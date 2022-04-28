@@ -2,6 +2,16 @@
 // import reset from "styled-reset";
 // import { scrollbar } from "../themes/scrollbar";
 
+import React from 'react'
+
+const GlobalStyles = () => {
+  return (
+    <div>GlobalStyles</div>
+  )
+}
+
+export default GlobalStyles
+
 // const GlobalStyles = createGlobalStyle`
 // 	${reset};
 //     :root {

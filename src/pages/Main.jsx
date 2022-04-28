@@ -1,9 +1,13 @@
 import React from 'react'
 
 const Main = () => {
+
     return (
-        <div>Main</div>
+        <div>
+            <p>Hello, World!</p>
+            <p>Hello, React!</p>
+        </div>
     )
 }
 
-export default Main
+export default Main;

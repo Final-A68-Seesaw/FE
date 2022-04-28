@@ -4,18 +4,30 @@ import { ConnectedRouter } from 'connected-react-router';
 
 //pages
 import Login from '../pages/Login';
+import Signup from '../pages/Signup'
 import Detail from '../pages/Detail';
 import Main from '../pages/Main';
 import Mypage from '../pages/Mypage';
 import ProfileEdit from '../pages/ProfileEdit';
 import SearchResult from '../pages/SearchResult';
 
+import { Provider } from 'react-redux';
+import store, { history } from '../redux/configStore';
+
 const Router = () => {
   return (
-    <div>
-        <Route path="/" exact component={Login}/>
-  
-    </div>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
+        <Route path="/" exact component={Login} />
+        <Route path="/signup" exact component={Signup} />
+        <Route path="/main" exact component={Main} />
+        <Route path="/searchresult" exact component={SearchResult} />
+        <Route path="/detail" exact component={Detail} />
+        <Route path="/mypage" exact component={Mypage} />
+        <Route path="/profiledit" exact component={ProfileEdit} />
+
+      </ConnectedRouter>
+    </Provider>
   )
 }
 
