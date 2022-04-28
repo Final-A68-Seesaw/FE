@@ -20,8 +20,19 @@ module.exports = {
         test: /\.jsx?$/,
         use: "babel-loader",
         exclude: ['/node_modules/']
-      }
-    ]
+      },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: 'style-loader'
+          },
+          {
+            loader: 'css-loader'
+          }
+            ]
+       }
+    ] 
   },
 
   // 빌드 설정
@@ -33,7 +44,8 @@ module.exports = {
   // webpack 서버 설정
   devServer: {
     static: path.join(__dirname, "build"), // 이 경로에 있는 파일이 변경될 때 다시 컴파일
-    port: 3000 // 서버 포트 지정
+    port: 3000, // 서버 포트 지정
+    historyApiFallback: true
   },
 
   plugins: [
