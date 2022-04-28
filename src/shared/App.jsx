@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Router from './Router';
-import GlobalStyles from './GlobalStyles';
+
 
 import Main from '../pages/Main';
 
