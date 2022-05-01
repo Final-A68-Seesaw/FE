@@ -1,13 +1,13 @@
 import React from 'react'
 
-const Main = () => {
+import Mainchat from '../components/Mainchat'
 
-    return (
-        <div>
-            <p>Hello, World!</p>
-            <p>Hello, React!</p>
-        </div>
-    )
+const Main = () => {
+  return (
+    <div>
+      <Mainchat />
+    </div>
+  )
 }
 
-export default Main;
+export default Main
