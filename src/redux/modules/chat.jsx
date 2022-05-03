@@ -21,7 +21,10 @@ const initialState = {
 export default handleActions(
     {
         [GET_CHAT]: (state, action) => produce(state, (draft) => {
-            draft.list = action.payload
+            action.payload.map((v) => {
+                draft.list.push({ ...v, createdAt: v.createdAt.match(/(\d*-\d*-\d*).(\d*:\d*:\d*)/)[2] })
+            })
+            // draft.list = action.payload
         }),
 
         [ADD_CHAT]: (state, action) => produce(state, (draft) => {

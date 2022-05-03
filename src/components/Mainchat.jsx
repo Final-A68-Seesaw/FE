@@ -14,7 +14,7 @@ let stompClient = null
 
 const Mainchat = () => {
 
-    const chatList = useSelector((state) => state)
+    const chatList = useSelector((state) => state.chat.list)
 
     const dispatch = useDispatch()
     const [addChat, setAddChat] = React.useState([])
@@ -64,14 +64,16 @@ const Mainchat = () => {
             try {
                 let chatMessage = {
                     status: "TALK",
-                    senderName: 'wow',
+                    senderName: userData.username,
                     message: userData.message,
                     area: 'main',
                 };
 
-                console.log('send => ', stompClient.send(ChatUrls.sendUrl, {}, JSON.stringify(chatMessage)))
+                stompClient.send(ChatUrls.sendUrl, {}, JSON.stringify(chatMessage))
 
                 setUserData({ ...userData, message: "" });
+
+                console.log('send over')
             }
             catch (err) {
                 console.log(err)
@@ -132,6 +134,7 @@ const Mainchat = () => {
 
     const onError = (err) => {
         console.log('Error! : ' + err)
+        console.log((/Lost connection/g).test(err))
     };
 
     const onPublicMessageReceived = (payload) => {
@@ -146,7 +149,9 @@ const Mainchat = () => {
                 console.log('out')
                 break;
             case "TALK":
+                setAddChat({ senderName: payloadData.senderName, message: payloadData.message, createdAt: payloadData.createdAt })
                 console.log('msg')
+
                 break;
             default: break;
         }
@@ -167,11 +172,11 @@ const Mainchat = () => {
             <ChatList ref={messageRef}>
                 <ul>
                     <p>chat - start</p>
-                    {addChat && addChat.map((v, i) => {
-                        if (v.senderName == 'wow')
-                            return <p key={i} style={{ display: 'flex', flexDirection: 'row-reverse' }}>{v.senderName} : {v.message}</p>
+                    {chatList.map((v, i) => {
+                        if (v.senderName == userData.username)
+                            return <p key={i} style={{ display: 'flex', flexDirection: 'row-reverse' }}>{v.createdAt} : {v.senderName} : {v.message}</p>
                         else
-                            return <p key={i}>{v.senderName} : {v.message}</p>
+                            return <p key={i}>{v.createdAt} : {v.senderName} : {v.message}</p>
                     })}
                     {/* {chat_list &&
                         chat_list.map((chat, index) => (
@@ -226,7 +231,7 @@ const Mainchat = () => {
                         name='message'
                         value={userData.message}
                         placeholder='채팅을 입력해주세요 :)'
-                        onChange={(e) => setUserData({ message: e.target.value })}
+                        onChange={(e) => setUserData({ ...userData, message: e.target.value })}
                         onKeyPress={onKeyPress}
                     />
                     <button onClick={sendPublicMessage}>
