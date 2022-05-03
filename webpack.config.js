@@ -1,5 +1,6 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack"); //env 사용 플러그인
 
 module.exports = {
   // 개발모드, development or production
@@ -31,7 +32,19 @@ module.exports = {
             loader: 'css-loader'
           }
             ]
-       }
+      },
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+          loader: 'file-loader',
+          },
+            ]
+      },
+      {
+        test: /\.svg$/,
+        use: ['@svgr/webpack'],
+      },
     ] 
   },
 
@@ -39,6 +52,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "build"), // 빌드되는 파일들이 만들어지는 위치, __dirname: 현재 디렉토리
     filename: "bundle.js", // 번들파일 이름
+    publicPath: '/',
   },
 
   // webpack 서버 설정
@@ -52,6 +66,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       // index.html에 output에서 만들어진 bundle.js를 적용하여, build에 새로운 html 파일 생성
       template: `./public/index.html`
-    })
+    }),
+    new Dotenv(),
   ]
 };

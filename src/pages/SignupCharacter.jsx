@@ -1,15 +1,16 @@
 import React from 'react'
+import { StepBar } from '../components/StepBar'
 
 import { history } from '../redux/configStore'
 
-const Detail = () => {
+const SignupCharacter = () => {
     return (
         <div>
-            <p>Signup</p>
+            <StepBar shape = "step3"/>
             
             <button onClick={() => history.push('/main')}>몰라</button>
         </div>
     )
 }
 
-export default Detail
+export default SignupCharacter
