@@ -29,12 +29,11 @@ const Router = () => {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        <Route path="/login" exact component={Login} />
         <Route path="/signup" exact component={Signup} />
         <Route path="/signup/making" exact component={SignupMBTI}/>
         <Route path="/signup/making/character" exact component={SignupCharacter}/>
 
-        <PublicRoute path="/login" exact component={Login} />
+        <Route path="/login" exact component={Login} />
         
         <Route path="/main" exact component={Main} />
         <Route path="/searchresult" exact component={SearchResult} />
