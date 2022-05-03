@@ -7,7 +7,6 @@ const App = () => {
         <>
             {/* <GlobalStyles/> */}
             <Router />
-            
         </>
     )
 }
