@@ -14,6 +14,19 @@ import {
   body_2,
   body_3,
   body_4,
+
+  Bold_41px,
+  Bold_24px,
+  Bold_22px,
+  Bold_18px,
+  Med_24px,
+  Med_22px,
+  Med_20px,
+  Med_18px,
+  Med_16px,
+  Med_14px,
+  Reg_20px,
+
   gnb,
   button,
   caption,
@@ -52,6 +65,30 @@ const Wrapper = styled.div`
         return `${body_3}`;
       case "body_4":
         return `${body_4}`;
+
+      case "Bold_41px":
+        return `${Bold_41px}`;
+      case "Bold_24px":
+        return `${Bold_24px}`;
+      case "Bold_22px":
+        return `${Bold_22px}`;
+      case "Bold_18px":
+        return `${Bold_18px}`;
+      case "Med_24px":
+        return `${Med_24px}`;
+      case "Med_22px":
+        return `${Med_22px}`;
+      case "Med_20px":
+        return `${Med_20px}`;
+      case "Med_18px":
+        return `${Med_18px}`;
+      case "Med_16px":
+        return `${Med_16px}`;
+      case "Med_14px":
+        return `${Med_14px}`;
+      case "Reg_20px":
+        return `${Reg_20px}`;
+
       case "gnb":
         return `${gnb}`;
       case "button":

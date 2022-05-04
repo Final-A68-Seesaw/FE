@@ -5,7 +5,8 @@ export const userApi = {
   loginCheck: () => instance.get("user/refresh"),
   login: (data) => nonTokenInstance.post("user/login", data),
   signup: (data) => nonTokenInstance.post("user/signup", data),
-  mbti: (Mbti) => instance.post("api/mbti",Mbti),
+  userCheck: (data) => nonTokenInstance.post('user/check', data),
+  mbti: (Mbti) => instance.post("user/mbti",Mbti),
 
   //kakao 로그인
   kakao: (code) => nonTokenInstance.get(`/user/kakao/callback?code=${code}`),

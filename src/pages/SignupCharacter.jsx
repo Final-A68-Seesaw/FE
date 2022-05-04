@@ -8,7 +8,7 @@ const SignupCharacter = () => {
         <div>
             <StepBar shape = "step3"/>
             
-            <button onClick={() => history.push('/main')}>몰라</button>
+            <button onClick={() => {}}>몰라</button>
         </div>
     )
 }

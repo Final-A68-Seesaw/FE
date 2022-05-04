@@ -75,6 +75,65 @@ export const body_4 = css`
   line-height: 1.8rem;
 `;
 
+
+
+export const Bold_41px = css`
+  font-size: 2.563rem;
+  font-weight: bold;
+`
+
+export const Bold_24px = css`
+  font-size: 1.5rem;
+  font-weight: bold;
+`
+
+export const Bold_22px = css`
+  font-size: 1.375rem;
+  font-weight: bold;
+`
+
+export const Bold_18px = css`
+  font-size: 1.125rem;
+  font-weight: bold;
+`
+
+export const Med_24px = css`
+  font-size: 1.5rem;
+  font-weight: 500;
+`
+
+export const Med_22px = css`
+  font-size: 1.375rem;
+  font-weight: 500;
+`
+
+export const Med_20px = css`
+  font-size: 1.25rem;
+  font-weight: 500;
+`
+
+export const Med_18px = css`
+  font-size: 1.125rem;
+  font-weight: 500;
+`
+
+export const Med_16px = css`
+  font-size: 1rem;
+  font-weight: 500;
+`
+
+export const Med_14px = css`
+  font-size: 0.875rem;
+  font-weight: 500;
+`
+
+export const Reg_20px = css`
+  font-size: 1.25rem;
+  font-weight: 400;
+`
+
+
+
 export const button = css`
   font-size: 1.6rem;
   line-height: 2.2rem;

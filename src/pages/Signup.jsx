@@ -4,6 +4,7 @@ import { userApi } from '../api/userApi';
 import { history } from '../redux/configStore';
 
 import { StepBar } from '../components/StepBar';
+import { setCookie } from '../shared/cookie';
 
 const Signup = () => {
     const {
@@ -20,9 +21,14 @@ const Signup = () => {
       const onSubmit = async (data) => {
         
         try{
-            const user = await userApi.signup(data);
-            window.alert("회원가입이 완료되었습니다.");
-            history.replace("/signup/making");
+            const user = await userApi.userCheck({'username': data.username, 'pwd': data.pwd, 'pwdCheck': data.pwdCheck});
+
+            setCookie('username', data.username)
+            setCookie('generation', data.generation)
+            setCookie('pwd', data.pwd)
+            setCookie('pwdCheck', data.pwdCheck)
+
+            history.push("/signup/making");
         }catch (e) {
             if(e.message === "Request failed with status code 400") {
                 alert("중복된 아이디입니다.");

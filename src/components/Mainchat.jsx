@@ -21,7 +21,6 @@ const Mainchat = () => {
     const [userData, setUserData] = React.useState({
         username: "wow",
         message: "",
-        // opposingUserName: "",
     });
 
     const messageRef = useRef();
@@ -56,7 +55,7 @@ const Mainchat = () => {
 
 
     const sendPublicMessage = () => {
-        // console.log(userData.message)
+      
         if (!userData.message) {
             console.log("내용을 입력해주세요!");
         } else {
@@ -78,7 +77,6 @@ const Mainchat = () => {
                 console.log(err)
             }
         }
-
     };
 
 

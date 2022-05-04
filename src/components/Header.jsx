@@ -64,6 +64,21 @@ const Head = styled.div`
             opacity: 1;
         }
     }
+
+    .slide-out-left {
+	    animation: slide-out-left 0.5s cubic-bezier(0.550, 0.085, 0.680, 0.530) both;
+    }
+    
+    @keyframes slide-out-left {
+        0% {
+            transform: translateX(0);
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(-1000px);
+            opacity: 0;
+        }
+    }
 `
 
 const HeadInner = styled.div`
