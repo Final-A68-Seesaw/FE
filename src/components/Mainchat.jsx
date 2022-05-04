@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { actionCreators as ChatActions } from '../redux/modules/chat'
 import { ChatUrls } from '../shared/ChatApi'
+import jwtDecode from 'jwt-decode';
 
 let stompClient = null
 
@@ -15,14 +16,16 @@ const Mainchat = () => {
 
     const chatList = useSelector((state) => state.chat.list)
 
+    // let Token = jwtDecode(localStorage.getItem('accessToken'))
+
+    // console.log(Token)
+
     const dispatch = useDispatch()
     const [addChat, setAddChat] = React.useState([])
 
-    const [userData, setUserData] = React.useState({
-        username: "wow",
-        message: "",
-    });
+    const [userData, setUserData] = React.useState(jwtDecode(localStorage.getItem('accessToken')));
 
+    console.log('user',userData)
     const messageRef = useRef();
 
     const stompConnect = () => {

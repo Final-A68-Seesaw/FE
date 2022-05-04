@@ -14,7 +14,8 @@ import CharCap from '../asset/Char_cap.svg'
 import CharGlasses from '../asset/Char_glasses.svg'
 
 //Hook
-import { useForm} from "react-hook-form"
+import { useForm } from "react-hook-form"
+import { clearStorage, getStorage } from '../shared/cookie';
 
 
 const SignupCharacter = () => {
@@ -25,15 +26,22 @@ const SignupCharacter = () => {
         = useForm();
 
     const onSubmit = async (data) => {
-        console.log(data);
+        console.log('data',data.nickname);
+
+        let signDic = ({...getStorage(), nickname: data.nickname, categories: ['기본이미지', '머리1', '모자1', '표정1']})
+        
+        // userApi.getCharacter().then((res)=>console.log('res:', res.data))
+
+        console.log(signDic)
          try{
-             const user = await userApi.signupFinal(data);
+             const user = await userApi.signupFinal(signDic);
              console.log(user);
-             history.replace("/main");
+             clearStorage()
+             history.replace("/login");
            }catch (e) {
                console.log(e);
                if(e.message === "Request failed with status code 400") {
-                   alert("mbti를 모두 체크해주세요.");
+                   console.log('400 Error ~ !')
                    return;
                }
            }

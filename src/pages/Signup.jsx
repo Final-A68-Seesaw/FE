@@ -4,7 +4,7 @@ import { userApi } from '../api/userApi';
 import { history } from '../redux/configStore';
 
 import { StepBar } from '../components/StepBar';
-import { setCookie } from '../shared/cookie';
+import { setStorage } from '../shared/cookie';
 
 const Signup = () => {
     const {
@@ -23,10 +23,9 @@ const Signup = () => {
         try{
             const user = await userApi.signup({'username': data.username, 'pwd': data.pwd, 'pwdCheck': data.pwdCheck});
 
-            setCookie('username', data.username)
-            setCookie('generation', data.generation)
-            setCookie('pwd', data.pwd)
-            setCookie('pwdCheck', data.pwdCheck)
+            setStorage('username', data.username)
+            setStorage('generation', data.generation)
+            setStorage('pwd', data.pwd)
 
             history.push("/signup/making");
         }catch (e) {
@@ -67,10 +66,10 @@ const Signup = () => {
                 value !== "none"
             })}>
             <option value="none">선택하세요</option>
-            <option value="xgen">X세대(1965년생~1979년생)</option>
-            <option value="ygen">Y세대(1980년생~1994년생)</option>
-            <option value="zgen">Z세대(1995년생~2005년생)</option>
-            <option value="alphazen">알파세대(2006년생~)</option>
+            <option value="x세대">X세대(1965년생~1979년생)</option>
+            <option value="y세대">Y세대(1980년생~1994년생)</option>
+            <option value="z세대">Z세대(1995년생~2005년생)</option>
+            <option value="알파세대">알파세대(2006년생~)</option>
         </select>
                 {errors.generation && errors.generation.type === "validate"
                 && <p>세대를 선택해주세요.</p>}

@@ -10,7 +10,7 @@ import Button from '../elements/Button';
 
 //Hook
 import { useForm } from "react-hook-form"
-import { getCookie, setCookie, signUpCookie } from '../shared/cookie';
+import { setStorage } from '../shared/cookie';
 
 
 const SignupMBTI = () => {
@@ -27,11 +27,11 @@ const SignupMBTI = () => {
     try {
       const user = await userApi.mbti(Mbti);
 
-      setCookie('energy', Mbti.energy)
-      setCookie('insight', Mbti.insight)
-      setCookie('judgement', Mbti.judgement)
-      setCookie('lifePattern', Mbti.lifePattern)
-      setCookie('mbtiRes', user.data)
+      setStorage('energy', Mbti.energy)
+      setStorage('insight', Mbti.insight)
+      setStorage('judgement', Mbti.judgement)
+      setStorage('lifePattern', Mbti.lifePattern)
+      setStorage('mbtiRes', user.data)
 
       console.log(user);
       history.push("/signup/making/character");
