@@ -1,76 +1,29 @@
-// import { createGlobalStyle } from "styled-components";
-// import reset from "styled-reset";
-// import { scrollbar } from "../themes/scrollbar";
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
-import React from 'react'
-
-const GlobalStyles = () => {
-  return (
-    <div>GlobalStyles</div>
-  )
+const GlobalStyles = createGlobalStyle`
+${reset}
+  :root {
+    /* color */
+  --red: #FF4E4E;
+  --yellow: #FFC438;
+  --green: #17A249;
+  --purple: #8E41FF;
+  --black: #222222;
+  --black24: #242424;
+  --gray66: #666666;
+  --gray99: #999999;
+  --grayc1: #c1c1c1;
+  --grayc0: #C0C4C9;
+  --graydf: #dfdfdf;
+  --grayed: #EDEFF2;
+  --white: #ffffff;
+   --orange : #F05C2E;
+  }
+  body{
+    font-family: 'Noto Sans KR', sans-serif;
 }
 
-export default GlobalStyles
+ `;
 
-// const GlobalStyles = createGlobalStyle`
-// 	${reset};
-//     :root {
-// 			/* color */
-//     --main: #4D6C56;
-//     --black: #151515;
-//     --darkgrey: #757575;
-//     --grey: #b7b7b7;
-//     --line: #eaeaea;
-// 		--white : #ffffff;
-// 		--point : #ffcccc;
-// 		--notice : #ff7776;
-// 		/* z-index */
-// 		--indexMobileNav: 20;
-// 		--indexSidebar : 25;
-// 		--indexColorPicker: 32;
-// 		--indexHeader : 30;
-// 		--indexDrop : 35;
-// 		--indexModal : 60;
-// 		--indexEventBtn : 70;
-// 		/* margin */
-// 		--xsMargin: 10px;
-// 		--smMargin: 20px;
-// 		--mdMargin: 40px;
-//   };
-//   * {
-// 		${scrollbar};
-// 		box-sizing : border-box;
-// 	}
-// 	html {
-// 		margin : 0;
-// 		padding: 0;
-// 		font-size:62.5%;
-// 		box-sizing: border-box;
-// 	}
-// 	body{
-// 		position: relative;
-// 		margin: 0;
-// 		padding: 0;
-// 		font-family: 'NanumSquareRound',sans-serif;
-// 		/* font-family:--apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;  */
-// 	}
-// 	a {
-// 		color: var(--black);
-// 		text-decoration:none;
-// 	}
-// 	input,
-// 	textarea,
-// 	button {
-//     font-family: 'NanumSquareRound',sans-serif;
-// 		color: var(--black);
-// 		border: none;
-// 		outline: none;
-// 	}
-// 	button {
-// 		padding: 0;
-// 		background-color: transparent;
-// 		cursor: pointer;
-// 	}
-// `;
-
-// export default GlobalStyles;
+export default GlobalStyles;

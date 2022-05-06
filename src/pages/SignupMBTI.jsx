@@ -6,7 +6,10 @@ import { history } from '../redux/configStore'
 import styled from 'styled-components'
 import { StepBar } from '../components/StepBar'
 import Hi  from '../asset/MBTI_HI.svg'
+
+//element
 import Button from '../elements/Button';
+import { med18 } from '../themes/textStyle';
 
 //Hook
 import { useForm } from "react-hook-form"
@@ -57,7 +60,7 @@ const SignupMBTI = () => {
           
           <StepBar shape = "step2"/>
           
-          <Hi/> //이모
+          <Hi/>
         
           <TextContainer>
             <b>씨소 플레이그라운드</b>에 처음 오신 회원님을 환영합니다!
@@ -203,9 +206,9 @@ const Container = styled.div`
 const TextContainer = styled.div`
   text-align: center;
   margin: 0.1rem;
-  font-weight: 400;
   margin-bottom: 3rem;
-  color:#242424;
+  ${med18}
+  color:var(--black24);
 `;
 
 const OutlineContaierBar = styled.section`
@@ -214,9 +217,9 @@ const OutlineContaierBar = styled.section`
   margin: auto;
   width: 50%;
   height: 4rem;
-  color: white;
+  color: var(--white);
   font-weight: bold;
-  background: #242424;
+  background: var(--black24);
   box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08), 0px 16px 24px rgba(22, 34, 51, 0.08);
   border-radius: 28px 28px 0px 0px ;
 `;
@@ -225,7 +228,7 @@ const OutlineContainer = styled.div`
   margin: auto;
   width: 50%;
   height: 57%;
-  background: #FFFFFF;
+  background: var(--white);
   box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08), 0px 16px 24px rgba(22, 34, 51, 0.08);
   border-radius: 0px 0px 28px 28px;
 `;
@@ -234,7 +237,7 @@ const QuestionText = styled.div`
   position: relative;
 
   display: flex;
-  color: #999999;
+  color: var(--gray99);
   font-weight: 500;
   margin: 2rem 5rem 0 5rem;
 
@@ -245,14 +248,14 @@ const FormCheckText = styled.span`
   width: 40%;
   height: 4rem;
   line-height: 4rem;
-  background-color: #edeff2;
+  background-color: var(--grayed);
   border-color: transparent;
   border-radius: 0.75rem;
   justify-content: center;
   display: inline-block;
   align-items: center;
   cursor: pointer;
-  color: #999999;
+  color: var(--gray99);
   font-weight: 500;
 `;
 
@@ -268,10 +271,10 @@ const FormCheckLeft = styled.input`
     display: none;
   }
   &:checked + ${FormCheckText} {
-    background: #fff;
-    color: #242424;
+    background: var(--white);
+    color: var(--black24);
     font-weight: bolder;
-    border: 3px solid #242424;
+    border: 3px solid var(--black24);
     box-shadow: 0px 8px 16px -4px rgba(22, 34, 51, 0.08);
 
   }
@@ -285,16 +288,15 @@ const QuestionLabel = styled.div`
   display: flex;
   width: 3.19rem;
   height: 3.31rem;
-  background-color: #ff4e4e;
+  background-color: var(--red);
   border-radius: 0.5rem 0 0 0.5rem;
   
   box-shadow: 0rem 1rem 1.5rem rgba(22, 34, 51, 0.08);
 `
 const QuestionNum = styled.div`
-  color: white;
+  color: var(--white);
   position: absolute;
   left: -7.2rem;
-  top: -0.2rem;
   display: flex;
   font-weight: bolder;
 `
