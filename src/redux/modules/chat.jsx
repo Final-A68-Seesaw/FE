@@ -6,9 +6,11 @@ import { createAction } from "redux-actions"
 
 const GET_CHAT = 'GETCHAT'
 const ADD_CHAT = 'ADDCHAT'
+const CLEAR_CHAR = 'CLEARCHAT'
 
 const getChat = createAction(GET_CHAT, (chat) => chat)
 const addChat = createAction(ADD_CHAT, (chat) => chat)
+const clearChat = createAction(CLEAR_CHAR, (chat) => chat)
 
 
 
@@ -27,9 +29,12 @@ export default handleActions(
             // draft.list = action.payload
         }),
 
+        [CLEAR_CHAR]: (state, action) => produce(state, (draft) => {
+            draft.list = []
+        }),
+
         [ADD_CHAT]: (state, action) => produce(state, (draft) => {
-            draft.list.push(action.payload)
-            console.log('add => ', draft.list)
+            draft.list.push({ ...action.payload, createdAt: action.payload.createdAt.match(/(\d*-\d*-\d*).(\d*:\d*:\d*)/)[2] })
         }),
     },
     initialState
@@ -38,6 +43,7 @@ export default handleActions(
 const actionCreators = {
     getChat,
     addChat,
+    clearChat,
 };
 
 export { actionCreators };
