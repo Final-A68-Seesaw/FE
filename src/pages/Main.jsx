@@ -7,9 +7,6 @@ import Mainchat from '../components/Mainchat'
 import jwtDecode from 'jwt-decode';
 import Header from '../components/Header';
 
-import Apple from '../asset/group279.svg'
-import Bpple from '../asset/group281.svg'
-import Cpple from '../asset/group284.svg'
 
 const Main = () => {
 

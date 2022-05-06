@@ -1,76 +1,167 @@
-import React, {useRef} from 'react'
+import React from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { __login } from "../redux/modules/user";
+import { history } from "../redux/configStore";
 
-import styled from 'styled-components';
-import Button from '../elements/Button';
-import KakaoBtn from '../components/KakaoBtn';
+//ele
+import Button from "../elements/Button";
+import { InputText, SFormError } from "../elements/Input";
+
+//style
+import styled from "styled-components";
+import KakaoBtn from "../components/KakaoBtn";
+import { FaTimesCircle } from "react-icons/Fa";
 
 const Login = () => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors }
-      } = useForm();
-      
-      const dispatch = useDispatch();
+  const {
+    reset,
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({ mode: "onChange" });
 
-      const onSubmit = (data) => {
-        dispatch(__login(data));
-      }; 
-     
-      
-    return (
-      <>
-        <form 
-        onSubmit={handleSubmit(onSubmit)}
-        >
+  const dispatch = useDispatch();
 
-        <label>이메일</label>
+  const onSubmit = (data) => {
+    dispatch(__login(data));
+  };
 
-        <input
-            name="username" type="email" 
-            placeholder="이메일을 입력해주세요."
-            ref={register({
-                required: true,
-                pattern:/^\S+@\S+$/i
-             })} />
+  return (
+    <>
+      <Container>
+        <RightContainer>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <LoginContainer>
+              <label>이메일</label>
+              <div>
+                <InputText
+                  ref={register({
+                    required: {
+                      value: true,
+                      message: "⚠ 이메일을 입력해주세요.",
+                    },
+                    pattern: {
+                      value:
+                        /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                      message: "⚠ 이메일 형식에 맞게 입력해주세요..",
+                    },
+                  })}
+                  name="username"
+                  type="text"
+                  placeholder="example@email.com"
+                  hasError={Boolean(errors?.username?.message)}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    reset({
+                      ...getValues(),
+                      username: "",
+                    });
+                  }}
+                  style={{ backgroundColor: "transparent", border: "0px" }}
+                >
+                  {/* marginTop: '1rem', marginLeft: '-2.5rem' */}
+                  <FaTimesCircle
+                    style={{
+                      width: "1rem",
+                      height: "1rem",
+                      color: "var(--graydf)",
+                    }}
+                  />
+                </button>
+                <SFormError>{errors?.username?.message}</SFormError>
+              </div>
 
-             {errors.email &&<p>이메일을 정확하게 입력해주세요.</p>}
+              <label>비밀번호</label>
+              <div>
+                <InputText
+                  ref={register({
+                    required: {
+                      value: true,
+                      message: "⚠ 패스워드를 입력해주세요.",
+                    },
+                    minLength: {
+                      value: 8,
+                      message: "⚠ 패스워드를 정확하게 입력해주세요.",
+                    },
+                    pattern: {
+                      value:
+                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+                      message:
+                        "⚠ 하나 이상의 숫자, 영어 대문자, 소문자, 특수문자 조합으로 8자리 이상 20자리 이하로 입력해주세요!",
+                    },
+                  })}
+                  name="pwd"
+                  type="password"
+                  placeholder="********"
+                  maxLength={"20"}
+                  hasError={Boolean(errors?.pwd?.message)}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    reset({
+                      ...getValues(),
+                      pwd: "",
+                    });
+                  }}
+                  style={{ backgroundColor: "transparent", border: "0px" }}
+                >
+                  {/* marginTop: '1rem', marginLeft: '-2.5rem' */}
+                  <FaTimesCircle
+                    style={{
+                      width: "1rem",
+                      height: "1rem",
+                      color: "var(--graydf)",
+                    }}
+                  />
+                </button>
+                <SFormError>{errors?.pwd?.message}</SFormError>
+              </div>
+            </LoginContainer>
 
-        
-        <label>비밀번호</label>
-        <input
-            name="pwd" type="password"
-            placeholder="비밀번호를 입력해주세요."
-            ref={register({
-                required: true,
-                maxLength: 20,
-                minLength: 8,
-                pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/
-            })}/>
+            <LoginBtn shape="confirmRed-B" type="submit">
+              로그인하기
+            </LoginBtn>
 
-            {errors.pwd && errors.pwd.type === "required"
-            && <p>패스워드를 입력해주세요.</p>}
-            {errors.pwd && errors.pwd.type === "maxLength"
-            && <p>패스워드를 정확하게 입력해주세요.</p>}
-            {errors.pwd && errors.pwd.type === "minLength"
-            && <p>패스워드를 정확하게 입력해주세요.</p>}
-            {errors.pwd && errors.pwd.type === "pattern"
-            && <p>하나 이상의 숫자, 영어 대문자, 소문자, 특수문자 조합으로 8자리 이상 20자리 이하로 입력해주세요!</p>}
-        
+            <LoginBtn
+              shape="confirmRed-B"
+              onClick={() => {
+                history.push("/signup");
+              }}
+            >
+              회원가입하기
+            </LoginBtn>
+          </form>
 
-            <LoginBtn  shape="confirmRed-B" type="submit">로그인하기</LoginBtn>
-      </form>
-      
-      <KakaoBtn/>
-      </>
-    )
-}
+          <KakaoBtn />
+        </RightContainer>
+      </Container>
+    </>
+  );
+};
 
-const LoginBtn = styled(Button)`
-  margin-top: 60px;
+const Container = styled.div`
+  max-width: 1920px;
+  width: 100%;
 `;
 
-export default Login
+const RightContainer = styled.div`
+  margin: auto;
+  max-width: 40%;
+  text-align: center;
+`;
+
+const LoginBtn = styled(Button)`
+  margin: 1rem;
+  width: 50%;
+`;
+
+const LoginContainer = styled.div`
+  padding: 3rem;
+`;
+
+export default Login;
