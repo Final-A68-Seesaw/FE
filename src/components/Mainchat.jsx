@@ -9,8 +9,8 @@ import jwtDecode from 'jwt-decode';
 import { actionCreators as ChatActions } from '../redux/modules/chat'
 import { ChatUrls } from '../shared/ChatApi'
 
-import { BsChevronDown } from 'react-icons/bs'
-import { FaRegDotCircle } from 'react-icons/fa'
+import { BsChevronDown } from 'react-icons/Bs'
+import { FaRegDotCircle } from 'react-icons/Fa'
 
 let stompClient = null
 
@@ -172,8 +172,8 @@ const Mainchat = (props) => {
         {chatList.map((v, i) => {
           if (v.senderName == userData.nickname)
             return <div key={i} style={{ display: 'flex', justifyContent: 'right' }}>
-              <p className='chattime' style={{ margin: '2px 0 20px 0' }}>{v.createdAt}</p>
-              <p className='userchat' style={{ justifyContent: 'right', wordBreak: 'break-all', width: '240px', height: '100%', margin: '2px 0 20px 0' }}>{v.message}</p>
+              <p className='chattime' style={{ margin: '10px 0 20px 0' }}>{v.createdAt}</p>
+              <p className='userchat' style={{ justifyContent: 'right', wordBreak: 'break-all', width: '240px', height: '100%', margin: '2px 0 20px 10px' }}>{v.message}</p>
               <p className='usernick'>{v.senderName}</p>
               <div className='chatImg'></div>
             </div>
@@ -181,8 +181,8 @@ const Mainchat = (props) => {
             return <div key={i} style={{ display: 'flex' }}>
               <div className='chatImg'></div>
               <p className='usernick'>{v.senderName}</p>
-              <p className='userchat' style={{ justifyContent: 'left', wordBreak: 'break-all', width: '240px', height: '100%', margin: '2px 0 20px 0' }}>{v.message}</p>
-              <p className='chattime' style={{ margin: '2px 0 20px 0' }}>{v.createdAt}</p>
+              <p className='userchat' style={{ justifyContent: 'left', wordBreak: 'break-all', width: '240px', height: '100%', margin: '2px 10px 20px 0' }}>{v.message}</p>
+              <p className='chattime' style={{ margin: '10px 0 20px 0' }}>{v.createdAt}</p>
             </div>
         })}
         <div ref={messageRef}></div>
@@ -276,7 +276,7 @@ const ChatModal = styled.div`
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 26px;
       display: flex;
       align-items: center;
@@ -307,7 +307,7 @@ const ChatModal = styled.div`
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 20px;
+      font-size: 18px;
       line-height: 29px;
       /* identical to box height */
 

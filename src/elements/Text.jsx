@@ -1,18 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 import {
-
-  Bold_41px,
-  Bold_24px,
-  Bold_22px,
-  Bold_18px,
-  Med_24px,
-  Med_22px,
-  Med_20px,
-  Med_18px,
-  Med_16px,
-  Med_14px,
-  Reg_20px,
+  
+  bold41,
+  bold24,
+  bold22,
+  bold18,
+  med24,
+  med22,
+  med20,
+  med18,
+  med16,
+  med14,
+  reg20,
 
 } from "../themes/textStyle";
 
