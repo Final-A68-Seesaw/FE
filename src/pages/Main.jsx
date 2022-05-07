@@ -5,13 +5,14 @@ import { __logout } from '../redux/modules/user';
 
 import Mainchat from '../components/Mainchat'
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 
 const Main = () => {
 
   const [showModal, setShowModal] = useState(false)
 
   const openModal = () => {
-    setShowModal(!showModal);
+    setShowModal(true);
   }
 
   console.log(showModal)
@@ -30,6 +31,8 @@ const Main = () => {
 
       {showModal ? <Mainchat open={setShowModal} /> : null}
 
+      <Footer />
+
     </ChatContainer>
   )
 }
@@ -37,7 +40,7 @@ const Main = () => {
 export default Main
 
 const ChatContainer = styled.div`
-  height: 1000px;
+  
 `
 
 const ChatBtn = styled.div`

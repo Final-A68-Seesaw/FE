@@ -57,6 +57,8 @@ const Mainchat = (props) => {
 
   const modalExit = (show) => {
 
+    stompDisConnect();
+
     setTimeout(() => {
       props.open(false)
       dispatch(ChatActions.clearChat())
@@ -75,16 +77,29 @@ const Mainchat = (props) => {
     stompClient.connect({}, onConnected, onError);
   };
 
-  // const stompDisConnect = () => {
-  //   console.log('disconnect')
-  //   try {
-  //     const user_join = { status: "OUT", senderName: username };
-  //     stompClient.send("/app/mainchat", token, JSON.stringify(user_join));
-  //     stompClient.disconnect(() => {
-  //       stompClient.unsubscribe("/topic/mainchat");
-  //     }, token);
-  //   } catch (err) { }
-  // };
+  const stompDisConnect = () => {
+    console.log('disconnect')
+
+    try {
+      const user_join = {
+        status: "OUT",
+        senderName: userData.nickname,
+        message: `${userData.nickname}님이 퇴장`,
+        area: 'main',
+      };
+
+      let header = {
+        'Authorization': Token,
+      }
+
+      stompClient.send(ChatUrls.sendUrl, header, JSON.stringify(user_join));
+      stompClient.disconnect(() => {
+        stompClient.unsubscribe(ChatUrls.subscribeUrl)
+      })
+    } catch (err) {
+      console.log(err)
+    }
+  };
 
   const onConnected = () => {
     try {
@@ -146,6 +161,7 @@ const Mainchat = (props) => {
       case "JOIN":
         break;
       case "OUT":
+        console.log('OUT')
         break;
       case "TALK":
         dispatch(ChatActions.addChat({ senderName: payloadData.senderName, message: payloadData.message, createdAt: payloadData.createdAt }))
@@ -207,23 +223,22 @@ export default Mainchat;
 
 const ChatModal = styled.div`
   position: fixed;
-  width: 470px;
-  height: 868px;
+  
+  width: 411.75px;
+  height: 651px;
+
   padding-bottom: 300px;
   right: 30px;
   bottom: 5px;
 
-  /* White_#ffffff */
-
   background: #FFFFFF;
-  /* gray_#c1c1c1 */
 
-  border: 1px solid #C1C1C1;
+  border: 0.75px solid #C1C1C1;
   box-sizing: border-box;
   /* 3 */
 
-  box-shadow: 0px 8px 16px -4px rgba(22, 34, 51, 0.08);
-  border-radius: 11px;
+  box-shadow: 0px 6px 12px -3px rgba(22, 34, 51, 0.08);
+  border-radius: 8.25px;
 
   animation: slide-in-blurred-bottom 0.6s cubic-bezier(0.230, 1.000, 0.320, 1.000) both;
 
@@ -261,17 +276,19 @@ const ChatModal = styled.div`
     align-items: center;
     justify-content: space-between;
     padding: 30px;
-    width: 409px;
-    height: 38px;
+    
+    width: 351.75px;
+    height: 58.5px;
 
     background: #222222;
-    border-radius: 10px 10px 0px 0px;
+    border-radius: 7.5px 7.5px 0px 0px;
 
     .onairp {
       width: 52px;
       height: 23px;
-
-      /* 18pt_Medium */
+      
+      width: 52.5px;
+      height: 17.25px;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
@@ -282,18 +299,17 @@ const ChatModal = styled.div`
       align-items: center;
       text-align: center;
 
-      /* White_#ffffff */
       color: #FFFFFF;
     }
 
     .onairicon {
-      /* Ellipse 35 */
-
       width: 18px;
       height: 18px;
-      margin: 4px 0 0 4px;
+      
+      width: 9.75px;
+      height: 9.75px;
 
-      /* White_#ffffff */
+      margin: 4px 0 0 4px;
 
       color: #FF4E4E;
     }
@@ -301,30 +317,26 @@ const ChatModal = styled.div`
     .headtitle {
       width: 171px;
       height: 29px;
-
-      /* 20pt_Bold */
+      
+      width: 142px;
+      height: 22px;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 15px;
       line-height: 29px;
-      /* identical to box height */
 
       display: flex;
       align-items: center;
       text-align: center;
 
-      /* White_#ffffff */
-
       color: #FFFFFF;
     }
 
     .buttonDown {
-      /* Button_down */
-      
-      width: 28px;
-      height: 28px;
+      width: 21px;
+      height: 21px;
       color: #FFFFFF;
     }
   }
@@ -336,31 +348,26 @@ const ChatModal = styled.div`
     overflow-y: auto;
 
     .chatImg {
-      width: 30px;
-      height: 30px;
+      width: 22.5px;
+      height: 22.5px;
 
       background: #C4C4C4;
-      border-radius: 4px;
+      border-radius: 3px;
     }
 
     .usernick {
-      width: 56px;
-      height: 29px;
-
-      /* 20pt_Bold */
+      width: 42px;
+      height: 22px;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 20px;
-      line-height: 29px;
+      font-size: 15px;
+      line-height: 22px;
       margin: 0 16px;
-      /* identical to box height */
 
       display: flex;
       align-items: center;
-
-      /* gray_#999999 */
 
       color: #999999;
     }
@@ -369,19 +376,14 @@ const ChatModal = styled.div`
       width: 162px;
       height: 29px;
 
-      /* 20pt_Medium */
-
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 500;
-      font-size: 20px;
-      line-height: 29px;
-      /* identical to box height */
+      font-size: 15px;
+      line-height: 22px;
 
       display: flex;
       align-items: center;
-
-      /* Black_#222222 */
 
       color: #222222;
     }
@@ -389,23 +391,28 @@ const ChatModal = styled.div`
 
   .chatBox {
     position: fixed;
-    width: 428px;
+
+    width: 368.75px;
     height: 120px;
+
     bottom: 0px;
     padding: 20px;
     display: flex;
     align-items: center;
-    border-radius: 0px 0px 11px 11px;
+    border-radius: 3px;
 
+    border: 0.75px solid #DFDFDF;
     background: #EDEFF2;
 
     .chatInput {
       box-sizing: border-box;
+      
+      width: 361px;
+      height: 48px;
 
-      width: 428px;
-      height: 64px;
-      padding: 24px;
-      font-size: 20px;
+      padding-left: 24px;
+      padding-right: 90px;
+      font-size: 15px;
 
       background: #FFFFFF;
 
@@ -413,13 +420,13 @@ const ChatModal = styled.div`
       border-radius: 4px;
 
       ::placeholder {
-        font-size: 20px;
+        font-size: 15px;
       }
     }
 
     .sendBtn {
-      width: 40px;
-      height: 40px;
+      width: 30px;
+      height: 30px;
       margin-left: -60px;
 
       background: #C4C4C4;
