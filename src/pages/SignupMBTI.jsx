@@ -1,19 +1,18 @@
 import React, { useState } from 'react'
 import { userApi } from '../api/userApi';
 import { history } from '../redux/configStore'
-
-//style
-import styled from 'styled-components'
-import { StepBar } from '../components/StepBar'
-import Hi  from '../asset/MBTI_HI.svg'
+import { useForm } from "react-hook-form"
+import { setStorage } from '../shared/cookie';
 
 //element
 import Button from '../elements/Button';
 import { med18 } from '../themes/textStyle';
 
-//Hook
-import { useForm } from "react-hook-form"
-import { setStorage } from '../shared/cookie';
+//style
+import styled from 'styled-components'
+import { StepBar } from '../components/StepBar'
+import Hi  from '../asset/Signup_Mbti_imo.svg'
+
 
 
 const SignupMBTI = () => {
