@@ -3,6 +3,7 @@ import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form"
 import { clearStorage, getStorage } from '../shared/cookie';
+import { userActions } from "../redux/modules/user";
 
 //ele
 import Button from "../elements/Button";
@@ -12,6 +13,7 @@ import { ErrorXInput} from "../elements/Input";
 import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
 import Pen from "../asset/Signup_Character_imo.svg";
+import { useSelector } from "react-redux";
 
 const SignupCharacter = () => {
   //react-hook-form
@@ -79,16 +81,26 @@ const SignupCharacter = () => {
     });
   }, []);
 
-  const userData = getStorage("all");
+  const userData = useSelector((state) => (state.user.usersign))
 
   //데이터전송
   const onSubmit = async (data) => {
 
-    let signDic = ({...getStorage(), nickname: data.nickname, charId: [charId[0], charId[1], charId[2]]})
+    let signDic = ({
+      pwd: userData.pwd,
+      username: userData.username,
+      generation: userData.generation,
+      energy: userData.energy,
+      insight: userData.insight,
+      judgement: userData.judgement,
+      lifePattern: userData.lifePattern,
+      nickname: data.nickname,
+      charId: [charId[0], charId[1], charId[2]]
+    })
     
      try{
          const user = await userApi.signupFinal(signDic);
-         clearStorage()
+         
          history.replace("/login");
        }catch (e) {
            console.log(e);

@@ -49,10 +49,11 @@ const Router = () => {
         <Route path="/detail" exact component={Detail} />
         <Route path="/mypage" exact component={Mypage} />
         <Route path="/profiledit" exact component={ProfileEdit} />
-        <Route path="/user/kakao/callback" component={AuthRedirectHandler}/>
+        <Route path="/user/kakao/callback" exact component={AuthRedirectHandler}/>
 
-        <Route path="/trouble" component={Trouble}/>
-        <Route path="/game" component={CrossWord}/>
+        <Route path="/trouble" exact component={Trouble}/>
+
+        <Route path="/game" exact component={CrossWord}/>
         
       </ConnectedRouter>
     </Provider>

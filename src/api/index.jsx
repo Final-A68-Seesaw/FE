@@ -5,11 +5,12 @@ const env = process.env.NODE_ENV;
 
 const targetServer =
   env === "development" ? "http://3.36.89.195/" : "false";
+  // env === "development" ? "http://3.38.104.97/" : "false";
 //env설정하기
 
 
 export const instance = axios.create({
-  baseURL: "http://3.36.89.195/",
+  baseURL: targetServer,
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json,",
@@ -18,7 +19,7 @@ export const instance = axios.create({
 
 // 토큰이 필요없는 요청에 쓰일 인스턴스 (로그인, 회원가입)
 export const nonTokenInstance = axios.create({
-  baseURL: "http://3.36.89.195/",
+  baseURL: targetServer,
   headers: {
     "content-type": "application/json;charset=UTF-8",
     accept: "application/json,",

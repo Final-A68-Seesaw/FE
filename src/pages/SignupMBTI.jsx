@@ -3,6 +3,7 @@ import { userApi } from '../api/userApi';
 import { history } from '../redux/configStore'
 import { useForm } from "react-hook-form"
 import { setStorage } from '../shared/cookie';
+import { userActions } from '../redux/modules/user';
 
 //element
 import Button from '../elements/Button';
@@ -12,30 +13,28 @@ import { med18 } from '../themes/textStyle';
 import styled from 'styled-components'
 import { StepBar } from '../components/StepBar'
 import Hi  from '../asset/Signup_Mbti_imo.svg'
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
 const SignupMBTI = () => {
 
+  const dispatch = useDispatch()
+
   const [Mbti, setMbti] = useState({ energy: null, insight: null, judgement: null, lifePattern: null });
+  const userData = useSelector((state) => (state.user.usersign))
 
   const {
     register, handleSubmit }
     = useForm();
 
   const onSubmit = async () => {
-    console.log(Mbti);
     
     try {
       const user = await userApi.mbti(Mbti);
 
-      setStorage('energy', Mbti.energy)
-      setStorage('insight', Mbti.insight)
-      setStorage('judgement', Mbti.judgement)
-      setStorage('lifePattern', Mbti.lifePattern)
-      setStorage('mbtiRes', user.data)
+      dispatch(userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data }))
 
-      console.log(user);
       history.push("/signup/making/character");
     } catch (e) {
       console.log(e);

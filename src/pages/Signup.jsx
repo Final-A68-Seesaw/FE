@@ -4,6 +4,7 @@ import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 
 import { setStorage } from "../shared/cookie";
+import { userActions } from "../redux/modules/user";
 
 //ele
 import Button from "../elements/Button";
@@ -13,8 +14,12 @@ import { ErrorXInput, SFormError } from "../elements/Input";
 import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
 import { SelectText } from "../elements/Select";
+import { useDispatch } from "react-redux";
 
 const Signup = () => {
+
+  const dispatch = useDispatch()
+  
   const {
     reset,
     register,
@@ -36,9 +41,15 @@ const Signup = () => {
         pwdCheck: data.pwdCheck,
       });
 
-      setStorage("username", data.username);
-      setStorage("generation", data.generation);
-      setStorage("pwd", data.pwd);
+      dispatch(userActions.userSave({
+        username: data.username,
+        pwd: data.pwd,
+        generation: data.generation,
+      }))
+
+      // setStorage("username", data.username);
+      // setStorage("generation", data.generation);
+      // setStorage("pwd", data.pwd);
 
       history.push("/signup/making");
     } catch (e) {

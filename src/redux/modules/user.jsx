@@ -12,6 +12,8 @@ const LOGIN = "user/LOGIN";
 const LOGIN_CHECK = "user/LOGIN_CHECK";
 const LOGOUT = "user/LOGOUT";
 
+const USERDATA = 'user/SIGNDATA'
+
 // action creator
 const login = createAction(LOGIN, (data) => (data));
 const loginCheck = createAction(LOGIN_CHECK, (isLogin, username) => ({
@@ -20,6 +22,7 @@ const loginCheck = createAction(LOGIN_CHECK, (isLogin, username) => ({
 }));
 const logout = createAction(LOGOUT, (username,pwd) => ({username,pwd}));
 
+const userSave = createAction(USERDATA, (user) => (user));
 // Thunk
 
 export const __login =
@@ -42,7 +45,7 @@ export const __login =
         path: "/",
         maxAge: 604800, // 7일
       });
-      history.replace("/main");
+      history.replace("/");
     } catch (e) {
         console.log("login error");
     }
@@ -64,7 +67,7 @@ export const __login =
                 path: "/",
                 maxAge: 604800, // 7일
               });
-              history.replace("/main");
+              history.replace("/");
         }catch (e) {
             console.log("kakao error",e);
             window.alert("로그인에 실패했습니다.");
@@ -116,6 +119,16 @@ const initialState = {
     calendar: null,
     modal: null,
   },
+  usersign: {
+    username: null,
+    generation: null,
+    pwd: null,
+    energy: null,
+    insight: null,
+    judgement: null,
+    lifePattern: null,
+    mbtiRes: null,
+  }
 };
 
 export default handleActions(
@@ -140,13 +153,18 @@ export default handleActions(
       produce(state, (draft) => {
         draft.isLogin = false;
       }),
+
+    [USERDATA]: (state, action) => produce(state, (draft) => {
+        draft.usersign = { ...initialState.usersign, ...action.payload }
+      }),
   },
   initialState
 );
 
 const userActions={
     __kakao,
-    __loginCheck
+    __loginCheck,
+    userSave,
 }
 
 export {userActions};
