@@ -6,12 +6,11 @@ import { history } from "../redux/configStore";
 
 //ele
 import Button from "../elements/Button";
-import { InputText, SFormError } from "../elements/Input";
+import { ErrorXInput } from "../elements/Input";
 
 //style
 import styled from "styled-components";
 import KakaoBtn from "../components/KakaoBtn";
-import { FaTimesCircle } from "react-icons/Fa";
 
 const Login = () => {
   const {
@@ -34,51 +33,38 @@ const Login = () => {
         <RightContainer>
           <form onSubmit={handleSubmit(onSubmit)}>
             <LoginContainer>
-              <label>이메일</label>
               <div>
-                <InputText
-                  ref={register({
-                    required: {
-                      value: true,
-                      message: "⚠ 이메일을 입력해주세요.",
-                    },
-                    pattern: {
-                      value:
-                        /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-                      message: "⚠ 이메일 형식에 맞게 입력해주세요..",
-                    },
-                  })}
-                  name="username"
-                  type="text"
-                  placeholder="example@email.com"
-                  hasError={Boolean(errors?.username?.message)}
-                />
-                <button
+              <ErrorXInput
+              type = "email"
+              name = "username"
+              label = "이메일"
+              register={register({
+                required: {
+                  value: true,
+                  message: "⚠ 이메일을 입력해주세요.",
+                },
+                pattern: {
+                  value:
+                    /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                  message: "⚠ 이메일 형식에 맞게 입력해주세요..",
+                },
+              })}
+              placeholder="example@email.com"
+              error = {errors?.username?.message}
+              />
+                <Button
+                  shape="inputReset"
                   type="button"
-                  onClick={() => {
-                    reset({
-                      ...getValues(),
-                      username: "",
-                    });
-                  }}
-                  style={{ backgroundColor: "transparent", border: "0px" }}
-                >
-                  {/* marginTop: '1rem', marginLeft: '-2.5rem' */}
-                  <FaTimesCircle
-                    style={{
-                      width: "1rem",
-                      height: "1rem",
-                      color: "var(--graydf)",
-                    }}
-                  />
-                </button>
-                <SFormError>{errors?.username?.message}</SFormError>
-              </div>
+                  onClick={() => reset({ ...getValues(), username: "" })}
+                />
 
-              <label>비밀번호</label>
+              </div>
               <div>
-                <InputText
-                  ref={register({
+                <ErrorXInput
+                  type="password"
+                  name="pwd"
+                  label="비밀번호"
+                  register={register({
                     required: {
                       value: true,
                       message: "⚠ 패스워드를 입력해주세요.",
@@ -94,32 +80,14 @@ const Login = () => {
                         "⚠ 하나 이상의 숫자, 영어 대문자, 소문자, 특수문자 조합으로 8자리 이상 20자리 이하로 입력해주세요!",
                     },
                   })}
-                  name="pwd"
-                  type="password"
                   placeholder="********"
-                  maxLength={"20"}
-                  hasError={Boolean(errors?.pwd?.message)}
+                  error={errors?.pwd?.message}
                 />
-                <button
+                <Button
+                  shape="inputReset"
                   type="button"
-                  onClick={() => {
-                    reset({
-                      ...getValues(),
-                      pwd: "",
-                    });
-                  }}
-                  style={{ backgroundColor: "transparent", border: "0px" }}
-                >
-                  {/* marginTop: '1rem', marginLeft: '-2.5rem' */}
-                  <FaTimesCircle
-                    style={{
-                      width: "1rem",
-                      height: "1rem",
-                      color: "var(--graydf)",
-                    }}
-                  />
-                </button>
-                <SFormError>{errors?.pwd?.message}</SFormError>
+                  onClick={() => reset({ ...getValues(), pwd: "" })}
+                />
               </div>
             </LoginContainer>
 

@@ -39,6 +39,7 @@ export const getStorage = (type = 'all') => {
                 insight: localStorage.getItem('insight'),
                 judgement: localStorage.getItem('judgement'),
                 lifePattern: localStorage.getItem('lifePattern'),
+                mbti: localStorage.getItem('mbtiRes')
             }
 
             return store

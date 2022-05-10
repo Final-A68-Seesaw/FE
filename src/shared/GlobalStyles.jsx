@@ -4,6 +4,7 @@ import reset from "styled-reset";
 const GlobalStyles = createGlobalStyle`
 ${reset}
   :root {
+    height: 100vh;
     /* color */
   --red: #FF4E4E;
   --yellow: #FFC438;
@@ -21,9 +22,20 @@ ${reset}
    --orange : #F05C2E;
   }
   body{
+    position: relative;
     font-family: 'Noto Sans KR', sans-serif;
-}
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+  }
+  html{
+    margin : 0;
+    padding: 0;
+    box-sizing: border-box;
+    height: 100vh;
+  }
 
  `;
+
 
 export default GlobalStyles;

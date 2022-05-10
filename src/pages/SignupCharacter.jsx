@@ -1,21 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
-
-//Hook
 import { useForm } from "react-hook-form"
 import { clearStorage, getStorage } from '../shared/cookie';
 
 //ele
 import Button from "../elements/Button";
-import { InputText, SFormError } from "../elements/Input";
+import { ErrorXInput} from "../elements/Input";
 
 //style
 import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
-import Pen from "../asset/SIGNUP_CHARACTER.svg";
-import { FaTimesCircle } from "react-icons/Fa";
-
+import Pen from "../asset/Signup_Character_imo.svg";
 
 const SignupCharacter = () => {
   //react-hook-form
@@ -27,11 +23,7 @@ const SignupCharacter = () => {
     formState: { errors, isValid },
   } = useForm({ mode: "onChange" });
 
-  //prevent default 기능, submit후 console확인 시 value 효용 상황 확인 가능
-  const onSubmitinValid = (data) => {
-    console.log("data", data);
-  };
-
+  
   //~캐릭터 카드~
   const [charId, setCharId] = useState([null, null, null]);
   const [charSelect, setCharSelect] = useState([]);
@@ -64,15 +56,7 @@ const SignupCharacter = () => {
         break;
     }
   };
-
-  //Api get
-  useEffect(() => {
-    userApi.signupCharacter().then((res) => {
-      setCharSelect(res.data);
-    });
-  }, []);
-
-  //닉네임 카드에 미리보기
+//닉네임 카드에 미리보기
   const [prevNick, setPrevNick] = useState("");
 
   const onInputChange = (e) => {
@@ -88,31 +72,35 @@ const SignupCharacter = () => {
     });
   };
 
+  //Api get
+  useEffect(() => {
+    userApi.signupCharacter().then((res) => {
+      setCharSelect(res.data);
+    });
+  }, []);
+
+  const userData = getStorage("all");
+
   //데이터전송
   const onSubmit = async (data) => {
-    console.log('data',data.nickname);
 
-    let signDic = ({...getStorage(), nickname: data.nickname, categories: ['기본이미지', '머리1', '모자1', '표정1']})
+    let signDic = ({...getStorage(), nickname: data.nickname, charId: [charId[0], charId[1], charId[2]]})
     
-    // userApi.getCharacter().then((res)=>console.log('res:', res.data))
-
-    console.log(signDic)
      try{
          const user = await userApi.signupFinal(signDic);
-         console.log(user);
          clearStorage()
          history.replace("/login");
        }catch (e) {
            console.log(e);
            if(e.message === "Request failed with status code 400") {
-               console.log('400 Error ~ !')
+               alert("중복된 닉네임입니다.")
                return;
            }
        }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitinValid, onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Container>
         <StepBar shape="step3" />
 
@@ -129,37 +117,35 @@ const SignupCharacter = () => {
         <img src={charPrev[2]} style={{width: "30%", position:'absolute', zIndex: '1'}} />
             </PrevWorkStage>
         </PrevContainer>
-         
+
+          {userData.mbti}
+          {userData.generation}
           {prevNick}
 
-          <label>닉네임</label>
-          <InputText
-            ref={register({
-              required: { value: true, message: "⚠ 닉네임을 입력해주세요." },
-              maxLength: { value: 8, message: "⚠ 최대 8글자 까지 가능합니다." },
-              minLength: {
-                value: 2,
-                message: "⚠ 닉네임은 최소 2글자 이상 입력해주세요.",
-              },
-            })}
-            name="nickname"
-            maxLength="9"
-            type="text"
-            placeholder="닉네임을 입력해주세요."
-            hasError={Boolean(errors?.nickname?.message)}
-            onChange={onInputChange}
-          />
-          <button
-            type="button"
-            onClick={onReset}
-            style={{ backgroundColor: "transparent", border: "0px" }}
-          >
-            {/* marginTop: '1rem', marginLeft: '-2.5rem' */}
-            <FaTimesCircle
-              style={{ width: "1rem", height: "1rem", color: "var(--graydf)" }}
-            />
-          </button>
-          <SFormError>{errors?.nickname?.message}</SFormError>
+          <ErrorXInput
+          type="text"
+          name="nickname"
+          label="닉네임"
+          register={register({
+            required: { 
+              value: true,
+              message: "⚠ 닉네임을 입력해주세요."
+            },
+            maxLength: {
+              value: 8,
+              message: "⚠ 최대 8글자 까지 가능합니다."
+            },
+            minLength: {
+              value: 2,
+              message: "⚠ 닉네임은 최소 2글자 이상 입력해주세요."
+            },
+          })}
+          placeholder="닉네임을 입력해주세요."
+          maxLength="9"
+          error={errors?.nickname?.message}
+          onChange={onInputChange}
+        />
+          <Button shape = "inputReset" onClick = {onReset} type = "button"/>
         </OutlineContainer>
 
         {selectFaceList &&
@@ -167,6 +153,7 @@ const SignupCharacter = () => {
             return (
               <label key={idx}>
                 <SelectCharBox
+                  {...register("faceUrl")}
                   type="radio"
                   name="faceUrl"
                   onChange={changeRadio}
@@ -186,6 +173,7 @@ const SignupCharacter = () => {
             return (
               <label key={idx}>
                 <SelectCharBox
+                  {...register("accessoryUrl")}
                   type="radio"
                   name="accessoryUrl"
                   onChange={changeRadio}
@@ -205,6 +193,7 @@ const SignupCharacter = () => {
             return (
               <label key={idx}>
                 <SelectCharBox
+                  {...register("backgroundUrl")}
                   type="radio"
                   name="backgroundUrl"
                   onChange={changeRadio}

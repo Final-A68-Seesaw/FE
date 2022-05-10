@@ -1,61 +1,53 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React from "react";
 import styled from "styled-components";
-import { body_3, sub_1 } from "../themes/textStyle";
+import { med14 } from "../themes/textStyle";
 
 const Textarea = ({
-  value,
-  name,
-  _onChange,
-  placeholder,
-  rows,
-  minHeight,
-  maxLength,
-  ...rest
+...rest
 }) => {
-  const ref = useRef(null);
-
-  useEffect(() => {
-    if (ref === null || ref.current === null) {
-      return;
-    }
-
-    ref.current.style.height = `${minHeight}` + "px";
-    ref.current.style.height = ref.current.scrollHeight + "px";
-  }, []);
-
-  const handleResizeHeight = useCallback(() => {
-    if (ref === null || ref.current === null) {
-      return;
-    }
-    ref.current.style.height = `${minHeight}` + "px";
-    ref.current.style.height = ref.current.scrollHeight + "px";
-  }, []);
-
-  // handleResizeHeight();
 
   return (
-    <Wrapper
-      maxLength={maxLength}
-      value={value}
-      name={name}
-      onChange={_onChange}
-      onInput={handleResizeHeight}
-      placeholder={placeholder}
-      rows={rows}
-      ref={ref}
-      {...rest}
-    />
+    <></>
   );
 };
 
-const Wrapper = styled.textarea`
-  ${sub_1};
-  color: var(--grey);
-  width: 100%;
+export const BasicTextarea = styled.textarea`
+  ${med14}
+  border-color: var(--graydf);
+  width: ${(props)=> props.width ? props.width : '95%' };
+  height: 16rem;
+  color: var(--black24);
   resize: none;
-  overflow-y: visible;
-  ${({ theme }) => theme.device.mobile} {
-    ${(props) => props.mobileText === "body_3" && `${body_3}`}
+  padding: 1rem;
+  
+  border: 1px solid ${(props) =>
+    (props.hasError
+      ? "var(--red)"
+      : "var(--graydf)")};
+  transition: border-color 150ms ease-in-out;
+
+  ::placeholder{
+    color: var(--grayc1);
+    margin: 5px;
   }
-`;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3.75px;
+    background-color: var(--grayc0);
+
+    &:hover {
+      background-color: #adb5bd;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--grayed);
+  }
+
+  
+`
 export default Textarea;
