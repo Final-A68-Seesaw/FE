@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import { GoSearch } from 'react-icons/go'
+
 import Image from '../elements/Image'
+import { InputText } from '../elements/Input'
 import Text from '../elements/Text'
 
 const Header = (props) => {
@@ -23,11 +26,14 @@ const Header = (props) => {
                 </ModalContainer> : null}
             <HeadInner>
                 <div style={{ display: 'flex' }}>
-                    <div style={{ marginRight: '30px', cursor:'pointer' }} onClick={openModal}>🍔</div>
-                    <div>🥔</div>
+                    <div style={{ marginRight: '30px', cursor: 'pointer' }} onClick={openModal}>🍔</div>
+                    <div style={{ marginRight: '30px', cursor: 'pointer' }}>사전장</div>
+                    <div style={{ marginRight: '30px', cursor: 'pointer' }}>질문장</div>
+                    <div style={{ cursor: 'pointer' }}>게임장</div>
                 </div>
-                <div>
-                    <Text>Text</Text>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <SearchInput placeholder='검색어를 입력해주세요' />
+                    <GoSearch style={{ margin: '0 0 0 -25px' }} />
                 </div>
                 <div style={{ display: 'flex' }}>
                     <Image />
@@ -83,6 +89,7 @@ const Head = styled.div`
 
 const HeadInner = styled.div`
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding: 36px;
 `
@@ -102,3 +109,13 @@ const ModalContainer = styled.div`
     
     
 `;
+
+const SearchInput = styled.input`
+    height: 30px;
+    border: 0px;
+    padding: 0px 10px;
+    
+    :focus {
+        outline: none;
+    }
+`

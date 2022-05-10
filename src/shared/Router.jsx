@@ -16,6 +16,7 @@ import Mypage from '../pages/Mypage';
 import ProfileEdit from '../pages/ProfileEdit';
 import SearchResult from '../pages/SearchResult';
 import AuthRedirectHandler from '../auth/AuthRedirectHandeler';
+import CrossWord from '../pages/CrossWord';
 
 
 // HOC (high order components)
@@ -24,6 +25,7 @@ import PrivateRoute from "../auth/PrivateRoute";
 
 import { Provider } from 'react-redux';
 import store, { history } from '../redux/configStore';
+import Trouble from '../pages/Trouble';
 
 const Router = () => {
   return (
@@ -35,12 +37,15 @@ const Router = () => {
 
         <Route path="/login" exact component={Login} />
         
-        <Route path="/main" exact component={Main} />
+        <Route path="/" exact component={Main} />
         <Route path="/searchresult" exact component={SearchResult} />
         <Route path="/detail" exact component={Detail} />
         <Route path="/mypage" exact component={Mypage} />
         <Route path="/profiledit" exact component={ProfileEdit} />
         <Route path="/user/kakao/callback" component={AuthRedirectHandler}/>
+
+        <Route path="/trouble" component={Trouble}/>
+        <Route path="/game" component={CrossWord}/>
         
       </ConnectedRouter>
     </Provider>

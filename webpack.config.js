@@ -7,7 +7,7 @@ module.exports = {
   mode: "development",
 
   // entry를 기준으로 연관된 모든 파일들을 번들링
-  entry: "./src/index",
+  entry: "./src/index.jsx",
 
   // 번들링 될 파일 확장자 등록
   resolve: {
@@ -31,21 +31,21 @@ module.exports = {
           {
             loader: 'css-loader'
           }
-            ]
+        ]
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
         use: [
           {
-          loader: 'file-loader',
+            loader: 'file-loader',
           },
-            ]
+        ]
       },
       {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
-    ] 
+    ]
   },
 
   // 빌드 설정

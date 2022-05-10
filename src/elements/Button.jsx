@@ -3,22 +3,22 @@ import styled, { css } from 'styled-components';
 
 const Button = ({ shape, children, ...rest }) => {
     switch (shape) {
-     
-      case "confirmRed-B":
-        return(
-            <Confirm {...rest}>
-                {children}
-            </Confirm>
-        );
-     default:
-        return (
-            <Confirm>
-                {children}
-            </Confirm>
-        );
-        
+
+        case "confirmRed-B":
+            return (
+                <Confirm {...rest}>
+                    {children}
+                </Confirm>
+            );
+        default:
+            return (
+                <Confirm {...rest}>
+                    {children}
+                </Confirm>
+            );
+
     }
-  };
+};
 
 
 
@@ -37,12 +37,12 @@ const Confirm = styled.button`
       cursor: pointer;
 
   &:hover{
-    background: #FF4E4E;
-    color: white;
+    background: ${(props) => props.background ? props.background : '#FF4E4E'};
+    color: ${(props) => props.color ? props.color : 'white'};
     font-weight: bolder;
-    position: relative;}
+    position: relative;
     transition: color 300ms ease-in-out, background-color 300ms ease-in-out;
-  
+  }
 `;
 
 

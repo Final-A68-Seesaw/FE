@@ -6,22 +6,26 @@ import { __logout } from '../redux/modules/user';
 import Mainchat from '../components/Mainchat'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
+import axios from 'axios';
+import { userApi } from '../api/userApi';
 
 const Main = () => {
 
   const [showModal, setShowModal] = useState(false)
 
+  const dispatch = useDispatch();
+
   const openModal = () => {
     setShowModal(true);
   }
 
-  console.log(showModal)
-
-  const dispatch = useDispatch();
-
   const clickLogout = () => {
     dispatch(__logout());
   };
+
+  React.useEffect(() => {
+    
+  }, [])
 
   return (
     <ChatContainer>
