@@ -130,7 +130,7 @@ const SignupCharacter = () => {
             </PrevWorkStage>
         </PrevContainer>
 
-          {userData.mbti}
+          {userData.mbtiRes}
           {userData.generation}
           {prevNick}
 
@@ -220,7 +220,7 @@ const SignupCharacter = () => {
             );
           })}
 
-        <FinalConfirm type="submit" disabled={!isValid}>
+        <FinalConfirm type="submit">
           가입완료
         </FinalConfirm>
       </Container>

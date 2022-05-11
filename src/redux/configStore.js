@@ -6,7 +6,7 @@ import thunk from "redux-thunk";
 
 import user from './modules/user';
 import chat from './modules/chat';
-import touble from "./modules/touble";
+import trouble from "./modules/touble";
 
 export const history = createBrowserHistory();
 
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
 
     user,
     chat,
-    touble,
+    trouble,
     router: connectRouter(history),
 });
 

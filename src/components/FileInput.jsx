@@ -1,89 +1,43 @@
-import React, { useCallback, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
-import { useForm } from "react-hook-form";
+import React from 'react'
+import styled from 'styled-components'
 
 const FileInput = (props) => {
-  const { name, label = name, mode = "update" } = props;
 
-  const { register, unregister, setValue, watch } = useForm();
+  const { _onClick, margin, width, height } = props
 
-  const files = watch(name);
-
-  const onDrop = useCallback(
-    (droppedFiles) => {
-      let newFiles =
-        mode === "update" ? droppedFiles : [...(files || []), ...droppedFiles];
-      if (mode === "append") {
-        newFiles = newFiles.reduce((prev, file) => {
-          const fo = Object.entries(file);
-          if (
-            prev.find((e) => {
-              const eo = Object.entries(e);
-              return eo.every(
-                ([key, value], index) =>
-                  key === fo[index][0] && value === fo[index][1]
-              );
-            })
-          ) {
-            return prev;
-          } else {
-            return [...prev, file];
-          }
-        }, []);
-      }
-      setValue(name, newFiles, { shouldValidate: true });
-    },
-    [setValue, name, mode, files]
-  );
-
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: props.accept
-  });
-
-  useEffect(() => {
-    register(name);
-    return () => {
-      unregister(name);
-    };
-  }, [register, unregister, name]);
+  const styles = {
+    margin,
+    width,
+    height,
+  }
 
   return (
-    <div style={{ padding: "100px" }}>
-      <label
-        htmlFor={name} style = {{cursor: 'pointer'}}
-      >
-        {label}
-      </label>
+    <FileDropbox>
+      <InputFile
+        type='file'
+        accept='image/png, image/jpg, image/jpeg, image/pdf'
+        multiple
+        onClick={_onClick}
+      />
+    </FileDropbox>
+  )
+}
 
-      <div {...getRootProps()}>
-        <input
-          {...props}
-          id={name}
-          {...getInputProps()}
-        />
+export default FileInput
 
-        <div>
-          <p >Drop the files here ...</p>
-          {!!files?.length && (
-            <div style={{ display: "inline-flex"}}>
-              {files.map((file) => {
-                return (
-                  <div key={file.name}>
-                    <img
-                      src={URL.createObjectURL(file)}
-                      alt={file.name}
-                      style={{ width: "100px", height: "100px",}}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-    </div>
-  );
-};
+const InputFile = styled.input`
+  width: ${(props) => props.width ? props.width : '100%'};
+  height: ${(props) => props.height ? props.height : '100%'};
 
-export default FileInput;
+`
+
+const FileDropbox = styled.div`
+  border: transparent;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--grayed);
+  border-radius: 3px;
+`;

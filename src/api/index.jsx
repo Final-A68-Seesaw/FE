@@ -17,6 +17,14 @@ export const instance = axios.create({
   },
 });
 
+export const formDatas = axios.create({
+  baseURL: targetServer,
+  headers: {
+    "content-type": "multipart/form-data",
+    accept: "multipart/form-data",
+  },
+});
+
 // 토큰이 필요없는 요청에 쓰일 인스턴스 (로그인, 회원가입)
 export const nonTokenInstance = axios.create({
   baseURL: targetServer,
@@ -27,6 +35,12 @@ export const nonTokenInstance = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem("accessToken");
+  config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
+  return config;
+});
+
+formDatas.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
   config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
   return config;

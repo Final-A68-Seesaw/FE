@@ -159,9 +159,10 @@ const Mainchat = (props) => {
 
     switch (payloadData.status) {
       case "JOIN":
+        dispatch(ChatActions.addChat({ message: payloadData.message }))
         break;
       case "OUT":
-        console.log('OUT')
+        dispatch(ChatActions.addChat({ message: payloadData.message }))
         break;
       case "TALK":
         dispatch(ChatActions.addChat({ senderName: payloadData.senderName, message: payloadData.message, createdAt: payloadData.createdAt }))
@@ -186,6 +187,10 @@ const Mainchat = (props) => {
 
       <div className='chatContainer'>
         {chatList.map((v, i) => {
+          if (!v.senderName)
+            return <div key={i} style={{ display: 'flex', justifyContent: 'center' }}>
+              <p className='userchat' style={{ wordBreak: 'break-all', width: '240px', height: '100%', margin: '20px 0' }}>{v.message}</p>
+            </div>
           if (v.senderName == userData.nickname)
             return <div key={i} style={{ display: 'flex', justifyContent: 'right' }}>
               <p className='chattime' style={{ margin: '10px 0 20px 0' }}>{v.createdAt}</p>

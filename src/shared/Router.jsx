@@ -12,6 +12,7 @@ import Login from '../pages/Login';
 
 //dictionary
 import AddDict from '../pages/AddDict';
+import AddDictFigma from '../pages/AddDictFigma.jsx';
 import Detail from '../pages/Detail';
 
 import Main from '../pages/Main';
@@ -21,6 +22,9 @@ import SearchResult from '../pages/SearchResult';
 import AuthRedirectHandler from '../auth/AuthRedirectHandeler';
 import CrossWord from '../pages/CrossWord';
 
+import Trouble from '../pages/Trouble';
+import TroubleDetail from '../pages/TroubleDetail';
+import TroubleWrite from '../pages/TroubleWrite';
 
 // HOC (high order components)
 import PublicRoute from "../auth/PublicRoute";
@@ -28,8 +32,6 @@ import PrivateRoute from "../auth/PrivateRoute";
 
 import { Provider } from 'react-redux';
 import store, { history } from '../redux/configStore';
-import Trouble from '../pages/Trouble';
-import AddDictFigma from '../pages/AddDictFigma.jsx';
 
 const Router = () => {
   return (
@@ -52,6 +54,8 @@ const Router = () => {
         <Route path="/user/kakao/callback" exact component={AuthRedirectHandler}/>
 
         <Route path="/trouble" exact component={Trouble}/>
+        <Route path="/troubledetail/:id" exact component={TroubleDetail}/>
+        <Route path="/troublewrite" exact component={TroubleWrite}/>
 
         <Route path="/game" exact component={CrossWord}/>
         

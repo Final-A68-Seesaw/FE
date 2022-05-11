@@ -34,7 +34,11 @@ export default handleActions(
         }),
 
         [ADD_CHAT]: (state, action) => produce(state, (draft) => {
-            draft.list.push({ ...action.payload, createdAt: action.payload.createdAt.match(/(\d*-\d*-\d*).(\d*:\d*:\d*)/)[2] })
+            console.log(action.payload)
+            if (action.payload.createdAt)
+                draft.list.push({ ...action.payload, createdAt: action.payload.createdAt.match(/(\d*-\d*-\d*).(\d*:\d*:\d*)/)[2] })
+            else
+                draft.list.push({ ...action.payload })
         }),
     },
     initialState

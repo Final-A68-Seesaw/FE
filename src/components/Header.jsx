@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import { history } from '../redux/configStore'
 
 import { GoSearch } from 'react-icons/go'
 
@@ -14,9 +15,6 @@ const Header = (props) => {
     const openModal = () => {
         setShowModal(!showModal);
     }
-    const closeModal = () => {
-        setShowModal(false);
-    }
 
     return (
         <Head>
@@ -28,8 +26,8 @@ const Header = (props) => {
                 <div style={{ display: 'flex' }}>
                     <div style={{ marginRight: '30px', cursor: 'pointer' }} onClick={openModal}>🍔</div>
                     <div style={{ marginRight: '30px', cursor: 'pointer' }}>사전장</div>
-                    <div style={{ marginRight: '30px', cursor: 'pointer' }}>질문장</div>
-                    <div style={{ cursor: 'pointer' }}>게임장</div>
+                    <div style={{ marginRight: '30px', cursor: 'pointer' }} onClick={() => history.push('/trouble')}>질문장</div>
+                    <div style={{ cursor: 'pointer' }} onClick={() => history.push('/game')}>게임장</div>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                     <SearchInput placeholder='검색어를 입력해주세요' />
