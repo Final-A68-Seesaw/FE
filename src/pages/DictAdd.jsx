@@ -1,19 +1,25 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
+//redux
+import { __addDict } from "../redux/modules/dictionary";
+import { useDispatch, useSelector } from "react-redux";
+import { __dictTitle } from "../redux/modules/dictionary";
+
 //element & components
+import Header from "../components/Header";
 import { med16 } from "../themes/textStyle";
 import { ErrorXInput, SFormError } from "../elements/Input";
 import Button from "../elements/Button";
 import { BasicTextarea } from "../elements/Textarea";
-import FileInput from "../components/FileInput";
+import { Select } from "../elements/Select";
+import FileUpload2 from "../components/FileUpload2";
 
 //style
 import styled from "styled-components";
-import Header from "../components/Header";
 import Book from "../asset/Dictionary_add_imo.svg";
 
-const AddDict = (props) => {
+const DictAdd = (props) => {
   const {
     reset,
     register,
@@ -26,21 +32,23 @@ const AddDict = (props) => {
 
   //인풋 글자수 count
   const [inputCount, setInputCount] = useState("0");
+  const [title, setTitle] = useState("");
   const onInputChange = (e) => {
     setInputCount(e.target.value.length);
+    setTitle(e.target.value);
   };
 
-  //file upload
-  const onDrop = (files) => {
-    setFiles(
-      acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      )
-    );
-    console.log(files);
+  //title 중복검사
+  const dispatch = useDispatch();
+
+  const realtitle = { title };
+  const onTitleChange = (e) => {
+    dispatch(__dictTitle(realtitle.title));
   };
+
+  //연도 select category
+  const year = new Date().getFullYear();
+  const years = Array.from(new Array(60), (val, index) => year - index);
 
   //태그
   const [tagItem, setTagItem] = useState("");
@@ -68,35 +76,44 @@ const AddDict = (props) => {
   };
 
   //데이터전송
+
+  const imageList = useSelector((state) => state.dictionary.files);
+
   const onSubmit = (data) => {
-    const { tagname } = getValues();
-    submitData({ tagname });
-    console.log(data);
-    // dispatch(__login(data));
+    let postDto = {
+      title: data.title,
+      contents: data.contents,
+      videoUrl: data.videoUrl,
+      tagNames: tagList,
+      generation: data.generation,
+      files: imageList,
+    };
+
+    dispatch(__addDict(postDto));
   };
 
   return (
     <>
       <Header />
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Container>
-          <BookContianer>
-            <Book />
-          </BookContianer>
-          <TextContainer>
-            회원님이 알고 있는 <b>새로운 신조어</b>를 등재해주세요
-          </TextContainer>
+      <Container>
+        <BookContianer>
+          <Book />
+        </BookContianer>
+        <TextContainer>
+          회원님이 알고 있는 <b>새로운 신조어</b>를 등재해주세요
+        </TextContainer>
 
-          <WhatisNew>
-            어떤 것이 신조어인가요?
-            <hr />
-            신조어는 새로 만든 낱말을 의미하며 신조어 또는 신어는 새로 만들거나
-            생겨난 말 또는 새로 귀화한 외래어를 가리킵니다. ‘신조어 사전’에서는
-            현재 새로 만들어진 말 뿐만 아니라 과거 유행했던 신조어를 모두
-            포함합니다.
-          </WhatisNew>
+        <WhatisNew>
+          어떤 것이 신조어인가요?
+          <hr />
+          신조어는 새로 만든 낱말을 의미하며 신조어 또는 신어는 새로 만들거나
+          생겨난 말 또는 새로 귀화한 외래어를 가리킵니다. ‘신조어 사전’에서는
+          현재 새로 만들어진 말 뿐만 아니라 과거 유행했던 신조어를 모두
+          포함합니다.
+        </WhatisNew>
 
-          <TitleInput>
+        <TitleInput>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <ErrorXInput
               type="text"
               name="title"
@@ -118,12 +135,14 @@ const AddDict = (props) => {
               type="button"
               onClick={() => reset({ ...getValues(), title: "" })}
             />
-            <Button shape="smallBlack-B" type="submit">
-              중복확인
-            </Button>
-          </TitleInput>
-          <InputCountBox>{inputCount}/50</InputCountBox>
-          <label></label>
+          </form>
+          <Button shape="smallBlack-B" onClick={onTitleChange}>
+            중복확인
+          </Button>
+        </TitleInput>
+        <InputCountBox>{inputCount}/50</InputCountBox>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
           <BasicTextarea
             ref={register({
               required: {
@@ -142,47 +161,72 @@ const AddDict = (props) => {
             hasError={Boolean(errors?.contents?.message)}
           />
           <SFormError>{errors?.contents?.message}</SFormError>
-          {/* <FileInput
-            accept="image/png, image/jpg, image/jpeg, image/pdf"
-            multiple={true}
-            onDrop={onDrop}
-            mode="append"
-            type="file"
-            name="mainImage"
-          /> */}
-          <div>
-            <WholeBox>
-              <TagBox>
-                {tagList.map((tagItem, index) => {
-                  return (
-                    <TagItem key={index}>
-                      <Text>{tagItem}</Text>
-                      <TagXButton onClick={deleteTagItem}>X</TagXButton>
-                    </TagItem>
-                  );
-                })}
 
-                <TagInput
-                  type="text"
-                  placeholder="#태그를 입력해주세요"
-                  tabIndex={2}
-                  onChange={(e) => setTagItem(e.target.value)}
-                  value={tagItem}
-                  onKeyPress={onKeyPress}
-                />
-              </TagBox>
-            </WholeBox>
-          </div>
-          <Button shape="confirmRed-B" type="submit" value="등록하기">
+          {/* 첨부파일 */}
+          <FileUpload2 />
+
+          <hr style={{ margin: "1rem 0 1rem 0", color: "var(--grayed)" }} />
+
+          <Select
+            name="generation"
+            register={register({
+              required: true,
+              validate: (value) => value !== "none",
+            })}
+            label="신조어 유행 시작 연도"
+            error={errors?.generation?.type}
+          >
+            {years.map((year, index) => {
+              return (
+                <option key={`year${index}`} value={year}>
+                  {year}
+                </option>
+              );
+            })}
+          </Select>
+
+          <ErrorXInput
+            type="text"
+            name="videoUrl"
+            label="동영상 링크 첨부"
+            register={register}
+            placeholder="URL을 입력해주세요"
+          />
+        </form>
+        <div>
+          <WholeBox>
+            <TagBox>
+              {tagList.map((tagItem, index) => {
+                return (
+                  <TagItem key={index}>
+                    <Text>#{tagItem}</Text>
+                    <TagXButton onClick={deleteTagItem}>X</TagXButton>
+                  </TagItem>
+                );
+              })}
+
+              <TagInput
+                type="text"
+                placeholder="Enter 키를 사용해 #태그를 입력해주세요!"
+                tabIndex={2}
+                onChange={(e) => setTagItem(e.target.value)}
+                value={tagItem}
+                onKeyPress={onKeyPress}
+              />
+            </TagBox>
+          </WholeBox>
+        </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Button shape="confirmRed-B" type="submit" >
             등록하기
           </Button>
-        </Container>
-      </form>
+        </form>
+      </Container>
     </>
   );
 };
 
-export default AddDict;
+export default DictAdd;
 
 const Container = styled.div`
   margin: auto;
@@ -221,14 +265,8 @@ const InputCountBox = styled.div`
   display: flex;
 `;
 
-const FileUpload = styled.div`
-  max-width: 700px;
-  margin: 2rem auto;
-`;
-
 const WholeBox = styled.div`
   display: flex;
- 
 `;
 
 const TagBox = styled.div`
@@ -277,7 +315,7 @@ const TagXButton = styled.button`
 
 const TagInput = styled.input`
   display: inline-flex;
-  min-width: 150px;
+  min-width: 250px;
   background: transparent;
   border: none;
   outline: none;

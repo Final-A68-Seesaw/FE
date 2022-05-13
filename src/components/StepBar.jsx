@@ -38,7 +38,6 @@ const Step_Bar = styled.div`
     padding-bottom: 2rem;
 `
 const Step_Text = styled.div`
-    margin-top: 4rem;
     width: 13.4%;
     height: 68.09%;
     color: #ff4e4e;

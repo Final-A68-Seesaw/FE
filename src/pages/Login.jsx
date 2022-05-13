@@ -11,6 +11,10 @@ import { ErrorXInput } from "../elements/Input";
 //style
 import styled from "styled-components";
 import KakaoBtn from "../components/KakaoBtn";
+  import { med14, bold30 } from "../themes/textStyle";
+import Logo  from '../asset/Seeso_logo.svg'
+import Img from '../asset/LoginIMG.svg'
+
 
 const Login = () => {
   const {
@@ -29,41 +33,48 @@ const Login = () => {
 
   return (
     <>
+
       <Container>
+        <Img/>
         <RightContainer>
+        <Logo style = {{display: "right"}}/>
+
           <form onSubmit={handleSubmit(onSubmit)}>
             <LoginContainer>
+
+              <TextBox>로그인</TextBox>
               <div>
-              <ErrorXInput
-              type = "email"
-              name = "username"
-              label = "이메일"
-              register={register({
-                required: {
-                  value: true,
-                  message: "⚠ 이메일을 입력해주세요.",
-                },
-                pattern: {
-                  value:
-                    /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-                  message: "⚠ 이메일 형식에 맞게 입력해주세요..",
-                },
-              })}
-              placeholder="example@email.com"
-              error = {errors?.username?.message}
-              />
-                <Button
+                <LabelBox>이메일</LabelBox>
+
+                <ErrorXInput
+                  type="email"
+                  name="username"
+                  register={register({
+                    required: {
+                      value: true,
+                      message: "⚠ 이메일을 입력해주세요.",
+                    },
+                    pattern: {
+                      value:
+                        /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
+                      message: "⚠ 이메일 형식에 맞게 입력해주세요..",
+                    },
+                  })}
+                  placeholder="example@email.com"
+                  error={errors?.username?.message}
+                  width = "24rem"
+                />
+                {/* <Button
                   shape="inputReset"
                   type="button"
                   onClick={() => reset({ ...getValues(), username: "" })}
-                />
-
+                /> */}
               </div>
               <div>
+                <LabelBox>비밀번호</LabelBox>
                 <ErrorXInput
                   type="password"
                   name="pwd"
-                  label="비밀번호"
                   register={register({
                     required: {
                       value: true,
@@ -82,16 +93,17 @@ const Login = () => {
                   })}
                   placeholder="********"
                   error={errors?.pwd?.message}
+                  width = "24rem"
                 />
-                <Button
+                {/* <Button
                   shape="inputReset"
                   type="button"
                   onClick={() => reset({ ...getValues(), pwd: "" })}
-                />
+                /> */}
               </div>
             </LoginContainer>
 
-            <LoginBtn shape="confirmRed-B" type="submit">
+            <LoginBtn shape="confirmRed-B" type="submit" margin="0" width="24rem">
               로그인하기
             </LoginBtn>
 
@@ -100,12 +112,14 @@ const Login = () => {
               onClick={() => {
                 history.push("/signup");
               }}
+              margin="0"
+              width="24rem"
             >
               회원가입하기
             </LoginBtn>
           </form>
 
-          <KakaoBtn />
+          {/* <KakaoBtn />/ */}
         </RightContainer>
       </Container>
     </>
@@ -113,23 +127,35 @@ const Login = () => {
 };
 
 const Container = styled.div`
-  max-width: 1920px;
-  width: 100%;
+  margin: auto;
+display: flex;
+justify-content: space-between;
+  max-width: 1440px;
 `;
 
 const RightContainer = styled.div`
   margin: auto;
-  max-width: 40%;
-  text-align: center;
+  max-width: 23rem;
+  text-align: left;
+  align-items: left;
 `;
 
 const LoginBtn = styled(Button)`
   margin: 1rem;
-  width: 50%;
 `;
 
 const LoginContainer = styled.div`
-  padding: 3rem;
+  padding: 1rem 0 2rem 0;
+`;
+const TextBox = styled.div`
+  ${bold30}
+  margin: 0 0 2rem 0;
+  text-align: left;
+
+`;
+const LabelBox = styled.div`
+  ${med14}
+  text-align: left;
 `;
 
 export default Login;

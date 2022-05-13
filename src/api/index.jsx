@@ -8,7 +8,6 @@ const targetServer =
   // env === "development" ? "http://3.38.104.97/" : "false";
 //env설정하기
 
-
 export const instance = axios.create({
   baseURL: targetServer,
   headers: {
@@ -34,6 +33,15 @@ export const nonTokenInstance = axios.create({
   },
 });
 
+// formdata 
+export const formDatas = axios.create({
+  baseURL: targetServer,
+  headers: {
+    "content-type": "multipart/form-data",
+    accept: "multipart/form-data",
+  },
+});
+
 instance.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
   config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
@@ -47,6 +55,11 @@ formDatas.interceptors.request.use((config) => {
 });
 
 nonTokenInstance.interceptors.request.use((config) => {
+  const accessToken = localStorage.getItem("accessToken");
+  config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
+  return config;
+});
+formDatas.interceptors.request.use((config) => {
   const accessToken = localStorage.getItem("accessToken");
   config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
   return config;

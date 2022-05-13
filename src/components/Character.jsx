@@ -22,5 +22,7 @@ const CharImg = styled.img`
     position: absolute;
 
     ${(props) => props.size ? `width: ${props.size}; height:${props.size}` : 
-        `width: 100px; height: 100px`};
+        `width: 2rem;`};
+
+    border-radius: 3px;
 `

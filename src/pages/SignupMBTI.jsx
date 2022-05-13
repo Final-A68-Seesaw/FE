@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { userApi } from '../api/userApi';
 import { history } from '../redux/configStore'
 import { useForm } from "react-hook-form"
-import { setStorage } from '../shared/cookie';
 import { userActions } from '../redux/modules/user';
 
 //element
@@ -14,6 +13,7 @@ import styled from 'styled-components'
 import { StepBar } from '../components/StepBar'
 import Hi  from '../asset/Signup_Mbti_imo.svg'
 import { useDispatch, useSelector } from 'react-redux';
+import Logo  from '../asset/Seeso_logo.svg'
 
 
 
@@ -25,7 +25,8 @@ const SignupMBTI = () => {
   const userData = useSelector((state) => (state.user.usersign))
 
   const {
-    register, handleSubmit }
+    register,
+    handleSubmit }
     = useForm();
 
   const onSubmit = async () => {
@@ -39,7 +40,7 @@ const SignupMBTI = () => {
     } catch (e) {
       console.log(e);
       if (e.message === "Request failed with status code 400") {
-        // alert("mbti를 모두 체크해주세요.");
+        alert("질문을 모두 체크해주세요!");
         return;
       }
     }
@@ -53,9 +54,8 @@ const SignupMBTI = () => {
     return (
       <form
         onSubmit={handleSubmit(onSubmit)}>
-
+          <Logo style = {{margin : "2rem 0 0 2rem"}}/>
         <Container>
-          
           <StepBar shape = "step2"/>
           
           <Hi/>
@@ -85,7 +85,7 @@ const SignupMBTI = () => {
                         onChange={changeRadio}
                         value="E"
                       />
-                      <FormCheckText >밖에 무조건 나간다.</FormCheckText>
+                      <FormCheckText >밖에 무조건 나간다</FormCheckText>
                     </label>
                     <label>
                       <FormCheckLeft
@@ -104,7 +104,7 @@ const SignupMBTI = () => {
                   <QuestionText>
                   <QuestionLabel/>
                   <QuestionNum>Q2</QuestionNum>
-                    주말이 왔어요, 심심한 당신은 어떤 선택을 하나요?
+                   오늘 저녁식사를 대접해야하네요! 당신의 요리 방식은?
                   </QuestionText> 
 
                   <div>
@@ -115,7 +115,7 @@ const SignupMBTI = () => {
                         onChange={changeRadio}
                         value="S"
                       />
-                      <FormCheckText>밖에 무조건 나간다</FormCheckText>
+                      <FormCheckText>요리할 때 정량계측한다</FormCheckText>
                     </label>
                     <label>
                       <FormCheckLeft
@@ -124,7 +124,7 @@ const SignupMBTI = () => {
                         onChange={changeRadio}
                         value="N"
                       />
-                      <FormCheckText >집에 그냥 있는다</FormCheckText>
+                      <FormCheckText >요리는 감으로 해야 제맛이다</FormCheckText>
                     </label>
                   </div>
                 
@@ -133,7 +133,7 @@ const SignupMBTI = () => {
                   <QuestionText>
                   <QuestionLabel/>
                   <QuestionNum>Q3</QuestionNum>
-                    주말이 왔어요, 심심한 당신은 어떤 선택을 하나요?
+                   당신은 안좋은 일이 생긴다면 슬픔을 지인들과 나누나요?
                   </QuestionText> 
 
                   <div>
@@ -144,7 +144,7 @@ const SignupMBTI = () => {
                         onChange={changeRadio}
                         value={"F"}
                       />
-                      <FormCheckText >밖에 무조건 나간다</FormCheckText>
+                      <FormCheckText >슬픔은 나누면 반이된다</FormCheckText>
                     </label>
                     <label>
                       <FormCheckLeft
@@ -153,7 +153,7 @@ const SignupMBTI = () => {
                         onChange={changeRadio}
                         value={"T"}
                       />
-                      <FormCheckText>집에 그냥 있는다</FormCheckText>
+                      <FormCheckText>슬픔을 나누면 슬픈 사람이 둘이된다</FormCheckText>
                     </label>
                   </div>
                 
@@ -164,7 +164,7 @@ const SignupMBTI = () => {
                     <QuestionLabel/>
                     <QuestionNum>Q4</QuestionNum>
 
-                      주말이 왔어요, 심심한 당신은 어떤 선택을 하나요?
+                      너무 바쁜 당신, 방의 정리정돈 상태는 어떤가요?
                   </QuestionText> 
 
                   <div>
@@ -175,7 +175,7 @@ const SignupMBTI = () => {
                         onChange={changeRadio}
                         value="J"
                       />
-                      <FormCheckText >밖에 무조건 나간다</FormCheckText>
+                      <FormCheckText >항상 방을 깨끗이 유지한다</FormCheckText>
                     </label>
                     <label>
                       <FormCheckLeft
@@ -184,14 +184,13 @@ const SignupMBTI = () => {
                         onChange={changeRadio}
                         value="P"
                       />
-                      <FormCheckText>집에 그냥 있는다</FormCheckText>
+                      <FormCheckText>몰아서 한꺼번에 한다</FormCheckText>
                     </label>
                   </div>
         
             </OutlineContainer>
-          <MbtiConfirm type="submit"> 다음 단계 </MbtiConfirm>
+          <MbtiConfirm width="24rem"type="submit"> 다음 단계 </MbtiConfirm>
           </Container>
-        
         </form>
     )
 }
@@ -213,7 +212,7 @@ const OutlineContaierBar = styled.section`
   text-align: center;
   line-height: 4rem;
   margin: auto;
-  width: 50%;
+  width: 41rem;
   height: 4rem;
   color: var(--white);
   font-weight: bold;
@@ -224,7 +223,7 @@ const OutlineContaierBar = styled.section`
 
 const OutlineContainer = styled.div`
   margin: auto;
-  width: 50%;
+  width: 41rem;
   height: 57%;
   background: var(--white);
   box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08), 0px 16px 24px rgba(22, 34, 51, 0.08);

@@ -12,8 +12,6 @@ import { BsChevronRight } from 'react-icons/Bs'
 
 import Seeso from '../asset/MainSeeso.svg'
 import ChatIcon from '../asset/ChatIcon.svg'
-import Mz_gen from '../asset/Mz_gen.svg'
-import MainTopimg from '../asset/MainTop.svg'
 import G1 from '../asset/G1.svg'
 import G2 from '../asset/G2.svg'
 import Y1 from '../asset/Y1.svg'
@@ -162,6 +160,8 @@ const Main = () => {
         </RecentCards>
 
       </RecentWrap>
+
+
 
       <Footer />
 
