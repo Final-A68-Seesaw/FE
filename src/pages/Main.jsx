@@ -18,6 +18,9 @@ import Y1 from '../asset/Y1.svg'
 import Y2 from '../asset/Y2.svg'
 import { MainApi } from '../api/mainApi';
 
+import isLogin from '../auth/isLogin';
+import { history } from '../redux/configStore';
+
 const Main = () => {
 
   const [showModal, setShowModal] = useState(false)
@@ -32,7 +35,7 @@ const Main = () => {
 
   const RecentScrollRef = useRef()
 
-  console.log('v3')
+  console.log('v1')
 
   const openModal = () => {
     setShowModal(true);
@@ -77,9 +80,10 @@ const Main = () => {
       <BestWordWrap>
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
+        {console.log(selectBest)}
         <div style={{ display: 'flex', width: '1510px', margin: 'auto', justifyContent: 'space-between' }}>
-          <img src={selectBest && selectBest.imageUrl} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
-          <BestSelect>
+          <img src={selectBest && (selectBest.imageUrl || selectBest.postImages)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
+          <BestSelect onClick={() => history.push(`/dictionary/detail/${selectBest.postId}`)}>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest && selectBest.generation}</GenBox></div>
             <div>
@@ -102,7 +106,7 @@ const Main = () => {
         <TestTitle>✍️ 닉네임 님의 능력을 테스트해보세요</TestTitle>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
           {getRand && getRand.map((v, i) => {
-            return <TestCard key={i}>
+            return <TestCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
               <img src={v.imageUrl} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} />
 
               <div style={{ display: 'flex', flexDirection: 'column', justifyContents: 'center', position: 'absolute', width: '682px', height: '435px' }}>
@@ -133,9 +137,9 @@ const Main = () => {
         <RecentCards>
 
           {getBest && getBest.map((v, i) => {
-            return <RecentCard key={i}>
+            return <RecentCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
               <GenBox>{v.generation}</GenBox>
-              <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0', width: '168px' }} />
+              <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0', height: '168px' }} />
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <RecentCardTitle>{v.title}</RecentCardTitle>
                 <RecentCardDesc>{v.contents}</RecentCardDesc>
@@ -165,10 +169,11 @@ const Main = () => {
 
       <Footer />
 
-      <ChatContainer>
-        <ChatBtn onClick={openModal}><ChatIcon></ChatIcon><p>실시간 토크장</p></ChatBtn>
-        {showModal ? <Mainchat open={setShowModal} /> : null}
-      </ChatContainer>
+      {isLogin() ?
+        <ChatContainer>
+          <ChatBtn onClick={openModal}><ChatIcon></ChatIcon><p>실시간 토크장</p></ChatBtn>
+          {showModal ? <Mainchat open={setShowModal} /> : null}
+        </ChatContainer> : null}
     </MainWrap>
   )
 }
@@ -268,6 +273,8 @@ const BestSelect = styled.div`
   flex-direction: column;
   justify-content: space-between;
   padding: 20px 20px 40px 24px;
+
+  cursor: pointer;
 `
 
 const GenBox = styled.div`
@@ -393,6 +400,8 @@ const TestCard = styled.div`
 
   background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 0%, #39008C 100%);
   border-radius: 11.1667px;
+
+  cursor: pointer;
 `
 
 const TestAnswer = styled.div`
@@ -508,6 +517,8 @@ const RecentCard = styled.div`
 
   background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 41.15%, #1B0042 80.21%);
   border-radius: 10px;
+
+  cursor: pointer;
 `
 
 const RecentCardTitle = styled.p`
