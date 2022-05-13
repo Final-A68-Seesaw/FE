@@ -21,6 +21,7 @@ import {
 } from "../themes/textStyle";
 import { CommentTextarea } from "../elements/Textarea";
 import Character from "../components/Character";
+import Footer from "../components/Footer";
 
 //style
 import styled from "styled-components";
@@ -114,7 +115,7 @@ const DictDetail = (props) => {
           ) : null}
         </>
 
-        {dataList && dataList.videoUrl === null ? null : (
+        {dataList && dataList.videoUrl === "null" ? null : (
           <>
             <LabelTag>
               참고 영상 URL |
@@ -179,7 +180,9 @@ const DictDetail = (props) => {
           </form>
         </CommentInputBox>
        <CommentCard data = {dataList && dataList.postComments[0]}/>
+       <FooterHrLine/>
       </Container>
+      <Footer/>
     </>
   );
 };
@@ -187,6 +190,7 @@ const DictDetail = (props) => {
 const Container = styled.div`
   margin: auto;
   max-width: 46rem;
+  padding-top: 4rem;
 `;
 
 const GenerationBox = styled.div`
@@ -366,6 +370,9 @@ const InputCountBox = styled.div`
   ${med14}
   margin: 0 1rem 1rem 0;
 `;
-
+const FooterHrLine = styled.hr`
+  border: 1px solid var(--graydf);
+  margin: 2rem 0 0 0;
+`;
 
 export default DictDetail;

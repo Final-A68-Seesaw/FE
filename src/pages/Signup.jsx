@@ -15,6 +15,7 @@ import { Select } from "../elements/Select";
 import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
 import Logo  from '../asset/Seeso_logo.svg'
+import { bold30 } from "../themes/textStyle";
 
 const Signup = () => {
 
@@ -72,7 +73,7 @@ const GenerationOptions = [
        <Logo style = {{margin : "2rem 0 0 2rem"}}/>
       <Container>
       <StepBar shape="step1" />
-
+<TextBox>회원가입</TextBox>
       <div >
         <ErrorXInput
           type="email"
@@ -178,7 +179,12 @@ const Container = styled.div`
 width:24rem;
 margin: auto;
 `
+const TextBox = styled.div`
+  ${bold30}
+  margin: 0 0 2rem 0;
+  text-align: left;
 
+`;
 const FirstSignupBtn = styled(Button)`
   margin: 1rem;
   width: 24rem;

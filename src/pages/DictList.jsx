@@ -3,15 +3,18 @@ import React, {useEffect} from 'react'
 //redux
 import { useDispatch, useSelector } from 'react-redux'
 import { __loadDictCardList } from '../redux/modules/dictionary'
+import { history } from '../redux/configStore'
 
 //element & component
 import Header from '../components/Header'
 import DictionaryCard from '../components/DictionaryCard'
+import Footer from '../components/Footer'
 
 //style
 import styled from 'styled-components'
 import Line from '../asset/Dictionary_list_line.svg'
 import { bold16, bold22, bold15, med15 } from '../themes/textStyle'
+
 
 const DictList = () => {
     const dispatch = useDispatch();
@@ -21,7 +24,7 @@ const DictList = () => {
     },[]);
     
     const dictList = useSelector((state) => state.dictionary.list);
-    
+    console.log(dictList);
   return (
     <div>
         <Header/>
@@ -36,7 +39,7 @@ const DictList = () => {
             return(
               <div key={i}>
              <WordCard 
-             onClick = {() => {history.push(`/dictionary/detail/1`)}}>
+             onClick = {() => {history.push(`/dictionary/detail/${v.postId}`)}}>
               
               
               <GenerationBox> {v.generation} </GenerationBox>
@@ -44,14 +47,16 @@ const DictList = () => {
                <CardContents>{v.contents}</CardContents>
                <ViewCountBox><div>조회수 {v.views}</div>
                <div>스크랩 {v.scrapCount} </div></ViewCountBox>
-              {/* {v.postImages} */}
+              <img src={v.postImages} style={{display: "flex",width: "12rem", height: "17rem", borderRadius: "10px"}} />
              </WordCard>
                 
               </div>
             )
           })}
           </CardWholeBox>
+     
         </Container>
+    <Footer/>
     </div>
   )
 }
@@ -60,6 +65,7 @@ export default DictList
 const Container = styled.div`
   margin: auto;
   max-width: 75rem;
+  padding-top: 5rem;
 `;
 const MenuSelection = styled.div`
   display: flex;
@@ -70,10 +76,12 @@ const MenuSelection = styled.div`
 `
 const DictSelect = styled.div`
 ${bold22}
+margin-left: 1rem;
 
 `
 const Newest = styled.div`
 ${bold16}
+margin-right: 2rem;
 `
 const CardWholeBox = styled.div`
 display: flex;
@@ -89,8 +97,14 @@ border-radius: 10px;
 color:var(--white);
 background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 41.15%, #1B0042 80.21%);
 margin: 0.5rem;
-padding: 1rem;
 
+cursor: pointer;
+
+`
+
+const CardImage = styled.div`
+  width: 12rem;
+  border-radius: 10px;
 `
 
 const GenerationBox = styled.div`
@@ -111,6 +125,12 @@ const GenerationBox = styled.div`
 const CardTitle = styled.div`
 ${bold22}
 margin-bottom: 1rem;
+text-overflow: ellipsis;
+
+overflow: hidden;
+
+white-space:nowrap;
+
 `
 const CardContents = styled.div`
   ${med15}

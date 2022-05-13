@@ -45,7 +45,8 @@ export const __login =
       });
       history.replace("/");
     } catch (e) {
-        console.log("login error");
+        console.log(res);
+        window.alert("존재하지 않는 이메일입니다.");
     }
   };
   
@@ -84,7 +85,7 @@ export const __logout =
     cookies.remove("refreshToken", {
       path: "/",
     });
-    history.replace("/login");
+    history.replace("/");
     dispatch(logout());
   };
 
