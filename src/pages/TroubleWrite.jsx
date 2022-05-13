@@ -132,7 +132,7 @@ const TroubleWrite = () => {
       <Header />
       {/* <form onSubmit={handleSubmit(onSubmit)}> */}
 
-      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', margin: 'auto', maxWidth: '46rem' }}>
+      <div style={{ padding: '74px 0', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', margin: 'auto', maxWidth: '46rem' }}>
         <TitleInput>타이틀
           <ErrorXInput
             maxLength={50}

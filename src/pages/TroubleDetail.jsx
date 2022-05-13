@@ -31,7 +31,7 @@ const TroubleDetail = (props) => {
     return (
         <div>
             {TroubleDetailList ?
-                <div>
+                <div style={{paddding:'74px 0'}}>
                     <Button onClick={delTrouble}>삭제</Button>
                     <Button onClick={setTrouble}>수정</Button>
                     <p>{TroubleDetailList.title}</p>

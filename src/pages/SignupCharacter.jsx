@@ -131,18 +131,18 @@ const SignupCharacter = () => {
           <LeftBox>
   
               <PrevWorkStage>
-                <div>
+              <div style={{ display: "flex", position: 'relative', justifyContent: 'center', top: '100px' }}>
                 <img
                   src={charPrev[0]}
-                  style={{ width: "20rem", position: "absolute", left: "32%", zIndex: "3" }}
+                  style={{ width: "22rem", position: "absolute", zIndex: "3" }}
                 />
                 <img
                   src={charPrev[1]}
-                  style={{ width: "20rem", position: "absolute", left: "32%", zIndex: "2" }}
+                  style={{ width: "22rem", position: "absolute", zIndex: "2" }}
                 />
                 <img
                   src={charPrev[2]}
-                  style={{ width: "20rem", position: "absolute", left: "32%",  zIndex: "1" }}
+                  style={{ width: "22rem", position: "absolute",  zIndex: "1" }}
                 />
                 </div>
               </PrevWorkStage>
@@ -283,8 +283,8 @@ const PrevContainer = styled.div`
 `;
 const PrevWorkStage = styled.div`
  
-  width: 50rem;
-  overflow-y: auto;
+  /* width: 50rem; */
+  /* overflow-y: auto; */
 `;
 
 const FinalConfirm = styled(Button)`
@@ -299,7 +299,7 @@ const RightBox = styled.div`
   width: 21rem;
 `;
 const LeftBox = styled.div`
-  width: 20rem;
+  /* width: 20rem; */
 `;
 const UserNameTag = styled.div`
   border: 3px solid #ea8c00;

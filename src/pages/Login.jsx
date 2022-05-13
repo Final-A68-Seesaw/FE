@@ -11,8 +11,8 @@ import { ErrorXInput } from "../elements/Input";
 //style
 import styled from "styled-components";
 import KakaoBtn from "../components/KakaoBtn";
-  import { med14, bold30 } from "../themes/textStyle";
-import Logo  from '../asset/Seeso_logo.svg'
+import { med14, bold30 } from "../themes/textStyle";
+import Logo from '../asset/Seeso_logo.svg'
 import Img from '../asset/LoginIMG.svg'
 
 
@@ -35,9 +35,11 @@ const Login = () => {
     <>
 
       <Container>
-        <Img/>
+        <div style={{ width: '987px'}}>
+          <Img />
+        </div>
         <RightContainer>
-        <Logo style = {{display: "right"}}/>
+          <Logo style={{ display: "right" }} />
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <LoginContainer>
@@ -62,7 +64,7 @@ const Login = () => {
                   })}
                   placeholder="example@email.com"
                   error={errors?.username?.message}
-                  width = "24rem"
+                  width="24rem"
                 />
                 {/* <Button
                   shape="inputReset"
@@ -93,7 +95,7 @@ const Login = () => {
                   })}
                   placeholder="********"
                   error={errors?.pwd?.message}
-                  width = "24rem"
+                  width="24rem"
                 />
                 {/* <Button
                   shape="inputReset"
@@ -127,10 +129,10 @@ const Login = () => {
 };
 
 const Container = styled.div`
-  margin: auto;
-display: flex;
-justify-content: space-between;
-  max-width: 1440px;
+  /* margin: auto; */
+  display: flex;
+  justify-content: space-between;
+  /* max-width: 1440px; */
 `;
 
 const RightContainer = styled.div`

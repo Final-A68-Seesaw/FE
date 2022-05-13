@@ -79,6 +79,7 @@ const Main = () => {
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
         <div style={{ display: 'flex', width: '1510px', margin: 'auto', justifyContent: 'space-between' }}>
+          <img src={selectBest?.imageUrl} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
           <BestSelect>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest?.generation}</GenBox></div>
@@ -94,7 +95,6 @@ const Main = () => {
             })}
           </div>
 
-          {/* <img src={selectBest?.imageUrl} /> */}
         </div>
       </BestWordWrap>
 
@@ -104,7 +104,7 @@ const Main = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
           {getRand && getRand.map((v, i) => {
             return <TestCard key={i}>
-              <img src={v.imageUrl} style={{ width: '682px', height: '435px', position: 'absolute' }} />
+              <img src={v.imageUrl} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} />
 
               <div style={{ display: 'flex', flexDirection: 'column', justifyContents: 'center', position: 'absolute', width: '682px', height: '435px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '26px' }}>
@@ -136,6 +136,7 @@ const Main = () => {
           {getBest && getBest.map((v, i) => {
             return <RecentCard key={i}>
               <GenBox>{v.generation}</GenBox>
+              <img src={v.postImages} style={{ borderRadius: '10px', margin:'10px 0'}} />
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <RecentCardTitle>{v.title}</RecentCardTitle>
                 <RecentCardDesc>{v.contents}</RecentCardDesc>
@@ -259,6 +260,7 @@ const BestWordTitle = styled.p`
 const BestSelect = styled.div`
   min-width: 485px;
   height: 282px;
+  z-index: 1;
 
   background: linear-gradient(180deg, rgba(129, 91, 0, 0.19) 0%, rgba(66, 46, 0, 0.91) 81.25%);
   border-radius: 12px;
@@ -271,6 +273,7 @@ const BestSelect = styled.div`
 
 const GenBox = styled.div`
   box-sizing: border-box;
+  z-index: 1;
 
   display: flex;
   flex-direction: row;
@@ -502,7 +505,7 @@ const RecentCard = styled.div`
 
   min-width: 223px;
   height: 320px;
-  padding: 22px 17px 31px 18px;
+  padding: 12px 17px 41px 18px;
 
   background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 41.15%, #1B0042 80.21%);
   border-radius: 10px;

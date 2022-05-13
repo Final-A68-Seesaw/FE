@@ -20,7 +20,7 @@ const Trouble = () => {
     return (
         <div>
             <Header />
-            <div>
+            <div style={{padding:'74px 0'}}>
                 {troubleList.map((v, i) => {
                     return <div key={i} onClick={()=>history.push(`/troubledetail/${v.id}`)}>
                         <img src={v.imageUrls[0]} />
