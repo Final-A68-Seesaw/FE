@@ -10,8 +10,13 @@ import Text from '../elements/Text'
 import Character from './Character'
 
 import HeaderIcon from '../asset/HeaderIcon.svg'
+import isLogin from '../auth/isLogin'
+import { useDispatch } from 'react-redux'
+import { __logout } from '../redux/modules/user'
+
 
 const Header = (props) => {
+    const dispatch = useDispatch();
 
     const [showModal, setShowModal] = useState(false)
     const [scrollDown, setScrollDown] = useState(false)
@@ -29,13 +34,15 @@ const Header = (props) => {
 
             <HeadInner>
                 <div style={{ display: 'flex' }}>
-                    <HeaderIcon />
+                    <HeaderIcon onClick={() => history.push('/')} style = {{cursor: "pointer"}}/>
                     {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
 
-                    <div style={{ display: 'flex', margin: '0 47.5px' }}>
-                        <HearderText >사전장</HearderText>
-                        <HearderText style={{ margin: '0 28px' }} onClick={() => history.push('/trouble')}>질문장</HearderText>
-                        <HearderText onClick={() => history.push('/game')}>게임장</HearderText>
+                    <div style={{ display: 'flex', margin: '0 0 0 25px' }}>
+                        <HearderText onClick={() => history.push('/dictionary')}>사전장</HearderText>
+                        <HearderText onClick={() => history.push('/dictionary/add')}>단어등록하기</HearderText>
+
+                        {/* <HearderText style={{ margin: '0 28px' }} onClick={() => history.push('/trouble')}>질문장</HearderText> */}
+                        {/* <HearderText onClick={() => history.push('/game')}>게임장</HearderText> */}
                     </div>
                 </div>
 
@@ -44,12 +51,22 @@ const Header = (props) => {
                     <GoSearch style={{ margin: '0 0 0 -25px', color: '#FAFAFA' }} />
                 </SearchDiv> : null}
 
-                <div style={{ display: 'flex' }}>
-                    <WriteDicBtn onClick={()=>history.push('/dictionary/add')}><p>단어 등재하기</p></WriteDicBtn>
-                    <ProfileDiv>
-                        {/* <Character /> */}
-                    </ProfileDiv>
-                </div>
+                {!isLogin()
+                ? <div style={{ display: 'flex' }}>
+                <WriteDicBtn onClick={()=>history.push('/login')}><p>로그인</p></WriteDicBtn>
+                <WriteDicBtn onClick={()=>history.push('/signup')}><p>회원가입</p></WriteDicBtn>    
+            </div>
+            : <div>
+{/*                      
+            <ProfileDiv>
+                    <Character />
+                </ProfileDiv> */}
+                <WriteDicBtn onClick={()=>dispatch(__logout())}><p>로그아웃</p></WriteDicBtn>
+           
+            </div>
+}
+                
+                
             </HeadInner>
         </Head>
     )
@@ -66,7 +83,6 @@ const Head = styled.div`
     top: 0px;
     height: 74px;
     width: 100%;
-
 
     
     .slide-in-left {
@@ -110,9 +126,7 @@ const HeadInner = styled.div`
 `
 
 const HearderText = styled.p`
-    width: 53px;
-    height: 28px;
-
+    margin-right: 1.5rem;
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 500;
@@ -178,7 +192,7 @@ const WriteDicBtn = styled.div`
     justify-content: center;
     align-items: center;
     padding: 0 8px;
-
+    margin-left: 1rem;
     width: 113px;
     height: 36px;
 
