@@ -3,8 +3,7 @@ import { cookies } from "../shared/cookie";
 
 const env = process.env.NODE_ENV;
 
-const targetServer =
-  env === "http://3.36.89.195/"
+const targetServer = "http://3.36.89.195"
   // env === "http://3.38.104.97/"
 //env설정하기
 
