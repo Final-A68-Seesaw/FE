@@ -8,7 +8,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 import { GoSearch } from 'react-icons/go'
-import { BsChevronRight } from 'react-icons/Bs'
+import { BsChevronRight } from 'react-icons/bs'
 
 import Seeso from '../asset/MainSeeso.svg'
 import ChatIcon from '../asset/ChatIcon.svg'

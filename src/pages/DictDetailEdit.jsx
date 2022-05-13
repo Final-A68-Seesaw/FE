@@ -25,7 +25,7 @@ import Character from "../components/Character";
 //style
 import styled from "styled-components";
 import Line from "../asset/Dictionary_detail_line.svg";
-import { BsChevronRight } from "react-icons/Bs";
+import { BsChevronRight } from "react-icons/bs";
 import CommentCard from "../components/CommentCard.jsx";
 
 const DictDetail = (props) => {

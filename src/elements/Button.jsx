@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FaTimesCircle } from "react-icons/Fa";
+import { FaTimesCircle } from "react-icons/fa";
 
 const Button = ({ shape, children, ...rest }) => {
   switch (shape) {

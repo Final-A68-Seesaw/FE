@@ -9,8 +9,8 @@ import jwtDecode from 'jwt-decode';
 import { actionCreators as ChatActions } from '../redux/modules/chat'
 import { ChatUrls } from '../shared/ChatApi'
 
-import { BsChevronDown } from 'react-icons/Bs'
-import { FaRegDotCircle } from 'react-icons/Fa'
+import { BsChevronDown } from 'react-icons/bs'
+import { FaRegDotCircle } from 'react-icons/fa'
 
 let stompClient = null
 

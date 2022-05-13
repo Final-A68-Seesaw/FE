@@ -7,8 +7,8 @@ import { bold15, med14, med15 } from "../themes/textStyle";
 
 //style
 import styled from "styled-components";
-import { AiOutlineLike } from "react-icons/Ai";
-import { AiTwotoneLike } from "react-icons/Ai";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiTwotoneLike } from "react-icons/ai";
 
 const CommentCard = (props) => {
   const dispatch = useDispatch();
