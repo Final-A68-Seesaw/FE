@@ -6,8 +6,6 @@ import { __logout } from '../redux/modules/user';
 import Mainchat from '../components/Mainchat'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import axios from 'axios';
-import { userApi } from '../api/userApi';
 
 const Main = () => {
 
@@ -34,6 +32,8 @@ const Main = () => {
       <ChatBtn onClick={openModal}><div></div><p>실시간 아무말대잔치</p></ChatBtn>
 
       {showModal ? <Mainchat open={setShowModal} /> : null}
+
+
 
       <Footer />
 

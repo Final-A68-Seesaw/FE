@@ -2,19 +2,19 @@ import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
-
-import { setStorage } from "../shared/cookie";
 import { userActions } from "../redux/modules/user";
+import { useDispatch } from "react-redux";
+
 
 //ele
 import Button from "../elements/Button";
-import { ErrorXInput, SFormError } from "../elements/Input";
+import { ErrorXInput } from "../elements/Input";
+import { Select } from "../elements/Select";
 
 //style
 import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
-import { SelectText } from "../elements/Select";
-import { useDispatch } from "react-redux";
+import Logo  from '../asset/Seeso_logo.svg'
 
 const Signup = () => {
 
@@ -28,9 +28,19 @@ const Signup = () => {
     getValues,
     formState: { errors },
   } = useForm({ mode: "onChange" });
-
+  
+//비밀번호 확인
   const pwd = useRef();
   pwd.current = watch("pwd");
+
+//select option
+const GenerationOptions = [
+  {value: "none", label: "선택하세요"},
+  {value: "x세대", label: "X세대(1965년생~1979년생)"},
+  {value: "y세대", label: "Y세대(1980년생~1994년생)"},
+  {value: "z세대", label: "Z세대(1995년생~2005년생)"},
+  {value: "알파세대", label: "알파세대(2006년생~)"}
+]
 
   //데이터 전송
   const onSubmit = async (data) => {
@@ -47,14 +57,11 @@ const Signup = () => {
         generation: data.generation,
       }))
 
-      // setStorage("username", data.username);
-      // setStorage("generation", data.generation);
-      // setStorage("pwd", data.pwd);
 
       history.push("/signup/making");
     } catch (e) {
       if (e.message === "Request failed with status code 400") {
-        alert("중복된 아이디입니다.");
+        alert("중복된 아이디입니다");
         return;
       }
     }
@@ -62,9 +69,11 @@ const Signup = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+       <Logo style = {{margin : "2rem 0 0 2rem"}}/>
+      <Container>
       <StepBar shape="step1" />
 
-      <div>
+      <div >
         <ErrorXInput
           type="email"
           name="username"
@@ -72,46 +81,36 @@ const Signup = () => {
           register={register({
             required: {
               value: true,
-              message: "⚠ 이메일을 입력해주세요.",
+              message: "⚠ 이메일을 입력해주세요",
             },
             pattern: {
               value: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/i,
-              message: "⚠ 이메일 형식에 맞게 입력해주세요..",
+              message: "⚠ 이메일 형식에 맞게 입력해주세요",
             },
           })}
           placeholder="example@email.com"
           error={errors?.username?.message}
         />
-        <Button
+        {/* <Button
           shape="inputReset"
           type="button"
           onClick={() => reset({ ...getValues(), username: "" })}
-        />
+        /> */}
       </div>
 
-      <label>나의 세대는?</label>
-      <div>
-        <SelectText
+          <Select
           name="generation"
-          ref={register({
+          register={register({
             required: true,
             validate: (value) => value !== "none",
           })}
-          hasError={Boolean(errors?.generation)}
-        >
-          <option value="none">선택하세요</option>
-          <option value="x세대">X세대(1965년생~1979년생)</option>
-          <option value="y세대">Y세대(1980년생~1994년생)</option>
-          <option value="z세대">Z세대(1995년생~2005년생)</option>
-          <option value="알파세대">알파세대(2006년생~)</option>
-        </SelectText>
-        <SFormError>
-          {errors.generation && errors.generation.type === "validate" && (
-            <p>⚠ 세대를 선택해주세요.</p>
-          )}
-        </SFormError>
-      </div>
-
+          label = "나의 세대는?"
+          error={errors?.generation?.type}
+          >
+            {GenerationOptions.map((item, index)=> (
+              <option key = {index} value = {item.value}>{item.label}</option>
+            ))}
+          </Select>
       <div>
         <ErrorXInput
           type="password"
@@ -120,11 +119,11 @@ const Signup = () => {
           register={register({
             required: {
               value: true,
-              message: "⚠ 패스워드를 입력해주세요.",
+              message: "⚠ 패스워드를 입력해주세요",
             },
             minLength: {
               value: 8,
-              message: "⚠ 패스워드를 정확하게 입력해주세요.",
+              message: "⚠ 패스워드를 정확하게 입력해주세요",
             },
             pattern: {
               value:
@@ -137,11 +136,11 @@ const Signup = () => {
           maxLength={"20"}
           error={errors?.pwd?.message}
         />
-        <Button
+        {/* <Button
           shape="inputReset"
           type="button"
           onClick={() => reset({ ...getValues(), pwd: "" })}
-        />
+        /> */}
       </div>
 
       <div>
@@ -161,22 +160,28 @@ const Signup = () => {
           maxLength={"20"}
           error={errors?.pwdCheck?.message}
         />
-        <Button
+        {/* <Button
           shape="inputReset"
           type="button"
           onClick={() => reset({ ...getValues(), pwdCheck: "" })}
-        />
+        /> */}
       </div>
       <FirstSignupBtn shpae="confirmRed-B" type="submit">
         다음 단계
       </FirstSignupBtn>
+      </Container>
     </form>
   );
 };
 
+const Container = styled.div`
+width:24rem;
+margin: auto;
+`
+
 const FirstSignupBtn = styled(Button)`
   margin: 1rem;
-  width: 50%;
+  width: 24rem;
 `;
 
 export default Signup;

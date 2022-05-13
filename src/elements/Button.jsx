@@ -72,6 +72,5 @@ const Confirm = styled.button`
 const ResetXbutton = styled.button`
   background-color: transparent;
   border: 0px;
-  /* margin-left: -2.5rem; */
 `;
 export default Button;
