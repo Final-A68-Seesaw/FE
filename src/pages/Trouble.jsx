@@ -13,8 +13,6 @@ const Trouble = () => {
     const dispatch = useDispatch()
     const troubleList = useSelector((state) => (state.trouble.list))
 
-    console.log(troubleList);
-
     useEffect(() => {
         dispatch(TroubleActions.getTrouDB())
     }, [])

@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
 import { actionCreators as TroubleActions } from '../redux/modules/touble'
+import Button from '../elements/Button'
+import { history } from '../redux/configStore'
 
 const TroubleDetail = (props) => {
 
@@ -12,18 +14,28 @@ const TroubleDetail = (props) => {
     const dispatch = useDispatch()
     const TroubleDetailList = useSelector((state) => state.trouble.detail)
 
-    console.log(TroubleDetailList)
+    const delTrouble = () => {
+        dispatch(TroubleActions.delTrouDB(params.id))
+    }
+
+    const setTrouble = () => {
+        history.push(`/troublewrite/${params.id}`)
+    }
 
     useEffect(() => {
         dispatch(TroubleActions.getTrouDetailDB(params.id))
+
+        return () => { dispatch(TroubleActions.clearDetail()) }
     }, [])
 
     return (
         <div>
             {TroubleDetailList ?
                 <div>
+                    <Button onClick={delTrouble}>삭제</Button>
+                    <Button onClick={setTrouble}>수정</Button>
                     <p>{TroubleDetailList.title}</p>
-                    <p>{TroubleDetailList.content}</p>
+                    <p>{TroubleDetailList.contents}</p>
                     <p>{TroubleDetailList.question}</p>
                     <p>{TroubleDetailList.answer}</p>
                     <p>{TroubleDetailList.imageUrls.map((v, i) => {

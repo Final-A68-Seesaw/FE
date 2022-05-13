@@ -13,7 +13,4 @@ export const TroubleApi = {
     troublecommentdelete: (commentid) => instance.delete(`api/trouble/comment/${commentid}`),
     
     troublecommentlike: (commentid) => instance.post(`api/trouble/comment/${commentid}/like`),
-    
-    ttg: (title) => instance.get(`api/post/${title}/present`),
-    ttp: (title) => instance.post(`api/post/${title}/present`),
 }

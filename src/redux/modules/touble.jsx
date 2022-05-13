@@ -11,6 +11,7 @@ const SET_TROU = 'SETTROU'
 const DEL_TROU = 'DELTROU'
 
 const GET_TR_DETAIL = 'GETDETAIL'
+const CLEAR_DETAIL = 'CLEARDETAIL'
 
 const getTrou = createAction(GET_TROU, (trouble) => trouble)
 const addTrou = createAction(ADD_TROU, (trouble) => trouble)
@@ -18,6 +19,7 @@ const setTrou = createAction(SET_TROU, (trouble) => trouble)
 const delTrou = createAction(DEL_TROU, (trouble) => trouble)
 
 const getDetail = createAction(GET_TR_DETAIL, (trouble) => trouble)
+const clearDetail = createAction(CLEAR_DETAIL, (trouble) => trouble)
 
 
 
@@ -64,7 +66,10 @@ const addTrouDB = (data) => {
         }
 
         TroubleApi.troublepost(formData)
-            .then((res) => console.log(res))
+            .then((res) => {
+                console.log(res)
+                history.replace('/trouble')
+            })
             .catch((err) => console.log(err))
     }
 }
@@ -75,6 +80,19 @@ const setTrouDB = (data) => {
         TroubleApi.troublepost(data)
             .then((res) => console.log(res))
             .catch((err) => console.log(err.response))
+    }
+}
+
+const delTrouDB = (id) => {
+    return (dispatch, getState, { history }) => {
+        console.log(parseInt(id))
+
+        TroubleApi.troubledel(id)
+            .then((res => {
+                console.log(res)
+                history.replace('/trouble')
+            }))
+            .catch((err) => console.log(err))
     }
 }
 
@@ -111,6 +129,10 @@ export default handleActions(
         [GET_TR_DETAIL]: (state, action) => produce(state, (draft) => {
             draft.detail = { ...action.payload }
         }),
+
+        [CLEAR_DETAIL]: (state, action) => produce(state, (draft) => {
+            draft.detail = null
+        }),
     },
     initialState
 );
@@ -121,10 +143,12 @@ const actionCreators = {
     setTrou,
     delTrou,
     getDetail,
+    clearDetail,
 
     getTrouDB,
     addTrouDB,
     setTrouDB,
+    delTrouDB,
     getTrouDetailDB,
 };
 

@@ -19,6 +19,7 @@ export const BasicTextarea = styled.textarea`
   color: var(--black24);
   resize: none;
   padding: 1rem;
+  margin: 10px 0;
   
   border: 1px solid ${(props) =>
     (props.hasError

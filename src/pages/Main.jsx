@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux';
 import { __logout } from '../redux/modules/user';
@@ -6,14 +6,35 @@ import { __logout } from '../redux/modules/user';
 import Mainchat from '../components/Mainchat'
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import axios from 'axios';
-import { userApi } from '../api/userApi';
+
+import { GoSearch } from 'react-icons/go'
+import { BsChevronRight } from 'react-icons/Bs'
+
+import Seeso from '../asset/MainSeeso.svg'
+import ChatIcon from '../asset/ChatIcon.svg'
+import Mz_gen from '../asset/Mz_gen.svg'
+import MainTopimg from '../asset/MainTop.svg'
+import G1 from '../asset/G1.svg'
+import G2 from '../asset/G2.svg'
+import Y1 from '../asset/Y1.svg'
+import Y2 from '../asset/Y2.svg'
+import { MainApi } from '../api/mainApi';
 
 const Main = () => {
 
   const [showModal, setShowModal] = useState(false)
 
+  const [getRand, setGetRand] = useState([])
+  const [getRecent, setGetRecent] = useState([])
+  const [getBest, setGetBest] = useState([])
+
+  const [selectBest, setSelectBest] = useState()
+
+  console.log(getRand, getRecent, getBest, selectBest)
+
   const dispatch = useDispatch();
+
+  const RecentScrollRef = useRef()
 
   const openModal = () => {
     setShowModal(true);
@@ -23,21 +44,132 @@ const Main = () => {
     dispatch(__logout());
   };
 
+  const onBestWord = (data) => {
+    setSelectBest(data)
+  }
+
   React.useEffect(() => {
-    
+    MainApi.mainGetRecent().then((res) => setGetRecent(res.data))
+    MainApi.mainGetRand().then((res) => setGetRand(res.data))
+    MainApi.mainGetBest().then((res) => {
+      setGetBest(res.data)
+      setSelectBest(res.data[0])
+    })
+    // MainApi.mainGetTrou().then((res) => console.log(res))
   }, [])
 
   return (
-    <ChatContainer>
+    <MainWrap>
       <Header />
+      <MainTop>
+        <G1 style={{ position: 'absolute', width: '140.42px', height: '176.97px', left: '12%', top: '50%', }} />
+        <G2 style={{ position: 'absolute', width: '140.98px', height: '155.08px', left: '24%', top: '50%', }} />
+        <Y1 style={{ position: 'absolute', width: '140.42px', height: '175.92px', left: '90%', top: '36%', }} />
+        <Y2 style={{ position: 'absolute', width: '140.98px', height: '192.8px', left: '70%', top: '90%', }} />
+        <MainText>우리들의 플레이그라운드</MainText>
 
-      <ChatBtn onClick={openModal}><div></div><p>실시간 아무말대잔치</p></ChatBtn>
+        <Seeso style={{ margin: '32px 0 91px 0' }} />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <MainSearch placeholder='궁금한 것을 검색해보세요' />
+          <GoSearch style={{ width: '24px', height: '24px', color: '#9A9999', margin: '0 0 0 -40px' }} />
+        </div>
+      </MainTop>
 
-      {showModal ? <Mainchat open={setShowModal} /> : null}
+      <div></div>
+
+      <BestWordWrap>
+        <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
+
+        <div style={{ display: 'flex', width: '1510px', margin: 'auto', justifyContent: 'space-between' }}>
+          <BestSelect>
+
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest?.generation}</GenBox></div>
+            <div>
+              <BestSelectTitle>{selectBest?.title}</BestSelectTitle>
+              <BestSelectContent>{selectBest?.contents}</BestSelectContent>
+            </div>
+          </BestSelect>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', margin: '0 0 0 31px', gap: '12.88px', width: '903px', }}>
+            {getRecent && getRecent.map((v, i) => {
+              return <BestWords key={i} onClick={() => onBestWord(v)}>{v.title}</BestWords>
+            })}
+          </div>
+
+          {/* <img src={selectBest?.imageUrl} /> */}
+        </div>
+      </BestWordWrap>
+
+      <TestWrap>
+
+        <TestTitle>✍️ 닉네임 님의 능력을 테스트해보세요</TestTitle>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
+          {getRand && getRand.map((v, i) => {
+            return <TestCard key={i}>
+              <img src={v.imageUrl} style={{ width: '682px', height: '435px', position: 'absolute' }} />
+
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContents: 'center', position: 'absolute', width: '682px', height: '435px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '26px' }}>
+                  <GenBox>{v.generation}</GenBox>
+                  <TestAnswer>
+                    <TestAnswerText>단어 정답보기</TestAnswerText>
+                    <div style={{ width: '20px', height: '20px', background: '#C4C4C4', }}></div>
+                  </TestAnswer>
+                </div>
+                <TestCellBox>
+                  <TestCell></TestCell>
+                  <TestCell></TestCell>
+                  <TestCell></TestCell>
+                  <TestCell></TestCell>
+                </TestCellBox>
+                <TestDescBox>
+                  <TestDesc>{v.contents}</TestDesc>
+                </TestDescBox>
+              </div>
+            </TestCard>
+          })}
+        </div>
+      </TestWrap>
+
+      <RecentWrap>
+        <RecentTitle>👍 최신 등록 신조어를 배워보세요</RecentTitle>
+        <RecentCards>
+
+          {getBest && getBest.map((v, i) => {
+            return <RecentCard key={i}>
+              <GenBox>{v.generation}</GenBox>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <RecentCardTitle>{v.title}</RecentCardTitle>
+                <RecentCardDesc>{v.contents}</RecentCardDesc>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <RecentCardView>조회수 {v.views}</RecentCardView>
+                  <RecentCardScrap>스크랩 {v.scrapCount}</RecentCardScrap>
+                </div>
+              </div>
+            </RecentCard>
+          })}
+
+          <div ref={RecentScrollRef}></div>
+
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <RightBtn>
+              <BsChevronRight onClick={() => {
+                RecentScrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
+              }} style={{ fontSize: '30px' }} />
+            </RightBtn>
+          </div>
+
+        </RecentCards>
+
+      </RecentWrap>
 
       <Footer />
 
-    </ChatContainer>
+      <ChatContainer>
+        <ChatBtn onClick={openModal}><ChatIcon></ChatIcon><p>실시간 토크장</p></ChatBtn>
+        {showModal ? <Mainchat open={setShowModal} /> : null}
+      </ChatContainer>
+    </MainWrap>
   )
 }
 
@@ -47,65 +179,455 @@ const ChatContainer = styled.div`
   
 `
 
-const ChatBtn = styled.div`
+const MainWrap = styled.div`
+  /* overflow-x: hidden; */
+`
+
+const MainTop = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  background: #FFC438;;
+`
+
+const MainText = styled.p`
+  width: 249px;
+  height: 35px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 35px;
+
+  color: #222222;
+`
+
+const MainSearch = styled.input`
+  box-sizing: border-box;
+
+  width: 517.33px;
+  height: 49.01px;
+  padding: 11px 21px;
+
+  background: #FFFFFF;
+  border: 1.04301px solid #D59704;
+  border-radius: 5px;
+
+  ::placeholder {
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 26px;
+
+    display: flex;
+    align-items: center;
+
+    color: #666666;
+  }
+`
+
+const BestWordWrap = styled.div`
+  height: 510px;
+  padding: 72px 0;
+
+  background: #8E41FF;
+`
+
+const BestWordTitle = styled.p`
+  max-width: 1510px;
+  height: 32px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  margin: 0 auto 47px auto;
+
+  color: #FFFFFF;
+`
+
+const BestSelect = styled.div`
+  min-width: 485px;
+  height: 282px;
+
+  background: linear-gradient(180deg, rgba(129, 91, 0, 0.19) 0%, rgba(66, 46, 0, 0.91) 81.25%);
+  border-radius: 12px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 20px 20px 40px 24px;
+`
+
+const GenBox = styled.div`
+  box-sizing: border-box;
+
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 18px 30px 18px 20px;
+  padding: 10px;
+
+  width: 73px;
+  height: 29px;
+
+  border: 1.4px solid #FFFFFF;
+  border-radius: 74.5027px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+
+  color: #FFFFFF;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+`
+
+const BestSelectTitle = styled.p`
+  height: 20px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 20px;
+
+  color: #FFFFFF;
+`
+
+const BestSelectContent = styled.p`
+  width: 440px;
+  height: 52px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 26px;
+  margin: 20px 0 40px 0;
+  
+  color: #CCCCCC;
+`
+
+const BestWords = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+
+  width: 200px;
+  height: 58.06px;
+
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 19px;
+  line-height: 28px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #FFFFFF;
+
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+
+  cursor: pointer;
+`
+
+const TestWrap = styled.div`
+  max-width: 1510px;
+  display: flex;
+  flex-direction: column;
+  
+  margin: 80px auto;
+  /* padding: 80px 100px; */
+`
+
+const TestTitle = styled.p`
+  /* ✍️ 닉네임 님의 능력을 테스트해보세요 */
+  width: 360px;
+  height: 32px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+
+  color: #222222;
+`
+
+const TestCard = styled.div`
+  min-width: 682px;
+  height: 435px;
+
+  background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 0%, #39008C 100%);
+  border-radius: 11.1667px;
+`
+
+const TestAnswer = styled.div`
+  display: flex;
+  align-items: center;
+
+  width: 126px;
+  height: 25px;
+`
+
+const TestAnswerText = styled.div`
+  width: 98px;
+  height: 25px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 25px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  text-align: right;
+  margin: 0 4px;
+
+  color: #FFFFFF;
+`
+
+const TestCellBox = styled.div`
+  display: flex; 
+  /* width: 270px;  */
+  height: 61px; 
+  margin: 60px auto;
+  gap: 10px;
+`
+
+const TestCell = styled.div`
+  box-sizing: border-box;
+
+  width: 80px;
+  height: 80px;
+
+  background: rgba(255, 255, 255, 0.7);
+  border: 1.3px solid #FFFFFF;
+  border-radius: 5px;
+`
+
+const TestDescBox = styled.div`
+  max-width: 386px;
+  
+  margin: 20px auto;
+`
+
+const TestDesc = styled.p`
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #CCCCCC;
+`
+
+const RecentWrap = styled.div`
+  margin: 126px auto 115px auto;
+  width: 1510px;
+
+  display: flex;
+  flex-direction: column;
+`
+
+const RecentTitle = styled.p`
+  /* 👍 최신 등록 신조어를 배워보세요 */
+  width: 310px;
+  height: 32px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
+  /* identical to box height */
+
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+
+  color: #222222;
+`
+
+const RecentCards = styled.div`
+  display: flex;
+  gap: 18px;
+  overflow-x: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+const RecentCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  min-width: 223px;
+  height: 320px;
+  padding: 22px 17px 31px 18px;
+
+  background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 41.15%, #1B0042 80.21%);
+  border-radius: 10px;
+`
+
+const RecentCardTitle = styled.p`
+  width: 188px;
+  height: 20px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 20px;
+  
+  color: #FFFFFF;
+`
+
+const RecentCardDesc = styled.p`
+  /* width: 188px; */
+  height: 40px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 20px;
+  margin: 12px 0 16px 0;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  
+  color: #AAAAAA;
+`
+
+const RecentCardView = styled.p`
+  width: 82px;
+  height: 14px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  
+  color: #555555;
+`
+
+const RecentCardScrap = styled.p`
+  width: 82px;
+  height: 14px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+
+  color: #555555;
+`
+
+const RightBtn = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  right: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #FFFFFF;
+  border-radius: 100px;
+  
+  box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08);
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25)) drop-shadow(0px 16px 24px rgba(22, 34, 51, 0.08));
+`
+
+
+const ChatBtn = styled.div`
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 6px;
 
   position: fixed;
-  width: 280px;
-  height: 72px;
+  width: 161px;
+  height: 58px;
   right: 30px;
   bottom: 30px;
 
-  background: #FFFFFF;
-/* 3 */
+  background: rgba(255, 255, 255, 0.9);
+  
+  border: 1.4px solid #EEEEEE;
+  backdrop-filter: blur(60px);
 
-  box-shadow: 0px 8px 16px -4px rgba(22, 34, 51, 0.08);
-  border-radius: 400px;
+  border-radius: 259.276px;
 
   :hover {
     cursor: pointer;
   }
 
   div {
-    position: static;
-    width: 60px;
-    height: 60px;
-
-    /* gray_#EDEFF2 */
-
-    background: #EDEFF2;
-    border-radius: 200px;
-
-    /* Inside auto layout */
-
-    flex: none;
-    order: 0;
-    flex-grow: 0;
-    margin: 0px 14px;
+    background: #222222;
   }
 
   p {
-    position: static;
-    width: 171px;
-    height: 29px;
-
-    /* 20pt_Medium */
+    width: 87px;
+    height: 14px;
 
     font-family: 'Noto Sans KR';
     font-style: normal;
     font-weight: 500;
-    font-size: 18px;
-    line-height: 29px;
-    /* identical to box height */
+    font-size: 15px;
+    line-height: 14px;
+    /* identical to box height, or 93% */
 
     display: flex;
     align-items: center;
-
-    /* Black_#222222 */
 
     color: #222222;
 
@@ -115,6 +637,5 @@ const ChatBtn = styled.div`
     flex: none;
     order: 1;
     flex-grow: 0;
-    margin: 0px 14px;
   }
 `

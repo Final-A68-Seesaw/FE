@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 const FileInput = (props) => {
 
-  const { _onClick, margin, width, height } = props
+  const { _onChange, margin, width, height } = props
 
   const styles = {
     margin,
@@ -14,10 +14,11 @@ const FileInput = (props) => {
   return (
     <FileDropbox>
       <InputFile
+        {...styles}
         type='file'
         accept='image/png, image/jpg, image/jpeg, image/pdf'
         multiple
-        onClick={_onClick}
+        onChange={_onChange}
       />
     </FileDropbox>
   )
@@ -29,6 +30,10 @@ const InputFile = styled.input`
   width: ${(props) => props.width ? props.width : '100%'};
   height: ${(props) => props.height ? props.height : '100%'};
 
+   font-size: 0px;
+   ::-webkit-file-upload-button {
+     display: none;
+   }
 `
 
 const FileDropbox = styled.div`

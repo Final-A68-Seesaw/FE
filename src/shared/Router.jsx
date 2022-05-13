@@ -56,6 +56,7 @@ const Router = () => {
         <Route path="/trouble" exact component={Trouble}/>
         <Route path="/troubledetail/:id" exact component={TroubleDetail}/>
         <Route path="/troublewrite" exact component={TroubleWrite}/>
+        <Route path="/troublewrite/:id" exact component={TroubleWrite}/>
 
         <Route path="/game" exact component={CrossWord}/>
         

@@ -9,6 +9,7 @@ export const ErrorXInput = ({
   label,
   ...inputProps
 }) => {
+
   return (
     <>
       <Labelbox>
@@ -29,7 +30,7 @@ const Labelbox = styled.div`
 `;
 
 export const SFormError = styled.div`
-  margin-bottom: 1rem;
+  margin: 1rem 0;
   color: var(--red);
   ${med14}
 `;
@@ -51,7 +52,10 @@ export const InputText = styled.input`
     border: 1px solid
       ${(props) => (props.hasError ? "var(--red)" : "var(--gray66)")};
   }
+
+  ${(inputProps) => inputProps.margin ? `margin: ${inputProps.margin}` : null};
 `;
+
 const ResetXbutton = styled.button`
   background-color: transparent;
   border: 0px;
