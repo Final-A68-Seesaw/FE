@@ -4,8 +4,8 @@ import { cookies } from "../shared/cookie";
 const env = process.env.NODE_ENV;
 
 const targetServer =
-  env === "development" ? "http://3.36.89.195/" : "false";
-  // env === "development" ? "http://3.38.104.97/" : "false";
+  env === "http://3.36.89.195/"
+  // env === "http://3.38.104.97/"
 //env설정하기
 
 export const instance = axios.create({

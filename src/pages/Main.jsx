@@ -32,7 +32,7 @@ const Main = () => {
 
   const RecentScrollRef = useRef()
 
-  console.log('v2')
+  console.log('v3')
 
   const openModal = () => {
     setShowModal(true);
@@ -135,7 +135,7 @@ const Main = () => {
           {getBest && getBest.map((v, i) => {
             return <RecentCard key={i}>
               <GenBox>{v.generation}</GenBox>
-              <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0' }} />
+              <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0', width: '168px' }} />
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <RecentCardTitle>{v.title}</RecentCardTitle>
                 <RecentCardDesc>{v.contents}</RecentCardDesc>
@@ -511,7 +511,7 @@ const RecentCard = styled.div`
 `
 
 const RecentCardTitle = styled.p`
-  width: 188px;
+  /* width: 188px; */
   height: 20px;
 
   font-family: 'Noto Sans KR';
