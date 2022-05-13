@@ -34,8 +34,6 @@ export const __login =
     const Token = login.headers.authorization.split(';Bearer ');
     const accessToken = Token[0].split(' ')[1];
     const refreshToken = Token[1];
-    console.log(accessToken)
-    console.log(refreshToken);
     
         localStorage.setItem("accessToken", accessToken, {
         path: "/",

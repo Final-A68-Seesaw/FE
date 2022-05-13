@@ -40,7 +40,6 @@ const initialState = {
 
 export const __dictTitle = (data) => {
   return (dispatch, getState, { history }) => {
-    console.log(data);
     dictApi.addDictTitle(data)
      .then((res) => {
        if ( res.data === false) {

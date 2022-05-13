@@ -30,8 +30,6 @@ const TroubleWrite = () => {
   const dispatch = useDispatch()
   const params = useParams()
 
-  console.log(params.id)
-
   const [TrFiles, setTrFiles] = useState([])
   const [imgUrlList, setImgUrlList] = useState([])
 
@@ -42,10 +40,10 @@ const TroubleWrite = () => {
   const [tags, setTags] = useState([])
   const [errMsg, setErrMsg] = useState({ title: true, content: true, whoGen: true, toGen: true })
 
-  const onSubmit = (data) => {
+  // const onSubmit = (data) => {
 
-    console.log(data);
-  };
+  //   console.log(data);
+  // };
 
   useEffect(() => {
     if (title === '') errMsg.title = false
@@ -58,13 +56,6 @@ const TroubleWrite = () => {
   const ImageFile = (e) => {
     const FileList = e.target.files
     const UrlList = []
-
-    let getFile = []
-    console.log(FileList)
-
-    for (let gg in FileList) {
-      console.log(FileList[gg]);
-    }
 
     setTrFiles([...TrFiles, ...FileList])
 

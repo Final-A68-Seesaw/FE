@@ -28,11 +28,11 @@ const Main = () => {
 
   const [selectBest, setSelectBest] = useState()
 
-  console.log(getRand, getRecent, getBest, selectBest)
-
   const dispatch = useDispatch();
 
   const RecentScrollRef = useRef()
+
+  console.log('v2')
 
   const openModal = () => {
     setShowModal(true);
@@ -53,7 +53,6 @@ const Main = () => {
       setGetBest(res.data)
       setSelectBest(res.data[0])
     })
-    // MainApi.mainGetTrou().then((res) => console.log(res))
   }, [])
 
   return (
@@ -79,13 +78,13 @@ const Main = () => {
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
         <div style={{ display: 'flex', width: '1510px', margin: 'auto', justifyContent: 'space-between' }}>
-          <img src={selectBest?.imageUrl} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
+          <img src={selectBest && selectBest.imageUrl} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
           <BestSelect>
 
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest?.generation}</GenBox></div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest && selectBest.generation}</GenBox></div>
             <div>
-              <BestSelectTitle>{selectBest?.title}</BestSelectTitle>
-              <BestSelectContent>{selectBest?.contents}</BestSelectContent>
+              <BestSelectTitle>{selectBest && selectBest.title}</BestSelectTitle>
+              <BestSelectContent>{selectBest && selectBest.contents}</BestSelectContent>
             </div>
           </BestSelect>
 
@@ -136,7 +135,7 @@ const Main = () => {
           {getBest && getBest.map((v, i) => {
             return <RecentCard key={i}>
               <GenBox>{v.generation}</GenBox>
-              <img src={v.postImages} style={{ borderRadius: '10px', margin:'10px 0'}} />
+              <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0' }} />
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <RecentCardTitle>{v.title}</RecentCardTitle>
                 <RecentCardDesc>{v.contents}</RecentCardDesc>

@@ -67,7 +67,6 @@ const addTrouDB = (data) => {
 
         TroubleApi.troublepost(formData)
             .then((res) => {
-                console.log(res)
                 history.replace('/trouble')
             })
             .catch((err) => console.log(err))
@@ -85,11 +84,9 @@ const setTrouDB = (data) => {
 
 const delTrouDB = (id) => {
     return (dispatch, getState, { history }) => {
-        console.log(parseInt(id))
 
         TroubleApi.troubledel(id)
             .then((res => {
-                console.log(res)
                 history.replace('/trouble')
             }))
             .catch((err) => console.log(err))

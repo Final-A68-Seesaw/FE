@@ -21,7 +21,7 @@ const DictList = () => {
     },[]);
     
     const dictList = useSelector((state) => state.dictionary.list);
-    console.log(dictList);
+    
   return (
     <div>
         <Header/>

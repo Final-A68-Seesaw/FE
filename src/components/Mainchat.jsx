@@ -73,13 +73,10 @@ const Mainchat = (props) => {
     let sock = new SockJS(ChatUrls.sockUrl)
 
     stompClient = Stomp.over(sock);
-    console.log(stompClient)
     stompClient.connect({}, onConnected, onError);
   };
 
   const stompDisConnect = () => {
-    console.log('disconnect')
-
     try {
       const user_join = {
         status: "OUT",
@@ -124,7 +121,6 @@ const Mainchat = (props) => {
 
   const onError = (err) => {
     console.log('Error! : ' + err)
-    console.log((/Lost connection/g).test(err))
   };
 
   const sendPublicMessage = () => {
@@ -166,7 +162,6 @@ const Mainchat = (props) => {
         break;
       case "TALK":
         dispatch(ChatActions.addChat({ senderName: payloadData.senderName, message: payloadData.message, createdAt: payloadData.createdAt }))
-        console.log(chatList);
         break;
       default: break;
     }

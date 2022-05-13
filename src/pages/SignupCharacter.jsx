@@ -80,7 +80,7 @@ const SignupCharacter = () => {
       setCharSelect(res.data);
       setCharId([res.data.faceUrl[0].charId, res.data.accessoryUrl[0].charId, res.data.backgroundUrl[0].charId ])
       setCharPrev([res.data.faceUrl[0].url, res.data.accessoryUrl[0].url, res.data.backgroundUrl[0].url ])
-      console.log(res);
+      
     });
   }, []);
   const userData = useSelector((state) => state.user.usersign);

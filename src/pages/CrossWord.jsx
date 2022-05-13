@@ -13,7 +13,7 @@ const CrossWord = () => {
 
     const AnswerPut = (e) => {
 
-        console.log(aref)
+        // console.log(aref)
 
         // let getAnswer = e.target.value
 
