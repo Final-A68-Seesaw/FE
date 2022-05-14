@@ -108,7 +108,7 @@ export const __addDict = (data) =>{
 
     export const __addDictComment = ( cardTitleId, data) =>{
       return (dispatch, getState, { history }) => {
-        console.log(data);
+        console.log(cardTitleId, data);
     
         dictApi.addComment(cardTitleId, data)
             .then((res) => console.log(res))
