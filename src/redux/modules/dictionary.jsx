@@ -128,17 +128,15 @@ export const __addDict = (data) =>{
 
     export const __deleteDictComment = (commentId) =>{
       return (dispatch, getState, { history }) => {
-        console.log(commentId);
     
-        dictApi.addComment(cardTitleId)
-            .then((res) => console.log(res))
+        dictApi.delComment(commentId)
+            .then(() => delDictCom(commentId))
             .catch((err) => console.log(err))
           }
     }
 
     export const __likeDictComment = (commentId) =>{
       return (dispatch, getState, { history }) => {
-        console.log(commentId);
     
         dictApi.addComment(commentId)
             .then((res) => console.log(res))
@@ -173,7 +171,7 @@ export default handleActions(
         }),
         [DEL_DICT_COM]: (state,action) =>
         produce(state, (draft)=>{
-          draft.data.unshift(action.payload.data);
+          // draft.data.unshift(action.payload.data);
         }),
 
         [LIKE_DICT_COM]: (state,action) =>

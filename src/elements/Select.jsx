@@ -18,6 +18,7 @@ export const Select = ({
         ref={register}
         hasError={Boolean(error)}
         {...selectProps}
+
       />
       <SFormError>{error =="validate" &&
       (<p>⚠ 선택해주세요.</p>)}</SFormError>
@@ -39,7 +40,8 @@ export const SFormError = styled.div`
 
 export const SelectText = styled.select`
   ${med14}
-  width: 103%;
+  width: ${(props) => (props.width ? props.width : "103%")};
+
   border-radius: 0.3rem;;
   height: 3rem;
   color: var(--black24);

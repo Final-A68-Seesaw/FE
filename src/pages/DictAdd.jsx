@@ -8,7 +8,7 @@ import { __dictTitle } from "../redux/modules/dictionary";
 
 //element & components
 import Header from "../components/Header";
-import { med16 } from "../themes/textStyle";
+import { bold18, med15, med14, med20 } from "../themes/textStyle";
 import { ErrorXInput, SFormError } from "../elements/Input";
 import Button from "../elements/Button";
 import { BasicTextarea } from "../elements/Textarea";
@@ -18,6 +18,8 @@ import FileUpload2 from "../components/FileUpload2";
 //style
 import styled from "styled-components";
 import Book from "../asset/Dictionary_add_imo.svg";
+import Footer from "../components/Footer";
+import TextIcon from "../asset/DictAddIcon.svg";
 
 const DictAdd = (props) => {
   const {
@@ -104,20 +106,22 @@ const DictAdd = (props) => {
         </TextContainer>
 
         <WhatisNew>
-          어떤 것이 신조어인가요?
+        <WhatBoxText><TextIcon/> 어떤 것이 신조어인가요?</WhatBoxText>
           <hr />
-          신조어는 새로 만든 낱말을 의미하며 신조어 또는 신어는 새로 만들거나
+         <WhatsmallText> 신조어는 새로 만든 낱말을 의미하며 신조어 또는 신어는 새로 만들거나
           생겨난 말 또는 새로 귀화한 외래어를 가리킵니다. ‘신조어 사전’에서는
           현재 새로 만들어진 말 뿐만 아니라 과거 유행했던 신조어를 모두
-          포함합니다.
+          포함합니다.</WhatsmallText>
         </WhatisNew>
+        
+        
+        <Labelbox>등재할 신조어 <InputCountBox>{inputCount}/50</InputCountBox> </Labelbox>
 
         <TitleInput>
           <form onSubmit={handleSubmit(onSubmit)}>
             <ErrorXInput
               type="text"
               name="title"
-              label="등재할 신조어"
               register={register({
                 required: {
                   value: true,
@@ -126,21 +130,20 @@ const DictAdd = (props) => {
               })}
               placeholder="단어를 입력해주세요"
               maxLength="50"
-              width="37.5rem"
+              width="37rem"
               onChange={onInputChange}
               error={errors?.title?.message}
             />
-            <Button
+            {/* <Button
               shape="inputReset"
               type="button"
               onClick={() => reset({ ...getValues(), title: "" })}
-            />
+            /> */}
           </form>
-          <Button shape="smallBlack-B" onClick={onTitleChange}>
+          <Button shape="smallBlack-B"  onClick={onTitleChange}>
             중복확인
           </Button>
         </TitleInput>
-        <InputCountBox>{inputCount}/50</InputCountBox>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <BasicTextarea
@@ -175,6 +178,7 @@ const DictAdd = (props) => {
             })}
             label="신조어 유행 시작 연도"
             error={errors?.generation?.type}
+            width= "24rem"
           >
             {years.map((year, index) => {
               return (
@@ -194,6 +198,7 @@ const DictAdd = (props) => {
           />
         </form>
         <div>
+          <Labelbox> 태그 </Labelbox>
           <WholeBox>
             <TagBox>
               {tagList.map((tagItem, index) => {
@@ -216,12 +221,16 @@ const DictAdd = (props) => {
             </TagBox>
           </WholeBox>
         </div>
+     
         <form onSubmit={handleSubmit(onSubmit)}>
+          <div style={{display: "flex", justifyContent:"center"}}>
           <Button shape="confirmRed-B" type="submit" >
             등록하기
           </Button>
+          </div>
         </form>
       </Container>
+      <Footer/>
     </>
   );
 };
@@ -231,6 +240,7 @@ export default DictAdd;
 const Container = styled.div`
   margin: auto;
   max-width: 46rem;
+  padding-top: 4rem;
 `;
 
 const BookContianer = styled.div`
@@ -242,27 +252,42 @@ const TextContainer = styled.div`
   text-align: center;
   margin-top: 1.3em;
   margin-bottom: 2.5rem;
-  ${med16}
+  ${med20}
   color:var(--black24);
 `;
 
 const WhatisNew = styled.div`
-  text-align: center;
+  text-align: left;
   padding: 3rem 1.5rem;
-  margin: auto;
-
+  margin-bottom: 2rem;
   background-color: #f5f7ff;
   border-radius: 0.47rem;
 `;
-
+const WhatBoxText = styled.div`
+  ${bold18}
+  align-items: top;
+  margin-bottom: 1rem;
+`
+const WhatsmallText = styled.div`
+${med15} margin-left: 0.5rem;
+line-height: 24px;
+`
+const Labelbox = styled.div`
+display: flex;
+justify-content: space-between;
+  ${med14}
+  margin-top: 8px;
+  margin-bottom: 8px;
+`;
 const TitleInput = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
 `;
 
 const InputCountBox = styled.div`
-  display: flex;
+${med14}
+  text-align: right;
+  margin-right: 7rem;
 `;
 
 const WholeBox = styled.div`
