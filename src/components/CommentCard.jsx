@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { __deleteDictComment } from "../redux/modules/dictionary";
 
 //ellement & component
 import Character from "./Character";
@@ -17,6 +18,11 @@ const CommentCard = (props) => {
     dispatch;
   };
 
+
+  const deleteCmt = (data) =>{
+    dispatch(__deleteDictComment(data));
+  }
+
   return (
     <>
       <HrLine />
@@ -28,14 +34,21 @@ const CommentCard = (props) => {
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <LoadCmtTime>
+
               {props.data?.commentTime}{" "}
+              {props.nickname === props.data.nickname
+              ? <>
               <div style={{ margin: "0 0.25rem" }} onClick={() => {}}>
                 수정
               </div>{" "}
               |{" "}
-              <div style={{ margin: "0 0.25rem" }} onClick={() => {}}>
+              <div style={{ margin: "0 0.25rem", cursor: "pointer"}}
+              onClick={() => {deleteCmt(props.data.commentId)}}>
                 삭제
-              </div>{" "}
+              </div>
+              </>
+              : null }
+              {" "}
               | 신고
             </LoadCmtTime>
           </div>
@@ -43,14 +56,17 @@ const CommentCard = (props) => {
         <LoadCmt> {props.data?.comment} </LoadCmt>
       </div>
       <div>
-        <LikeBtn>
-          {props.data?.commentLikeStatus === true ? (
-            <AiOutlineLike style={{ width: "1.5rem" }} />
-          ) : (
-            <AiTwotoneLike style={{ width: "1.5rem" }} />
-          )}
-          {props.data?.commentLikeCount}
-        </LikeBtn>
+        {props.nickname !== props.data.nickname
+        ?<LikeBtn>
+        {props.data?.commentLikeStatus === false ? (
+          <AiOutlineLike style={{ cursor: "pointer", width: "1.5rem" }} />
+        ) : (
+          <AiTwotoneLike style={{ cursor: "pointer", width: "1.5rem" }} />
+        )}
+        {props.data?.commentLikeCount}
+      </LikeBtn>
+      : null}
+        
       </div>
     </>
   );
@@ -84,9 +100,8 @@ const LikeBtn = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border: 0.75px solid var(--graydf);
-  border-radius: 1.5px;
-  width: 4rem;
+  border: transparent;
+  padding: 1rem 1rem 1rem 0.5rem;
   height: 2rem;
   margin: 0 1rem 1rem 2.5rem;
 `;

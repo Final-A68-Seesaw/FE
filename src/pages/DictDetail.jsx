@@ -63,8 +63,10 @@ const DictDetail = (props) => {
         <GenerationBox>{dataList && dataList.generation} </GenerationBox>
         <BetweenBox>
         <TitleBox>{dataList && dataList.title}</TitleBox>
-        <EditDeleteBox> <div>수정</div> | <div>삭제</div> | 신고</EditDeleteBox>
-        </BetweenBox>
+       {dataList&&dataList.lastNickname === dataList&&dataList.nickname
+       ? <EditDeleteBox> <div>수정</div> | <div>삭제</div> | 신고</EditDeleteBox>
+       : null }
+       </BetweenBox>
         <UserInfoBox>
           <Character char={dataList && dataList.profileImages} />
           <CharacterAlign>
@@ -179,7 +181,15 @@ const DictDetail = (props) => {
             </div>
           </form>
         </CommentInputBox>
-       <CommentCard data = {dataList && dataList.postComments[0]}/>
+
+        {dataList && dataList.postComments.map((v,i) => {
+          return (<div key={i}>
+            <CommentCard data = {v} nickname = {dataList.nickname}/>
+          </div>)
+        })}
+
+       
+       
        <FooterHrLine/>
       </Container>
       <Footer/>
@@ -210,8 +220,7 @@ const GenerationBox = styled.div`
 const CharacterAlign = styled.div`
 display:flex;
 align-items: center;
-margin-top: 1rem;
-margin-bottom: 1rem;
+margin: 0.5rem 0;
 
 `;
 const BetweenBox = styled.div`
@@ -318,7 +327,7 @@ const CommentBox = styled.div`
   border-radius: 3px;
   padding: 1rem;
   text-align: center;
-  margin-top: 5rem;
+  margin-top: 4rem;
   margin-bottom: 3rem;
 `;
 const CommentBoldText = styled.div`

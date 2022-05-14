@@ -16,7 +16,7 @@ const Button = ({ shape, children, ...rest }) => {
     case "smallBlack-B":
       return (
         <Confirm
-          margin="0 0 0 2rem"
+          margin="0 0 0.5rem 1rem"
           width="8.43rem"
           height="3rem"
           background="black"
