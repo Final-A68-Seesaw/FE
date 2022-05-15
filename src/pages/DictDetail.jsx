@@ -53,7 +53,7 @@ const DictDetail = (props) => {
 
   //댓글 데이터 전송
   const onSubmit = (data) => {
-    dispatch(__addDictComment(params.cardTitleId, data));
+    dispatch(__addDictComment(params.cardTitleId, data, dataList.nickname));
   };
 
   return (

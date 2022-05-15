@@ -45,8 +45,11 @@ export const __login =
       });
       history.replace("/");
     } catch (e) {
-        console.log(res);
-        window.alert("존재하지 않는 이메일입니다.");
+      console.log(e)
+        if (e.message === "Request failed with status code 400") {
+          alert("아이디와 비밀번호를 다시 확인해주세요!");
+          return;
+        }
     }
   };
   
