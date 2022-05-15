@@ -35,7 +35,7 @@ const Login = () => {
     <>
 
       <Container>
-        <div style={{ width: '50%'}}>
+        <div style={{ Width:'200px', minHeight: '100vh' }}>
           <Img />
         </div>
         <RightContainer>

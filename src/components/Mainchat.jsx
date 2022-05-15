@@ -43,6 +43,8 @@ const Mainchat = (props) => {
 
   useEffect(() => {
     ConnectReady()
+
+    return () => stompDisConnect()
   }, [])
 
   useEffect(() => {
@@ -223,6 +225,7 @@ export default Mainchat;
 
 const ChatModal = styled.div`
   position: fixed;
+  z-index: 100;
   
   width: 411.75px;
   height: 651px;
@@ -275,10 +278,10 @@ const ChatModal = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 30px;
+    padding: 0 15px;
     
-    width: 351.75px;
-    height: 58.5px;
+    width: 348px;
+    height: 58px;
 
     background: #222222;
     border-radius: 7.5px 7.5px 0px 0px;
@@ -289,6 +292,7 @@ const ChatModal = styled.div`
       
       width: 52.5px;
       height: 17.25px;
+      /* margin: 0 15px 0 15px; */
 
       font-family: 'Noto Sans KR';
       font-style: normal;
@@ -392,32 +396,34 @@ const ChatModal = styled.div`
   .chatBox {
     position: fixed;
 
-    width: 368.75px;
-    height: 120px;
+    width: 348px;
+    height: 119px;
 
     bottom: 0px;
-    padding: 20px;
+    padding: 0 15px;
     display: flex;
     align-items: center;
+    justify-content: center;
     border-radius: 3px;
 
     border: 0.75px solid #DFDFDF;
-    background: #EDEFF2;
+    background: #F5F7FF;
 
     .chatInput {
       box-sizing: border-box;
       
-      width: 361px;
+      width: 320px;
       height: 48px;
 
-      padding-left: 24px;
+      padding-left: 20px;
       padding-right: 90px;
       font-size: 15px;
+      margin: 15px 0 56px 0;
 
       background: #FFFFFF;
 
       border: 1px solid #DFDFDF;
-      border-radius: 4px;
+      border-radius: 3px;
 
       ::placeholder {
         font-size: 15px;

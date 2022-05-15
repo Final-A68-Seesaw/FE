@@ -80,7 +80,6 @@ const Main = () => {
       <BestWordWrap>
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
-        {console.log(selectBest)}
         <div style={{ display: 'flex', width: '1510px', margin: 'auto', justifyContent: 'space-between' }}>
           <img src={selectBest && (selectBest.imageUrl || selectBest.postImages)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
           <BestSelect onClick={() => history.push(`/dictionary/detail/${selectBest.postId}`)}>
@@ -104,7 +103,7 @@ const Main = () => {
       <TestWrap>
 
         <TestTitle>✍️ 닉네임 님의 능력을 테스트해보세요</TestTitle>
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px', gap: '10px' }}>
           {getRand && getRand.map((v, i) => {
             return <TestCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
               <img src={v.imageUrl} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} />

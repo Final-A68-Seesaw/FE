@@ -45,7 +45,7 @@ export const __login =
       });
       history.replace("/");
     } catch (e) {
-        console.log(res);
+        console.log(e);
         window.alert("존재하지 않는 이메일입니다.");
     }
   };
