@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 
 //redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,46 +17,45 @@ import { bold16, bold22, bold15, med15 } from '../themes/textStyle'
 
 
 const DictList = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    useEffect(()=>{
-        dispatch(__loadDictCardList());
-    },[]);
-    
-    const dictList = useSelector((state) => state.dictionary.list);
-    console.log(dictList);
+  useEffect(() => {
+    dispatch(__loadDictCardList());
+  }, []);
+
+  const dictList = useSelector((state) => state.dictionary.list);
+  console.log(dictList);
   return (
     <div>
-        <Header/>
-        <Container>
-          <MenuSelection>
+      <Header />
+      <Container>
+        <MenuSelection>
           <DictSelect>사전장</DictSelect>
           <Newest>최신순</Newest>
-          </MenuSelection>
-          <Line style = {{width: "74rem"}}/>
-          <CardWholeBox>
-          {dictList && dictList.map ((v,i)=>{
-            return(
-              <div key={i}>
-             <WordCard 
-             onClick = {() => {history.push(`/dictionary/detail/${v.postId}`)}}>
-              
-              
-              <GenerationBox> {v.generation} </GenerationBox>
-               <CardTitle>{v.title}</CardTitle>
-               <CardContents>{v.contents}</CardContents>
-               <ViewCountBox><div>조회수 {v.views}</div>
-               <div>스크랩 {v.scrapCount} </div></ViewCountBox>
-              <img src={v.postImages} style={{display: "flex",width: "12rem", height: "17rem", borderRadius: "10px"}} />
-             </WordCard>
-                
+        </MenuSelection>
+        <Line style={{ width: "74rem" }} />
+        <CardWholeBox>
+          {dictList && dictList.map((v, i) => {
+            return (
+              <div key={i} style={{ margin: '0.5rem' }}>
+                <WordCard
+                  onClick={() => { history.push(`/dictionary/detail/${v.postId}`) }}>
+
+                  <GenerationBox> {v.generation} </GenerationBox>
+                  <CardTitle>{v.title}</CardTitle>
+                  <CardContents>{v.contents}</CardContents>
+                  <ViewCountBox><div>조회수 {v.views}</div>
+                    <div>스크랩 {v.scrapCount} </div></ViewCountBox>
+                </WordCard>
+                <img src={v.postImages} style={{ display: "flex", width: "223px", height: "320px", borderRadius: "10px" }} />
+
               </div>
             )
           })}
-          </CardWholeBox>
-     
-        </Container>
-    <Footer/>
+        </CardWholeBox>
+
+      </Container>
+      <Footer />
     </div>
   )
 }
@@ -91,12 +90,17 @@ margin-top: 2rem;
 
 `
 const WordCard = styled.div`
-width: 12rem;
-height: 17rem;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+
+width: 223px;
+height: 320px;
 border-radius: 10px;
 color:var(--white);
 background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 41.15%, #1B0042 80.21%);
-margin: 0.5rem;
+/* margin: 0.5rem; */
+position: absolute;
 
 cursor: pointer;
 
@@ -117,18 +121,15 @@ const GenerationBox = styled.div`
   border-radius: 40px;
   border: 3px solid var(--white);
   color: white;
-  margin-bottom: 8rem;
+  margin:1rem 0 8rem 1rem;
   ${bold15}
  
 `;
 
 const CardTitle = styled.div`
 ${bold22}
-margin-bottom: 1rem;
+margin: 0 0 1rem 1rem;
 text-overflow: ellipsis;
-
-overflow: hidden;
-
 white-space:nowrap;
 
 `
@@ -136,18 +137,25 @@ const CardContents = styled.div`
   ${med15}
   color: #AAAAAA;
   display: inline-block;
-  width: 100%;
+  width: 85%;
   overflow: hidden;
+  word-wrap: break-word;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   /* 여러 줄 자르기 추가 스타일 */
   white-space: normal;
   line-height: 1.2;
   height: 2.3rem;
+  margin: 0 1rem 0 1rem;
+  
 `
 const ViewCountBox = styled.div`
 color: #555555;
 ${med15}
-margin: 1rem 0.5rem 1rem 0;
+margin: 0 0.5rem 0.5rem 0;
+padding: 1rem;
 display: flex;
 justify-content: space-between;
 `
