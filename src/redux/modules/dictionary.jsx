@@ -97,6 +97,19 @@ export const __loadDictDetail = (cardTitle, commentPage) => {
   };
 };
 
+export const __deleteDictDetail = (postId )=>{
+  return (dispatch, getState, { history }) => {
+    console.log(postId)
+    dictApi
+    .delDictDetail(postId)
+    .then((res)=>{
+      console.log(res)
+      history.push("/dictionary")
+    })
+    .catch((err)=> console.log(err))
+  }
+}
+
 export const __loadDictCardList = (data) => {
   return (dispatch, getState, { history }) => {
     dictApi

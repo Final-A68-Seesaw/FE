@@ -7,7 +7,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   __loadDictDetail,
   __addDictComment,
+  __deleteDictDetail,
 } from "../redux/modules/dictionary";
+import { history } from "../redux/configStore";
 
 //element & component
 import Header from "../components/Header";
@@ -38,11 +40,18 @@ const DictDetail = (props) => {
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
 
+  //디테일 데이터 로드
   useEffect(() => {
-    dispatch(__loadDictDetail(params.cardTitleId, 1));
+    dispatch(__loadDictDetail(params.cardTitleId));
   }, []);
 
-  //이미지 버튼 애니메이션
+  //디테일 삭제 전송
+  const deleteDetail = (data) => {
+    //얼럿 기능 구현하기.
+    dispatch(__deleteDictDetail(data));
+  };
+
+  //이미지 더보기 버튼 애니메이션
   const RecentScrollRef = useRef();
 
   //인풋 글자수 count
@@ -56,26 +65,40 @@ const DictDetail = (props) => {
     dispatch(__addDictComment(params.cardTitleId, data, dataList.nickname));
   };
 
+  console.log(params.cardTitleId);
   return (
     <>
       <Header />
       <Container>
         <GenerationBox>{dataList && dataList.generation} </GenerationBox>
         <BetweenBox>
-        <TitleBox>{dataList && dataList.title}</TitleBox>
-       {dataList&&dataList.lastNickname === dataList&&dataList.nickname
-       ? <EditDeleteBox> <div>수정</div> | <div>삭제</div> | 신고</EditDeleteBox>
-       : null }
-       </BetweenBox>
+          <TitleBox>{dataList && dataList.title}</TitleBox>
+            <EditDeleteBox>
+              <div
+                style={{ margin: "0 0.25rem", cursor: "pointer" }}
+                onClick={() => {history.push(`/dictionary/detail/${params.cardTitleId}/edit`)}}
+              >
+                수정
+              </div>{" "}
+             {/*  |
+              <div
+                style={{ margin: "0 0.25rem", cursor: "pointer" }}
+                onClick={() => {deleteDetail(params.cardTitleId)}}
+                >
+                  삭제
+                  </div> */}
+              | 신고
+            </EditDeleteBox>
+        </BetweenBox>
         <UserInfoBox>
           <Character char={dataList && dataList.profileImages} />
           <CharacterAlign>
-          <UserName>{dataList && dataList.lastNickname}</UserName>
-          <UpdateBox>{dataList && dataList.postUpdateTime} </UpdateBox>
-          <WordInfo>
-            | 조회수 {dataList && dataList.views} | 스크랩{" "}
-            {dataList && dataList.scrapCount}
-          </WordInfo>
+            <UserName>{dataList && dataList.lastNickname}</UserName>
+            <UpdateBox>{dataList && dataList.postUpdateTime} </UpdateBox>
+            <WordInfo>
+              | 조회수 {dataList && dataList.views} | 스크랩{" "}
+              {dataList && dataList.scrapCount}
+            </WordInfo>
           </CharacterAlign>
         </UserInfoBox>
 
@@ -130,12 +153,12 @@ const DictDetail = (props) => {
           </>
         )}
 
-        {dataList && dataList.tagName.length !== 0 ? (
+        {dataList && dataList.tagNames.length !== 0 ? (
           <>
             <LabelTag>태그</LabelTag>
             <TagArea>
               <Tags>
-                {dataList.tagName.map((v, i) => {
+                {dataList.tagNames.map((v, i) => {
                   return (
                     <div key={i}>
                       <Tag> # {v}</Tag>
@@ -182,17 +205,18 @@ const DictDetail = (props) => {
           </form>
         </CommentInputBox>
 
-        {dataList && dataList.postComments.map((v,i) => {
-          return (<div key={i}>
-            <CommentCard data = {v} nickname = {dataList.nickname}/>
-          </div>)
-        })}
+        {dataList &&
+          dataList.postComments.map((v, i) => {
+            return (
+              <div key={i}>
+                <CommentCard data={v} nickname={dataList.nickname} />
+              </div>
+            );
+          })}
 
-       
-       
-       <FooterHrLine/>
+        <FooterHrLine />
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 };
@@ -218,15 +242,14 @@ const GenerationBox = styled.div`
   margin-bottom: 0.5rem;
 `;
 const CharacterAlign = styled.div`
-display:flex;
-align-items: center;
-margin: 0.5rem 0;
-
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
 `;
 const BetweenBox = styled.div`
   justify-content: space-between;
-display: flex;
-`
+  display: flex;
+`;
 const TitleBox = styled.div`
   ${bold30}
   margin-bottom: 0.5rem;
@@ -235,9 +258,9 @@ const EditDeleteBox = styled.div`
   color: var(--gray99);
   ${med14}
   display: flex;
-`
+`;
 const UserInfoBox = styled.div`
-display: flex;
+  display: flex;
   margin: 1rem 0;
 `;
 const UserName = styled.div`

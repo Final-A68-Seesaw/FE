@@ -56,23 +56,28 @@ const DictAdd = (props) => {
   const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState([]);
 
+  //엔터키 프레스시 태그 추가됨
   const onKeyPress = (e) => {
     if (e.target.value.length !== 0 && e.key === "Enter") {
       submitTagItem();
     }
   };
 
+  //엔터키 프레스 후 태그의 내용이 중복되면 얼럿이 뜨고 없으면 추가된 후 태그 인풋이 리셋됨
   const submitTagItem = () => {
-    let updatedTagList = [...tagList];
-    updatedTagList.push(tagItem);
-    setTagList(updatedTagList);
+    if (!tagList.find((v) => v === tagItem) && tagList.length < 10) {
+      let updatedTagList = [...tagList];
+      updatedTagList.push(tagItem);
+      setTagList(updatedTagList);
+    }
     setTagItem("");
   };
 
+  //태그 삭제시
   const deleteTagItem = (e) => {
     const deleteTagItem = e.target.parentElement.firstChild.innerText;
     const filteredTagList = tagList.filter(
-      (tagItem) => tagItem !== deleteTagItem
+      (tagItem) => `#${tagItem}` !== deleteTagItem
     );
     setTagList(filteredTagList);
   };
@@ -106,16 +111,22 @@ const DictAdd = (props) => {
         </TextContainer>
 
         <WhatisNew>
-        <WhatBoxText><TextIcon/> 어떤 것이 신조어인가요?</WhatBoxText>
+          <WhatBoxText>
+            <TextIcon /> 어떤 것이 신조어인가요?
+          </WhatBoxText>
           <hr />
-         <WhatsmallText> 신조어는 새로 만든 낱말을 의미하며 신조어 또는 신어는 새로 만들거나
-          생겨난 말 또는 새로 귀화한 외래어를 가리킵니다. ‘신조어 사전’에서는
-          현재 새로 만들어진 말 뿐만 아니라 과거 유행했던 신조어를 모두
-          포함합니다.</WhatsmallText>
+          <WhatsmallText>
+            {" "}
+            신조어는 새로 만든 낱말을 의미하며 신조어 또는 신어는 새로 만들거나
+            생겨난 말 또는 새로 귀화한 외래어를 가리킵니다. ‘신조어 사전’에서는
+            현재 새로 만들어진 말 뿐만 아니라 과거 유행했던 신조어를 모두
+            포함합니다.
+          </WhatsmallText>
         </WhatisNew>
-        
-        
-        <Labelbox>등재할 신조어 <InputCountBox>{inputCount}/50</InputCountBox> </Labelbox>
+
+        <LabelBox>
+          등재할 신조어 <InputCountBox>{inputCount} /50</InputCountBox>{" "}
+        </LabelBox>
 
         <TitleInput>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -140,7 +151,7 @@ const DictAdd = (props) => {
               onClick={() => reset({ ...getValues(), title: "" })}
             /> */}
           </form>
-          <Button shape="smallBlack-B"  onClick={onTitleChange}>
+          <Button shape="smallBlack-B" onClick={onTitleChange}>
             중복확인
           </Button>
         </TitleInput>
@@ -178,7 +189,7 @@ const DictAdd = (props) => {
             })}
             label="신조어 유행 시작 연도"
             error={errors?.generation?.type}
-            width= "24rem"
+            width="24rem"
           >
             {years.map((year, index) => {
               return (
@@ -194,22 +205,35 @@ const DictAdd = (props) => {
             name="videoUrl"
             label="동영상 링크 첨부"
             register={register}
-            placeholder="URL을 입력해주세요"
+            placeholder="URL을 입력해주세요!"
           />
         </form>
         <div>
-          <Labelbox> 태그 </Labelbox>
+          <LabelBox>
+            <TagLabel> 태그 </TagLabel>{" "}
+            <TagLabel>{tagList.length} /10</TagLabel>
+          </LabelBox>
           <WholeBox>
-            <TagBox>
-              {tagList.map((tagItem, index) => {
-                return (
-                  <TagItem key={index}>
-                    <Text>#{tagItem}</Text>
-                    <TagXButton onClick={deleteTagItem}>X</TagXButton>
-                  </TagItem>
-                );
-              })}
+            {tagList.length === 0 ? null : (
+              <div>
+              <TagBox>
+                {tagList.map((tagItem, index) => {
+                  return (
+                    <TagItem key={index}>
+                      <Text>#{tagItem}</Text>
+                      <TagXButton onClick={deleteTagItem}>X</TagXButton>
+                    </TagItem>
+                  );
+                })}
+              </TagBox>
+              <HrLine />
 
+              </div>
+            )}
+
+            {tagList.length >= 10 ? (
+              <TagMaxText>태그는 10개까지 입력 가능합니다!</TagMaxText>
+            ) : (
               <TagInput
                 type="text"
                 placeholder="Enter 키를 사용해 #태그를 입력해주세요!"
@@ -218,19 +242,19 @@ const DictAdd = (props) => {
                 value={tagItem}
                 onKeyPress={onKeyPress}
               />
-            </TagBox>
+            )}
           </WholeBox>
         </div>
-     
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div style={{display: "flex", justifyContent:"center"}}>
-          <Button shape="confirmRed-B" type="submit" >
-            등록하기
-          </Button>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Button shape="confirmRed-B" type="submit">
+              등록하기
+            </Button>
           </div>
         </form>
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 };
@@ -267,17 +291,25 @@ const WhatBoxText = styled.div`
   ${bold18}
   align-items: top;
   margin-bottom: 1rem;
-`
+`;
 const WhatsmallText = styled.div`
-${med15} margin-left: 0.5rem;
-line-height: 24px;
-`
-const Labelbox = styled.div`
-display: flex;
-justify-content: space-between;
+  ${med15} margin-left: 0.5rem;
+  line-height: 24px;
+`;
+const LabelBox = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+const TagLabel = styled.div`
+  display: flex;
+  justify-content: space-between;
   ${med14}
   margin-top: 8px;
   margin-bottom: 8px;
+`;
+const HrLine = styled.hr`
+ margin : 0.4rem 0.7rem 0 0.7rem;
+  border: 0.3px solid var(--graydf);
 `;
 const TitleInput = styled.div`
   display: flex;
@@ -285,28 +317,27 @@ const TitleInput = styled.div`
 `;
 
 const InputCountBox = styled.div`
-${med14}
+  ${med14}
   text-align: right;
   margin-right: 7rem;
 `;
 
 const WholeBox = styled.div`
-  display: flex;
-`;
-
-const TagBox = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  min-height: 50px;
-  padding: 0 10px;
   border: 1px solid var(--graydf);
-  border-radius: 3px;
+  border-radius: 0.3rem;
   width: 46rem;
-  height: 3rem;
   &:focus-within {
     border: 2px solid black;
   }
+`;
+
+const TagBox = styled.div`
+background-color: transparent;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  min-height: 3rem;
+  padding: 0 10px;
 `;
 
 const TagItem = styled.div`
@@ -338,6 +369,11 @@ const TagXButton = styled.button`
   cursor: pointer;
 `;
 
+const TagMaxText = styled.div`
+  color: var(--grayc1);
+  ${med14}
+  padding: 0.9rem;
+`;
 const TagInput = styled.input`
   display: inline-flex;
   min-width: 250px;
@@ -345,4 +381,9 @@ const TagInput = styled.input`
   border: none;
   outline: none;
   cursor: text;
+  padding: 0.9rem;
+  &::placeholder {
+    color: var(--grayc1);
+    ${med14}
+  }
 `;
