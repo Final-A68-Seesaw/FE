@@ -16,8 +16,9 @@ import G1 from '../asset/G1.svg'
 import G2 from '../asset/G2.svg'
 import Y1 from '../asset/Y1.svg'
 import Y2 from '../asset/Y2.svg'
-import { MainApi } from '../api/mainApi';
+import GameCard from '../asset/GameCard.svg'
 
+import { MainApi } from '../api/mainApi';
 import isLogin from '../auth/isLogin';
 import { history } from '../redux/configStore';
 
@@ -80,8 +81,8 @@ const Main = () => {
       <BestWordWrap>
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
-        <div style={{ display: 'flex', width: '1510px', margin: 'auto', justifyContent: 'space-between' }}>
-          <img src={selectBest && (selectBest.imageUrl || selectBest.postImages)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
+        <div style={{ display: 'flex', width: '1423px', margin: 'auto', justifyContent: 'space-between' }}>
+          <img src={selectBest && (selectBest.imageUrl || selectBest.postImage)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
           <BestSelect onClick={() => history.push(`/dictionary/detail/${selectBest.postId}`)}>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest && selectBest.generation}</GenBox></div>
@@ -104,16 +105,21 @@ const Main = () => {
 
         <TestTitle>✍️ 닉네임 님의 능력을 테스트해보세요</TestTitle>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px', gap: '10px' }}>
+          
           {getRand && getRand.map((v, i) => {
             return <TestCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
-              <img src={v.imageUrl} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} />
+              {/* <img src={v.postImage} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} /> */}
+              <div style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} >
+                <GameCard style={{ width: '682px', height: '435px' }} />
+              </div>
 
-              <div style={{ display: 'flex', flexDirection: 'column', justifyContents: 'center', position: 'absolute', width: '682px', height: '435px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', justifyContents: 'center', position: 'absolute', width: '682px', height: '435px', padding: '18px 0' }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '26px' }}>
                   <GenBox>{v.generation}</GenBox>
                   <TestAnswer>
-                    <TestAnswerText>단어 정답보기</TestAnswerText>
-                    <div style={{ width: '20px', height: '20px', background: '#C4C4C4', }}></div>
+                    <TestAnswerText>테스트 하러 가기</TestAnswerText>
+                    {/* <div style={{ width: '20px', height: '20px', background: '#C4C4C4', }}></div> */}
+                  <BsChevronRight style={{ color: '#FAFAFA' }} />
                   </TestAnswer>
                 </div>
                 <TestCellBox>
@@ -243,7 +249,7 @@ const BestWordWrap = styled.div`
 `
 
 const BestWordTitle = styled.p`
-  max-width: 1510px;
+  max-width: 1423px;
   height: 32px;
 
   font-family: 'Noto Sans KR';
@@ -340,7 +346,7 @@ const BestWords = styled.div`
   align-items: center;
   padding: 8px;
 
-  width: 200px;
+  width: 157.34px;
   height: 58.06px;
 
   background: rgba(255, 255, 255, 0.1);
@@ -367,7 +373,7 @@ const BestWords = styled.div`
 `
 
 const TestWrap = styled.div`
-  max-width: 1510px;
+  max-width: 1423px;
   display: flex;
   flex-direction: column;
   
@@ -397,7 +403,7 @@ const TestCard = styled.div`
   min-width: 682px;
   height: 435px;
 
-  background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 0%, #39008C 100%);
+  /* background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 0%, #39008C 100%); */
   border-radius: 11.1667px;
 
   cursor: pointer;
@@ -407,12 +413,12 @@ const TestAnswer = styled.div`
   display: flex;
   align-items: center;
 
-  width: 126px;
+  width: 145px;
   height: 25px;
 `
 
 const TestAnswerText = styled.div`
-  width: 98px;
+  width: 118px;
   height: 25px;
 
   font-family: 'Noto Sans KR';
@@ -470,7 +476,7 @@ const TestDesc = styled.p`
 
 const RecentWrap = styled.div`
   margin: 126px auto 115px auto;
-  width: 1510px;
+  width: 1423px;
 
   display: flex;
   flex-direction: column;
@@ -583,7 +589,7 @@ const RightBtn = styled.div`
   position: absolute;
   width: 70px;
   height: 70px;
-  right: 160px;
+  right: 3%;
   display: flex;
   align-items: center;
   justify-content: center;

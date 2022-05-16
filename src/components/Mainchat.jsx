@@ -11,6 +11,7 @@ import { ChatUrls } from '../shared/ChatApi'
 
 import { BsChevronDown } from 'react-icons/bs'
 import { FaRegDotCircle } from 'react-icons/fa'
+import { FiSend } from 'react-icons/fi'
 
 let stompClient = null
 
@@ -190,8 +191,8 @@ const Mainchat = (props) => {
             </div>
           if (v.senderName == userData.nickname)
             return <div key={i} style={{ display: 'flex', justifyContent: 'right' }}>
-              <p className='chattime' style={{ margin: '10px 0 20px 0' }}>{v.createdAt}</p>
-              <p className='userchat' style={{ justifyContent: 'right', wordBreak: 'break-all', width: '240px', height: '100%', margin: '2px 0 20px 10px' }}>{v.message}</p>
+              <p className='chattime' style={{ margin: '4px 0 20px 0', fontSize: '10px' }}>{v.createdAt}</p>
+              <p className='userchat' style={{ justifyContent: 'right', wordBreak: 'break-all', width: '240px', height: '100%', margin: '-2px 0 20px 10px' }}>{v.message}</p>
               <p className='usernick'>{v.senderName}</p>
               <div className='chatImg'></div>
             </div>
@@ -199,8 +200,8 @@ const Mainchat = (props) => {
             return <div key={i} style={{ display: 'flex' }}>
               <div className='chatImg'></div>
               <p className='usernick'>{v.senderName}</p>
-              <p className='userchat' style={{ justifyContent: 'left', wordBreak: 'break-all', width: '240px', height: '100%', margin: '2px 10px 20px 0' }}>{v.message}</p>
-              <p className='chattime' style={{ margin: '10px 0 20px 0' }}>{v.createdAt}</p>
+              <p className='userchat' style={{ justifyContent: 'left', wordBreak: 'break-all', width: '240px', height: '100%', margin: '-2px 10px 20px 0' }}>{v.message}</p>
+              <p className='chattime' style={{ margin: '4px 0 20px 0', fontSize: '10px' }}>{v.createdAt}</p>
             </div>
         })}
         <div ref={messageRef}></div>
@@ -215,7 +216,7 @@ const Mainchat = (props) => {
           maxLength='50'
           onKeyDown={onKeyDown}
           onChange={(e) => setUserData({ ...userData, message: e.target.value })}></input>
-        <button className='sendBtn' onClick={sendPublicMessage}></button>
+        <FiSend className='sendBtn' onClick={sendPublicMessage} />
       </div>
     </ChatModal>
   )
@@ -227,8 +228,8 @@ const ChatModal = styled.div`
   position: fixed;
   z-index: 100;
   
-  width: 411.75px;
-  height: 651px;
+  width: 379.75px;
+  height: 640px;
 
   padding-bottom: 300px;
   right: 30px;
@@ -348,20 +349,35 @@ const ChatModal = styled.div`
   .chatContainer {
     
     padding: 20px;
-    height: 100%;
+    height: 420px;
     overflow-y: auto;
+    overflow-x: hidden;
+    
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #C0C4C9;
+      border-radius: 3.71094px;
+      height: 84px;
+    }
 
     .chatImg {
-      width: 22.5px;
-      height: 22.5px;
+      min-width: 23px;
+      height: 23px;
+      margin: 2px 0 0 0;
 
       background: #C4C4C4;
       border-radius: 3px;
     }
 
     .usernick {
-      width: 42px;
-      height: 22px;
+      max-width: 76px;
+      min-width: 56px;
+      /* width:42px; */
+      max-height: 22px;
+      justify-content: center;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
@@ -396,11 +412,11 @@ const ChatModal = styled.div`
   .chatBox {
     position: fixed;
 
-    width: 348px;
+    width: 337px;
     height: 119px;
 
     bottom: 0px;
-    padding: 0 15px;
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -433,9 +449,11 @@ const ChatModal = styled.div`
     .sendBtn {
       width: 30px;
       height: 30px;
-      margin-left: -60px;
+      margin: 0 0 40px -40px;
 
       background: #C4C4C4;
+      
+      cursor: pointer;
     }
   }
 `
