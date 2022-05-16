@@ -9,7 +9,7 @@ const Character = (props) => {
         <div>
             {CharParts && CharParts.map((v, i) => {
                 return <div key={i}>
-                    <CharImg src={v.url} style={{ zIndex: `${CharParts.length - i}` }} size={props.size} />
+                    <CharImg src={v.profileImage} style={{ zIndex: `${CharParts.length - i}` }} size={props.size} />
                 </div>
             })}
         </div>

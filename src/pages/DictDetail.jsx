@@ -42,7 +42,7 @@ const DictDetail = (props) => {
 
   //디테일 데이터 로드
   useEffect(() => {
-    dispatch(__loadDictDetail(params.cardTitleId));
+    dispatch(__loadDictDetail(params.cardTitleId, 1));
   }, []);
 
   //디테일 삭제 전송

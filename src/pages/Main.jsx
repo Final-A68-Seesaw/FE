@@ -51,7 +51,9 @@ const Main = () => {
   }
 
   React.useEffect(() => {
-    MainApi.mainGetRecent().then((res) => setGetRecent(res.data))
+    MainApi.mainGetRecent().then((res) => {
+      setGetRecent(res.data)
+    })
     MainApi.mainGetRand().then((res) => setGetRand(res.data))
     MainApi.mainGetBest().then((res) => {
       setGetBest(res.data)
@@ -105,7 +107,7 @@ const Main = () => {
 
         <TestTitle>✍️ 닉네임 님의 능력을 테스트해보세요</TestTitle>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px', gap: '10px' }}>
-          
+
           {getRand && getRand.map((v, i) => {
             return <TestCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
               {/* <img src={v.postImage} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} /> */}
@@ -119,7 +121,7 @@ const Main = () => {
                   <TestAnswer>
                     <TestAnswerText>테스트 하러 가기</TestAnswerText>
                     {/* <div style={{ width: '20px', height: '20px', background: '#C4C4C4', }}></div> */}
-                  <BsChevronRight style={{ color: '#FAFAFA' }} />
+                    <BsChevronRight style={{ color: '#FAFAFA' }} />
                   </TestAnswer>
                 </div>
                 <TestCellBox>
