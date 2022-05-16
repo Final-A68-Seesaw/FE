@@ -79,7 +79,7 @@ const SignupCharacter = () => {
     userApi.signupCharacter().then((res) => {
       setCharSelect(res.data);
       setCharId([res.data.faceUrl[0].charId, res.data.accessoryUrl[0].charId, res.data.backgroundUrl[0].charId ])
-      setCharPrev([res.data.faceUrl[0].url, res.data.accessoryUrl[0].url, res.data.backgroundUrl[0].url ])
+      setCharPrev([res.data.faceUrl[0].profileImage, res.data.accessoryUrl[0].profileImage, res.data.backgroundUrl[0].profileImage ])
       
     });
   }, []);
@@ -191,11 +191,11 @@ const SignupCharacter = () => {
                         type="radio"
                         name="faceUrl"
                         onChange={changeRadio}
-                        value={[a.url, a.charId]}
+                        value={[a.profileImage, a.charId]}
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.url} style = {{width:"4rem", height: "4rem", borderRadius: "0.75rem"}} />
+                          <img src={a.profileImage} style = {{width:"4rem", height: "4rem", borderRadius: "0.75rem"}} />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -213,11 +213,11 @@ const SignupCharacter = () => {
                         type="radio"
                         name="accessoryUrl"
                         onChange={changeRadio}
-                        value={[a.url, a.charId]}
+                        value={[a.profileImage, a.charId]}
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.url } style = {{width:"4rem",height: "4rem", borderRadius: "0.75rem"}}/>
+                          <img src={a.profileImage } style = {{width:"4rem",height: "4rem", borderRadius: "0.75rem"}}/>
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -236,11 +236,11 @@ const SignupCharacter = () => {
                         label="배경"
                         name="backgroundUrl"
                         onChange={changeRadio}
-                        value={[a.url, a.charId]}
+                        value={[a.profileImage, a.charId]}
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.url} style = {{width:"4rem",height: "4rem", borderRadius: "1rem"}} />
+                          <img src={a.profileImage} style = {{width:"4rem",height: "4rem", borderRadius: "1rem"}} />
                         </CharContain>
                       </SelectCharSource>
                     </label>

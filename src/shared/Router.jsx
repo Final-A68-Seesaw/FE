@@ -13,6 +13,7 @@ import Login from '../pages/Login';
 import DictAdd from '../pages/DictAdd';
 import DictDetail from '../pages/DictDetail';
 import DictList from '../pages/DictList';
+import DictDetailEdit from '../pages/DictDetailEdit'
 
 //trouble
 import Trouble from '../pages/Trouble';
@@ -44,9 +45,10 @@ const Router = () => {
         
         <Route path="/" exact component={Main} />
 
+        <Route path="/dictionary" exact component={DictList}/>
         <Route path="/dictionary/add" exact component={DictAdd}/>
         <Route path="/dictionary/detail/:cardTitleId" exact component = {DictDetail}/>
-        <Route path="/dictionary" exact component={DictList}/>
+        <Route path="/dictionary/detail/:cardTitleId/edit" exact component = {DictDetailEdit}/>
 
         <Route path="/searchresult" exact component={SearchResult} />
         <Route path="/mypage" exact component={Mypage} />
