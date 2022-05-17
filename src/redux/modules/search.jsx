@@ -13,10 +13,10 @@ const initialState = {
 
 const getSearchDB = (searchData) => {
     return (dispatch, getState, { history }) => {
+
         MainApi.getsearch(searchData)
             .then((res) => {
-                dispatch(getSearch(res.data))
-                history.push(`/searchresult`)
+                history.push(`/searchresult/${searchData}`)
             })
             .catch((err) => console.log(err))
     }

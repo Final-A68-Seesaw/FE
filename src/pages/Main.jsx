@@ -85,7 +85,7 @@ const Main = () => {
       <BestWordWrap>
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
-        <div style={{ display: 'flex', margin: 'auto', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', margin: 'auto', maxWidth: '1423px', justifyContent: 'space-between' }}>
           <img src={selectBest && (selectBest.postImages || selectBest.postImage)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
           <BestSelect onClick={() => history.push(`/dictionary/detail/${selectBest.postId}`)}>
 
@@ -250,7 +250,7 @@ const BestWordWrap = styled.div`
 `
 
 const BestWordTitle = styled.p`
-  /* max-width: 1423px; */
+  max-width: 1423px;
   height: 32px;
 
   font-family: 'Noto Sans KR';
@@ -374,7 +374,7 @@ const BestWords = styled.div`
 `
 
 const TestWrap = styled.div`
-  /* max-width: 1423px; */
+  max-width: 1423px;
   display: flex;
   flex-direction: column;
   
@@ -476,8 +476,8 @@ const TestDesc = styled.p`
 `
 
 const RecentWrap = styled.div`
+  max-width: 1423px;
   margin: 126px auto 115px auto;
-  /* width: 1423px; */
 
   display: flex;
   flex-direction: column;

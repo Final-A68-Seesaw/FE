@@ -50,7 +50,7 @@ const Router = () => {
         <Route path="/dictionary/detail/:cardTitleId" exact component = {DictDetail}/>
         <Route path="/dictionary/detail/:cardTitleId/edit" exact component = {DictDetailEdit}/>
 
-        <Route path="/searchresult/:id" exact component={SearchResult} />
+        <Route path="/searchresult/:keyword" exact component={SearchResult} />
         <Route path="/mypage" exact component={Mypage} />
         <Route path="/profiledit" exact component={ProfileEdit} />
         <Route path="/user/kakao/callback" exact component={AuthRedirectHandler}/>

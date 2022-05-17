@@ -28,13 +28,15 @@ const Header = (props) => {
         setScrolly(scrollY)
     }
 
-    const openModal = () => {
-        setShowModal(!showModal);
-    }
+    // const openModal = () => {
+    //     setShowModal(!showModal);
+    // }
 
     const HeadSearch = (e) => {
-        if (e.key === 'Enter')
-            dispatch(SearchActions.getSearchDB(headInput))
+        if (e.key === 'Enter') {
+            setHeadInput('')
+            history.push(`/searchresult/${searchData}`)
+        }
     }
 
     return (

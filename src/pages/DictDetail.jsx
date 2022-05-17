@@ -223,14 +223,14 @@ const DictDetail = (props) => {
 
         <FooterHrLine />
 
-        {/* <div style={{ width: '309px', height: '32px', margin: '45px auto', display: 'flex', gap: '17.75px' }}>
+        <div style={{ width: '309px', height: '32px', margin: '45px auto', display: 'flex', gap: '17.75px' }}>
           {dataList && Array(Math.ceil(dataList.commentCount / 4)).fill().map((v, i) => {
             if (pageNum === i + 1)
               return <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>{i + 1}</SelectNumberBox>
             else
               return <NumberBox key={i} onClick={() => pageChange(i + 1)}>{i + 1}</NumberBox>
           })}
-        </div> */}
+        </div>
 
       </Container>
       <Footer />
