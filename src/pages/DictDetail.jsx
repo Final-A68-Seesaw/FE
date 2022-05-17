@@ -8,6 +8,7 @@ import {
   __loadDictDetail,
   __addDictComment,
   __deleteDictDetail,
+  __scrapDict,
 } from "../redux/modules/dictionary";
 import { history } from "../redux/configStore";
 
@@ -28,7 +29,8 @@ import Footer from "../components/Footer";
 //style
 import styled from "styled-components";
 import Line from "../asset/Dictionary_detail_line.svg";
-import { BsChevronRight } from "react-icons/bs";
+import { BsSuitHeart } from "react-icons/bs";
+import { BsSuitHeartFill } from "react-icons/bs";
 import CommentCard from "../components/CommentCard.jsx";
 
 const DictDetail = (props) => {
@@ -47,11 +49,17 @@ const DictDetail = (props) => {
     dispatch(__loadDictDetail(params.cardTitleId, pageNum));
   }, []);
 
-  //디테일 삭제 전송
-  const deleteDetail = (data) => {
-    //얼럿 기능 구현하기.
-    dispatch(__deleteDictDetail(data));
+  //스크랩 기능
+  const [scrap, setScrap] = useState(false);
+  const ChangeScrap = () => {
+    setScrap(!scrap);
+    dispatch(__scrapDict(!scrap, params.cardTitleId));
   };
+  // //디테일 삭제 전송
+  // const deleteDetail = (data) => {
+  //   //얼럿 기능 구현하기.
+  //   dispatch(__deleteDictDetail(data));
+  // };
 
   //이미지 더보기 버튼 애니메이션
   const RecentScrollRef = useRef();
@@ -98,15 +106,25 @@ const DictDetail = (props) => {
           </EditDeleteBox>
         </BetweenBox>
         <UserInfoBox>
-          <Character char={dataList && dataList.profileImages} />
-          <CharacterAlign>
-            <UserName>{dataList && dataList.lastNickname}</UserName>
-            <UpdateBox>{dataList && dataList.postUpdateTime} </UpdateBox>
-            <WordInfo>
-              | 조회수 {dataList && dataList.views} | 스크랩{" "}
-              {dataList && dataList.scrapCount}
-            </WordInfo>
-          </CharacterAlign>
+          <div>
+            <Character char={dataList && dataList.profileImages} />
+            <CharacterAlign>
+              <UserName>{dataList && dataList.lastNickname}</UserName>
+              <UpdateBox>{dataList && dataList.postUpdateTime} </UpdateBox>
+              <WordInfo>
+                | 조회수 {dataList && dataList.views} | 스크랩{" "}
+                {dataList && dataList.scrapCount}
+              </WordInfo>
+            </CharacterAlign>
+          </div>
+          <ScrapBtn onClick={ChangeScrap}>
+            {dataList && dataList.scrapStatus === false ? (
+              <BsSuitHeart style={{ cursor: "pointer", width: "1rem" }} />
+            ) : (
+              <BsSuitHeartFill style={{ cursor: "pointer", width: "1rem" }} />
+            )}
+            <ScrapText>스크랩</ScrapText>
+          </ScrapBtn>
         </UserInfoBox>
 
         <ContentsBox>{dataList && dataList.contents} </ContentsBox>
@@ -266,10 +284,11 @@ const CharacterAlign = styled.div`
 const BetweenBox = styled.div`
   justify-content: space-between;
   display: flex;
+  align-items: center;
 `;
 const TitleBox = styled.div`
   ${bold30}
-  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
 `;
 const EditDeleteBox = styled.div`
   color: var(--gray99);
@@ -279,6 +298,22 @@ const EditDeleteBox = styled.div`
 const UserInfoBox = styled.div`
   display: flex;
   margin: 1rem 0;
+  justify-content: space-between;
+  align-items: center;
+`;
+const ScrapBtn = styled.div`
+  width: 5.5rem;
+  height: 2rem;
+  border: 1.5px solid var(--purple);
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  color: var(--purple);
+  border-radius: 3px;
+`;
+const ScrapText = styled.div`
+  margin-left: 0.3rem;
+  ${bold15}
 `;
 const UserName = styled.div`
   ${bold15}

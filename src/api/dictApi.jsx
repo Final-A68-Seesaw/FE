@@ -9,6 +9,8 @@ export const dictApi = {
   delDictDetail: (postId)=> instance.delete(`api/post/${postId}`),
   putDictDetail: (postId, data)=> instance.put(`api/post/${postId}`,data),
  
+  scrapDict: (postId) => instance.post(`api/post/${postId}/scrap`),
+
   addComment: (cardTitleId, data) => instance.post(`/api/post/comment/${cardTitleId}`, data),
   putComment: (commentId, data) => instance.put(`/api/post/comment/${commentId}`,data),
   delComment: (commentId) => instance.delete(`/api/post/comment/${commentId}`),

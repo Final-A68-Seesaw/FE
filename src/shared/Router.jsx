@@ -44,13 +44,13 @@ const Router = () => {
         <Route path="/login" exact component={Login} />
         
         <Route path="/" exact component={Main} />
+        <Route path="/searchresult/:keyword" exact component={SearchResult} />
 
         <Route path="/dictionary" exact component={DictList}/>
         <Route path="/dictionary/add" exact component={DictAdd}/>
         <Route path="/dictionary/detail/:cardTitleId" exact component = {DictDetail}/>
         <Route path="/dictionary/detail/:cardTitleId/edit" exact component = {DictDetailEdit}/>
 
-        <Route path="/searchresult/:keyword" exact component={SearchResult} />
         <Route path="/mypage" exact component={Mypage} />
         <Route path="/profiledit" exact component={ProfileEdit} />
         <Route path="/user/kakao/callback" exact component={AuthRedirectHandler}/>

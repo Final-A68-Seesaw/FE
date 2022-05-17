@@ -49,7 +49,10 @@ export const SelectText = styled.select`
     ${(props) => (props.hasError ? "var(--red)" : "var(--graydf)")};
   transition: border-color 150ms ease-in-out;
   padding: 0.5rem 3rem 0.5rem 0.5rem;
-
+  
+  &::placeholder {
+    color: var(--grayc1);
+  }
   
   option {
     color: var(--black24);

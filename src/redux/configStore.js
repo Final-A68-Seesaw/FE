@@ -9,6 +9,7 @@ import chat from './modules/chat';
 import trouble from "./modules/touble";
 import dictionary from "./modules/dictionary";
 import search from "./modules/search";
+import mypage from "./modules/mypage";
 
 export const history = createBrowserHistory();
 
@@ -19,6 +20,7 @@ const rootReducer = combineReducers({
     trouble,
     dictionary,
     search,
+    mypage,
     router: connectRouter(history),
 });
 
