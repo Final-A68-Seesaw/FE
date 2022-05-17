@@ -6,5 +6,5 @@ export const MainApi = {
   mainGetBest: () => instance.get('/api/main/post/list'),
   mainGetTrou: () => instance.get('/api/main/trouble/list'),
 
-  search: (data) => instance.get('/api/post/search', data),
+  getsearch: (data) => instance.get(`/api/post/search?keyword=${data}`),
 }

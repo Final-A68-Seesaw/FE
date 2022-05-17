@@ -14,6 +14,7 @@ import isLogin from '../auth/isLogin'
 import { useDispatch } from 'react-redux'
 import { __logout } from '../redux/modules/user'
 import { MainApi } from '../api/mainApi'
+import { actionCreators as SearchActions } from '../redux/modules/search'
 
 
 const Header = (props) => {
@@ -21,7 +22,7 @@ const Header = (props) => {
     const [scrolly, setScrolly] = useState(0)
 
     const [showModal, setShowModal] = useState(false)
-    const [scrollDown, setScrollDown] = useState(false)
+    const [headInput, setHeadInput] = useState('')
 
     onscroll = (e) => {
         setScrolly(scrollY)
@@ -31,9 +32,10 @@ const Header = (props) => {
         setShowModal(!showModal);
     }
 
-    useEffect(() => {
-        // MainApi.search('공').then((res) => console.log(res))
-    }, [])
+    const HeadSearch = (e) => {
+        if (e.key === 'Enter')
+            dispatch(SearchActions.getSearchDB(headInput))
+    }
 
     return (
         <Head>
@@ -56,10 +58,10 @@ const Header = (props) => {
                     </div>
                 </div>
 
-                {scrolly >= 600 ? <SearchDiv>
-                    <SearchInput placeholder='검색어를 입력해주세요' />
+                {<SearchDiv>
+                    <SearchInput placeholder='검색어를 입력해주세요' onChange={(e) => setHeadInput(e.target.value)} onKeyDown={HeadSearch} />
                     <GoSearch style={{ margin: '0 0 0 -25px', color: '#FAFAFA' }} />
-                </SearchDiv> : null}
+                </SearchDiv>}
 
                 {!isLogin()
                     ? <div style={{ display: 'flex' }}>

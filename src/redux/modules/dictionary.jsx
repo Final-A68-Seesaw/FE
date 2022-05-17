@@ -151,12 +151,15 @@ export const __deleteDictComment = (commentId, postId, pageNum) => {
     //   })
     //   .catch((err)=>console.log(err))
 
-    dictApi
-      .delComment(commentId)
-      .then(() => {
-        dispatch(delDictCom(commentId))
-      })
-      .catch((err) => console.log(err));
+    dispatch(delDictCom(commentId))
+
+    // dictApi
+    //   .delComment(commentId)
+    //   .then((res) => {
+    //     console.log(res);
+    //     // dispatch(delDictCom(commentId))
+    //   })
+    //   .catch((err) => console.log(err));
   };
 };
 
@@ -219,10 +222,10 @@ export default handleActions(
         console.log(action.payload);
         let comList = state.detailData.postComments.filter((v) => v.commentId !== action.payload)
         
-        // if(action.payload.getNextComment)
-        //   comList.push(action.payload.getNextComment)
+        if(action.payload.getNextComment)
+          comList.push(action.payload.getNextComment)
 
-        //   console.log(comList);
+          console.log(comList);
         
         draft.detailData.postComments = comList
       }),
