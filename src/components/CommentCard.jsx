@@ -49,7 +49,7 @@ const CommentCard = (props) => {
 
   //삭제 데이터 전송
   const deleteCmt = (data) =>{
-    dispatch(__deleteDictComment(data));
+    dispatch(__deleteDictComment(data, props.postId, props.pageNum));
   }
 
   return (
@@ -58,14 +58,14 @@ const CommentCard = (props) => {
       <div>
         <LoadCmtInfo>
           <div>
-            <Character char={props.data?.profileImages} />
+            <Character char={props?.pfImg} />
             <LoadCmtNickname>{props.data?.nickname}</LoadCmtNickname>
           </div>
           <div style={{ display: "flex", alignItems: "center" }}>
             <LoadCmtTime>
 
               {props.data?.commentTime}{" "}
-              {props.nickname === props.data.nickname
+              {props.nickname === props.data?.nickname
               ? <>
               <div style={{ margin: "0 0.25rem", cursor: "pointer"}} onClick={updateCmt}>
                 수정
@@ -103,7 +103,7 @@ const CommentCard = (props) => {
         :<LoadCmt> {props.data?.comment} </LoadCmt>}
       </div>
       <div>
-        {props.nickname !== props.data.nickname
+        {props.nickname !== props.data?.nickname
         ?<LikeBtn onClick = {ChangeLike}>
         {props.data?.commentLikeStatus === false ? (
           <AiOutlineLike style={{ cursor: "pointer", width: "1.5rem" }} />

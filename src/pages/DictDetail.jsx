@@ -39,10 +39,12 @@ const DictDetail = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
+  const [pageNum, setPageNum] = useState(1)
 
   //디테일 데이터 로드
   useEffect(() => {
-    dispatch(__loadDictDetail(params.cardTitleId, 1));
+    window.scrollTo({ top: 0 })
+    dispatch(__loadDictDetail(params.cardTitleId, pageNum));
   }, []);
 
   //디테일 삭제 전송
@@ -60,12 +62,17 @@ const DictDetail = (props) => {
     setInputCount(e.target.value.length);
   };
 
+  const pageChange = (page) => {
+    setPageNum(page)
+    dispatch(__loadDictDetail(params.cardTitleId, page));
+  }
+
   //댓글 데이터 전송
   const onSubmit = (data) => {
+    console.log(data);
     dispatch(__addDictComment(params.cardTitleId, data, dataList.nickname));
   };
 
-  console.log(params.cardTitleId);
   return (
     <>
       <Header />
@@ -73,22 +80,22 @@ const DictDetail = (props) => {
         <GenerationBox>{dataList && dataList.generation} </GenerationBox>
         <BetweenBox>
           <TitleBox>{dataList && dataList.title}</TitleBox>
-            <EditDeleteBox>
-              <div
-                style={{ margin: "0 0.25rem", cursor: "pointer" }}
-                onClick={() => {history.push(`/dictionary/detail/${params.cardTitleId}/edit`)}}
-              >
-                수정
-              </div>{" "}
-             {/*  |
+          <EditDeleteBox>
+            <div
+              style={{ margin: "0 0.25rem", cursor: "pointer" }}
+              onClick={() => { history.push(`/dictionary/detail/${params.cardTitleId}/edit`) }}
+            >
+              수정
+            </div>{" "}
+            {/*  |
               <div
                 style={{ margin: "0 0.25rem", cursor: "pointer" }}
                 onClick={() => {deleteDetail(params.cardTitleId)}}
                 >
                   삭제
                   </div> */}
-              | 신고
-            </EditDeleteBox>
+            | 신고
+          </EditDeleteBox>
         </BetweenBox>
         <UserInfoBox>
           <Character char={dataList && dataList.profileImages} />
@@ -209,12 +216,22 @@ const DictDetail = (props) => {
           dataList.postComments.map((v, i) => {
             return (
               <div key={i}>
-                <CommentCard data={v} nickname={dataList.nickname} />
+                <CommentCard postId={params.cardTitleId} pageNum={pageNum} data={v} pfImg={dataList.profileImages} nickname={dataList.nickname} />
               </div>
             );
           })}
 
         <FooterHrLine />
+
+        {/* <div style={{ width: '309px', height: '32px', margin: '45px auto', display: 'flex', gap: '17.75px' }}>
+          {dataList && Array(Math.ceil(dataList.commentCount / 4)).fill().map((v, i) => {
+            if (pageNum === i + 1)
+              return <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>{i + 1}</SelectNumberBox>
+            else
+              return <NumberBox key={i} onClick={() => pageChange(i + 1)}>{i + 1}</NumberBox>
+          })}
+        </div> */}
+
       </Container>
       <Footer />
     </>
@@ -406,5 +423,47 @@ const FooterHrLine = styled.hr`
   border: 1px solid var(--graydf);
   margin: 2rem 0 0 0;
 `;
+
+const NumberBox = styled.div`
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 34px;
+  height: 32px;
+
+  background: #FFFFFF;
+
+  /* border: 0.75px solid #C1C1C1; */
+  border-radius: 1.5px;
+
+  cursor: pointer;
+`
+
+const SelectNumberBox = styled.div`
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 34px;
+  height: 32px;
+
+  background: #FFFFFF;
+
+  border: 0.75px solid #C1C1C1;
+  border-radius: 1.5px;
+
+  cursor: pointer;
+`
 
 export default DictDetail;

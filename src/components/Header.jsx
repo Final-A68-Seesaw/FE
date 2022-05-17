@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { history } from '../redux/configStore'
 
@@ -13,17 +13,27 @@ import HeaderIcon from '../asset/HeaderIcon.svg'
 import isLogin from '../auth/isLogin'
 import { useDispatch } from 'react-redux'
 import { __logout } from '../redux/modules/user'
+import { MainApi } from '../api/mainApi'
 
 
 const Header = (props) => {
     const dispatch = useDispatch();
+    const [scrolly, setScrolly] = useState(0)
 
     const [showModal, setShowModal] = useState(false)
     const [scrollDown, setScrollDown] = useState(false)
 
+    onscroll = (e) => {
+        setScrolly(scrollY)
+    }
+
     const openModal = () => {
         setShowModal(!showModal);
     }
+
+    useEffect(() => {
+        // MainApi.search('공').then((res) => console.log(res))
+    }, [])
 
     return (
         <Head>
@@ -34,7 +44,7 @@ const Header = (props) => {
 
             <HeadInner>
                 <div style={{ display: 'flex' }}>
-                    <HeaderIcon onClick={() => history.push('/')} style = {{cursor: "pointer"}}/>
+                    <HeaderIcon onClick={() => history.push('/')} style={{ cursor: "pointer" }} />
                     {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
 
                     <div style={{ display: 'flex', margin: '0 0 0 25px' }}>
@@ -46,27 +56,27 @@ const Header = (props) => {
                     </div>
                 </div>
 
-                {scrollDown ? <SearchDiv>
+                {scrolly >= 600 ? <SearchDiv>
                     <SearchInput placeholder='검색어를 입력해주세요' />
                     <GoSearch style={{ margin: '0 0 0 -25px', color: '#FAFAFA' }} />
                 </SearchDiv> : null}
 
                 {!isLogin()
-                ? <div style={{ display: 'flex' }}>
-                <WriteDicBtn onClick={()=>history.push('/login')}><p>로그인</p></WriteDicBtn>
-                <WriteDicBtn onClick={()=>history.push('/signup')}><p>회원가입</p></WriteDicBtn>    
-            </div>
-            : <div>
-{/*                      
+                    ? <div style={{ display: 'flex' }}>
+                        <WriteDicBtn onClick={() => history.push('/login')}><p>로그인</p></WriteDicBtn>
+                        <WriteDicBtn onClick={() => history.push('/signup')}><p>회원가입</p></WriteDicBtn>
+                    </div>
+                    : <div>
+                        {/*                      
             <ProfileDiv>
                     <Character />
                 </ProfileDiv> */}
-                <WriteDicBtn onClick={()=>dispatch(__logout())}><p>로그아웃</p></WriteDicBtn>
-           
-            </div>
-}
-                
-                
+                        <WriteDicBtn onClick={() => dispatch(__logout())}><p>로그아웃</p></WriteDicBtn>
+
+                    </div>
+                }
+
+
             </HeadInner>
         </Head>
     )

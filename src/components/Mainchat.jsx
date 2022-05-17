@@ -189,20 +189,13 @@ const Mainchat = (props) => {
             return <div key={i} style={{ display: 'flex', justifyContent: 'center' }}>
               <p className='userchat' style={{ wordBreak: 'break-all', width: '240px', height: '100%', margin: '20px 0' }}>{v.message}</p>
             </div>
-          if (v.senderName == userData.nickname)
-            return <div key={i} style={{ display: 'flex', justifyContent: 'right' }}>
-              <p className='chattime' style={{ margin: '4px 0 20px 0', fontSize: '10px' }}>{v.createdAt}</p>
-              <p className='userchat' style={{ justifyContent: 'right', wordBreak: 'break-all', width: '240px', height: '100%', margin: '-2px 0 20px 10px' }}>{v.message}</p>
-              <p className='usernick'>{v.senderName}</p>
-              <div className='chatImg'></div>
-            </div>
-          else
-            return <div key={i} style={{ display: 'flex' }}>
-              <div className='chatImg'></div>
-              <p className='usernick'>{v.senderName}</p>
-              <p className='userchat' style={{ justifyContent: 'left', wordBreak: 'break-all', width: '240px', height: '100%', margin: '-2px 10px 20px 0' }}>{v.message}</p>
-              <p className='chattime' style={{ margin: '4px 0 20px 0', fontSize: '10px' }}>{v.createdAt}</p>
-            </div>
+
+          return <div key={i} style={{ display: 'flex' }}>
+            <div className='chatImg'></div>
+            <p className='usernick'>{v.senderName}</p>
+            <p className='userchat' style={{ justifyContent: 'left', wordBreak: 'break-all', width: '240px', height: '100%', margin: '-2px 10px 20px 0' }}>{v.message}</p>
+            {/* <p className='chattime' style={{ margin: '4px 0 20px 0', fontSize: '10px' }}>{v.createdAt}</p> */}
+          </div>
         })}
         <div ref={messageRef}></div>
       </div>
@@ -373,11 +366,15 @@ const ChatModal = styled.div`
     }
 
     .usernick {
-      max-width: 76px;
+      width: 76px;
       min-width: 56px;
       /* width:42px; */
       max-height: 22px;
       justify-content: center;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
@@ -386,7 +383,7 @@ const ChatModal = styled.div`
       line-height: 22px;
       margin: 0 16px;
 
-      display: flex;
+      /* display: flex; */
       align-items: center;
 
       color: #999999;
@@ -451,7 +448,7 @@ const ChatModal = styled.div`
       height: 30px;
       margin: 0 0 40px -40px;
 
-      background: #C4C4C4;
+      /* background: #C4C4C4; */
       
       cursor: pointer;
     }

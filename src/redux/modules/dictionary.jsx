@@ -90,7 +90,6 @@ export const __loadDictDetail = (cardTitle, commentPage) => {
     dictApi
       .DictDetail(cardTitle, commentPage)
       .then((res) => {
-        console.log(res.data);
         dispatch(getDictDetail(res.data));
       })
       .catch((err) => console.log(err.response));
@@ -121,29 +120,42 @@ export const __loadDictCardList = (data) => {
 
 export const __addDictComment = (cardTitleId, data, nickname) => {
   return (dispatch, getState, { history }) => {
-    console.log(data);
     dictApi
       .addComment(cardTitleId, data)
       .then((res) => {
         let nowCommentData = {
-          comment: data,
-          commentId: res.data,
+          comment: data.comment,
+          commentId: res.data.commentId,
           commentLikeCount: 0,
           commentLikeStatus: false,
           commentTime: "1초전",
           nickname: nickname
-        }        
+        }
         dispatch(addDictCom(nowCommentData))
       })
       .catch((err) => console.log(err));
   };
 };
 
-export const __deleteDictComment = (commentId) => {
+export const __deleteDictComment = (commentId, postId, pageNum) => {
   return (dispatch, getState, { history }) => {
+
+    let getNextComment = {}
+
+    // dictApi
+    //   .DictDetail(postId, pageNum + 1)
+    //   .then((res)=> {
+    //     console.log(res);
+    //     getNextComment = res.data.postComments[0]
+    //     dispatch(delDictCom({ commentId, getNextComment }))
+    //   })
+    //   .catch((err)=>console.log(err))
+
     dictApi
       .delComment(commentId)
-      .then(() => dispatch(delDictCom(commentId)))
+      .then(() => {
+        dispatch(delDictCom(commentId))
+      })
       .catch((err) => console.log(err));
   };
 };
@@ -176,7 +188,6 @@ export default handleActions(
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailData = action.payload;
-        console.log("리듀서", draft.detailData)
       }),
 
     [ADD_DICT]: (state, action) =>
@@ -191,7 +202,8 @@ export default handleActions(
 
     [ADD_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
-      console.log()
+        if(draft.detailData.postComments.length < 4)
+          draft.detailData.postComments = [...state.detailData.postComments, action.payload]
       }),
     [PUT_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
@@ -204,8 +216,15 @@ export default handleActions(
       }),
     [DEL_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
-        // draft.data.unshift(action.payload.data);
-        console.log(action.payload)
+        console.log(action.payload);
+        let comList = state.detailData.postComments.filter((v) => v.commentId !== action.payload)
+        
+        // if(action.payload.getNextComment)
+        //   comList.push(action.payload.getNextComment)
+
+        //   console.log(comList);
+        
+        draft.detailData.postComments = comList
       }),
 
     [LIKE_DICT_COM]: (state, action) =>

@@ -36,7 +36,7 @@ const Main = () => {
 
   const RecentScrollRef = useRef()
 
-  console.log('v1')
+  console.log('v2')
 
   const openModal = () => {
     setShowModal(true);
@@ -65,9 +65,11 @@ const Main = () => {
     <MainWrap>
       <Header />
       <MainTop>
-        <G1 style={{ position: 'absolute', width: '140.42px', height: '176.97px', left: '12%', top: '50%', }} />
-        <G2 style={{ position: 'absolute', width: '140.98px', height: '155.08px', left: '24%', top: '50%', }} />
-        <Y1 style={{ position: 'absolute', width: '140.42px', height: '175.92px', left: '90%', top: '36%', }} />
+        <div style={{ display: 'flex', position: 'absolute', width: '286px', height: '176.97px', gap: '14.4px', left: '7%', top: '60%', }}>
+          <G1 />
+          <G2 />
+        </div>
+        <Y1 style={{ position: 'absolute', width: '140.42px', height: '175.92px', left: '85%', top: '36%', }} />
         <Y2 style={{ position: 'absolute', width: '140.98px', height: '192.8px', left: '70%', top: '90%', }} />
         <MainText>우리들의 플레이그라운드</MainText>
 
@@ -78,13 +80,13 @@ const Main = () => {
         </div>
       </MainTop>
 
-      <div></div>
+      {/* <div></div> */}
 
       <BestWordWrap>
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
-        <div style={{ display: 'flex', width: '1423px', margin: 'auto', justifyContent: 'space-between' }}>
-          <img src={selectBest && (selectBest.imageUrl || selectBest.postImage)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
+        <div style={{ display: 'flex', margin: 'auto', justifyContent: 'space-between' }}>
+          <img src={selectBest && (selectBest.postImages || selectBest.postImage)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
           <BestSelect onClick={() => history.push(`/dictionary/detail/${selectBest.postId}`)}>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest && selectBest.generation}</GenBox></div>
@@ -94,7 +96,7 @@ const Main = () => {
             </div>
           </BestSelect>
 
-          <div style={{ display: 'flex', flexWrap: 'wrap', margin: '0 0 0 31px', gap: '12.88px', width: '903px', }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12.88px', width: '903px', justifyContent: 'right' }}>
             {getRecent && getRecent.map((v, i) => {
               return <BestWords key={i} onClick={() => onBestWord(v)}>{v.title}</BestWords>
             })}
@@ -109,10 +111,10 @@ const Main = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px', gap: '10px' }}>
 
           {getRand && getRand.map((v, i) => {
-            return <TestCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
+            return <TestCard key={i} >
               {/* <img src={v.postImage} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} /> */}
-              <div style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} >
-                <GameCard style={{ width: '682px', height: '435px' }} />
+              <div style={{ width: '582px', height: '335px', position: 'absolute', borderRadius: '11.1667px' }} >
+                <GameCard style={{ width: '582px', height: '335px' }} />
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', justifyContents: 'center', position: 'absolute', width: '682px', height: '435px', padding: '18px 0' }}>
@@ -169,10 +171,7 @@ const Main = () => {
           </div>
 
         </RecentCards>
-
       </RecentWrap>
-
-
 
       <Footer />
 
@@ -251,7 +250,7 @@ const BestWordWrap = styled.div`
 `
 
 const BestWordTitle = styled.p`
-  max-width: 1423px;
+  /* max-width: 1423px; */
   height: 32px;
 
   font-family: 'Noto Sans KR';
@@ -375,7 +374,7 @@ const BestWords = styled.div`
 `
 
 const TestWrap = styled.div`
-  max-width: 1423px;
+  /* max-width: 1423px; */
   display: flex;
   flex-direction: column;
   
@@ -402,8 +401,8 @@ const TestTitle = styled.p`
 `
 
 const TestCard = styled.div`
-  min-width: 682px;
-  height: 435px;
+  min-width: 582px;
+  height: 335px;
 
   /* background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 0%, #39008C 100%); */
   border-radius: 11.1667px;
@@ -478,7 +477,7 @@ const TestDesc = styled.p`
 
 const RecentWrap = styled.div`
   margin: 126px auto 115px auto;
-  width: 1423px;
+  /* width: 1423px; */
 
   display: flex;
   flex-direction: column;
