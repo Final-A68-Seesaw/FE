@@ -113,8 +113,8 @@ const Main = () => {
           {getRand && getRand.map((v, i) => {
             return <TestCard key={i} >
               {/* <img src={v.postImage} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} /> */}
-              <div style={{ width: '582px', height: '335px', position: 'absolute', borderRadius: '11.1667px' }} >
-                <GameCard style={{ width: '582px', height: '335px' }} />
+              <div style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} >
+                <GameCard style={{ width: '682px', height: '435px' }} />
               </div>
 
               <div style={{ display: 'flex', flexDirection: 'column', justifyContents: 'center', position: 'absolute', width: '682px', height: '435px', padding: '18px 0' }}>
@@ -401,8 +401,8 @@ const TestTitle = styled.p`
 `
 
 const TestCard = styled.div`
-  min-width: 582px;
-  height: 335px;
+  min-width: 682px;
+  height: 435px;
 
   /* background: linear-gradient(180deg, rgba(18, 0, 44, 0.39) 0%, #39008C 100%); */
   border-radius: 11.1667px;
