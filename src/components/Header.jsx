@@ -61,7 +61,7 @@ const Header = (props) => {
             <ProfileDiv>
                     <Character />
                 </ProfileDiv> */}
-                <WriteDicBtn onClick={()=>dispatch(__logout())}><p>로그아웃</p></WriteDicBtn>
+                {/* <WriteDicBtn onClick={()=>dispatch(__logout())}><p>로그아웃</p></WriteDicBtn> */}
            
             </div>
 }

@@ -8,6 +8,7 @@ import user from './modules/user';
 import chat from './modules/chat';
 import trouble from "./modules/touble";
 import dictionary from "./modules/dictionary";
+import mypage from "./modules/mypage";
 
 export const history = createBrowserHistory();
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     chat,
     trouble,
     dictionary,
+    mypage,
     router: connectRouter(history),
 });
 

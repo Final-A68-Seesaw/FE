@@ -57,10 +57,10 @@ const CommentCard = (props) => {
       <HrLine />
       <div>
         <LoadCmtInfo>
-          <div>
+          <CharNickBox>
             <Character char={props.data?.profileImages} />
             <LoadCmtNickname>{props.data?.nickname}</LoadCmtNickname>
-          </div>
+          </CharNickBox>
           <div style={{ display: "flex", alignItems: "center" }}>
             <LoadCmtTime>
 
@@ -128,10 +128,14 @@ const LoadCmtInfo = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+const CharNickBox = styled.div`
+ margin: 0 0 0 1.5rem;
+ align-items: center;
+`
 const LoadCmtNickname = styled.div`
   ${bold15}
   color: black;
-  margin: 1rem 1rem 1rem 2.5rem;
+  margin: 0.5rem 0 1rem 2.5rem;
 `;
 const LoadCmtTime = styled.div`
   color: var(--gray99);
@@ -139,7 +143,7 @@ const LoadCmtTime = styled.div`
   ${med14}
 `;
 const LoadCmt = styled.div`
-  margin: 0 1rem 1rem 2.5rem;
+  margin: 0 1rem 1rem 4rem;
   ${med15}
 `;
 const LikeBtn = styled.button`
@@ -147,10 +151,12 @@ const LikeBtn = styled.button`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  border: transparent;
-  padding: 1rem 1rem 1rem 0.5rem;
+  border: 1px solid var(--graydf);
+  border-radius: 3px;
+  padding: 0.7rem 0.7rem 0.7rem 0.4rem;
   height: 2rem;
-  margin: 0 1rem 1rem 2.5rem;
+  background-color: transparent;
+  margin: 0 1rem 1rem 4rem;
 `;
 const CommentSubmitBtn = styled.button`
   background-color: var(--red);

@@ -6,8 +6,11 @@ import { dictApi } from "../../api/dictApi";
 const GET_DICT = "GETDICT";
 const GET_DICT_DETAIL = "GETDICTDETAIL";
 const ADD_DICT = "ADDDICT";
-const SET_DICT = "SETDICT";
 const DEL_DICT = "DELDICT";
+const PUT_DICT = "PUTDICT";
+const SET_DICT = "SETDICT";
+
+const SCRAP_DICT = "SCRAPDICT";
 
 const ADD_DICT_COM = "ADD_DICT_COM";
 const PUT_DICT_COM = "PUT_DICT_COM";
@@ -18,8 +21,11 @@ const LIKE_DICT_COM = "LIKE_DICT_COM";
 const getDict = createAction(GET_DICT, (data) => data);
 const getDictDetail = createAction(GET_DICT_DETAIL, (detailData) => detailData);
 const addDict = createAction(ADD_DICT, (data) => ({ data }));
-export const setDict = createAction(SET_DICT, (files) => ({ files }));
 const delDict = createAction(DEL_DICT, (dict) => dict);
+const putDict = createAction(PUT_DICT, (data) => data);
+export const setDict = createAction(SET_DICT, (files) => ({ files }));
+
+const scrapDict = createAction(SCRAP_DICT, (data) => data);
 
 const addDictCom = createAction(ADD_DICT_COM, (data) => data);
 const putDictCom = createAction(PUT_DICT_COM, (data) => data);
@@ -36,7 +42,6 @@ const initialState = {
 export const __addDict = (data) => {
   return (dispatch, getState, { history }) => {
     console.log(data);
-    console.log(data.tagNames);
     const formData = new FormData();
     formData.append(
       "postRequestDto",
@@ -97,18 +102,49 @@ export const __loadDictDetail = (cardTitle, commentPage) => {
   };
 };
 
-export const __deleteDictDetail = (postId )=>{
+export const __deleteDictDetail = (postId) => {
   return (dispatch, getState, { history }) => {
-    console.log(postId)
+    console.log(postId);
     dictApi
-    .delDictDetail(postId)
-    .then((res)=>{
-      console.log(res)
-      history.push("/dictionary")
-    })
-    .catch((err)=> console.log(err))
-  }
-}
+      .delDictDetail(postId)
+      .then((res) => {
+        console.log(res);
+        history.push("/dictionary");
+      })
+      .catch((err) => console.log(err));
+  };
+};
+
+export const __updateDictDetail = (data, postId) => {
+  return (dispatch, getState, { history }) => {
+    console.log(data);
+    const formData = new FormData();
+    formData.append(
+      "postRequestDto",
+      new Blob(
+        [
+          JSON.stringify({
+            postId,
+            contents: data.contents,
+            videoUrl: data.videoUrl,
+            tagNames: data.tagNames,
+            generation: data.generation,
+          }),
+        ],
+        { type: "application/json" }
+      )
+    );
+    if (data.files.length !== 0) {
+      data.files.map((e) => {
+        return formData.append("files", e);
+      });
+    }
+    dictApi
+      .putDict(formData)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  };
+};
 
 export const __loadDictCardList = (data) => {
   return (dispatch, getState, { history }) => {
@@ -116,6 +152,16 @@ export const __loadDictCardList = (data) => {
       .DictList()
       .then((res) => dispatch(getDict(res.data)))
       .catch((err) => console.log(err.response));
+  };
+};
+
+export const __scrapDict = (scrap, postId) => {
+  return (dispatch, getState, { history }) => {
+    console.log(scrap, postId);
+    dictApi
+      .scrapDict(postId)
+      .then((res) => dispatch(scrapDict({ postId, scrapStatus: res.data })))
+      .catch((err) => console.log(err));
   };
 };
 
@@ -131,9 +177,9 @@ export const __addDictComment = (cardTitleId, data, nickname) => {
           commentLikeCount: 0,
           commentLikeStatus: false,
           commentTime: "1초전",
-          nickname: nickname
-        }        
-        dispatch(addDictCom(nowCommentData))
+          nickname: nickname,
+        };
+        dispatch(addDictCom(nowCommentData));
       })
       .catch((err) => console.log(err));
   };
@@ -152,17 +198,17 @@ export const __updateDictComment = (data, commentId) => {
   return (dispatch, getState, { history }) => {
     dictApi
       .putComment(commentId, data)
-      .then((res) => dispatch(putDictCom({commentId, comment: data.comment})))
+      .then((res) => dispatch(putDictCom({ commentId, comment: data.comment })))
       .catch((err) => console.log(err));
   };
 };
 
-export const __likeDictComment = (like,commentId) => {
+export const __likeDictComment = (like, commentId) => {
   return (dispatch, getState, { history }) => {
-    console.log(like, commentId)
+    console.log(like, commentId);
     dictApi
       .likeComment(commentId)
-      .then((res) => console.log(res))
+      .then((res) => dispatch(likeDictCom({ commentId, likeStatus: res.data })))
       .catch((err) => console.log(err));
   };
 };
@@ -176,7 +222,6 @@ export default handleActions(
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailData = action.payload;
-        console.log("리듀서", draft.detailData)
       }),
 
     [ADD_DICT]: (state, action) =>
@@ -188,29 +233,42 @@ export default handleActions(
         draft.files.push(action.payload.files);
       }),
 
+    [SCRAP_DICT]: (state, action) =>
+      produce(state, (draft) => {
+        let index = draft.list.findIndex((v) => {
+          return v.postId == action.payload.postId;
+        });
+        draft.list[index].scrapStatus = action.payload.scrapStatus;
+      }),
 
     [ADD_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
-      console.log()
+        console.log();
       }),
     [PUT_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
-        let commentList = state.detailData.postComments.map((v,i)=>{
-        if (v.commentId === action.payload.commentId)
-        return {...v, comment: action.payload.comment}
-        return v
-        })
-        draft.detailData = {...state.detailData, postComments: commentList}
+        let commentList = state.detailData.postComments.map((v, i) => {
+          if (v.commentId === action.payload.commentId)
+            return { ...v, comment: action.payload.comment };
+          return v;
+        });
+        draft.detailData = { ...state.detailData, postComments: commentList };
       }),
-    [DEL_DICT_COM]: (state, action) =>
-      produce(state, (draft) => {
-        // draft.data.unshift(action.payload.data);
-        console.log(action.payload)
-      }),
+
+    // [DEL_DICT_COM]: (state, action) =>
+    //   produce(state, (draft) => {
+    //     draft.data.unshift(action.payload.data);
+    //     console.log(action.payload);
+    //   }),
 
     [LIKE_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
-        draft.data.unshift(action.payload.data);
+        let index = draft.detailData.postComments.findIndex((v) => {
+          return v.commentId == action.payload.commentId;
+        });
+        draft.detailData.postComments[index].commentLikeStatus =
+          action.payload.likeStatus;
+          console.log( action.payload)
       }),
   },
   initialState
