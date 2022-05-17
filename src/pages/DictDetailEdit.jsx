@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 //redux
@@ -32,13 +32,23 @@ const DictAdd = (props) => {
     mode: "onChange",
   });
 
+  const params = useParams();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
 
+  //디테일 데이터 로드
+  useEffect(() => {
+    dispatch(__loadDictDetail(params.cardTitleId, 1));
+  }, []);
 
-  //연도 select category
-  const year = new Date().getFullYear();
-  const years = Array.from(new Array(60), (val, index) => year - index);
+//단어 사용 세대
+  const GenerationOptions = [
+    {value: "none", label: "선택하세요"},
+    {value: "x세대", label: "X세대(1965년 ~ 1979년)"},
+    {value: "y세대", label: "Y세대(1980년 ~ 1994년)"},
+    {value: "z세대", label: "Z세대(1995년 ~ 2005년)"},
+    {value: "알파세대", label: "알파세대(2006년~)"}
+  ]
 
   //태그
   const [tagItem, setTagItem] = useState("");
@@ -94,7 +104,6 @@ const DictAdd = (props) => {
         </TextContainer>
       
         <GenerationBox>{dataList && dataList.generation} </GenerationBox>
-  
         <TitleBox>{dataList && dataList.title}</TitleBox>
 
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -107,12 +116,7 @@ const DictAdd = (props) => {
             })}
             name="contents"
             type="text"
-            placeholder="단어를 설명해줄 수 있는 내용을 적어주세요.
-
-                *등록시 유의할 점
-                - 형식은 자유롭게 작성하되, 누구나 알아볼 수 있도록 정리해주세요.
-                - 사전에 등록되는 것인 만큼 신중하게 내용을 작성해주세요.
-                - 최대한 정확한 내용을 담도록 노력해주세요."
+            value = {dataList && dataList.contents}
             hasError={Boolean(errors?.contents?.message)}
           />
           <SFormError>{errors?.contents?.message}</SFormError>
@@ -123,22 +127,18 @@ const DictAdd = (props) => {
           <hr style={{ margin: "1rem 0 1rem 0", color: "var(--grayed)" }} />
 
           <Select
-            name="generation"
-            register={register({
-              required: true,
-              validate: (value) => value !== "none",
-            })}
-            label="신조어 유행 시작 연도"
-            error={errors?.generation?.type}
-            width= "24rem"
+          name="generation"
+          register={register({
+            required: true,
+            validate: (value) => value !== "none",
+          })}
+          label = "단어 사용 세대"
+          width = "24rem"
+          error={errors?.generation?.type}
           >
-            {years.map((year, index) => {
-              return (
-                <option key={`year${index}`} value={year}>
-                  {year}
-                </option>
-              );
-            })}
+            {GenerationOptions.map((item, index)=> (
+              <option key = {index} value = {item.value}>{item.label}</option>
+            ))}
           </Select>
 
           <ErrorXInput
@@ -177,7 +177,7 @@ const DictAdd = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div style={{display: "flex", justifyContent:"center"}}>
           <Button shape="confirmRed-B" type="submit" >
-            등록하기
+            수정완료
           </Button>
           </div>
         </form>
@@ -226,7 +226,7 @@ const GenerationBox = styled.div`
   border-radius: 40px;
   color: white;
   ${bold12}
-  margin-top: 5rem;
+  margin-top: 3rem;
   margin-bottom: 0.5rem;
 `;
 const TitleBox = styled.div`

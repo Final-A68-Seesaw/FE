@@ -19,13 +19,51 @@ const Button = ({ shape, children, ...rest }) => {
           margin="0 0 0.5rem 1rem"
           width="8.43rem"
           height="3rem"
-          background="black"
+          backgroundColor = "black"
+          background="white"
+          color = "black"
           borderRadius="3px"
           {...rest}
         >
           {children}
         </Confirm>
       );
+
+      case "mypage-Black-B":
+        return (
+          <Confirm
+            margin="0 0 0.5rem 1rem"
+            width="12.5rem"
+            height="2.25rem"
+            background="white"
+            color = "black"
+            backgroundColor="black"
+            maincolor="white"
+            borderRadius="3px"
+            borderColor="black"
+            {...rest}
+          >
+            {children}
+          </Confirm>
+        );
+
+        case "mypage-White-B":
+          return (
+            <Confirm
+              margin="0 0 0.5rem 1rem"
+              width="12.5rem"
+              height="2.25rem"
+              background="black"
+              color = "white"
+              backgroundColor="white"
+              maincolor="black"
+              borderRadius="3px"
+              borderColor="black"
+              {...rest}
+            >
+              {children}
+            </Confirm>
+          );
 
     case "inputReset":
       return (
@@ -50,11 +88,11 @@ const Confirm = styled.button`
   display: ${(props) => (props.display ? props.display : "inline-block")};
   width: ${(props) => (props.width ? props.width : "50%")};
   height: ${(props) => (props.height ? props.height : "3.5rem")};
-  background-color: #c1c1c1;
-  border-color: transparent;
+  background-color: ${(props) => (props.backgroundColor ? props.backgroundColor : "#c1c1c1;")};
+  border-color: ${(props) => (props.borderColor ? props.borderColor : "transparent")};
   border-radius: ${(props) =>
     props.borderRadius ? props.borderRadius : "12px"};
-  color: white;
+  color: ${(props) => (props.maincolor ? props.maincolor : "white")};
   font-size: 16px;
   font-weight: bolder;
   cursor: pointer;

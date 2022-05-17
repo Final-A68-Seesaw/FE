@@ -48,9 +48,14 @@ const DictAdd = (props) => {
     dispatch(__dictTitle(realtitle.title));
   };
 
-  //연도 select category
-  const year = new Date().getFullYear();
-  const years = Array.from(new Array(60), (val, index) => year - index);
+//단어 사용 세대
+const GenerationOptions = [
+  {value: "none", label: "선택하세요"},
+  {value: "x세대", label: "X세대(1965년 ~ 1979년)"},
+  {value: "y세대", label: "Y세대(1980년 ~ 1994년)"},
+  {value: "z세대", label: "Z세대(1995년 ~ 2005년)"},
+  {value: "알파세대", label: "알파세대(2006년~)"}
+]
 
   //태그
   const [tagItem, setTagItem] = useState("");
@@ -83,9 +88,7 @@ const DictAdd = (props) => {
   };
 
   //데이터전송
-
   const imageList = useSelector((state) => state.dictionary.files);
-
   const onSubmit = (data) => {
     let postDto = {
       title: data.title,
@@ -182,22 +185,18 @@ const DictAdd = (props) => {
           <hr style={{ margin: "1rem 0 1rem 0", color: "var(--grayed)" }} />
 
           <Select
-            name="generation"
-            register={register({
-              required: true,
-              validate: (value) => value !== "none",
-            })}
-            label="신조어 유행 시작 연도"
-            error={errors?.generation?.type}
-            width="24rem"
+          name="generation"
+          register={register({
+            required: true,
+            validate: (value) => value !== "none",
+          })}
+          label = "단어 사용 세대"
+          width = "24rem"
+          error={errors?.generation?.type}
           >
-            {years.map((year, index) => {
-              return (
-                <option key={`year${index}`} value={year}>
-                  {year}
-                </option>
-              );
-            })}
+            {GenerationOptions.map((item, index)=> (
+              <option key = {index} value = {item.value}>{item.label}</option>
+            ))}
           </Select>
 
           <ErrorXInput
@@ -227,7 +226,6 @@ const DictAdd = (props) => {
                 })}
               </TagBox>
               <HrLine />
-
               </div>
             )}
 
