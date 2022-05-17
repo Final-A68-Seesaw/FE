@@ -17,31 +17,33 @@ import { bold16, bold22, bold15, med15 } from '../themes/textStyle'
 
 
 const DictList = () => {
-    
-  const dispatch = useDispatch();
 
-  return (
-    <div>
-      <Header />
-      <Container>
-        <MenuSelection>
-          <DictSelect>고민글</DictSelect>
-          <DictSelect>단어</DictSelect>
-          
-        </MenuSelection>
-        <Line style={{ width: "74rem" }} />
-        <CardWholeBox>
-          {dictList && dictList.map((v, i) => {
-            return (
-              <DictionaryCard key={i} data={v} />
-            )
-          })}
-        </CardWholeBox>
+    const dispatch = useDispatch();
 
-      </Container>
-      <Footer />
-    </div>
-  )
+    const [dicSel, setDicSel] = useState()
+
+    return (
+        <div>
+            <Header />
+            <Container>
+                <MenuSelection>
+                    <DictSelect>고민글</DictSelect>
+                    <DictSelect>단어</DictSelect>
+
+                </MenuSelection>
+                <Line style={{ width: "74rem" }} />
+                <CardWholeBox>
+                    {dictList && dictList.map((v, i) => {
+                        return (
+                            <DictionaryCard key={i} data={v} />
+                        )
+                    })}
+                </CardWholeBox>
+
+            </Container>
+            <Footer />
+        </div>
+    )
 }
 
 export default DictList
