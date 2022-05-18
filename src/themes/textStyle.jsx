@@ -13,9 +13,12 @@ export const bold24 = css`
   font-size: 1.5rem;
   font-weight: bold;
 `
-
 export const bold22 = css`
   font-size: 1.375rem;
+  font-weight: bold;
+`
+export const bold20 = css`
+  font-size: 20px;
   font-weight: bold;
 `
 export const bold18 = css`
@@ -75,6 +78,10 @@ export const med15 = css`
 
 export const med14 = css`
   font-size: 0.875rem;
+  font-weight: 500;
+`
+export const med12 = css`
+  font-size: 12px;
   font-weight: 500;
 `
 

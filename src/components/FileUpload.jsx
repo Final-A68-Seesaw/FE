@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setDict } from "../redux/modules/dictionary";
+import { setTrou } from "../redux/modules/touble";
 
 import DropzoneImg from "../asset/Dictionary_add_dropzone.svg";
 
-const FileUpload2 = () => {
+const FileUpload = () => {
   const dispatch = useDispatch();
+  const imageList = useSelector((state) => state.trouble.files);
 
   const [Files, setFiles] = useState([]);
   const [imgUrlList, setImgUrlList] = useState([]);
@@ -23,8 +24,9 @@ const FileUpload2 = () => {
     }
 
     setImgUrlList([...imgUrlList, ...UrlList]);
-    dispatch(setDict(...FileList));
+    dispatch(setTrou(...FileList));
   };
+    ;
 
   const delFile = (id) => {
     setImgUrlList(imgUrlList.filter((v, i) => i !== id));
@@ -63,7 +65,7 @@ const FileUpload2 = () => {
   );
 };
 
-export default FileUpload2;
+export default FileUpload;
 
 const FileInput = styled.input`
   width: 100%;

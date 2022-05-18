@@ -1,6 +1,6 @@
 import React from "react";
 import styled  from "styled-components";
-import { med14 } from "../themes/textStyle";
+import { med14, med15 } from "../themes/textStyle";
 
 
 export const Select = ({
@@ -39,7 +39,7 @@ export const SFormError = styled.div`
 `;
 
 export const SelectText = styled.select`
-  ${med14}
+  ${med15}
   width: ${(props) => (props.width ? props.width : "103%")};
 
   border-radius: 0.3rem;;

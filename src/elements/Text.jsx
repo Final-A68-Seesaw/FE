@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import {
-  
   bold41,
   bold30,
   bold24,
   bold22,
+  bold20,
   bold18,
   bold17,
   bold16,
@@ -19,8 +19,8 @@ import {
   med16,
   med15,
   med14,
+  med12,
   reg20,
-
 } from "../themes/textStyle";
 
 const Text = ({ children, ...rest }) => {
@@ -38,6 +38,8 @@ const Wrapper = styled.div`
         return `${bold24}`;
       case "bold22":
         return `${bold22}`;
+      case "bold20":
+        return `${bold20}`;
       case "bold18":
         return `${bold18}`;
       case "bold17":
@@ -47,9 +49,9 @@ const Wrapper = styled.div`
       case "bold15":
         return `${bold15}`;
       case "bold14":
-        return `${bold14}`; 
+        return `${bold14}`;
       case "bold12":
-        return`${bold12}`;
+        return `${bold12}`;
       case "med24":
         return `${med24}`;
       case "med22":
@@ -64,6 +66,8 @@ const Wrapper = styled.div`
         return `${med15}`;
       case "med14":
         return `${med14}`;
+      case "med12":
+        return `${med12}`;
       case "reg20":
         return `${reg20}`;
 

@@ -13,7 +13,7 @@ const getScrap = createAction(GET_MY_SCRAP, (data) => data)
 
 const initialState = {
   list: [],
-    
+  scrap: []  
 }
 
 
@@ -31,6 +31,27 @@ export const __loadMypage = (data) => {
     };
   };
 
+export const __loadMypageScrap = (data) =>{
+  return(dispatch, gestState, {history}) =>{
+    MypageApi
+    .mypageGetScrap(data)
+    .then((res) => {
+      dispatch(getScrap(res.data))
+    })
+    .catch((err) => console.log(err.response))
+  }
+}
+
+export const __editMyProfile = (data) =>{
+  return(dispatch, getState, {history}) =>{
+    MypageApi
+    .mypagePutProfile(data)
+    .then((res)=>{console.log(res);
+    // history.replace("/mypage");
+  })
+    .catch((err) => console.log(err.response))
+  }
+}
 
 export default handleActions(
     {
@@ -40,7 +61,7 @@ export default handleActions(
         }),
         [GET_MY_SCRAP]: (state, action) =>
         produce(state, (draft) => {
-            draft.list = action.payload
+            draft.scrap = action.payload
         }),
 
         
