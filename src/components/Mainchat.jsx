@@ -54,7 +54,11 @@ const Mainchat = (props) => {
 
   const onKeyDown = (e) => {
     if (e.key === "Enter") {
-      sendPublicMessage();
+      sendPublicMessage()
+    }
+    
+    if (e.key === "Escape") {
+      modalExit()
     }
   };
 

@@ -17,13 +17,15 @@ const Trouble = () => {
         dispatch(TroubleActions.getTrouDB())
     }, [])
 
+    console.log(troubleList);
+
     return (
         <div>
             <Header />
-            <div style={{padding:'74px 0'}}>
+            <div style={{ padding: '74px 0' }}>
                 {troubleList.map((v, i) => {
-                    return <div key={i} onClick={()=>history.push(`/troubledetail/${v.id}`)}>
-                        <img src={v.imageUrls[0]} />
+                    return <div key={i} onClick={() => history.push(`/troubledetail/${v.id}`)}>
+                        <img src={v.troubleImages[0]} />
                         <Character char={v.profileImages} />
                         <p>{v.title}</p>
                         <p>{v.contents}</p>

@@ -26,6 +26,7 @@ import ProfileEdit from '../pages/ProfileEdit';
 import SearchResult from '../pages/SearchResult';
 import AuthRedirectHandler from '../auth/AuthRedirectHandeler';
 import CrossWord from '../pages/CrossWord';
+import GameMain from '../pages/GameMain';
 
 // HOC (high order components)
 import PublicRoute from "../auth/PublicRoute";
@@ -60,6 +61,7 @@ const Router = () => {
         <Route path="/troublewrite" exact component={TroubleWrite}/>
         <Route path="/troublewrite/:id" exact component={TroubleWrite}/>
 
+        <Route path="/gamemain" exact component={GameMain}/>
         <Route path="/game" exact component={CrossWord}/>
         
       </ConnectedRouter>

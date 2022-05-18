@@ -25,11 +25,13 @@ const DictList = () => {
 
     const params = useParams()
 
+    console.log(params, dictSearchList);
+
     const [dicSel, setDicSel] = useState()
 
     useEffect(() => {
         dispatch(SearchActions.getSearchDB(params.keyword))
-    }, [dictSearchList])
+    }, [params.keyword])
 
     return (
         <div>

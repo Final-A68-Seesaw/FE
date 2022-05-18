@@ -54,6 +54,7 @@ const Header = (props) => {
                     <div style={{ display: 'flex', margin: '0 0 0 25px' }}>
                         <HearderText className='jello-horizontal' onClick={() => history.push('/dictionary')}>사전장</HearderText>
                         <HearderText className='jello-horizontal' onClick={() => history.push('/dictionary/add')}>단어등록하기</HearderText>
+                        <HearderText className='jello-horizontal' onClick={() => history.push('/gamemain')}>게임장</HearderText>
 
                         {/* <HearderText style={{ margin: '0 28px' }} onClick={() => history.push('/trouble')}>질문장</HearderText> */}
                         {/* <HearderText onClick={() => history.push('/game')}>게임장</HearderText> */}

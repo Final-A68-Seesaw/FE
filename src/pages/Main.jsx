@@ -84,7 +84,7 @@ const Main = () => {
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
         <div style={{ display: 'flex', margin: 'auto', maxWidth: '1423px', justifyContent: 'space-between' }}>
-          <img src={selectBest && (selectBest.postImages || selectBest.postImage)} style={{ width: '529px', height: '341px', position: 'absolute', borderRadius: '12px' }} />
+          <img src={selectBest && (selectBest.postImages || selectBest.postImage)} style={{ width: '529px', maxHeight: '341px', position: 'absolute', borderRadius: '12px' }} />
           <BestSelect onClick={() => history.push(`/dictionary/detail/${selectBest.postId}`)}>
 
             <div style={{ display: 'flex', justifyContent: 'flex-end' }}><GenBox>{selectBest && selectBest.generation}</GenBox></div>

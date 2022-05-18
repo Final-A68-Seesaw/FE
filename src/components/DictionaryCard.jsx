@@ -27,7 +27,7 @@ const DictionaryCard = (props) => {
 
   return (
     <div style={{ margin: '0.5rem' }}>
-      <WordCard onClick={() => { history.push(`/dictionary/detail/${props.data.postId}`) }}>
+      <WordCard onClick={() => { history.push(`/dictionary/detail/${props.data.id}`) }}>
 
         <GenScrapBox>
           <GenerationBox> {props.data.generation} </GenerationBox>

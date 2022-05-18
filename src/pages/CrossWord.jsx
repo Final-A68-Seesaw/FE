@@ -4,6 +4,10 @@ import Header from '../components/Header'
 import Button from '../elements/Button'
 import { InputText } from '../elements/Input'
 import { bold41 } from '../themes/textStyle'
+import GameBg from '../asset/GameBg.svg'
+import GameBgPng from '../asset/GameBg.png'
+import GameInput1 from '../asset/GameInputBg1.svg'
+import GameInput2 from '../asset/GameInputBg2.svg'
 
 const CrossWord = () => {
 
@@ -45,15 +49,25 @@ const CrossWord = () => {
     }
 
 
-    const data = {
-        across: [
-            {
-                num: 1,
-                word: '피카츄',
-                row: 0,
-                col: 0,
-            }
-        ],
+    const data = [
+        {
+            num: 1,
+            word: '피카츄',
+            line: 'down',
+            row: 0,
+            col: 0,
+        },
+        {
+            num: 2,
+            word: '라이츄',
+            line: 'down',
+            row: 6,
+            col: 2,
+        },
+    ]
+
+    const SettingData = (data) => {
+        
     }
 
     return (
@@ -61,29 +75,48 @@ const CrossWord = () => {
             <Header />
 
             <GameContainer>
-                <CellContainer>
-                    {Array(100).fill(0).map((v, i) => {
-                        if (i % 6 == 0)
-                            return <QCell key={i} />
+                <img src={GameBgPng} style={{ position: 'absolute', width: '-webkit-fill-available', height: '-webkit-fill-available', top: '0px' }} />
+                {/* <GameBack ><GameBg style={{ position: 'absolute', width: '-webkit-fill-available', height: '-webkit-fill-available', top: '0px' }} /></GameBack> */}
+                {/* <CellContainer>
+                    {Array(100).fill().map((v, i) => {
                         return <Cell key={i} />
                     })}
+                </CellContainer> */}
+                <CellContainer>
+                    {SettingData(data)}
                 </CellContainer>
 
                 <QuestContainer>
                     <QuestDiv>
-                        <Questlabel>단어 설명</Questlabel>
-                        <Questdesc>맞출 칸을 선택해 주세요</Questdesc>
-                        <AnswerDiv>
-                            {/* <AnswerCell
+
+                        <GameInput1 style={{ position: 'absolute', right: '0px' }} />
+                        <GameInput2 style={{ position: 'absolute', right: '0px', bottom: '0px', zIndex: '3' }} />
+
+                        <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', width: '594px', height: '100vh', right: '0px', background: '#111111' }}>
+                            <div style={{ display: 'flex', width: '494px', height: '23px', margin: '127px auto 0 auto', justifyContent: 'space-between' }}>
+                                <Questlabel>단어 설명</Questlabel>
+                                <QuestCnt>남은단어</QuestCnt>
+                            </div>
+                            <Questdesc>맞출 칸을 선택해 주세요</Questdesc>
+                            <AnswerDiv>
+                                {/* <AnswerCell
                                 id={AnswerLength++}
                                 ref={(ref)=> aref = ref}
                                 maxLength={1}
                                 onChange={AnswerPut}
                             /> */}
-                            <AnswerInput />
-                        </AnswerDiv>
-                        <Button>확인</Button>
-                        <GameOver>그만</GameOver>
+                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                    <AnswerInput />
+                                    <AnswerWrong>다시한번 생각해보세요!</AnswerWrong>
+                                </div>
+                            </AnswerDiv>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '70px', alignItems: 'center', zIndex: '4' }}>
+                                <CheckBtn margin='0'>확인</CheckBtn>
+                                <GameOver><u>포기할래요</u></GameOver>
+                            </div>
+
+                        </div>
                     </QuestDiv>
                 </QuestContainer>
             </GameContainer>
@@ -97,37 +130,53 @@ const GameContainer = styled.div`
     display: flex;
 `
 
+const GameBack = styled.div`
+    /* position: absolute;
+    width: auto;
+    height: 754px; */
+`
+
 const CellContainer = styled.div`
-    width: 700px;
-    min-width: 700px;
-    height: 700px;
-    margin: 10px;
-    margin: 40px;
+    position: absolute;
+    min-width: 624px;
+    width: 624px;
+    height: 534.6px;
+    gap: 8.61px;
+    margin: 127px 126px 0 126px;
+
     display: flex;
     flex-wrap: wrap;
 `
 
 const Cell = styled.div`
-    width: 60px;
-    height: 60px;
-    margin: 5px;
+    width: 51.65px;
+    height: 51.65px;
 
-    box-shadow: -5px 0 5px black;
-
-    background: #C0C4C9;
-    border-radius: 5px;
+    border: 1.5px solid #FFFFFF;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4.30434px;
     transform: matrix(0, -1, -1, 0, 0, 0);
 `
 
 const QCell = styled.div`
-    width: 60px;
-    height: 60px;
-    margin: 5px;
+    width: 51.65px;
+    height: 51.65px;
 
-    box-shadow: -5px 0 5px black;
+    background: #FFFFFF;
+    border: 1.5px solid #FFFFFF;
+    border-radius: 4.30434px;
+    transform: matrix(0, -1, -1, 0, 0, 0);
+`
 
-    background: #5f6264;
-    border-radius: 5px;
+const SelCell = styled.div`
+    box-sizing: border-box;
+
+    width: 51.65px;
+    height: 51.65px;
+
+    background: #8E41FF;
+    border: 1.5px solid #FFFFFF;
+    border-radius: 4.30434px;
     transform: matrix(0, -1, -1, 0, 0, 0);
 `
 
@@ -154,39 +203,138 @@ const AnswerCell = styled.input`
 const QuestContainer = styled.div`
     display: flex;
     flex-direction: column;
+    width: 100%;
 `
 
 const AnswerDiv = styled.div`
     display: flex;
-    width: 100px;
-    height: 100px;
-    background-color: green;
+    margin: 0 auto;
 `
 
 const AnswerInput = styled.input`
     ${bold41}
-    width: 200px;
+    width: 270px;
+    height: 92px;
+
+    border: 1.5px solid #FFFFFF;
+    border-radius: 5px;
+`
+
+const AnswerWrong = styled.div`
+    
+    height: 20px;
+    margin: 12px auto 0 auto;
+    z-index: 4;
+
+    /* 14pt_Medium */
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    /* primary_red_#FF4E4E */
+
+    color: #FF4E4E;
 `
 
 const QuestDiv = styled.div`
-    width: 100px;
-    height: 100px;
-    background-color: red;
+
 `
 
 const Questlabel = styled.div`
-    width: 100px;
-    height: 100px;
-    background-color: blue;
+    
+    width: 63px;
+    height: 23px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFFFF;
+`
+
+const QuestCnt = styled.div`
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 23px;
+    display: flex;
+    align-items: center;
+    text-align: right;
+
+    /* Secondary_yellow_#FFC438 */
+
+    color: #FFC438;
 `
 
 const Questdesc = styled.div`
-    width: 100px;
-    height: 100px;
-    background-color: yellow;
+    box-sizing: border-box;
+
+    width: 494px;
+    min-height: 228px;
+    margin: 14px auto 48px auto;
+    display: flex;
+    padding: 30px 26px;
+
+    background: #333333;
+    border: 1px solid #555555;
+    backdrop-filter: blur(15px);
+
+    border-radius: 5px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 35px;
+    letter-spacing: -0.05em;
+
+    color: #FFFFFF;
 `
 
-const GameOver = styled.button`
-    border: 0px;
-    background-color: rgba(0,0,0,0);
+const CheckBtn = styled.div`
+    width: 212px;
+    height: 52px;
+
+    background: #444444;
+    border-radius: 56.9524px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    color: #AAAAAA;
+`
+
+const GameOver = styled.p`
+    margin: 16px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #C0C4C9;
 `

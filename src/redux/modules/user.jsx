@@ -32,8 +32,6 @@ export const __login =
     try {
     const login = await userApi.login(data);
 
-    console.log(login);
-
     const Token = login.headers.authorization.split(';Bearer ');
     const accessToken = Token[0].split(' ')[1];
     const refreshToken = Token[1];
@@ -48,6 +46,7 @@ export const __login =
       });
 
       localStorage.setItem('nickname', jwtDecode(accessToken).NICKNAME)
+      localStorage.setItem('generation', jwtDecode(accessToken).GENERATION)
       // console.log(jwtDecode(accessToken).NICKNAME)
       history.replace("/");
     } catch (e) {
@@ -85,9 +84,8 @@ export const __login =
 export const __logout =
   () =>
   (dispatch, getState, { history }) => {
-    localStorage.removeItem("accessToken", {
-      path: "/",
-    });
+    localStorage.clear()
+    
     cookies.remove("refreshToken", {
       path: "/",
     });
