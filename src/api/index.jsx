@@ -3,7 +3,7 @@ import { cookies } from "../shared/cookie";
 
 const env = process.env.NODE_ENV;
 
-const targetServer = "https://sparta-ms.shop"
+const targetServer = "https://sparta-hm.site"
   // env === "http://3.38.104.97/"
 //env설정하기
 

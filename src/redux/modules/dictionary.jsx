@@ -233,10 +233,15 @@ export default handleActions(
 
     [SCRAP_DICT]: (state, action) =>
       produce(state, (draft) => {
-        let index = draft.list.findIndex((v) => {
-          return v.postId == action.payload.postId;
-        });
-        draft.list[index].scrapStatus = action.payload.scrapStatus;
+        if (draft.list.length === 0)
+          draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus
+        else {
+          let index = draft.list.findIndex((v) => {
+            return v.postId == action.payload.postId;
+          });
+          draft.list[index].scrapStatus = action.payload.scrapStatus.scrapStatus
+        }
+
       }),
 
     [ADD_DICT_COM]: (state, action) =>
@@ -276,7 +281,7 @@ export default handleActions(
         });
         draft.detailData.postComments[index].commentLikeStatus =
           action.payload.likeStatus;
-          console.log( action.payload)
+        console.log(action.payload)
       }),
   },
   initialState

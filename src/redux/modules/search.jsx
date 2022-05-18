@@ -16,7 +16,7 @@ const getSearchDB = (searchData) => {
 
         MainApi.getsearch(searchData)
             .then((res) => {
-                history.push(`/searchresult/${searchData}`)
+                dispatch(getSearch(res.data.postSearchList))
             })
             .catch((err) => console.log(err))
     }
@@ -25,7 +25,7 @@ const getSearchDB = (searchData) => {
 export default handleActions(
     {
         [GET_SEARCH]: (state, action) => produce(state, (draft) => {
-            console.log(action.payload)
+            draft.list = action.payload
         }),
     },
     initialState

@@ -35,7 +35,7 @@ const Header = (props) => {
     const HeadSearch = (e) => {
         if (e.key === 'Enter') {
             setHeadInput('')
-            history.push(`/searchresult/${searchData}`)
+            history.push(`/searchresult/${headInput}`)
         }
     }
 
@@ -52,8 +52,8 @@ const Header = (props) => {
                     {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
 
                     <div style={{ display: 'flex', margin: '0 0 0 25px' }}>
-                        <HearderText onClick={() => history.push('/dictionary')}>사전장</HearderText>
-                        <HearderText onClick={() => history.push('/dictionary/add')}>단어등록하기</HearderText>
+                        <HearderText className='jello-horizontal' onClick={() => history.push('/dictionary')}>사전장</HearderText>
+                        <HearderText className='jello-horizontal' onClick={() => history.push('/dictionary/add')}>단어등록하기</HearderText>
 
                         {/* <HearderText style={{ margin: '0 28px' }} onClick={() => history.push('/trouble')}>질문장</HearderText> */}
                         {/* <HearderText onClick={() => history.push('/game')}>게임장</HearderText> */}
@@ -75,12 +75,13 @@ const Header = (props) => {
             <ProfileDiv>
                     <Character />
                 </ProfileDiv> */}
-                {/* <WriteDicBtn onClick={()=>dispatch(__logout())}><p>로그아웃</p></WriteDicBtn> */}
-           
-            </div>
-}
-                
-                
+                        {/* <WriteDicBtn onClick={()=>dispatch(__logout())}><p>로그아웃</p></WriteDicBtn> */}
+                        <HeadNick>{localStorage.getItem('nickname')}</HeadNick>
+
+                    </div>
+                }
+
+
             </HeadInner>
         </Head>
     )
@@ -98,6 +99,21 @@ const Head = styled.div`
     height: 74px;
     width: 100%;
 
+    .jello-horizontal {
+        :hover {
+	        animation: jello-horizontal 0.9s both;
+        }
+    }
+
+    @keyframes jello-horizontal {
+        0% { transform: scale3d(1, 1, 1); }
+        30% { transform: scale3d(1.25, 0.75, 1); }
+        40% { transform: scale3d(0.75, 1.25, 1); }
+        50% { transform: scale3d(1.15, 0.85, 1); }
+        65% { transform: scale3d(0.95, 1.05, 1); }
+        75% { transform: scale3d(1.05, 0.95, 1); }
+        100% { transform: scale3d(1, 1, 1); }
+    }
     
     .slide-in-left {
         animation: slide-in-left 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -252,4 +268,14 @@ const ProfileDiv = styled.div`
     display: flex;
     width: 48px;
     height: 30px;
+`
+
+const HeadNick = styled.div`
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 20px;
+
+    color: #FFFFFF;
 `

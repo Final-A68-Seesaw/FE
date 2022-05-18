@@ -46,12 +46,12 @@ const DictList = () => {
         </MenuSelection>
         <Line style={{ width: "74rem" }} />
         <CardWholeBox>
-          {/* {dictList && dictList.map((v, i) => {
+          {dictList && dictList.map((v, i) => {
             return (
               <DictionaryCard key={i} data={v} />
             )
-          })} */}
-          {dictList &&
+          })}
+          {/* {dictList &&
             dictList.map((v, i) => {
               return (
                 <div key={i} style={{ margin: "0.5rem" }}>
@@ -92,7 +92,7 @@ const DictList = () => {
                   />
                 </div>
               );
-            })}
+            })} */}
         </CardWholeBox>
       </Container>
       <Footer />

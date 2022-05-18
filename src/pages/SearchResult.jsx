@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router-dom'
 
 //redux
 import { useDispatch, useSelector } from 'react-redux'
 import { __loadDictCardList } from '../redux/modules/dictionary'
 import { history } from '../redux/configStore'
+import { actionCreators as SearchActions } from '../redux/modules/search'
 
 //element & component
 import Header from '../components/Header'
@@ -19,8 +21,15 @@ import { bold16, bold22, bold15, med15 } from '../themes/textStyle'
 const DictList = () => {
 
     const dispatch = useDispatch();
+    const dictSearchList = useSelector((state) => (state.search.list))
+
+    const params = useParams()
 
     const [dicSel, setDicSel] = useState()
+
+    useEffect(() => {
+        dispatch(SearchActions.getSearchDB(params.keyword))
+    }, [])
 
     return (
         <div>
@@ -33,11 +42,7 @@ const DictList = () => {
                 </MenuSelection>
                 <Line style={{ width: "74rem" }} />
                 <CardWholeBox>
-                    {dictList && dictList.map((v, i) => {
-                        return (
-                            <DictionaryCard key={i} data={v} />
-                        )
-                    })}
+                    {dictSearchList?.map((v, i) => <DictionaryCard key={i} data={v} />)}
                 </CardWholeBox>
 
             </Container>

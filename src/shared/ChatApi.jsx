@@ -1,7 +1,7 @@
 
 const env = process.env.NODE_ENV;
 
-const server = 'http://3.38.104.97';
+const server = 'https://sparta-hm.site';
 
 const sockUrl = server + '/ws-seesaw'
 const sockUrls = server + '/wss-seesaw'

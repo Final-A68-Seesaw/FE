@@ -6,6 +6,7 @@ import produce from "immer";
 // shared & api
 import { cookies } from "../../shared/cookie";
 import { userApi } from "../../api/userApi";
+import jwtDecode from "jwt-decode";
 
 // action
 const LOGIN = "user/LOGIN";
@@ -31,6 +32,8 @@ export const __login =
     try {
     const login = await userApi.login(data);
 
+    console.log(login);
+
     const Token = login.headers.authorization.split(';Bearer ');
     const accessToken = Token[0].split(' ')[1];
     const refreshToken = Token[1];
@@ -43,6 +46,9 @@ export const __login =
         path: "/",
         maxAge: 604800, // 7일
       });
+
+      localStorage.setItem('nickname', jwtDecode(accessToken).NICKNAME)
+      // console.log(jwtDecode(accessToken).NICKNAME)
       history.replace("/");
     } catch (e) {
         console.log(e);

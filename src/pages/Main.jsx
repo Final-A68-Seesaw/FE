@@ -36,8 +36,6 @@ const Main = () => {
 
   const RecentScrollRef = useRef()
 
-  console.log('v2')
-
   const openModal = () => {
     setShowModal(true);
   }
@@ -127,10 +125,7 @@ const Main = () => {
                   </TestAnswer>
                 </div>
                 <TestCellBox>
-                  <TestCell></TestCell>
-                  <TestCell></TestCell>
-                  <TestCell></TestCell>
-                  <TestCell></TestCell>
+                  {Array(v.title.length).fill().map((v, i) => <TestCell key={i} />)}
                 </TestCellBox>
                 <TestDescBox>
                   <TestDesc>{v.contents}</TestDesc>
@@ -471,6 +466,13 @@ const TestDesc = styled.p`
   display: flex;
   align-items: center;
   text-align: center;
+
+  /* word-wrap: break-word; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 
   color: #CCCCCC;
 `
