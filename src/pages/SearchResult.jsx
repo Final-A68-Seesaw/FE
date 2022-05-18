@@ -29,7 +29,7 @@ const DictList = () => {
 
     useEffect(() => {
         dispatch(SearchActions.getSearchDB(params.keyword))
-    }, [])
+    }, [dictSearchList])
 
     return (
         <div>

@@ -34,8 +34,8 @@ const Header = (props) => {
 
     const HeadSearch = (e) => {
         if (e.key === 'Enter') {
-            setHeadInput('')
             history.push(`/searchresult/${headInput}`)
+            setHeadInput('')
         }
     }
 
@@ -61,7 +61,7 @@ const Header = (props) => {
                 </div>
 
                 {<SearchDiv>
-                    <SearchInput placeholder='검색어를 입력해주세요' onChange={(e) => setHeadInput(e.target.value)} onKeyDown={HeadSearch} />
+                    <SearchInput placeholder='검색어를 입력해주세요' value={headInput} onChange={(e) => setHeadInput(e.target.value)} onKeyDown={HeadSearch} />
                     <GoSearch style={{ margin: '0 0 0 -25px', color: '#FAFAFA' }} />
                 </SearchDiv>}
 
