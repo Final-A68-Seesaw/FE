@@ -2,22 +2,21 @@ import React, { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
-import { clearStorage, getStorage } from "../shared/cookie";
-import { userActions } from "../redux/modules/user";
 import { useSelector } from "react-redux";
 
 //ele
 import Button from "../elements/Button";
 import { ErrorXInput } from "../elements/Input";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
 
 //style
 import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
-import Pen from "../asset/Signup_Character_imo.svg";
-import Logo from "../asset/Seeso_logo.svg";
-import { bold18, med14, med18, med20 } from "../themes/textStyle";
+import { bold18, med14, med18, bold20 } from "../themes/textStyle";
+import { MypageApi } from "../api/mypageApi";
 
-const SignupCharacter = () => {
+const MyPageEdit = () => {
   //react-hook-form
   const {
     reset,
@@ -40,7 +39,7 @@ const SignupCharacter = () => {
   //이미지 선택시 charId로 값이 들어감
   const changeRadio = (e) => {
     const values = e.target.value.split(",");
-    console.log(values)
+    console.log(values);
     switch (e.target.name) {
       case "faceUrl":
         setCharId([values[1], charId[1], charId[2]]);
@@ -76,25 +75,27 @@ const SignupCharacter = () => {
 
   //Api get
   useEffect(() => {
-    userApi.signupCharacter().then((res) => {
+    MypageApi.mypageGet().then((res) => {
       setCharSelect(res.data);
-      setCharId([res.data.faceUrl[0].charId, res.data.accessoryUrl[0].charId, res.data.backgroundUrl[0].charId ])
-      setCharPrev([res.data.faceUrl[0].profileImage, res.data.accessoryUrl[0].profileImage, res.data.backgroundUrl[0].profileImage ])
-      
+      setCharId([
+        res.data.profileImages[0].charId,
+        res.data.profileImages[1].charId,
+        res.data.profileImages[2].charId,
+      ]);
+      setCharPrev([
+        res.data.profileImages[0].profileImage,
+        res.data.profileImages[1].profileImage,
+        res.data.profileImages[2].profileImage,
+      ]);
+      console.log(res);
     });
   }, []);
-  const userData = useSelector((state) => state.user.usersign);
+  const userData = useSelector((state) => state.mypage.list);
+  // console.log(userData)
 
   //데이터전송
   const onSubmit = async (data) => {
     let signDic = {
-      pwd: userData.pwd,
-      username: userData.username,
-      generation: userData.generation,
-      energy: userData.energy,
-      insight: userData.insight,
-      judgement: userData.judgement,
-      lifePattern: userData.lifePattern,
       nickname: data.nickname,
       charId: [charId[0], charId[1], charId[2]],
     };
@@ -118,20 +119,21 @@ const SignupCharacter = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Logo style={{ margin: "2rem 0 0 2rem" }} />
+      <Header />
       <Container>
-        <StepBar shape="step3" />
-
-        <Pen />
-        <TextContainer>
-          회원님의 성격이 담긴 <b>나만의 캐릭터 카드</b>를 완성시켜주세요!
-        </TextContainer>
+        <TextContainer>프로필수정</TextContainer>
 
         <OutlineContainer>
           <LeftBox>
-  
-              <PrevWorkStage>
-              <div style={{ display: "flex", position: 'relative', justifyContent: 'center', top: '100px' }}>
+            <PrevWorkStage>
+              <div
+                style={{
+                  display: "flex",
+                  position: "relative",
+                  justifyContent: "center",
+                  top: "100px",
+                }}
+              >
                 <img
                   src={charPrev[0]}
                   style={{ width: "22rem", position: "absolute", zIndex: "3" }}
@@ -142,11 +144,11 @@ const SignupCharacter = () => {
                 />
                 <img
                   src={charPrev[2]}
-                  style={{ width: "22rem", position: "absolute",  zIndex: "1" }}
+                  style={{ width: "22rem", position: "absolute", zIndex: "1" }}
                 />
-                </div>
-              </PrevWorkStage>
-     
+              </div>
+            </PrevWorkStage>
+
             <UserNameTag>
               <PreviewNick>{prevNick}님은 </PreviewNick>
               <Previewmbti>
@@ -195,7 +197,14 @@ const SignupCharacter = () => {
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage} style = {{width:"4rem", height: "4rem", borderRadius: "0.75rem"}} />
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "0.75rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -217,7 +226,14 @@ const SignupCharacter = () => {
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage } style = {{width:"4rem",height: "4rem", borderRadius: "0.75rem"}}/>
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "0.75rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -240,7 +256,14 @@ const SignupCharacter = () => {
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage} style = {{width:"4rem",height: "4rem", borderRadius: "1rem"}} />
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "1rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -250,14 +273,16 @@ const SignupCharacter = () => {
           </RightBox>
         </OutlineContainer>
         <FinalConfirm width="24rem" type="submit">
-          가입완료
+          수정완료
         </FinalConfirm>
       </Container>
+      <Footer />
     </form>
   );
 };
 
 const Container = styled.div`
+  padding-top: 9rem;
   margin: auto;
   max-width: 44rem;
   text-align: center;
@@ -266,7 +291,7 @@ const Container = styled.div`
 const TextContainer = styled.div`
   text-align: center;
   margin: 0.1rem;
-  ${med18}
+  ${bold20}
   color: #242424;
 `;
 const OutlineContainer = styled.div`
@@ -282,7 +307,6 @@ const PrevContainer = styled.div`
   align-items: center;
 `;
 const PrevWorkStage = styled.div`
- 
   /* width: 50rem; */
   /* overflow-y: auto; */
 `;
@@ -310,7 +334,6 @@ const UserNameTag = styled.div`
     0px 8px 16px -4px rgba(22, 34, 51, 0.08);
   color: #ea8c00;
   padding: 1rem 0;
-  
 `;
 const PreviewNick = styled.div`
   ${bold18}
@@ -356,4 +379,4 @@ const SelectCharBox = styled.input`
   }
   display: none;
 `;
-export default SignupCharacter;
+export default MyPageEdit;

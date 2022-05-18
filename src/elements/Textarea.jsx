@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { med14 } from "../themes/textStyle";
+import { med14, med15 } from "../themes/textStyle";
 
 const Textarea = ({
 ...rest
@@ -45,7 +45,7 @@ export const CommentTextarea = styled.textarea`
 `
 
 export const BasicTextarea = styled.textarea`
-  ${med14}
+  ${med15}
   border-color: ${(props)=> props.borderColor ? props.borderColor : 'var(--graydf)'};
   width: ${(props)=> props.width ? props.width : '95%' };
   height: ${(props)=> props.height ? props.height : '16rem' };
@@ -53,7 +53,7 @@ export const BasicTextarea = styled.textarea`
   resize: none;
   padding: 1rem;
   margin: 10px 0;
-  
+  border-radius: 0.3rem;
   border: 1px solid ${(props) =>
     (props.hasError
       ? "var(--red)"

@@ -25,13 +25,13 @@ import {
 import { CommentTextarea } from "../elements/Textarea";
 import Character from "../components/Character";
 import Footer from "../components/Footer";
+import CommentCard from "../components/CommentCard.jsx";
 
 //style
 import styled from "styled-components";
 import Line from "../asset/Dictionary_detail_line.svg";
 import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
-import CommentCard from "../components/CommentCard.jsx";
 
 const DictDetail = (props) => {
   const { register, handleSubmit, formState } = useForm({
@@ -41,11 +41,11 @@ const DictDetail = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
-  const [pageNum, setPageNum] = useState(1)
+  const [pageNum, setPageNum] = useState(1);
 
   //디테일 데이터 로드
   useEffect(() => {
-    window.scrollTo({ top: 0 })
+    window.scrollTo({ top: 0 });
     dispatch(__loadDictDetail(params.cardTitleId, pageNum));
   }, []);
 
@@ -55,9 +55,9 @@ const DictDetail = (props) => {
     setScrap(!scrap);
     dispatch(__scrapDict(!scrap, params.cardTitleId));
   };
+
   // //디테일 삭제 전송
   // const deleteDetail = (data) => {
-  //   //얼럿 기능 구현하기.
   //   dispatch(__deleteDictDetail(data));
   // };
 
@@ -71,9 +71,9 @@ const DictDetail = (props) => {
   };
 
   const pageChange = (page) => {
-    setPageNum(page)
+    setPageNum(page);
     dispatch(__loadDictDetail(params.cardTitleId, page));
-  }
+  };
 
   //댓글 데이터 전송
   const onSubmit = (data) => {
@@ -91,7 +91,9 @@ const DictDetail = (props) => {
           <EditDeleteBox>
             <div
               style={{ margin: "0 0.25rem", cursor: "pointer" }}
-              onClick={() => { history.push(`/dictionary/detail/${params.cardTitleId}/edit`) }}
+              onClick={() => {
+                history.push(`/dictionary/detail/${params.cardTitleId}/edit`);
+              }}
             >
               수정
             </div>{" "}
@@ -198,7 +200,6 @@ const DictDetail = (props) => {
 
         <CommentBox>
           <CommentBoldText>
-            {" "}
             신조어의 예문에 대한 댓글을 달아주세요!
           </CommentBoldText>
           <CommentText>
@@ -234,7 +235,13 @@ const DictDetail = (props) => {
           dataList.postComments.map((v, i) => {
             return (
               <div key={i}>
-                <CommentCard postId={params.cardTitleId} pageNum={pageNum} data={v} pfImg={dataList.profileImages} nickname={dataList.nickname} />
+                <CommentCard
+                  postId={params.cardTitleId}
+                  pageNum={pageNum}
+                  data={v}
+                  pfImg={dataList.profileImages}
+                  nickname={dataList.nickname}
+                />
               </div>
             );
           })}
@@ -249,7 +256,6 @@ const DictDetail = (props) => {
               return <NumberBox key={i} onClick={() => pageChange(i + 1)}>{i + 1}</NumberBox>
           })}
         </div> */}
-
       </Container>
       <Footer />
     </>
@@ -325,6 +331,7 @@ const UpdateBox = styled.div`
 const WordInfo = styled.div`
   color: var(--gray99);
   margin: 0 0.5rem 0 0.5rem;
+  ${med14}
 `;
 
 const ContentsBox = styled.div`
@@ -472,13 +479,13 @@ const NumberBox = styled.div`
   width: 34px;
   height: 32px;
 
-  background: #FFFFFF;
+  background: #ffffff;
 
   /* border: 0.75px solid #C1C1C1; */
   border-radius: 1.5px;
 
   cursor: pointer;
-`
+`;
 
 const SelectNumberBox = styled.div`
   box-sizing: border-box;
@@ -493,12 +500,12 @@ const SelectNumberBox = styled.div`
   width: 34px;
   height: 32px;
 
-  background: #FFFFFF;
+  background: #ffffff;
 
-  border: 0.75px solid #C1C1C1;
+  border: 0.75px solid #c1c1c1;
   border-radius: 1.5px;
 
   cursor: pointer;
-`
+`;
 
 export default DictDetail;

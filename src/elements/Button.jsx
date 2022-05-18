@@ -32,7 +32,7 @@ const Button = ({ shape, children, ...rest }) => {
       case "mypage-Black-B":
         return (
           <Confirm
-            margin="0 0 0.5rem 1rem"
+            margin="0 0 0.5rem 0.5rem"
             width="12.5rem"
             height="2.25rem"
             background="white"
@@ -50,7 +50,7 @@ const Button = ({ shape, children, ...rest }) => {
         case "mypage-White-B":
           return (
             <Confirm
-              margin="0 0 0.5rem 1rem"
+              margin="0 0 0.5rem 0.5rem"
               width="12.5rem"
               height="2.25rem"
               background="black"

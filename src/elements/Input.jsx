@@ -32,7 +32,7 @@ const Labelbox = styled.div`
 `;
 
 export const SFormError = styled.div`
-  margin: 1rem 0;
+  margin: 0 0 1rem 0;
   color: var(--red);
   ${med14}
 `;

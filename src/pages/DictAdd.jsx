@@ -14,11 +14,11 @@ import Button from "../elements/Button";
 import { BasicTextarea } from "../elements/Textarea";
 import { Select } from "../elements/Select";
 import FileUpload2 from "../components/FileUpload2";
+import Footer from "../components/Footer";
 
 //style
 import styled from "styled-components";
 import Book from "../asset/Dictionary_add_imo.svg";
-import Footer from "../components/Footer";
 import TextIcon from "../asset/DictAddIcon.svg";
 
 const DictAdd = (props) => {
@@ -128,7 +128,7 @@ const GenerationOptions = [
         </WhatisNew>
 
         <LabelBox>
-          등재할 신조어 <InputCountBox>{inputCount} /50</InputCountBox>{" "}
+          등재할 신조어 <InputCountBox>{inputCount} /50</InputCountBox>
         </LabelBox>
 
         <TitleInput>
@@ -164,12 +164,12 @@ const GenerationOptions = [
             ref={register({
               required: {
                 value: true,
-                message: "⚠ 내용을 입력해주세요.",
+                message: "⚠ 내용을 입력해주세요",
               },
             })}
             name="contents"
             type="text"
-            placeholder="단어를 설명해줄 수 있는 내용을 적어주세요.
+            placeholder="단어를 설명해줄 수 있는 내용을 적어주세요
 
                 *등록시 유의할 점
                 - 형식은 자유롭게 작성하되, 누구나 알아볼 수 있도록 정리해주세요.
