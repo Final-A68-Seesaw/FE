@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -19,9 +18,7 @@ import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
 
 const DictList = () => {
-  const params = useParams();
   const dispatch = useDispatch();
-  const dataList = useSelector((state) => state.dictionary.detailData);
 
   useEffect(() => {
     dispatch(__loadDictCardList());
@@ -37,14 +34,14 @@ const DictList = () => {
   const dictList = useSelector((state) => state.dictionary.list);
 
   return (
-    <div>
+    <>
       <Header />
       <Container>
         <MenuSelection>
           <DictSelect>사전장</DictSelect>
           <Newest>최신순</Newest>
         </MenuSelection>
-        <Line style={{ width: "74rem" }} />
+        <Line style={{ width: "74.5rem" }} />
         <CardWholeBox>
           {dictList && dictList.map((v, i) => {
             return (
@@ -96,7 +93,7 @@ const DictList = () => {
         </CardWholeBox>
       </Container>
       <Footer />
-    </div>
+    </>
   );
 };
 

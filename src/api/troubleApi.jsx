@@ -8,7 +8,7 @@ export const TroubleApi = {
     troubledetailget: (id) => instance.get(`/api/trouble/${id}`),
     troubledel: (id) => instance.delete(`/api/trouble/${id}`),
 
-    troublecommentpost: (troubleid) => instance.post(`/api/trouble/comment/${troubleid}`),
+    troublecommentpost: (troubleid,data) => instance.post(`/api/trouble/comment/${troubleid}`,data),
     troublecommentput: (commentid) => instance.put(`/api/trouble/comment/${commentid}`),
     troublecommentdelete: (commentid) => instance.delete(`/api/trouble/comment/${commentid}`),
     

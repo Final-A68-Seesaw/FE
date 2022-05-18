@@ -169,7 +169,7 @@ export const __addDictComment = (cardTitleId, data, nickname) => {
     dictApi
       .addComment(cardTitleId, data)
       .then((res) => {
-        dispatch(addDictCom(res.data))
+        dispatch(addDictCom(res.data));
       })
       .catch((err) => console.log(err));
   };
@@ -177,15 +177,14 @@ export const __addDictComment = (cardTitleId, data, nickname) => {
 
 export const __deleteDictComment = (commentId, postId, pageNum) => {
   return (dispatch, getState, { history }) => {
-
     dictApi
       .delComment(commentId)
       .then((res) => {
         let getNextComment = {
           commentId: commentId,
-          nextComment: res.data
-        }
-        dispatch(delDictCom(getNextComment))
+          nextComment: res.data,
+        };
+        dispatch(delDictCom(getNextComment));
       })
       .catch((err) => console.log(err));
   };
@@ -229,6 +228,7 @@ export default handleActions(
     [SET_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.files.push(action.payload.files);
+
       }),
 
     [SCRAP_DICT]: (state, action) =>
@@ -246,32 +246,37 @@ export default handleActions(
 
     [ADD_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
-        draft.detailData.postComments.unshift(action.payload)
+        draft.detailData.postComments.unshift(action.payload);
 
         if (draft.detailData.postComments.length > 4)
-          draft.detailData.postComments = draft.detailData.postComments.slice(0, 4)
+          draft.detailData.postComments = draft.detailData.postComments.slice(
+            0,
+            4
+          );
 
-        draft.detailData.commentCount = action.payload.commentCount
+        draft.detailData.commentCount = action.payload.commentCount;
       }),
     [PUT_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
         let commentList = state.detailData.postComments.map((v, i) => {
           if (v.commentId === action.payload.commentId)
-            return { ...v, comment: action.payload.comment }
-          return v
-        })
-        draft.detailData = { ...state.detailData, postComments: commentList }
+            return { ...v, comment: action.payload.comment };
+          return v;
+        });
+        draft.detailData = { ...state.detailData, postComments: commentList };
       }),
     [DEL_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
         console.log(action.payload);
-        let comList = state.detailData.postComments.filter((v) => v.commentId !== action.payload.commentId)
+        let comList = state.detailData.postComments.filter(
+          (v) => v.commentId !== action.payload.commentId
+        );
 
         if (action.payload.nextComment.commentId)
-          comList.push(action.payload.nextComment)
+          comList.push(action.payload.nextComment);
 
-        draft.detailData.postComments = comList
-        draft.detailData.commentCount = action.payload.nextComment.commentCount
+        draft.detailData.postComments = comList;
+        draft.detailData.commentCount = action.payload.nextComment.commentCount;
       }),
 
     [LIKE_DICT_COM]: (state, action) =>

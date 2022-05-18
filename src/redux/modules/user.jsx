@@ -45,13 +45,14 @@ export const __login =
         maxAge: 604800, // 7일
       });
 
-      localStorage.setItem('nickname', jwtDecode(accessToken).NICKNAME)
-      localStorage.setItem('generation', jwtDecode(accessToken).GENERATION)
-      // console.log(jwtDecode(accessToken).NICKNAME)
+      localStorage.setItem("generation", jwtDecode(accessToken).GENERATION)
+      localStorage.setItem("nickname", jwtDecode(accessToken).NICKNAME)
       history.replace("/");
     } catch (e) {
-        console.log(e);
-        window.alert("존재하지 않는 이메일입니다.");
+      if (e.message === "Request failed with status code 401") {
+        alert("이메일과 패스워드를 확인해주세요!");
+        return;
+      }
     }
   };
   
@@ -84,8 +85,7 @@ export const __login =
 export const __logout =
   () =>
   (dispatch, getState, { history }) => {
-    localStorage.clear()
-    
+    localStorage.clear();
     cookies.remove("refreshToken", {
       path: "/",
     });

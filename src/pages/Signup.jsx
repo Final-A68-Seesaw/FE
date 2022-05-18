@@ -37,9 +37,9 @@ const Signup = () => {
 //select option
 const GenerationOptions = [
   {value: "none", label: "선택하세요"},
-  {value: "x세대", label: "X세대(1965년생~1979년생)"},
-  {value: "y세대", label: "Y세대(1980년생~1994년생)"},
-  {value: "z세대", label: "Z세대(1995년생~2005년생)"},
+  {value: "X세대", label: "X세대(1965년생~1979년생)"},
+  {value: "Y세대", label: "Y세대(1980년생~1994년생)"},
+  {value: "Z세대", label: "Z세대(1995년생~2005년생)"},
   {value: "알파세대", label: "알파세대(2006년생~)"}
 ]
 

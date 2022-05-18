@@ -138,7 +138,6 @@ const LoadCmtInfo = styled.div`
   align-items: center;
 `;
 const CharNickBox = styled.div`
-  margin: 0 0 0 1.5rem;
   align-items: center;
 `;
 const LoadCmtNickname = styled.div`
@@ -152,7 +151,7 @@ const LoadCmtTime = styled.div`
   ${med14}
 `;
 const LoadCmt = styled.div`
-  margin: 0 1rem 1rem 4rem;
+  margin: 0 1rem 1rem 2.5rem;
   ${med15}
 `;
 const LikeBtn = styled.button`
