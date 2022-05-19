@@ -66,9 +66,9 @@ const MyPageTop = () => {
         </form>
 
         <MyMenu>
-          <MyScrap>스크랩</MyScrap>
-          <MyWord>내 등재 단어</MyWord>
-          <MyWriteList>내 작성 글</MyWriteList>
+          <MyScrap onClick = {()=>{history.replace('/mypage/scrap')}}>스크랩</MyScrap>
+          <MyWord onClick = {()=>{history.replace('/mypage/myword')}}>내 등재 단어</MyWord>
+          <MyWriting onClick = {()=>{history.replace('/mypage/writing')}} >내 작성 글</MyWriting>
         </MyMenu>
         <HrLine />
       </Container>
@@ -82,7 +82,7 @@ const Container = styled.div`
   margin: auto;
   max-width: 60rem;
   padding-top: 9rem;
-  margin-bottom: 3rem;
+
 `;
 const UserInfos = styled.div`
   justify-content: center;
@@ -118,18 +118,21 @@ const MyScrap = styled.div`
   margin-bottom: 1rem;
   text-align: center;
   border-bottom-width: 3px;
+  cursor: pointer;
 `;
 const MyWord = styled.div`
   width: 9rem;
   margin-bottom: 1rem;
   text-align: center;
+  cursor: pointer;
 `;
-const MyWriteList = styled.div`
+const MyWriting = styled.div`
   width: 9rem;
   margin-bottom: 1rem;
   text-align: center;
+  cursor: pointer;
 `;
 const HrLine = styled.hr`
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
   margin-top: 0;
 `;

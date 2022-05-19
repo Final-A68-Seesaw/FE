@@ -34,7 +34,7 @@ import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
 
 const DictDetail = (props) => {
-  const { register, handleSubmit, formState } = useForm({
+  const {reset, getValues, register, handleSubmit, formState } = useForm({
     mode: "onChange",
   });
 
@@ -80,7 +80,14 @@ const DictDetail = (props) => {
     console.log(data);
     dispatch(__addDictComment(params.cardTitleId, data, dataList.nickname));
   };
-
+  //댓글 데이터 전송후 댓글 인풋 리셋
+  const onReset = () => {
+    reset({
+      ...getValues(),
+      comment: "",
+    });
+  };
+console.log(dataList && dataList)
   return (
     <>
       <Header />
@@ -167,7 +174,7 @@ const DictDetail = (props) => {
           ) : null}
         </>
 
-        {dataList && dataList.videoUrl === "null" ? null : (
+        {dataList && dataList.videoUrl === "" || "null" ? null : (
           <>
             <LabelTag>
               참고 영상 URL |
@@ -213,6 +220,9 @@ const DictDetail = (props) => {
         </WordUseExample>
         <Line />
         <CommentInputBox>
+          <CommentCharBox>
+            <Character char={dataList && dataList.profileImages} />
+          </CommentCharBox>
           <CommentUserName>{dataList && dataList.nickname}</CommentUserName>
           <form onSubmit={handleSubmit(onSubmit)}>
             <CommentTextarea
@@ -226,7 +236,7 @@ const DictDetail = (props) => {
             <InputCountBox>{inputCount}/500</InputCountBox>
             <div style={{ display: "flex", justifyContent: "top" }}>
               <CommentHr width="90%" />
-              <CommentSubmitBtn type="submit">등록</CommentSubmitBtn>
+              <CommentSubmitBtn type="submit" onClick={onReset}>등록</CommentSubmitBtn>
             </div>
           </form>
         </CommentInputBox>
@@ -248,15 +258,33 @@ const DictDetail = (props) => {
 
         <FooterHrLine />
 
-        <div style={{ width: '309px', height: '32px', margin: '45px auto', display: 'flex', gap: '17.75px' }}>
-          {dataList && Array(Math.ceil(dataList.commentCount / 4)).fill().map((v, i) => {
-            if (pageNum === i + 1)
-              return <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>{i + 1}</SelectNumberBox>
-            else
-              return <NumberBox key={i} onClick={() => pageChange(i + 1)}>{i + 1}</NumberBox>
-          })}
+        <div
+          style={{
+            width: "309px",
+            height: "32px",
+            margin: "45px auto",
+            display: "flex",
+            gap: "17.75px",
+          }}
+        >
+          {dataList &&
+            Array(Math.ceil(dataList.commentCount / 4))
+              .fill()
+              .map((v, i) => {
+                if (pageNum === i + 1)
+                  return (
+                    <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>
+                      {i + 1}
+                    </SelectNumberBox>
+                  );
+                else
+                  return (
+                    <NumberBox key={i} onClick={() => pageChange(i + 1)}>
+                      {i + 1}
+                    </NumberBox>
+                  );
+              })}
         </div>
-
       </Container>
       <Footer />
     </>
@@ -435,10 +463,13 @@ const CommentInputBox = styled.div`
   border-radius: 3px;
   margin: 2rem 0 2rem 0;
 `;
+const CommentCharBox = styled.div`
+  margin: 0.7rem 0 0 1rem;
+`;
 const CommentUserName = styled.div`
   ${bold15}
   color: black;
-  margin: 1rem 0 0 1rem;
+  margin: 1.2rem 0 0 3.5rem;
 `;
 const CommentSubmitBtn = styled.button`
   background-color: var(--red);

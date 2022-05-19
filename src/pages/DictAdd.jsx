@@ -51,9 +51,9 @@ const DictAdd = (props) => {
 //단어 사용 세대
 const GenerationOptions = [
   {value: "none", label: "선택하세요"},
-  {value: "x세대", label: "X세대(1965년 ~ 1979년)"},
-  {value: "y세대", label: "Y세대(1980년 ~ 1994년)"},
-  {value: "z세대", label: "Z세대(1995년 ~ 2005년)"},
+  {value: "X세대", label: "X세대(1965년 ~ 1979년)"},
+  {value: "Y세대", label: "Y세대(1980년 ~ 1994년)"},
+  {value: "Z세대", label: "Z세대(1995년 ~ 2005년)"},
   {value: "알파세대", label: "알파세대(2006년~)"}
 ]
 

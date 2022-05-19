@@ -22,7 +22,7 @@ import Footer from "../components/Footer";
 import TextIcon from "../asset/DictAddIcon.svg";
 import { useParams } from "react-router-dom";
 
-const DictAdd = (props) => {
+const DictDetailEdit = (props) => {
   const {
     reset,
     register,
@@ -199,7 +199,7 @@ const DictAdd = (props) => {
   );
 };
 
-export default DictAdd;
+export default DictDetailEdit;
 
 const Container = styled.div`
   margin: auto;

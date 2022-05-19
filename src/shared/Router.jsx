@@ -30,6 +30,8 @@ import TroubleAdd from '../pages/TroubleAdd';
 
 //MyPage
 import MyPageScrap from '../pages/MyPageScrap';
+import MyPageMyWord from '../pages/MyPageMyWord';
+import MyPageWriting from '../pages/MyPageWriting';
 import MyPageEdit from '../pages/MyPageEdit';
 
 import AuthRedirectHandler from '../auth/AuthRedirectHandeler';
@@ -63,7 +65,9 @@ const Router = () => {
         <Route path="/trouble/detail/:id" exact component={TroubleDetail}/>
         <Route path="/trouble/add" exact component={TroubleAdd}/>
 
-        <Route path="/mypage" exact component={MyPageScrap}/>
+        <Route path="/mypage/scrap" exact component={MyPageScrap}/>
+        <Route path="/mypage/myword" exact component={MyPageMyWord}/>
+        <Route path="/mypage/writing" exact component={MyPageWriting}/>
         <Route path="/mypage/edit" exact component={MyPageEdit}/>
 
         <Route path="/user/kakao/callback" exact component={AuthRedirectHandler}/>

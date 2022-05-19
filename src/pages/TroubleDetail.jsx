@@ -13,7 +13,6 @@ import {
 import { history } from "../redux/configStore";
 
 //element & component
-import Button from "../elements/Button";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {
@@ -77,7 +76,7 @@ const TroubleDetail = (props) => {
         <CenterBox>
           <GenerationBox>
             {DataList && DataList.question}가 물어봅니다 {">"}{" "}
-            {DataList && DataList.answer}가 대답해주세요{" "}
+            {DataList && DataList.answer}가 대답해주세요
           </GenerationBox>
         </CenterBox>
         <TitleBox>{DataList && DataList.title} </TitleBox>
@@ -88,9 +87,9 @@ const TroubleDetail = (props) => {
             <OutCharAlign>
               <Character char={DataList && DataList.profileImages} />
               <CharacterAlign>
-                <UserName>{DataList && DataList.nickname}</UserName>
+                <UserName>{DataList && DataList.writer}</UserName>
                 <WordInfo>
-                  | {DataList && DataList.postTime} | 조회수{" "}
+                  | {DataList && DataList.troubleTime} | 조회수{" "}
                   {DataList && DataList.views}
                 </WordInfo>
               </CharacterAlign>
@@ -182,6 +181,9 @@ const TroubleDetail = (props) => {
         </CommentBox>
         <HrLine />
         <CommentInputBox>
+          <CommentCharBox>
+        <Character char={DataList && DataList.profileImages} />
+        </CommentCharBox>
           <CommentUserName>{DataList && DataList.nickname}</CommentUserName>
           <form onSubmit={handleSubmit(onSubmit)}>
             <CommentTextarea
@@ -206,7 +208,7 @@ const TroubleDetail = (props) => {
               <div key={i}>
                 <CommentCard
                   postId={params.id}
-                //   pageNum={pageNum}
+                  // pageNum={pageNum}
                   data={v}
                   pfImg={DataList.profileImages}
                   nickname={DataList.nickname}
@@ -237,7 +239,6 @@ const CenterBox = styled.div`
 const GenerationBox = styled.div`
   width: 18rem;
   align-items: center;
-  margin: 0 10px 0 0;
   padding: 7px;
   background-color: var(--white);
   border-radius: 22px;
@@ -364,6 +365,7 @@ const CommentBox = styled.div`
   margin-top: 4rem;
   margin-bottom: 3rem;
 `;
+
 const CommentBoldText = styled.div`
   ${bold17}
   color: var(--black);
@@ -373,10 +375,14 @@ const CommentText = styled.div`
   ${med14}
   color: var(--red);
 `;
+const CommentCharBox = styled.div`
+  margin: 0.7rem 0 0 1rem;
+
+`;
 const CommentUserName = styled.div`
   ${bold15}
   color: black;
-  margin: 1rem 0 0 1rem;
+  margin: 1.2rem 0 0 3.5rem;
 `;
 const CommentSubmitBtn = styled.button`
   background-color: var(--red);
