@@ -169,6 +169,7 @@ export const __addDictComment = (cardTitleId, data, nickname) => {
     dictApi
       .addComment(cardTitleId, data)
       .then((res) => {
+        console.log(res.data)
         dispatch(addDictCom(res.data));
       })
       .catch((err) => console.log(err));
@@ -233,6 +234,7 @@ export default handleActions(
 
     [SCRAP_DICT]: (state, action) =>
       produce(state, (draft) => {
+        console.log(state);
         if (draft.list.length === 0)
           draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus
         else {

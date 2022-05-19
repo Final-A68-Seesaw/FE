@@ -1,41 +1,51 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 //redux
-import { useDispatch } from 'react-redux';
-import { history } from '../redux/configStore';
+import { useDispatch } from "react-redux";
+import { history } from "../redux/configStore";
 import { __scrapDict } from "../redux/modules/dictionary";
+import { __scrapMyPage } from "../redux/modules/mypage";
 
 //element & component
-
+import { bold15, bold22, med15 } from "../themes/textStyle";
 
 //style
-import styled from 'styled-components'
-import { bold15, bold22, med15 } from '../themes/textStyle';
+import styled from "styled-components";
 import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
 
 const DictionaryCard = (props) => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
 
   //스크랩 기능
   const [scrap, setScrap] = useState(false);
   const ChangeScrap = (postId) => {
     setScrap(!scrap);
-    dispatch(__scrapDict(!scrap, postId));
+    if(props.data.mainImage){
+      dispatch(__scrapMyPage(!scrap, postId))
+    } else {
+      dispatch(__scrapDict(!scrap, postId));
+    } 
   };
 
-  return (
-    <div style={{ margin: '0.5rem' }}>
-      <WordCard onClick={() => { history.push(`/dictionary/detail/${props.data.postId}`) }}>
 
+  return (
+    <div style={{ margin: "0.5rem" }}>
+      <WordCard
+        onClick={() => {
+          history.push(`/dictionary/detail/${props.data.postId}`);
+        }}
+      >
         <GenScrapBox>
           <GenerationBox> {props.data.generation} </GenerationBox>
 
-          <ScrapBtn onClick={(e) => {
-            ChangeScrap(props.data.postId)
-            e.stopPropagation()
-          }}>
+          <ScrapBtn
+            onClick={(e) => {
+              ChangeScrap(props.data.postId);
+              e.stopPropagation();
+            }}
+          >
             {props.data.scrapStatus === false ? (
               <BsSuitHeart style={{ cursor: "pointer", width: "1rem" }} />
             ) : (
@@ -46,19 +56,27 @@ const DictionaryCard = (props) => {
 
         <CardTitle>{props.data.title}</CardTitle>
         <CardContents>{props.data.contents}</CardContents>
-        <ViewCountBox><div>조회수 {props.data.views}</div>
-          <div>스크랩 {props.data.scrapCount} </div></ViewCountBox>
+        <ViewCountBox>
+          <div>조회수 {props.data.views}</div>
+          <div>스크랩 {props.data.scrapCount} </div>
+        </ViewCountBox>
       </WordCard>
-      <img src={props.data.postImages || props.data.postImage} style={{ display: "flex", width: "223px", height: "320px", borderRadius: "10px" }} />
-
+      <img
+        src={
+          props.data.postImages || props.data.postImage || props.data.mainImage
+        }
+        style={{
+          display: "flex",
+          width: "223px",
+          height: "320px",
+          borderRadius: "10px",
+        }}
+      />
     </div>
-  )
-}
+  );
+};
 
-export default DictionaryCard
-
-
-
+export default DictionaryCard;
 
 const WordCard = styled.div`
   display: flex;
@@ -77,7 +95,7 @@ const WordCard = styled.div`
   /* margin: 0.5rem; */
   position: absolute;
 
-    cursor: pointer;
+  cursor: pointer;
 `;
 const GenScrapBox = styled.div`
   justify-content: space-between;

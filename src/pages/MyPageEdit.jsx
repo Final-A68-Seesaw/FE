@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 //ele
 import Button from "../elements/Button";
@@ -15,8 +15,12 @@ import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
 import { bold18, med14, med18, bold20 } from "../themes/textStyle";
 import { MypageApi } from "../api/mypageApi";
+import { __loadMypage } from "../redux/modules/mypage";
 
 const MyPageEdit = () => {
+  const dispatch = useDispatch();
+  const userData = useSelector((state) => state.mypage.list);
+
   //react-hook-form
   const {
     reset,
@@ -75,8 +79,8 @@ const MyPageEdit = () => {
 
   //Api get
   useEffect(() => {
+    dispatch(__loadMypage());
     MypageApi.mypageGet().then((res) => {
-      setCharSelect(res.data);
       setCharId([
         res.data.profileImages[0].charId,
         res.data.profileImages[1].charId,
@@ -87,11 +91,12 @@ const MyPageEdit = () => {
         res.data.profileImages[1].profileImage,
         res.data.profileImages[2].profileImage,
       ]);
-      console.log(res);
     });
+    userApi.signupCharacter().then((res) => {
+      setCharSelect(res.data);
+    })
   }, []);
-  const userData = useSelector((state) => state.mypage.list);
-  // console.log(userData)
+  console.log(userData)
 
   //데이터전송
   const onSubmit = async (data) => {
@@ -150,7 +155,7 @@ const MyPageEdit = () => {
             </PrevWorkStage>
 
             <UserNameTag>
-              <PreviewNick>{prevNick}님은 </PreviewNick>
+              <PreviewNick>{prevNick? prevNick: userData?.nickname}님은 </PreviewNick>
               <Previewmbti>
                 {userData.mbtiRes} {userData.generation}
               </Previewmbti>
@@ -161,6 +166,7 @@ const MyPageEdit = () => {
             <ErrorXInput
               type="text"
               name="nickname"
+              defaultValue = {userData.nickname}
               register={register({
                 required: {
                   value: true,

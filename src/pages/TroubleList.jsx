@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { __loadTrouCardList } from "../redux/modules/touble";
-import { history } from "../redux/configStore";
 
 //element & component
 import Header from "../components/Header";
@@ -13,9 +12,7 @@ import { bold16, bold22, bold15, med15, med18 } from "../themes/textStyle";
 //style
 import styled from "styled-components";
 import Line from "../asset/Dictionary_list_line.svg";
-import Arrow from "../asset/Trouble_arrow.svg"
-import TroubleDetail from "./TroubleDetail";
-import Character from "../components/Character";
+import TroubleCard from "../components/TroubleCard";
 
 const TroubleList = () => {
   const dispatch = useDispatch();
@@ -40,33 +37,9 @@ const TroubleList = () => {
         <CardWholeBox>
             {troubleList.map((v, i) => {
               return (
-                <div key={i} style={{ margin: "0.5rem" , cursor:"pointer"}}
-                onClick={() => history.push(`/trouble/detail/${v.id}`)}
-                >
-                <WordCard>
-                    <GenBox>
-                <GenerationTag> {v.answer} </GenerationTag>
-                <Arrow/>
-                <GenerationTag> {v.question} </GenerationTag>
-                </GenBox>
-                  <CardTitle>{v.title}</CardTitle>
-                  <ViewCountBox>
-                      <div>조회수 {v.views}</div>
-                      <div>댓글 {v.commentCount} </div>
-                    </ViewCountBox>
-                
-                </WordCard>
-                <img src={v.troubleImages[0]}
-                style={{
-                    display: "flex",
-                    width: "223px",
-                    height: "320px",
-                    borderRadius: "10px",
-                  }}/>
-
-                </div>
+                <TroubleCard key={i} data={v}/>
               );
-            })}
+            })} 
         </CardWholeBox>
       </Container>
       <Footer />
