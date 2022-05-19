@@ -131,7 +131,7 @@ const DictDetailEdit = (props) => {
           <SFormError>{errors?.contents?.message}</SFormError>
 
           {/* 첨부파일 */}
-          <FileUpload2 />
+          <FileUpload2 file={dataList?.postImages}/>
 
           <hr style={{ margin: "1rem 0 1rem 0", color: "var(--grayed)" }} />
 
