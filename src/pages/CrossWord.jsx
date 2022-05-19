@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import Header from '../components/Header'
 import Button from '../elements/Button'
@@ -8,6 +8,7 @@ import GameBg from '../asset/GameBg.svg'
 import GameBgPng from '../asset/GameBg.png'
 import GameInput1 from '../asset/GameInputBg1.svg'
 import GameInput2 from '../asset/GameInputBg2.svg'
+import CWword from '../components/CWword'
 
 const CrossWord = () => {
 
@@ -48,26 +49,88 @@ const CrossWord = () => {
         // document.getElementById(an.toString()).focus()
     }
 
+    const [selQuiz, setSelQuiz] = useState()
+    const [writeAnswer, setWriteAnswer] = useState('')
 
-    const data = [
+    const [testData, setTestData] = useState([
         {
             num: 1,
             word: '피카츄',
-            line: 'down',
-            row: 0,
-            col: 0,
+            desc: '전기쥐',
+            line: 'right',
+            row: 3,
+            col: 3,
+            pass: false,
         },
         {
             num: 2,
-            word: '라이츄',
+            word: '라이츄파이리',
+            desc: '전기쥐진화+스타트불',
             line: 'down',
-            row: 6,
-            col: 2,
+            row: 5,
+            col: 1,
+            pass: false,
         },
-    ]
+        {
+            num: 3,
+            word: '이상해씨',
+            desc: '스타트풀',
+            line: 'right',
+            row: 5,
+            col: 2,
+            pass: false,
+        },
+    ])
 
-    const SettingData = (data) => {
-        
+    const SelWord = (data) => {
+        if (data.pass)
+            return
+        console.log(data);
+        setSelQuiz(data)
+        setWriteAnswer('')
+    }
+
+
+    // console.log(selQuiz);
+    // console.log(writeAnswer);
+
+
+    const SettingData = (data, ikey) => {
+
+        if (!data) {
+            let gameMap = []
+
+            for (let i = 0; i < 10; i++) {
+                for (let j = 0; j < 10; j++) {
+                    gameMap.push(<Cell key={i * 10 + j} />)
+                }
+            }
+
+            return <CellContainer>{gameMap}</CellContainer>
+        }
+
+        // return <CellContainer key={ikey}><CWword data={data} datakey={selQuiz?.num} onClick={() => SelWord(data)} /></CellContainer>
+    }
+
+    const onkeydown = (e) => {
+        if (e.key === 'Enter')
+            CheckAnswer()
+    }
+
+    const CheckAnswer = () => {
+        if (!selQuiz)
+            return
+
+        if (selQuiz.word === writeAnswer) {
+            console.log('ok')
+            let test = (testData.findIndex((v, i) => selQuiz.num === v.num))
+            testData[test].pass = true
+        }
+        else {
+            console.log('no')
+        }
+
+        setWriteAnswer('')
     }
 
     return (
@@ -75,29 +138,26 @@ const CrossWord = () => {
             <Header />
 
             <GameContainer>
-                <img src={GameBgPng} style={{ position: 'absolute', width: '-webkit-fill-available', height: '-webkit-fill-available', top: '0px' }} />
-                {/* <GameBack ><GameBg style={{ position: 'absolute', width: '-webkit-fill-available', height: '-webkit-fill-available', top: '0px' }} /></GameBack> */}
-                {/* <CellContainer>
-                    {Array(100).fill().map((v, i) => {
-                        return <Cell key={i} />
-                    })}
-                </CellContainer> */}
-                <CellContainer>
-                    {SettingData(data)}
-                </CellContainer>
+                <img src={GameBgPng} style={{ position: 'absolute', width: '-webkit-fill-available', minHeight: '755px', height: '100vh', overflow: 'hidden', top: '0px' }} />
+                {/* <GameBack ><GameBg style={{ position: 'absolute', width: '-webkit-fill-available', minHeight: '626px', height: '-webkit-fill-available', top: '0px' }} /></GameBack> */}
+
+                {SettingData()}
+                {testData?.map((v, i) => {
+                    return SettingData(v, i)
+                })}
 
                 <QuestContainer>
                     <QuestDiv>
 
                         <GameInput1 style={{ position: 'absolute', right: '0px' }} />
-                        <GameInput2 style={{ position: 'absolute', right: '0px', bottom: '0px', zIndex: '3' }} />
+                        {/* <GameInput2 style={{ position: 'absolute', right: '0px', bottom: '0px', zIndex: '3' }} /> */}
 
-                        <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', width: '594px', height: '100vh', right: '0px', background: '#111111' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', width: '594px', minHeight: '755px', height: '100vh', right: '0px', background: '#111111' }}>
                             <div style={{ display: 'flex', width: '494px', height: '23px', margin: '127px auto 0 auto', justifyContent: 'space-between' }}>
                                 <Questlabel>단어 설명</Questlabel>
                                 <QuestCnt>남은단어</QuestCnt>
                             </div>
-                            <Questdesc>맞출 칸을 선택해 주세요</Questdesc>
+                            <Questdesc>{selQuiz ? selQuiz.desc : `맞출 칸을 선택해 주세요`}</Questdesc>
                             <AnswerDiv>
                                 {/* <AnswerCell
                                 id={AnswerLength++}
@@ -106,13 +166,17 @@ const CrossWord = () => {
                                 onChange={AnswerPut}
                             /> */}
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <AnswerInput />
+                                    <AnswerInput
+                                        value={writeAnswer}
+                                        onChange={(e) => setWriteAnswer(e.target.value)}
+                                        onKeyDown={(e) => onkeydown(e)}
+                                    />
                                     <AnswerWrong>다시한번 생각해보세요!</AnswerWrong>
                                 </div>
                             </AnswerDiv>
 
                             <div style={{ display: 'flex', flexDirection: 'column', marginTop: '70px', alignItems: 'center', zIndex: '4' }}>
-                                <CheckBtn margin='0'>확인</CheckBtn>
+                                <CheckBtn margin='0' onClick={CheckAnswer}>확인</CheckBtn>
                                 <GameOver><u>포기할래요</u></GameOver>
                             </div>
 
@@ -148,6 +212,26 @@ const CellContainer = styled.div`
     flex-wrap: wrap;
 `
 
+const BlankCelldiv = styled.div`
+    display: flex;
+    gap: 8.61px;
+
+    ${(props) => props.row ? `width: ${60.26 * props.row}px` : null}
+    ${(props) => props.col ? `height: ${60.26 * 10 * props.col}px` : null}
+`
+
+const RowCelldiv = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 8.61px;
+`
+
+const ColCelldiv = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 8.61px;
+`
+
 const Cell = styled.div`
     width: 51.65px;
     height: 51.65px;
@@ -166,6 +250,11 @@ const QCell = styled.div`
     border: 1.5px solid #FFFFFF;
     border-radius: 4.30434px;
     transform: matrix(0, -1, -1, 0, 0, 0);
+`
+
+const BCell = styled.div`
+    width: 51.65px;
+    height: 51.65px;
 `
 
 const SelCell = styled.div`
@@ -214,10 +303,25 @@ const AnswerDiv = styled.div`
 const AnswerInput = styled.input`
     ${bold41}
     width: 270px;
-    height: 92px;
+    height: 60px;
+    padding: 0 10px;
 
     border: 1.5px solid #FFFFFF;
     border-radius: 5px;
+    background: #111111;
+
+    /* 35pt_Bold */
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 51px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
 `
 
 const AnswerWrong = styled.div`
@@ -322,6 +426,8 @@ const CheckBtn = styled.div`
     text-align: center;
 
     color: #AAAAAA;
+
+    cursor: pointer;
 `
 
 const GameOver = styled.p`
@@ -337,4 +443,6 @@ const GameOver = styled.p`
     text-align: center;
 
     color: #C0C4C9;
+
+    cursor: pointer;
 `

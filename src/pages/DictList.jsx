@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { __loadDictCardList, __scrapDict } from "../redux/modules/dictionary";
+import { actionCreators as DictionaryActions } from "../redux/modules/dictionary";
 import { history } from "../redux/configStore";
 
 //element & component
@@ -22,13 +23,15 @@ const DictList = () => {
 
   useEffect(() => {
     dispatch(__loadDictCardList());
+
+    return () => dispatch(DictionaryActions.clearDict())
   }, []);
 
   //스크랩 기능
   const [scrap, setScrap] = useState(false);
   const ChangeScrap = (postId) => {
     setScrap(!scrap);
-    dispatch(__scrapDict(!scrap,postId));
+    dispatch(__scrapDict(!scrap, postId));
   };
 
   const dictList = useSelector((state) => state.dictionary.list);

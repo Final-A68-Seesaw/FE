@@ -41,7 +41,7 @@ const TroubleList = () => {
             {troubleList.map((v, i) => {
               return (
                 <div key={i} style={{ margin: "0.5rem" , cursor:"pointer"}}
-                onClick={() => history.push(`/trouble/detail/${v.id}`)}
+                onClick={() => history.push(`/trouble/detail/${v.troubleId}`)}
                 >
                 <WordCard>
                     <GenBox>

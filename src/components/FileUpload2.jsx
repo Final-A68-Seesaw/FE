@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -6,11 +6,17 @@ import { setDict } from "../redux/modules/dictionary";
 
 import DropzoneImg from "../asset/Dictionary_add_dropzone.svg";
 
-const FileUpload2 = () => {
+const FileUpload2 = (props) => {
   const dispatch = useDispatch();
 
+  // console.log(props.file);
+
   const [Files, setFiles] = useState([]);
-  const [imgUrlList, setImgUrlList] = useState([]);
+  const [imgUrlList, setImgUrlList] = useState(props.file ? props.file : []);
+
+  useEffect(() => {
+    // console.log('list' ,imgUrlList);
+  }, [props])
 
   const ImageFile = (e) => {
     const FileList = e.target.files;

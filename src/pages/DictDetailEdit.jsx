@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 //redux
-import { __addDict } from "../redux/modules/dictionary";
+import { __addDict, __loadDictDetail, __updateDictDetail } from "../redux/modules/dictionary";
 import { useDispatch, useSelector } from "react-redux";
 import { __dictTitle } from "../redux/modules/dictionary";
 
@@ -20,6 +20,7 @@ import styled from "styled-components";
 import Book from "../asset/Dictionary_add_imo.svg";
 import Footer from "../components/Footer";
 import TextIcon from "../asset/DictAddIcon.svg";
+import { useParams } from "react-router-dom";
 
 const DictAdd = (props) => {
   const {
@@ -41,18 +42,24 @@ const DictAdd = (props) => {
     dispatch(__loadDictDetail(params.cardTitleId, 1));
   }, []);
 
+  useEffect(()=>{
+    if(dataList)
+      setTagList(dataList.tagNames)
+  }, [dataList])
+
 //단어 사용 세대
   const GenerationOptions = [
     {value: "none", label: "선택하세요"},
-    {value: "x세대", label: "X세대(1965년 ~ 1979년)"},
-    {value: "y세대", label: "Y세대(1980년 ~ 1994년)"},
-    {value: "z세대", label: "Z세대(1995년 ~ 2005년)"},
+    {value: "X세대", label: "X세대(1965년 ~ 1979년)"},
+    {value: "Y세대", label: "Y세대(1980년 ~ 1994년)"},
+    {value: "Z세대", label: "Z세대(1995년 ~ 2005년)"},
     {value: "알파세대", label: "알파세대(2006년~)"}
   ]
 
   //태그
   const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState([]);
+  const [gen, setGen] = useState()
 
   const onKeyPress = (e) => {
     if (e.target.value.length !== 0 && e.key === "Enter") {
@@ -70,7 +77,7 @@ const DictAdd = (props) => {
   const deleteTagItem = (e) => {
     const deleteTagItem = e.target.parentElement.firstChild.innerText;
     const filteredTagList = tagList.filter(
-      (tagItem) => tagItem !== deleteTagItem
+      (tagItem) => `#${tagItem}` !== deleteTagItem
     );
     setTagList(filteredTagList);
   };
@@ -81,15 +88,16 @@ const DictAdd = (props) => {
 
   const onSubmit = (data) => {
     let postDto = {
-      title: data.title,
+      title: dataList.title,
       contents: data.contents,
       videoUrl: data.videoUrl,
       tagNames: tagList,
       generation: data.generation,
+      filesUrl: dataList.postImages,
       files: imageList,
     };
 
-    dispatch(__addDict(postDto));
+    dispatch(__updateDictDetail(postDto, params.cardTitleId));
   };
 
   return (
@@ -108,6 +116,7 @@ const DictAdd = (props) => {
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <BasicTextarea
+          defaultValue={dataList && dataList.contents}
             ref={register({
               required: {
                 value: true,
@@ -116,7 +125,7 @@ const DictAdd = (props) => {
             })}
             name="contents"
             type="text"
-            value = {dataList && dataList.contents}
+            // value = {dataList && dataList.contents}
             hasError={Boolean(errors?.contents?.message)}
           />
           <SFormError>{errors?.contents?.message}</SFormError>
@@ -128,6 +137,8 @@ const DictAdd = (props) => {
 
           <Select
           name="generation"
+          value={gen ? gen : dataList?.generation}
+          onChange={(e)=>setGen(e.target.value)}
           register={register({
             required: true,
             validate: (value) => value !== "none",
@@ -136,15 +147,16 @@ const DictAdd = (props) => {
           width = "24rem"
           error={errors?.generation?.type}
           >
-            {GenerationOptions.map((item, index)=> (
-              <option key = {index} value = {item.value}>{item.label}</option>
-            ))}
+          {GenerationOptions.map((item, index)=> {
+            return <option key = {index} value = {item.value}>{item.label}</option>
+          })}
           </Select>
 
           <ErrorXInput
             type="text"
             name="videoUrl"
             label="동영상 링크 첨부"
+            defaultValue={dataList && dataList.videoUrl}
             register={register}
             placeholder="URL을 입력해주세요"
           />

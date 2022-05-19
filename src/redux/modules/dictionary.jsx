@@ -9,6 +9,7 @@ const ADD_DICT = "ADDDICT";
 const DEL_DICT = "DELDICT";
 const PUT_DICT = "PUTDICT";
 const SET_DICT = "SETDICT";
+const CLEAR_DICT = "CREARDICT";
 
 const SCRAP_DICT = "SCRAPDICT";
 
@@ -24,6 +25,7 @@ const addDict = createAction(ADD_DICT, (data) => ({ data }));
 const delDict = createAction(DEL_DICT, (dict) => dict);
 const putDict = createAction(PUT_DICT, (data) => data);
 export const setDict = createAction(SET_DICT, (files) => ({ files }));
+const clearDict = createAction(CLEAR_DICT, (data) => data)
 
 const scrapDict = createAction(SCRAP_DICT, (data) => data);
 
@@ -95,6 +97,7 @@ export const __loadDictDetail = (cardTitle, commentPage) => {
     dictApi
       .DictDetail(cardTitle, commentPage)
       .then((res) => {
+        console.log(res);
         dispatch(getDictDetail(res.data));
       })
       .catch((err) => console.log(err.response));
@@ -123,23 +126,26 @@ export const __updateDictDetail = (data, postId) => {
       new Blob(
         [
           JSON.stringify({
-            postId,
+            title: data.title,
             contents: data.contents,
             videoUrl: data.videoUrl,
             tagNames: data.tagNames,
             generation: data.generation,
+            postImages: data.filesUrl,
           }),
         ],
         { type: "application/json" }
       )
     );
+    
     if (data.files.length !== 0) {
       data.files.map((e) => {
         return formData.append("files", e);
       });
     }
+
     dictApi
-      .putDict(formData)
+      .putDictDetail(postId, formData)
       .then((res) => console.log(res))
       .catch((err) => console.log(err));
   };
@@ -225,10 +231,16 @@ export default handleActions(
         console.log(action.payload);
         draft.data.unshift(action.payload.data);
       }),
+      
+      
     [SET_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.files.push(action.payload.files);
 
+      }),
+    [CLEAR_DICT]: (state, action) =>
+      produce(state, (draft) => {
+        draft.list = []
       }),
 
     [SCRAP_DICT]: (state, action) =>
@@ -282,10 +294,11 @@ export default handleActions(
     [LIKE_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
         let index = draft.detailData.postComments.findIndex((v) => {
-          return v.commentId == action.payload.commentId;
+          return v.commentId == action.payload.likeStatus.commentId;
         });
-        draft.detailData.postComments[index].commentLikeStatus =
-          action.payload.likeStatus;
+
+        draft.detailData.postComments[index].commentLikeStatus = action.payload.likeStatus.commentLikeStatus;
+        draft.detailData.postComments[index].commentLikeCount = action.payload.likeStatus.commentLikeCount;
         console.log(action.payload)
       }),
   },
@@ -296,6 +309,7 @@ const actionCreators = {
   getDict,
   addDict,
   delDict,
+  clearDict,
 };
 
 export { actionCreators };
