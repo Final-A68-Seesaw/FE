@@ -5,6 +5,8 @@ const CWword = (props) => {
 
     const searchlen = props.data.col * 10 + props.data.row
 
+    const selecting = props.data.num === props.datakey
+
     return (
         <BlankDiv key={props.datakey}>
             {Array(searchlen).fill().map((v, i) => {
@@ -12,21 +14,21 @@ const CWword = (props) => {
             })}
 
             {props.data.line === 'down'
-                ? <ColCelldiv onClick={props?.onClick} pass={props.data.pass}>
+                ? <ColCelldiv onClick={props?.onClick} pass={props.data.pass} sel={selecting}>
                     {Array(props.data.word.length).fill().map((v, i) => {
                         if (props.data.pass)
                             return <PassCell key={i}>{props.data.word.slice(i, i + 1)}</PassCell>
-                        if (props.data.num === props.datakey)
+                        else if (selecting)
                             return <SelCell key={i} />
                         else
                             return <QCell key={i} />
                     })}
                 </ColCelldiv>
-                : <RowCelldiv onClick={props?.onClick} pass={props.data.pass}>
+                : <RowCelldiv onClick={props?.onClick} pass={props.data.pass} sel={selecting}>
                     {Array(props.data.word.length).fill().map((v, i) => {
                         if (props.data.pass)
                             return <PassCell key={i}>{props.data.word.slice(i, i + 1)}</PassCell>
-                        if (props.data.num === props.datakey)
+                        else if (selecting)
                             return <SelCell key={i} />
                         else
                             return <QCell key={i} />
@@ -43,18 +45,20 @@ const RowCelldiv = styled.div`
     display: flex;
     flex-direction: row;
     gap: 8.61px;
-    z-index: 10;
-
-    ${(props) => props.pass ? null : `cursor: pointer`};
+    z-index: 5;
+    
+    ${(props) => props.pass ? `z-index: 15` : `cursor: pointer`};
+    ${(props) => props.sel ? `z-index: 10` : null};
 `
 
 const ColCelldiv = styled.div`
     display: flex;
     flex-direction: column;
     gap: 8.61px;
-    z-index: 10;
+    z-index: 5;
 
-    ${(props) => props.pass ? null : `cursor: pointer`};
+    ${(props) => props.pass ? `z-index: 15` : `cursor: pointer`};
+    ${(props) => props.sel ? `z-index: 10` : null};
 `
 
 const BlankDiv = styled.div`
@@ -94,6 +98,8 @@ const SelCell = styled.div`
 const PassCell = styled.div`
     width: 51.65px;
     height: 51.65px;
+    z-index: 15;
+    
     display: flex;
     align-items: center;
     justify-content: center;

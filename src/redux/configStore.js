@@ -10,6 +10,7 @@ import trouble from "./modules/touble";
 import dictionary from "./modules/dictionary";
 import search from "./modules/search";
 import mypage from "./modules/mypage";
+import image from "./modules/image";
 
 export const history = createBrowserHistory();
 
@@ -21,6 +22,7 @@ const rootReducer = combineReducers({
     dictionary,
     search,
     mypage,
+    image,
     router: connectRouter(history),
 });
 

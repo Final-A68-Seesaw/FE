@@ -41,6 +41,7 @@ const DictDetail = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
+  const userinfo = useSelector((state) => state.user.userinfo)
   const [pageNum, setPageNum] = useState(1);
 
   //디테일 데이터 로드
@@ -87,7 +88,7 @@ const DictDetail = (props) => {
       comment: "",
     });
   };
-console.log(dataList && dataList)
+  
   return (
     <>
       <Header />
@@ -221,7 +222,7 @@ console.log(dataList && dataList)
         <Line />
         <CommentInputBox>
           <CommentCharBox>
-            <Character char={dataList && dataList.profileImages} />
+            <Character char={userinfo?.profileImages} />
           </CommentCharBox>
           <CommentUserName>{dataList && dataList.nickname}</CommentUserName>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -249,7 +250,7 @@ console.log(dataList && dataList)
                   postId={params.cardTitleId}
                   pageNum={pageNum}
                   data={v}
-                  pfImg={dataList.profileImages}
+                  pfImg={v.profileImages}
                   nickname={dataList.nickname}
                 />
               </div>

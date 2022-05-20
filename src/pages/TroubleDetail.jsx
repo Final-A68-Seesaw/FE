@@ -37,6 +37,7 @@ const TroubleDetail = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const DataList = useSelector((state) => state.trouble.detail);
+  const userinfo = useSelector((state) => state.user.userinfo)
 
   useEffect(() => {
     dispatch(TroubleActions.getTrouDetailDB(params.id));
@@ -182,7 +183,7 @@ const TroubleDetail = (props) => {
         <HrLine />
         <CommentInputBox>
           <CommentCharBox>
-        <Character char={DataList && DataList.profileImages} />
+        <Character char={userinfo?.profileImages} />
         </CommentCharBox>
           <CommentUserName>{DataList && DataList.nickname}</CommentUserName>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -210,7 +211,7 @@ const TroubleDetail = (props) => {
                   postId={params.id}
                   // pageNum={pageNum}
                   data={v}
-                  pfImg={DataList.profileImages}
+                  pfImg={v.profileImages}
                   nickname={DataList.nickname}
                 />
               </div>

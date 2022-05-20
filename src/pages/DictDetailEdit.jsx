@@ -36,6 +36,7 @@ const DictDetailEdit = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
+  const newPostImages = useSelector((state) => state.image)
 
   //디테일 데이터 로드
   useEffect(() => {
@@ -94,7 +95,7 @@ const DictDetailEdit = (props) => {
       tagNames: tagList,
       generation: data.generation,
       filesUrl: dataList.postImages,
-      files: imageList,
+      files: newPostImages,
     };
 
     dispatch(__updateDictDetail(postDto, params.cardTitleId));

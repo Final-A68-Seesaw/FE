@@ -3,6 +3,8 @@ import { handleActions } from "redux-actions";
 import { createAction } from "redux-actions";
 import { dictApi } from "../../api/dictApi";
 
+import { actionCreators as ImageActions } from "./image";
+
 const GET_DICT = "GETDICT";
 const GET_DICT_DETAIL = "GETDICTDETAIL";
 const ADD_DICT = "ADDDICT";
@@ -97,7 +99,7 @@ export const __loadDictDetail = (cardTitle, commentPage) => {
     dictApi
       .DictDetail(cardTitle, commentPage)
       .then((res) => {
-        console.log(res);
+        dispatch(ImageActions.getimg(res.data.postImages))
         dispatch(getDictDetail(res.data));
       })
       .catch((err) => console.log(err.response));
@@ -131,22 +133,22 @@ export const __updateDictDetail = (data, postId) => {
             videoUrl: data.videoUrl,
             tagNames: data.tagNames,
             generation: data.generation,
-            postImages: data.filesUrl,
+            postImages: data.files.imagelist,
           }),
         ],
         { type: "application/json" }
       )
     );
     
-    if (data.files.length !== 0) {
-      data.files.map((e) => {
+    if (data.files.newimagelist !== 0) {
+      data.files.newimagelist.map((e) => {
         return formData.append("files", e);
       });
     }
 
     dictApi
       .putDictDetail(postId, formData)
-      .then((res) => console.log(res))
+      .then((res) => history.replace(`/dictionary/detail/${postId}`))
       .catch((err) => console.log(err));
   };
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
 import Header from '../components/Header'
 import Button from '../elements/Button'
@@ -49,8 +49,13 @@ const CrossWord = () => {
         // document.getElementById(an.toString()).focus()
     }
 
+    const inputRef = useRef()
+
     const [selQuiz, setSelQuiz] = useState()
     const [writeAnswer, setWriteAnswer] = useState('')
+    const [answerCheck, setAnswerCheck] = useState(true)
+    const [giveup, setGiveup] = useState(false)
+    const [gameover, setGameover] = useState(false)
 
     const [testData, setTestData] = useState([
         {
@@ -85,31 +90,31 @@ const CrossWord = () => {
     const SelWord = (data) => {
         if (data.pass)
             return
-        console.log(data);
+
         setSelQuiz(data)
         setWriteAnswer('')
+        setAnswerCheck(true)
+        inputRef.current.focus()
     }
 
 
     // console.log(selQuiz);
     // console.log(writeAnswer);
 
+    const SettingLine = (data, ikey) => {
+        // return <CellContainer key={ikey}><CWword data={data} datakey={selQuiz?.num} onClick={() => SelWord(data)} /></CellContainer>
+    }
 
-    const SettingData = (data, ikey) => {
+    const SettingData = () => {
+        let gameMap = []
 
-        if (!data) {
-            let gameMap = []
-
-            for (let i = 0; i < 10; i++) {
-                for (let j = 0; j < 10; j++) {
-                    gameMap.push(<Cell key={i * 10 + j} />)
-                }
+        for (let i = 0; i < 10; i++) {
+            for (let j = 0; j < 10; j++) {
+                gameMap.push(<Cell key={i * 10 + j} />)
             }
-
-            return <CellContainer>{gameMap}</CellContainer>
         }
 
-        // return <CellContainer key={ikey}><CWword data={data} datakey={selQuiz?.num} onClick={() => SelWord(data)} /></CellContainer>
+        return <CellContainer>{gameMap}</CellContainer>
     }
 
     const onkeydown = (e) => {
@@ -125,9 +130,11 @@ const CrossWord = () => {
             console.log('ok')
             let test = (testData.findIndex((v, i) => selQuiz.num === v.num))
             testData[test].pass = true
+            setAnswerCheck(true)
         }
         else {
             console.log('no')
+            setAnswerCheck(false)
         }
 
         setWriteAnswer('')
@@ -143,7 +150,7 @@ const CrossWord = () => {
 
                 {SettingData()}
                 {testData?.map((v, i) => {
-                    return SettingData(v, i)
+                    return SettingLine(v, i)
                 })}
 
                 <QuestContainer>
@@ -167,11 +174,12 @@ const CrossWord = () => {
                             /> */}
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
                                     <AnswerInput
+                                        ref={inputRef}
                                         value={writeAnswer}
                                         onChange={(e) => setWriteAnswer(e.target.value)}
                                         onKeyDown={(e) => onkeydown(e)}
                                     />
-                                    <AnswerWrong>다시한번 생각해보세요!</AnswerWrong>
+                                    <AnswerWrong>{!answerCheck ? <WrongMsg>{`다시한번 생각해보세요!`}</WrongMsg> : null}</AnswerWrong>
                                 </div>
                             </AnswerDiv>
 
@@ -325,10 +333,26 @@ const AnswerInput = styled.input`
 `
 
 const AnswerWrong = styled.div`
-    
+
     height: 20px;
     margin: 12px auto 0 auto;
     z-index: 4;
+
+`
+
+const WrongMsg = styled.p`
+    animation: shake-horizontal 0.6s cubic-bezier(0.455, 0.030, 0.515, 0.955) ;
+
+    @keyframes shake-horizontal {
+        0%,
+        100% { transform: translateX(0); }
+        10%, 30%, 50%,
+        70% { transform: translateX(-10px); }
+        20%, 40%,
+        60% { transform: translateX(10px); }
+        80% { transform: translateX(8px); }
+        90% { transform: translateX(-8px); }
+    }
 
     /* 14pt_Medium */
 
@@ -411,7 +435,7 @@ const CheckBtn = styled.div`
     width: 212px;
     height: 52px;
 
-    background: #444444;
+    background: #9851FF;
     border-radius: 56.9524px;
 
     font-family: 'Noto Sans KR';
@@ -425,9 +449,14 @@ const CheckBtn = styled.div`
     align-items: center;
     text-align: center;
 
-    color: #AAAAAA;
+    color: #FFFFFF;
 
     cursor: pointer;
+
+    :hover {
+        background: #444444;
+        transition: ease-in-out 0.5s;
+    }
 `
 
 const GameOver = styled.p`

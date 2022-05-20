@@ -2,21 +2,37 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setDict } from "../redux/modules/dictionary";
+import { setDict, __loadDictDetail } from "../redux/modules/dictionary";
+import { actionCreators as ImageActions } from "../redux/modules/image";
 
 import DropzoneImg from "../asset/Dictionary_add_dropzone.svg";
+import { useParams } from "react-router-dom";
 
 const FileUpload2 = (props) => {
   const dispatch = useDispatch();
 
   // console.log(props.file);
 
+  const dbimages = useSelector((state) => state.image)
+  // console.log('db', dbimages);
+  const detailData = useSelector((state) => state.dictionary.detailData)
+  // console.log('detail', detailData?.postImages)
+  const params = useParams()
+  // console.log(params);
+
+  // console.log(dbimages);
+
   const [Files, setFiles] = useState([]);
   const [imgUrlList, setImgUrlList] = useState(props.file ? props.file : []);
 
   useEffect(() => {
     // console.log('list' ,imgUrlList);
-  }, [props])
+    // dispatch(ImageActions.getimg())
+    if (props.file)
+      dispatch(__loadDictDetail(params.cardTitleId, 1));
+
+    return () => dispatch(ImageActions.clrimg())
+  }, [])
 
   const ImageFile = (e) => {
     const FileList = e.target.files;
@@ -29,11 +45,12 @@ const FileUpload2 = (props) => {
     }
 
     setImgUrlList([...imgUrlList, ...UrlList]);
-    dispatch(setDict(...FileList));
+    dispatch(ImageActions.addimg(...FileList));
   };
 
   const delFile = (id) => {
     setImgUrlList(imgUrlList.filter((v, i) => i !== id));
+    dispatch(ImageActions.delimg(id))
   };
 
   return (

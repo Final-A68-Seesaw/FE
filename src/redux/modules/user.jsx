@@ -7,6 +7,7 @@ import produce from "immer";
 import { cookies } from "../../shared/cookie";
 import { userApi } from "../../api/userApi";
 import jwtDecode from "jwt-decode";
+import { MypageApi } from "../../api/mypageApi";
 
 // action
 const LOGIN = "user/LOGIN";
@@ -14,6 +15,7 @@ const LOGIN_CHECK = "user/LOGIN_CHECK";
 const LOGOUT = "user/LOGOUT";
 
 const USERDATA = 'user/SIGNDATA'
+const LOADUSER = 'user/LOAD'
 
 // action creator
 const login = createAction(LOGIN, (data) => (data));
@@ -23,7 +25,8 @@ const loginCheck = createAction(LOGIN_CHECK, (isLogin, username) => ({
 }));
 const logout = createAction(LOGOUT, (username,pwd) => ({username,pwd}));
 
-const userSave = createAction(USERDATA, (user) => (user));
+const userSave = createAction(USERDATA, (user) => (user))
+const loadUser = createAction(LOADUSER, (user) => (user))
 // Thunk
 
 export const __login =
@@ -36,7 +39,7 @@ export const __login =
     const accessToken = Token[0].split(' ')[1];
     const refreshToken = Token[1];
     
-        localStorage.setItem("accessToken", accessToken, {
+      localStorage.setItem("accessToken", accessToken, {
         path: "/",
         maxAge: 259200, // 3일
       });
@@ -45,8 +48,25 @@ export const __login =
         maxAge: 604800, // 7일
       });
 
-      localStorage.setItem("generation", jwtDecode(accessToken).GENERATION)
-      localStorage.setItem("nickname", jwtDecode(accessToken).NICKNAME)
+      MypageApi.mypageGet().then((res)=>{
+        cookies.set('generation', res.data.generation, {
+          path: '/',
+          maxAge: 604800,
+        })
+        cookies.set('nickname', res.data.nickname, {
+          path: '/',
+          maxAge: 604800,
+        })
+
+        localStorage.setItem('profileImage0id', res.data.profileImages[0].charId)
+        localStorage.setItem('profileImage0url', res.data.profileImages[0].profileImage)
+        localStorage.setItem('profileImage1id', res.data.profileImages[1].charId)
+        localStorage.setItem('profileImage1url', res.data.profileImages[1].profileImage)
+        localStorage.setItem('profileImage2id', res.data.profileImages[2].charId)
+        localStorage.setItem('profileImage2url', res.data.profileImages[2].profileImage)
+      })
+      dispatch(loadUser())
+
       history.replace("/");
     } catch (e) {
       if (e.message === "Request failed with status code 401") {
@@ -131,7 +151,8 @@ const initialState = {
     judgement: null,
     lifePattern: null,
     mbtiRes: null,
-  }
+  },
+  userinfo: {},
 };
 
 export default handleActions(
@@ -160,6 +181,27 @@ export default handleActions(
     [USERDATA]: (state, action) => produce(state, (draft) => {
         draft.usersign = { ...initialState.usersign, ...action.payload }
       }),
+
+    [LOADUSER]: (state, action) => produce(state, (draft) => {
+        const profileImages = [
+        {
+          charId: localStorage.getItem('profileImage0id'),
+          profileImage: localStorage.getItem('profileImage0url')
+        },
+        {
+          charId: localStorage.getItem('profileImage1id'),
+          profileImage: localStorage.getItem('profileImage1url')
+        },
+        {
+          charId: localStorage.getItem('profileImage2id'),
+          profileImage: localStorage.getItem('profileImage2url')
+        },
+      ]
+      const nickname = cookies.get('nickname')
+      const generation = cookies.get('generation')
+
+      draft.userinfo = { nickname, generation,  profileImages }
+      }),
   },
   initialState
 );
@@ -168,6 +210,7 @@ const userActions={
     __kakao,
     __loginCheck,
     userSave,
+    loadUser,
 }
 
 export {userActions};

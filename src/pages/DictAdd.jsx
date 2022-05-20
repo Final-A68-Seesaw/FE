@@ -89,6 +89,8 @@ const GenerationOptions = [
 
   //데이터전송
   const imageList = useSelector((state) => state.dictionary.files);
+  const images = useSelector((state) => state.image.newimagelist)
+  console.log(images);
   const onSubmit = (data) => {
     let postDto = {
       title: data.title,
@@ -96,8 +98,10 @@ const GenerationOptions = [
       videoUrl: data.videoUrl,
       tagNames: tagList,
       generation: data.generation,
-      files: imageList,
+      files: images,
     };
+
+    console.log(postDto, data)
 
     dispatch(__addDict(postDto));
   };

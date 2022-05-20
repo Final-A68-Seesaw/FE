@@ -11,14 +11,17 @@ import Character from './Character'
 
 import HeaderIcon from '../asset/HeaderIcon.svg'
 import isLogin from '../auth/isLogin'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { __logout } from '../redux/modules/user'
 import { MainApi } from '../api/mainApi'
 import { actionCreators as SearchActions } from '../redux/modules/search'
+import { userActions } from '../redux/modules/user'
 
 
 const Header = (props) => {
     const dispatch = useDispatch();
+    const userinfo = useSelector((state) => (state.user.userinfo))
+
     const [scrolly, setScrolly] = useState(0)
 
     const [showModal, setShowModal] = useState(false)
@@ -39,6 +42,10 @@ const Header = (props) => {
         }
     }
 
+    useEffect(() => {
+        dispatch(userActions.loadUser())
+    }, [])
+
     return (
         <Head>
             {/* {showModal ?
@@ -57,7 +64,6 @@ const Header = (props) => {
                         <HearderText className='jello-horizontal' onClick={() => history.push('/gamemain')}>게임장</HearderText>
 
                         {/* <HearderText style={{ margin: '0 28px' }} onClick={() => history.push('/trouble')}>질문장</HearderText> */}
-                        {/* <HearderText onClick={() => history.push('/game')}>게임장</HearderText> */}
                     </div>
                 </div>
 
