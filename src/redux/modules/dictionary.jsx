@@ -245,6 +245,8 @@ export default handleActions(
     [CLEAR_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.list = []
+        draft.files = []
+        draft.detailData = null
       }),
 
     [SCRAP_DICT]: (state, action) =>

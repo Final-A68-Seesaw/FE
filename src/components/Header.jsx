@@ -246,6 +246,8 @@ const WordAddBtn = styled.div`
   background: #333333;
   border: 1.5px solid rgba(255, 255, 255, 0.2);
   border-radius: 30px;
+
+  cursor: pointer;
 `;
 
 const TroubleAddBtn = styled.div`
@@ -261,6 +263,8 @@ const TroubleAddBtn = styled.div`
   background: #333333;
   border: 1.5px solid rgba(255, 196, 56, 0.3);
   border-radius: 30px;
+
+  cursor: pointer;
 `;
 
 const HearderText = styled.p`

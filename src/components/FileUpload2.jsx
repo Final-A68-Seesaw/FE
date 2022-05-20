@@ -14,7 +14,7 @@ const FileUpload2 = (props) => {
   // console.log(props.file);
 
   const dbimages = useSelector((state) => state.image)
-  // console.log('db', dbimages);
+  console.log('db', dbimages);
   const detailData = useSelector((state) => state.dictionary.detailData)
   // console.log('detail', detailData?.postImages)
   const params = useParams()
@@ -23,6 +23,7 @@ const FileUpload2 = (props) => {
   // console.log(dbimages);
 
   const [Files, setFiles] = useState([]);
+  const [oversize, setOversize] = useState(false)
   const [imgUrlList, setImgUrlList] = useState(props.file ? props.file : []);
 
   useEffect(() => {
@@ -38,14 +39,19 @@ const FileUpload2 = (props) => {
     const FileList = e.target.files;
     const UrlList = [];
 
-    setFiles([...Files, ...FileList]);
-
     for (let i = 0; i < FileList.length; i++) {
+      if (FileList[i].size > 10 * 1024 * 1024) {
+        setOversize(true)
+        return
+      }
       UrlList.push(URL.createObjectURL(FileList[i]));
     }
 
+    setOversize(false)
+    setFiles([...Files, ...FileList]);
+
     setImgUrlList([...imgUrlList, ...UrlList]);
-    dispatch(ImageActions.addimg(...FileList));
+    dispatch(ImageActions.addimg({ FileList }));
   };
 
   const delFile = (id) => {
@@ -99,16 +105,20 @@ const FileInput = styled.input`
   }
 `;
 
+const OversizeMsg = styled.p`
+  
+`
+
 const PreviewBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
   max-width: 100%;
-  height: 11rem;
+  height: 11.5rem;
   background-color: var(--grayed);
   border-radius: 3px;
   //가로스크롤
-  overflow: auto;
+  overflow-x: auto;
   white-space: nowrap;
   &::-webkit-scrollbar {
     width: 8px;

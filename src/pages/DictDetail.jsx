@@ -11,6 +11,7 @@ import {
   __scrapDict,
 } from "../redux/modules/dictionary";
 import { history } from "../redux/configStore";
+import { actionCreators as DictionaryActions } from "../redux/modules/dictionary";
 
 //element & component
 import Header from "../components/Header";
@@ -47,6 +48,8 @@ const DictDetail = (props) => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
     dispatch(__loadDictDetail(params.cardTitleId, pageNum));
+    
+    return ()=>{ dispatch(DictionaryActions.clearDict()) }
   }, []);
 
   //스크랩 기능
@@ -81,13 +84,6 @@ const DictDetail = (props) => {
   const onSubmit = (data) => {
     console.log(data);
     dispatch(__addDictComment(params.cardTitleId, data, dataList.nickname));
-  };
-  //댓글 데이터 전송후 댓글 인풋 리셋
-  const onReset = () => {
-    reset({
-      ...getValues(),
-      comment: "",
-    });
   };
   
   return (
@@ -231,14 +227,13 @@ const DictDetail = (props) => {
               ref={register}
               name="comment"
               type="text"
-              onChange={onInputChange}
               maxLength="500"
               placeholder="주제와 무관한 댓글, 홍보, 욕설, 일방적인 비난이나 악플 등은 삭제될 수 있습니다."
             />
             <InputCountBox>{inputCount}/500</InputCountBox>
             <div style={{ display: "flex", justifyContent: "top" }}>
               <CommentHr width="90%" />
-              <CommentSubmitBtn type="submit" onClick={onReset}>
+              <CommentSubmitBtn type="submit">
                 등록
               </CommentSubmitBtn>
             </div>

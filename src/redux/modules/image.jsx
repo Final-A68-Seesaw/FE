@@ -20,12 +20,11 @@ const initialState = {
 export default handleActions(
     {
         [GETIMG]: (state, action) => produce(state, (draft) => {
-            // console.log(action.payload);
             draft.imagelist = action.payload
         }),
         [ADDIMG]: (state, action) => produce(state, (draft) => {
             if (action.payload)
-                draft.newimagelist.push(action.payload)
+                draft.newimagelist = [...draft.newimagelist, ...action.payload.FileList]
         }),
         [DELIMG]: (state, action) => produce(state, (draft) => {
             if (action.payload >= state.imagelist.length)
