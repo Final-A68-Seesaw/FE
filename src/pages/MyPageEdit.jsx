@@ -15,7 +15,7 @@ import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
 import { bold18, med14, med18, bold20 } from "../themes/textStyle";
 import { MypageApi } from "../api/mypageApi";
-import { __loadMypage } from "../redux/modules/mypage";
+import { __editMyProfile, __loadMypage } from "../redux/modules/mypage";
 
 const MyPageEdit = () => {
   const dispatch = useDispatch();
@@ -43,7 +43,6 @@ const MyPageEdit = () => {
   //이미지 선택시 charId로 값이 들어감
   const changeRadio = (e) => {
     const values = e.target.value.split(",");
-    console.log(values);
     switch (e.target.name) {
       case "faceUrl":
         setCharId([values[1], charId[1], charId[2]]);
@@ -96,30 +95,14 @@ const MyPageEdit = () => {
       setCharSelect(res.data);
     })
   }, []);
-  console.log(userData)
 
   //데이터전송
   const onSubmit = async (data) => {
     let signDic = {
       nickname: data.nickname,
-      charId: [charId[0], charId[1], charId[2]],
+      profileImages: [charId[0], charId[1], charId[2]],
     };
-
-    try {
-      const user = await userApi.signupFinal(signDic);
-
-      history.replace("/login");
-    } catch (e) {
-      if (e.message === "Request failed with status code 400") {
-        alert("중복된 닉네임입니다.");
-        return;
-      }
-      if (e.message === "Request failed with status code 500") {
-        alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
-        history.replace("/signup");
-        return;
-      }
-    }
+    dispatch(__editMyProfile(signDic))
   };
 
   return (
@@ -157,7 +140,7 @@ const MyPageEdit = () => {
             <UserNameTag>
               <PreviewNick>{prevNick? prevNick: userData?.nickname}님은 </PreviewNick>
               <Previewmbti>
-                {userData.mbtiRes} {userData.generation}
+                {userData.mbti} {userData.generation}
               </Previewmbti>
             </UserNameTag>
           </LeftBox>

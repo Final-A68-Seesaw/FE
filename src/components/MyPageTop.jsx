@@ -49,7 +49,9 @@ const MyPageTop = () => {
             <div>
               <Button
                 shape="mypage-Black-B"
-                onClick={()=>{history.push("/mypage/edit")}}
+                onClick={() => {
+                  history.push("/mypage/edit");
+                }}
               >
                 프로필 수정
               </Button>
@@ -66,9 +68,27 @@ const MyPageTop = () => {
         </form>
 
         <MyMenu>
-          <MyScrap onClick = {()=>{history.replace('/mypage/scrap')}}>스크랩</MyScrap>
-          <MyWord onClick = {()=>{history.replace('/mypage/myword')}}>내 등재 단어</MyWord>
-          <MyWriting onClick = {()=>{history.replace('/mypage/writing')}} >내 작성 글</MyWriting>
+          <MyScrap
+            onClick={() => {
+              history.replace("/mypage/scrap");
+            }}
+          >
+            스크랩
+          </MyScrap>
+          <MyWord
+            onClick={() => {
+              history.replace("/mypage/myword");
+            }}
+          >
+            내 등재 단어
+          </MyWord>
+          <MyWriting
+            onClick={() => {
+              history.replace("/mypage/writing");
+            }}
+          >
+            내 작성 글
+          </MyWriting>
         </MyMenu>
         <HrLine />
       </Container>
@@ -82,14 +102,14 @@ const Container = styled.div`
   margin: auto;
   max-width: 60rem;
   padding-top: 9rem;
-
 `;
 const UserInfos = styled.div`
   justify-content: center;
   display: flex;
-`;
-const UserInfo = styled.div`
   margin-left: 0.5rem;
+`;
+
+const UserInfo = styled.div`
   text-align: center;
 `;
 const UserNick = styled.div`

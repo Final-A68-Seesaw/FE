@@ -6,7 +6,6 @@ import { TroubleApi } from "../../api/troubleApi";
 const GET_TROU = "GETTROU";
 const ADD_TROU = "ADDTROU";
 const SET_TROU = "SETTROU";
-const DEL_TROU = "DELTROU";
 
 const GET_TR_DETAIL = "GETDETAIL";
 const CLEAR_DETAIL = "CLEARDETAIL";
@@ -20,7 +19,6 @@ const LIKE_TROU_COM = "LIKE_TROU_COM";
 const getTrou = createAction(GET_TROU, (trouble) => trouble);
 const addTrou = createAction(ADD_TROU, (trouble) => trouble);
 export const setTrou = createAction(SET_TROU, (files) => ({ files }));
-const delTrou = createAction(DEL_TROU, (trouble) => trouble);
 
 const getDetail = createAction(GET_TR_DETAIL, (trouble) => trouble);
 export const clearDetail = createAction(CLEAR_DETAIL, (trouble) => trouble);
@@ -97,9 +95,9 @@ export const __addTrouComment = (troubleid, data, nickname) => {
   };
 };
 
-const getTrouDetailDB = (id) => {
+const getTrouDetailDB = (id,commentId) => {
   return (dispatch, getState, { history }) => {
-    TroubleApi.troubledetail(id)
+    TroubleApi.troubledetail(id,commentId)
       .then((res) => dispatch(getDetail(res.data)))
       .catch((err) => console.log(err));
   };
@@ -124,15 +122,9 @@ export default handleActions(
         console.log(state);
       }),
 
-    [DEL_TROU]: (state, action) =>
-      produce(state, (draft) => {
-        console.log(action.payload);
-        // draft.list = action.payload
-      }),
-
     [GET_TR_DETAIL]: (state, action) =>
       produce(state, (draft) => {
-        draft.detail = { ...action.payload };
+        draft.detail = action.payload;
       }),
 
     [CLEAR_DETAIL]: (state, action) =>

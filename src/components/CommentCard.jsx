@@ -82,11 +82,10 @@ const CommentCard = (props) => {
                       deleteCmt(props.data.commentId);
                     }}
                   >
-                    삭제
+                    삭제 |
                   </div>
                 </>
-              ) : null}{" "}
-              | 신고
+              ) : null} 신고
             </LoadCmtTime>
           </div>
         </LoadCmtInfo>

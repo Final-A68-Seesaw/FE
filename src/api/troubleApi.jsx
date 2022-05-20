@@ -2,7 +2,7 @@ import { instance, nonTokenInstance, formDatas } from "./index";
 
 export const TroubleApi = {
     troubleget: () => instance.get('/api/trouble/list'),
-    troubledetail: (id) => instance.get(`/api/trouble/${id}/detail`),
+    troubledetail: (id, commentPageId) => instance.get(`/api/trouble/${id}/detail?page=${commentPageId}`),
     troublepost: (data) => formDatas.post('/api/trouble', data),
     troubleput: (id, data) => formDatas.put(`/api/trouble/${id}`, data),
     troubledetailget: (id) => instance.get(`/api/trouble/${id}`),
