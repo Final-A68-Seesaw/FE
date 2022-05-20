@@ -9,12 +9,16 @@ const GET_MY_SCRAP = 'GETMYSCRAP'
 const GET_MY_WORD = 'GETMYWORD'
 const GET_MY_WRITING = 'GETMYWRITING'
 
+const PUT_MY_PROFILE = 'PUTMYPROFILE'
+
 const SCRAP_MY_PAGE = 'SCRAPMYPAGE'
 
 const getMyprofile = createAction(GET_MY_PROFILE, (data) => data)
 const getScrap = createAction(GET_MY_SCRAP, (data) => data)
 const getMyWord = createAction(GET_MY_WORD, (data) => data)
 const getMyWriting = createAction(GET_MY_WRITING, (data) => data)
+
+const putMyprofile = createAction(PUT_MY_PROFILE, (data) => data)
 
 const scrapMypage = createAction(SCRAP_MY_PAGE, (data) => data)
 
@@ -81,10 +85,12 @@ export const __loadMypageWriting = (data) =>{
 
 export const __editMyProfile = (data) =>{
   return(dispatch, getState, {history}) =>{
+    console.log(data)
     MypageApi
     .mypagePutProfile(data)
-    .then((res)=>{console.log(res);
-    // history.replace("/mypage");
+    .then((res)=>{
+    alert("프로필 수정이 완료되었습니다!")
+    history.replace("/mypage/scrap");
   })
     .catch((err) => console.log(err.response))
   }

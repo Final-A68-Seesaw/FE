@@ -6,5 +6,5 @@ export const MypageApi = {
   mypageGetTrou: () => instance.get('api/mypage/troubles'),
   mypageGetMyWord: () => instance.get('api/mypage/posts'),
   
-  mypagePutProfile: () => instance.put('api/mypage/profile'),
+  mypagePutProfile: (data) => instance.put('api/mypage/profile',data),
 }

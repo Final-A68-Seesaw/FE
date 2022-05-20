@@ -39,7 +39,7 @@ const TroubleDetail = (props) => {
   const DataList = useSelector((state) => state.trouble.detail);
 
   useEffect(() => {
-    dispatch(TroubleActions.getTrouDetailDB(params.id));
+    dispatch(TroubleActions.getTrouDetailDB(params.id, pageNum));
 
     return () => {
       dispatch(clearDetail());
@@ -65,6 +65,13 @@ const TroubleDetail = (props) => {
 
   const setTrouble = () => {
     history.push(`/troublewrite/${params.id}`);
+  };
+
+  //pagenation
+  const [pageNum, setPageNum] = useState(1);
+  const pageChange = (page) => {
+    setPageNum(page);
+    dispatch(TroubleActions.getTrouDetailDB(params.id, page));
   };
 
   console.log(DataList);
@@ -208,7 +215,7 @@ const TroubleDetail = (props) => {
               <div key={i}>
                 <CommentCard
                   postId={params.id}
-                  // pageNum={pageNum}
+                  pageNum={pageNum}
                   data={v}
                   pfImg={DataList.profileImages}
                   nickname={DataList.nickname}
@@ -218,6 +225,33 @@ const TroubleDetail = (props) => {
           })}
 
         <FooterHrLine />
+        <div
+          style={{
+            width: "309px",
+            height: "32px",
+            margin: "45px auto",
+            display: "flex",
+            gap: "17.75px",
+          }}
+        >
+          {DataList &&
+            Array(Math.ceil(DataList.commentCount / 4))
+              .fill()
+              .map((v, i) => {
+                if (pageNum === i + 1)
+                  return (
+                    <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>
+                      {i + 1}
+                    </SelectNumberBox>
+                  );
+                else
+                  return (
+                    <NumberBox key={i} onClick={() => pageChange(i + 1)}>
+                      {i + 1}
+                    </NumberBox>
+                  );
+              })}
+        </div>
       </Container>
       <Footer />
     </>
@@ -409,4 +443,45 @@ const InputCountBox = styled.div`
 const FooterHrLine = styled.hr`
   border: 1px solid var(--graydf);
   margin: 2rem 0 0 0;
+`;
+const NumberBox = styled.div`
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 34px;
+  height: 32px;
+
+  background: #ffffff;
+
+  /* border: 0.75px solid #C1C1C1; */
+  border-radius: 1.5px;
+
+  cursor: pointer;
+`;
+
+const SelectNumberBox = styled.div`
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  width: 34px;
+  height: 32px;
+
+  background: #ffffff;
+
+  border: 0.75px solid #c1c1c1;
+  border-radius: 1.5px;
+
+  cursor: pointer;
 `;

@@ -34,14 +34,13 @@ import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
 
 const DictDetail = (props) => {
-  const {reset, getValues, register, handleSubmit, formState } = useForm({
+  const { reset, getValues, register, handleSubmit, formState } = useForm({
     mode: "onChange",
   });
 
   const params = useParams();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
-  const [pageNum, setPageNum] = useState(1);
 
   //디테일 데이터 로드
   useEffect(() => {
@@ -56,7 +55,7 @@ const DictDetail = (props) => {
     dispatch(__scrapDict(!scrap, params.cardTitleId));
   };
 
-  // //디테일 삭제 전송
+  // //디테일 페이지 삭제 전송
   // const deleteDetail = (data) => {
   //   dispatch(__deleteDictDetail(data));
   // };
@@ -70,6 +69,8 @@ const DictDetail = (props) => {
     setInputCount(e.target.value.length);
   };
 
+  //pagenation
+  const [pageNum, setPageNum] = useState(1);
   const pageChange = (page) => {
     setPageNum(page);
     dispatch(__loadDictDetail(params.cardTitleId, page));
@@ -87,7 +88,7 @@ const DictDetail = (props) => {
       comment: "",
     });
   };
-console.log(dataList && dataList)
+  console.log(dataList && dataList);
   return (
     <>
       <Header />
@@ -174,7 +175,7 @@ console.log(dataList && dataList)
           ) : null}
         </>
 
-        {dataList && dataList.videoUrl === "" || "null" ? null : (
+        {(dataList && dataList.videoUrl === "") || "null" ? null : (
           <>
             <LabelTag>
               참고 영상 URL |
@@ -236,7 +237,9 @@ console.log(dataList && dataList)
             <InputCountBox>{inputCount}/500</InputCountBox>
             <div style={{ display: "flex", justifyContent: "top" }}>
               <CommentHr width="90%" />
-              <CommentSubmitBtn type="submit" onClick={onReset}>등록</CommentSubmitBtn>
+              <CommentSubmitBtn type="submit" onClick={onReset}>
+                등록
+              </CommentSubmitBtn>
             </div>
           </form>
         </CommentInputBox>

@@ -225,6 +225,7 @@ export default handleActions(
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailData = action.payload;
+        console.log(action.payload)
       }),
 
     [ADD_DICT]: (state, action) =>
