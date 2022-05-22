@@ -20,10 +20,14 @@ const DictList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(__loadDictCardList());
+    dispatch(__loadDictCardList(1));
 
     return () => dispatch(DictionaryActions.clearDict())
   }, []);
+
+  // onscroll = (e) => {
+  //   console.log(window.scrollY);
+  // };
 
   //스크랩 기능
   const [scrap, setScrap] = useState(false);

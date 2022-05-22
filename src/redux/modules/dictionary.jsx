@@ -153,10 +153,10 @@ export const __updateDictDetail = (data, postId) => {
   };
 };
 
-export const __loadDictCardList = (data) => {
+export const __loadDictCardList = (page) => {
   return (dispatch, getState, { history }) => {
     dictApi
-      .DictList()
+      .DictList(page)
       .then((res) => dispatch(getDict(res.data)))
       .catch((err) => console.log(err.response));
   };
@@ -210,7 +210,6 @@ export const __updateDictComment = (data, commentId) => {
 
 export const __likeDictComment = (like, commentId) => {
   return (dispatch, getState, { history }) => {
-    console.log(like, commentId);
     dictApi
       .likeComment(commentId)
       .then((res) => dispatch(likeDictCom({ commentId, likeStatus: res.data })))
@@ -222,7 +221,8 @@ export default handleActions(
   {
     [GET_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = action.payload;
+        // console.log(action.payload.splice(0, 10));
+        draft.list = action.payload.splice(0, 30);
       }),
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {

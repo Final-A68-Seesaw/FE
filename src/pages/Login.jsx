@@ -36,7 +36,7 @@ const Login = () => {
 
       <Container>
         <div style={{ Width:'200px', minHeight: '100vh' }}>
-          <Img />
+          <Img style={{minWidth:'100%', height:'99.9vh'}}/>
         </div>
         <RightContainer>
           <Logo style={{ display: "right" }} />
@@ -137,7 +137,7 @@ const Container = styled.div`
 
 const RightContainer = styled.div`
   margin: auto;
-  max-width: 23rem;
+  max-width: 26rem;
   text-align: left;
   align-items: left;
 `;

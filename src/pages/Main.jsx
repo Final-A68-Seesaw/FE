@@ -31,6 +31,7 @@ const Main = () => {
   const [getBest, setGetBest] = useState([])
 
   const [selectBest, setSelectBest] = useState()
+  const [searchInput, setSearchInput] = useState("");
 
   const dispatch = useDispatch();
 
@@ -47,9 +48,19 @@ const Main = () => {
   const onBestWord = (data) => {
     setSelectBest(data)
   }
+  
+  const mainSearch = (e) => {
+    if (e.key === "Enter") {
+      history.push(`/searchresult/${searchInput}`);
+      setSearchInput("");
+    }
+  };
+
+  console.log('env', process.env.REACT_APP_CLIENT_KEY)
 
   React.useEffect(() => {
     MainApi.mainGetRecent().then((res) => {
+      console.log(res.data);
       setGetRecent(res.data)
     })
     MainApi.mainGetRand().then((res) => setGetRand(res.data))
@@ -73,7 +84,12 @@ const Main = () => {
 
         <Seeso style={{ margin: '32px 0 91px 0' }} />
         <div style={{ display: 'flex', alignItems: 'center' }}>
-          <MainSearch placeholder='궁금한 것을 검색해보세요' />
+          <MainSearch
+            placeholder='궁금한 것을 검색해보세요'
+            value={searchInput}
+            onChange={(e) => setSearchInput(e.target.value)}
+            onKeyDown={mainSearch}
+          />
           <GoSearch style={{ width: '24px', height: '24px', color: '#9A9999', margin: '0 0 0 -40px' }} />
         </div>
       </MainTop>
