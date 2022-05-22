@@ -3,9 +3,11 @@ import styled from 'styled-components';
 
 const CWword = (props) => {
 
-    const searchlen = props.data.col * 10 + props.data.row
+    console.log(props.IsOver);
 
-    const selecting = props.data.num === props.datakey
+    const searchlen = props.data.y * 10 + props.data.x
+
+    const selecting = props.data.id === props.datakey
 
     return (
         <BlankDiv key={props.datakey}>
@@ -13,21 +15,25 @@ const CWword = (props) => {
                 return <BCell key={i} />
             })}
 
-            {props.data.line === 'down'
-                ? <ColCelldiv onClick={props?.onClick} pass={props.data.pass} sel={selecting}>
-                    {Array(props.data.word.length).fill().map((v, i) => {
+            {!props.data.oriental
+                ? <ColCelldiv onClick={props?.onClick} pass={props.data.pass || props.IsOver} sel={selecting}>
+                    {Array(props.data.wordCount).fill().map((v, i) => {
                         if (props.data.pass)
                             return <PassCell key={i}>{props.data.word.slice(i, i + 1)}</PassCell>
+                        else if (props.IsOver)
+                            return <GiveUp key={i}>{props.data.word.slice(i, i + 1)}</GiveUp>
                         else if (selecting)
                             return <SelCell key={i} />
                         else
                             return <QCell key={i} />
                     })}
                 </ColCelldiv>
-                : <RowCelldiv onClick={props?.onClick} pass={props.data.pass} sel={selecting}>
-                    {Array(props.data.word.length).fill().map((v, i) => {
+                : <RowCelldiv onClick={props?.onClick} pass={props.data.pass || props.IsOver} sel={selecting}>
+                    {Array(props.data.wordCount).fill().map((v, i) => {
                         if (props.data.pass)
                             return <PassCell key={i}>{props.data.word.slice(i, i + 1)}</PassCell>
+                        else if (props.IsOver)
+                            return <GiveUp key={i}>{props.data.word.slice(i, i + 1)}</GiveUp>
                         else if (selecting)
                             return <SelCell key={i} />
                         else
@@ -116,4 +122,27 @@ const PassCell = styled.div`
     line-height: 51px;
 
     color: #FFFFFF;
+`
+
+const GiveUp = styled.div`
+    width: 51.65px;
+    height: 51.65px;
+    z-index: 20;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #FFFFFF;
+    border: 1.5px solid #FFFFFF;
+    border-radius: 4.30434px;
+    
+    /* 35pt_Bold */
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 35px;
+    line-height: 51px;
+
+    color: #FF4E4E;
 `

@@ -39,9 +39,9 @@ export const __login =
     const accessToken = Token[0].split(' ')[1];
     const refreshToken = Token[1];
     
-      localStorage.setItem("accessToken", accessToken, {
+      cookies.set("accessToken", accessToken, {
         path: "/",
-        maxAge: 259200, // 3일
+        maxAge: 86400, // 1일
       });
       cookies.set("refreshToken", refreshToken, {
         path: "/",
@@ -67,7 +67,7 @@ export const __login =
       })
       dispatch(loadUser())
 
-      history.replace("/");
+      history.replace("/main");
     } catch (e) {
       if (e.message === "Request failed with status code 401") {
         alert("이메일과 패스워드를 확인해주세요!");
@@ -92,7 +92,7 @@ export const __login =
                 path: "/",
                 maxAge: 604800, // 7일
               });
-              history.replace("/");
+              history.replace("/main");
         }catch (e) {
             console.log("kakao error",e);
             window.alert("로그인에 실패했습니다.");
@@ -109,7 +109,7 @@ export const __logout =
     cookies.remove("refreshToken", {
       path: "/",
     });
-    history.replace("/");
+    history.replace("/main");
     dispatch(logout());
     alert("로그아웃이 완료되었습니다!");
   };

@@ -42,6 +42,8 @@ import GameMain from '../pages/GameMain';
 // HOC (high order components)
 import PublicRoute from "../auth/PublicRoute";
 import PrivateRoute from "../auth/PrivateRoute";
+import StartPage from '../pages/StartPage';
+import About from '../pages/About';
 
 
 
@@ -49,12 +51,15 @@ const Router = () => {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
+        <Route path="/" exact component={StartPage} />
+        <Route path="/about" exact component={About} />
+
         <Route path="/signup" exact component={Signup} />
         <Route path="/signup/making" exact component={SignupMBTI}/>
         <Route path="/signup/making/character" exact component={SignupCharacter}/>
         <Route path="/login" exact component={Login} />
         
-        <Route path="/" exact component={Main} />
+        <Route path="/main" exact component={Main} />
         <Route path="/searchresult/:keyword" exact component={SearchResult} />
 
         <Route path="/dictionary" exact component={DictList}/>

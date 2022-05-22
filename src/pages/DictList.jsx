@@ -25,6 +25,10 @@ const DictList = () => {
     return () => dispatch(DictionaryActions.clearDict())
   }, []);
 
+  // onscroll = (e) => {
+  //   console.log(window.scrollY);
+  // };
+
   //스크랩 기능
   const [scrap, setScrap] = useState(false);
   const ChangeScrap = (postId) => {

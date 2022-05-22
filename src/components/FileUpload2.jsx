@@ -32,6 +32,8 @@ const FileUpload2 = (props) => {
     if (props.file)
       dispatch(__loadDictDetail(params.cardTitleId, 1));
 
+    setOversize(false)
+
     return () => dispatch(ImageActions.clrimg())
   }, [])
 
@@ -42,6 +44,7 @@ const FileUpload2 = (props) => {
     for (let i = 0; i < FileList.length; i++) {
       if (FileList[i].size > 10 * 1024 * 1024) {
         setOversize(true)
+        console.log(oversize);
         return
       }
       UrlList.push(URL.createObjectURL(FileList[i]));
@@ -63,6 +66,7 @@ const FileUpload2 = (props) => {
     <div>
       {imgUrlList.length !== 0 && imgUrlList ? (
         <>
+          <OversizeMsg>파일은 10MB이하로 올려주세요 !</OversizeMsg>
           <PreviewBox style={{ justifyContent: "flex-start" }}>
             <Previews>
               {imgUrlList.map((v, i) => {
@@ -106,7 +110,14 @@ const FileInput = styled.input`
 `;
 
 const OversizeMsg = styled.p`
-  
+  width: 310px;
+  height: 32px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 32px;
 `
 
 const PreviewBox = styled.div`

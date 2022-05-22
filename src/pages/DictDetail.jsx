@@ -267,12 +267,10 @@ const DictDetail = (props) => {
           }}
         >
           {dataList &&
-            Array(Math.ceil(dataList.commentCount / 4))
-              .fill()
-              .map((v, i) => {
+            Array(Math.ceil(dataList.commentCount / 4)).fill().map((v, i) => {
                 if (pageNum === i + 1)
                   return (
-                    <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>
+                    <SelectNumberBox key={i} >
                       {i + 1}
                     </SelectNumberBox>
                   );

@@ -35,19 +35,19 @@ export const formDatas = axios.create({
 });
 
 instance.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = cookies.get("accessToken");
   config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
   return config;
 });
 
 formDatas.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = cookies.get("accessToken");
   config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
   return config;
 });
 
 nonTokenInstance.interceptors.request.use((config) => {
-  const accessToken = localStorage.getItem("accessToken");
+  const accessToken = cookies.get("accessToken");
   config.headers.common["Authorization"] = `Bearer ${accessToken}`; //Authorization
   return config;
 });

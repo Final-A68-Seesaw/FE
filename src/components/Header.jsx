@@ -26,9 +26,9 @@ const Header = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [headInput, setHeadInput] = useState("");
 
-  onscroll = (e) => {
-    setScrolly(scrollY);
-  };
+  // onscroll = (e) => {
+  //   setScrolly(scrollY);
+  // };
 
   // const openModal = () => {
   //     setShowModal(!showModal);
@@ -57,8 +57,8 @@ const Header = (props) => {
         <div style={{ display: "flex" }}>
           <HeaderIcon
             className="jello-horizontal"
-            onClick={() => history.push("/")}
-            style={{ cursor: "pointer", marginRight: "1.5rem"}}
+            onClick={() => history.push("/main")}
+            style={{ cursor: "pointer" }}
           />
           {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
 

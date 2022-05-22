@@ -7,4 +7,6 @@ export const MainApi = {
   mainGetTrou: () => instance.get('/api/main/trouble/list'),
 
   getsearch: (data) => instance.get(`/api/post/search?keyword=${data}`),
+
+  testgame: () => instance.get(`/api/mockup/crossword`),
 }

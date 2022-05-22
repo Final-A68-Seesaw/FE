@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Header from '../components/Header'
 import Button from '../elements/Button'
@@ -9,6 +9,8 @@ import GameBgPng from '../asset/GameBg.png'
 import GameInput1 from '../asset/GameInputBg1.svg'
 import GameInput2 from '../asset/GameInputBg2.svg'
 import CWword from '../components/CWword'
+import { MainApi } from '../api/mainApi'
+import GameOVerDiv from '../asset/GameOverDiv.svg'
 
 const CrossWord = () => {
 
@@ -58,37 +60,37 @@ const CrossWord = () => {
     const [gameover, setGameover] = useState(false)
 
     const [testData, setTestData] = useState([
-        {
-            num: 1,
-            word: '피카츄',
-            desc: '전기쥐',
-            line: 'right',
-            row: 3,
-            col: 3,
-            pass: false,
-        },
-        {
-            num: 2,
-            word: '라이츄파이리',
-            desc: '전기쥐진화+스타트불',
-            line: 'down',
-            row: 5,
-            col: 1,
-            pass: false,
-        },
-        {
-            num: 3,
-            word: '이상해씨',
-            desc: '스타트풀',
-            line: 'right',
-            row: 5,
-            col: 2,
-            pass: false,
-        },
+        // {
+        //     num: 1,
+        //     word: '피카츄',
+        //     desc: '전기쥐',
+        //     line: 'right',
+        //     row: 3,
+        //     col: 3,
+        //     pass: false,
+        // },
+        // {
+        //     num: 2,
+        //     word: '라이츄파이리',
+        //     desc: '전기쥐진화+스타트불',
+        //     line: 'down',
+        //     row: 5,
+        //     col: 1,
+        //     pass: false,
+        // },
+        // {
+        //     num: 3,
+        //     word: '이상해씨',
+        //     desc: '스타트풀',
+        //     line: 'right',
+        //     row: 5,
+        //     col: 2,
+        //     pass: false,
+        // },
     ])
 
     const SelWord = (data) => {
-        if (data.pass)
+        if (data.pass || giveup)
             return
 
         setSelQuiz(data)
@@ -102,7 +104,13 @@ const CrossWord = () => {
     // console.log(writeAnswer);
 
     const SettingLine = (data, ikey) => {
-        // return <CellContainer key={ikey}><CWword data={data} datakey={selQuiz?.num} onClick={() => SelWord(data)} /></CellContainer>
+        return <CellContainer key={ikey}>
+            <CWword
+                data={data}
+                datakey={selQuiz?.id}
+                IsOver={gameover || giveup}
+                onClick={() => SelWord(data)} />
+        </CellContainer>
     }
 
     const SettingData = () => {
@@ -122,15 +130,31 @@ const CrossWord = () => {
             CheckAnswer()
     }
 
+    const AllCheck = () => {
+        for (let i = 0; i < testData.length; i++) {
+            if (!testData[i].pass)
+                return false
+        }
+        return true
+    }
+
+    const GameGiveUp = () => {
+        setGiveup(true)
+    }
+
     const CheckAnswer = () => {
         if (!selQuiz)
             return
 
         if (selQuiz.word === writeAnswer) {
             console.log('ok')
-            let test = (testData.findIndex((v, i) => selQuiz.num === v.num))
+            let test = (testData.findIndex((v, i) => selQuiz.id === v.id))
             testData[test].pass = true
             setAnswerCheck(true)
+            setSelQuiz()
+            if (AllCheck()) {
+                setGameover(true);
+            }
         }
         else {
             console.log('no')
@@ -139,6 +163,14 @@ const CrossWord = () => {
 
         setWriteAnswer('')
     }
+
+    useEffect(() => {
+        MainApi.testgame().then((res) => {
+            console.log(res.data)
+            setTestData(res.data)
+        })
+    }, [])
+
 
     return (
         <div>
@@ -164,7 +196,7 @@ const CrossWord = () => {
                                 <Questlabel>단어 설명</Questlabel>
                                 <QuestCnt>남은단어</QuestCnt>
                             </div>
-                            <Questdesc>{selQuiz ? selQuiz.desc : `맞출 칸을 선택해 주세요`}</Questdesc>
+                            <Questdesc>{selQuiz ? selQuiz.contents : `맞출 칸을 선택해 주세요`}</Questdesc>
                             <AnswerDiv>
                                 {/* <AnswerCell
                                 id={AnswerLength++}
@@ -185,9 +217,9 @@ const CrossWord = () => {
 
                             <div style={{ display: 'flex', flexDirection: 'column', marginTop: '70px', alignItems: 'center', zIndex: '4' }}>
                                 <CheckBtn margin='0' onClick={CheckAnswer}>확인</CheckBtn>
-                                <GameOver><u>포기할래요</u></GameOver>
+                                <GameOver onClick={GameGiveUp}><u>포기할래요</u></GameOver>
                             </div>
-
+                            {/* <GameOVerDiv /> */}
                         </div>
                     </QuestDiv>
                 </QuestContainer>
