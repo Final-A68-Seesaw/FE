@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useLocation } from "react-router-dom";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -21,9 +22,9 @@ const MyPageTop = () => {
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
+  const location = useLocation();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.mypage.list);
-  console.log(dataList && dataList);
 
   const onSubmit = (data) => {
     dispatch(__login(data));
@@ -69,6 +70,7 @@ const MyPageTop = () => {
 
         <MyMenu>
           <MyScrap
+            pathname={location.pathname === "/mypage/scrap"}
             onClick={() => {
               history.replace("/mypage/scrap");
             }}
@@ -76,6 +78,7 @@ const MyPageTop = () => {
             스크랩
           </MyScrap>
           <MyWord
+            pathname={location.pathname === "/mypage/myword"}
             onClick={() => {
               history.replace("/mypage/myword");
             }}
@@ -83,6 +86,7 @@ const MyPageTop = () => {
             내 등재 단어
           </MyWord>
           <MyWriting
+            pathname={location.pathname === "/mypage/writing"}
             onClick={() => {
               history.replace("/mypage/writing");
             }}
@@ -135,22 +139,27 @@ const MyMenu = styled.div`
 `;
 const MyScrap = styled.div`
   width: 9rem;
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
   text-align: center;
-  border-bottom-width: 3px;
   cursor: pointer;
+  border-bottom: ${(props) =>
+    props.pathname ? "3px solid black" : ""} !important;
 `;
 const MyWord = styled.div`
   width: 9rem;
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
   text-align: center;
   cursor: pointer;
+  border-bottom: ${(props) =>
+    props.pathname ? "3px solid black" : ""} !important;
 `;
 const MyWriting = styled.div`
   width: 9rem;
-  margin-bottom: 1rem;
+  padding-bottom: 1rem;
   text-align: center;
   cursor: pointer;
+  border-bottom: ${(props) =>
+    props.pathname ? "3px solid black" : ""} !important;
 `;
 const HrLine = styled.hr`
   margin-bottom: 2rem;

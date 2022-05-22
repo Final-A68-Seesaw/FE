@@ -8,6 +8,7 @@ import {
   __likeDictComment,
   __updateDictComment,
 } from "../redux/modules/dictionary";
+import { __deleteTrouComment, __likeTrouComment, __updateTrouComment } from "../redux/modules/touble";
 
 //ellement & component
 import Character from "./Character";
@@ -29,9 +30,12 @@ const CommentCard = (props) => {
   const [like, setLike] = useState(false);
   const ChangeLike = () => {
     setLike(!like);
-    dispatch(__likeDictComment(!like, props.data.commentId));
+    if (props.data.commentCount!==undefined) {
+      dispatch(__likeDictComment(!like, props.data.commentId));
+    } else {
+      dispatch(__likeTrouComment(!like, props.data.commentId));
+    }
   };
-
   //댓글 수정 클릭시 인풋 열고 닫기
   const [updateInput, setUpdateInput] = useState(false);
   const updateCmt = () => {
@@ -46,14 +50,24 @@ const CommentCard = (props) => {
 
   //수정 데이터 전송
   const onSubmit = (data) => {
-    dispatch(__updateDictComment(data, props.data.commentId));
+    if (props.data.commentCount!==undefined) {
+      dispatch(__updateDictComment(data, props.data.commentId));
+    } else {
+      dispatch(__updateTrouComment(data, props.data.commentId))
+    }
     updateCmt();
   };
 
   //삭제 데이터 전송
   const deleteCmt = (data) => {
+    console.log(data)
+    if (props.data.commentCount!==undefined) {
     dispatch(__deleteDictComment(data, props.postId, props.pageNum));
+    } else {
+      dispatch(__deleteTrouComment(data, props.postId, props.pageNum))
+    }
   };
+  console.log(props)
 
   return (
     <>
@@ -85,7 +99,8 @@ const CommentCard = (props) => {
                     삭제 |
                   </div>
                 </>
-              ) : null} 신고
+              ) : null}{" "}
+              신고
             </LoadCmtTime>
           </div>
         </LoadCmtInfo>

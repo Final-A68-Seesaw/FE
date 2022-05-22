@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 //redux
@@ -75,7 +75,6 @@ const TroubleDetail = (props) => {
     dispatch(TroubleActions.getTrouDetailDB(params.id, page));
   };
 
-  console.log(DataList);
 
   return (
     <>
@@ -239,6 +238,7 @@ const TroubleDetail = (props) => {
             Array(Math.ceil(DataList.commentCount / 4))
               .fill()
               .map((v, i) => {
+                
                 if (pageNum === i + 1)
                   return (
                     <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>

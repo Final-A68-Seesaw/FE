@@ -5,6 +5,7 @@ const env = process.env.NODE_ENV;
 
 const targetServer = "https://sparta-hm.site"
   // env === "http://3.38.104.97/"
+  // https://walbu.shop
 //env설정하기
 
 export const instance = axios.create({

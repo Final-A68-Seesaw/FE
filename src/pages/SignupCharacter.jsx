@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
-import { clearStorage, getStorage } from "../shared/cookie";
-import { userActions } from "../redux/modules/user";
 import { useSelector } from "react-redux";
 
 //ele
@@ -84,7 +82,7 @@ const SignupCharacter = () => {
     });
   }, []);
   const userData = useSelector((state) => state.user.usersign);
-
+console.log(userData)
   //데이터전송
   const onSubmit = async (data) => {
     let signDic = {
@@ -95,13 +93,14 @@ const SignupCharacter = () => {
       insight: userData.insight,
       judgement: userData.judgement,
       lifePattern: userData.lifePattern,
+      id: userData.id,
       nickname: data.nickname,
       charId: [charId[0], charId[1], charId[2]],
     };
 
     try {
       const user = await userApi.signupFinal(signDic);
-
+      console.log(user)
       history.replace("/login");
     } catch (e) {
       if (e.message === "Request failed with status code 400") {
@@ -324,17 +323,15 @@ const CharContain = styled.div`
   height: 4rem;
 `;
 const SelectCharSource = styled.span`
-  margin: 1rem 0.5rem 2.5rem 0.5rem;
+  margin: 0.8rem 0.3rem 2.3rem 0.3rem;
   width: 4rem;
   height: 4rem;
   line-height: 4rem;
   background-color: var(--grayed);
-  border-color: transparent;
+  border: 3px solid transparent;
   border-radius: 0.75rem;
 
   display: inline-block;
-  /* justify-content: center;
-  align-items: center; */
   cursor: pointer;
 `;
 const SelectCharBox = styled.input`
@@ -347,12 +344,10 @@ const SelectCharBox = styled.input`
     line-height: 33px;
     font-weight: 500;
     display: none;
+    border: 3px solid transparent;
   }
   &:checked + ${SelectCharSource} {
-    color: var(--black24);
-    font-weight: bolder;
     border: 3px solid var(--yellow);
-    box-shadow: 0px 8px 16px -4px rgba(22, 34, 51, 0.08);
   }
   display: none;
 `;

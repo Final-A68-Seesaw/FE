@@ -1,17 +1,30 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
+//redux
 import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as TroubleActions } from "../redux/modules/touble";
+import { actionCreators as ImageActions } from "../redux/modules/image";
 import { setTrou } from "../redux/modules/touble";
 
+//style
+import styled from "styled-components";
 import DropzoneImg from "../asset/Dictionary_add_dropzone.svg";
 
-const FileUpload = () => {
+const FileUpload = (props) => {
   const dispatch = useDispatch();
-  const imageList = useSelector((state) => state.trouble.files);
+  const params = useParams();
 
   const [Files, setFiles] = useState([]);
-  const [imgUrlList, setImgUrlList] = useState([]);
+  const [imgUrlList, setImgUrlList] = useState(props.file ? props.file : []);
+
+  console.log(props)
+  useEffect(() => {
+    if (props.file)
+      dispatch(TroubleActions.getTrouDetailDB(params.id, 1));
+
+    return () => dispatch(ImageActions.clrimg());
+  }, []);
 
   const ImageFile = (e) => {
     const FileList = e.target.files;
@@ -24,12 +37,11 @@ const FileUpload = () => {
     }
 
     setImgUrlList([...imgUrlList, ...UrlList]);
-    dispatch(setTrou(...FileList));
+    dispatch(ImageActions.addimg(...FileList));
   };
-    ;
-
   const delFile = (id) => {
     setImgUrlList(imgUrlList.filter((v, i) => i !== id));
+    dispatch(ImageActions.delimg(id));
   };
 
   return (

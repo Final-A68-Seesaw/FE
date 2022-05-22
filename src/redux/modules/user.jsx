@@ -111,6 +111,7 @@ export const __logout =
     });
     history.replace("/");
     dispatch(logout());
+    alert("로그아웃이 완료되었습니다!");
   };
 
  const __loginCheck =
@@ -145,12 +146,12 @@ const initialState = {
   usersign: {
     username: null,
     generation: null,
-    pwd: null,
     energy: null,
     insight: null,
     judgement: null,
     lifePattern: null,
     mbtiRes: null,
+    id: null,
   },
   userinfo: {},
 };

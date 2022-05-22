@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { __addTrou } from "../redux/modules/touble";
+import {
+  actionCreators as TroubleActions,
+  __updateTrouDetail,
+} from "../redux/modules/touble";
 
 //element & component
 import { med12, med15, med14, med20 } from "../themes/textStyle";
@@ -30,6 +34,18 @@ const TroubleAdd = () => {
     mode: "onChange",
   });
   const dispatch = useDispatch();
+  const params = useParams();
+  const dataList = useSelector((state) => state.trouble.detail);
+  const newPostImages = useSelector((state) => state.image);
+
+  //디테일 데이터 로드
+  useEffect(() => {
+    dispatch(TroubleActions.getTrouDetailDB(params.id, 1));
+  }, []);
+
+  useEffect(() => {
+    if (dataList) setTagList(dataList.tagNames);
+  }, [dataList]);
 
   //select option
   const GenerationOptions = [
@@ -39,6 +55,9 @@ const TroubleAdd = () => {
     { value: "Z세대", label: "Z세대가 대답해주세요" },
     { value: "알파세대", label: "알파세대가 대답해주세요" },
   ];
+
+  //select detail 정보 load
+  const [ans, setAns] = useState();
 
   //인풋 글자수 count
   const [inputCount, setInputCount] = useState("0");
@@ -79,21 +98,21 @@ const TroubleAdd = () => {
   };
 
   //데이터전송
-  const images = useSelector((state) => state.image.newimagelist)
-  const userinfo = useSelector((state) => state.user.userinfo);
-  const generation = userinfo.generation;
   const onSubmit = (data) => {
-    console.log(data, tagList, images);
     let troubleDto = {
       title: data.title,
       contents: data.contents,
       tagNames: tagList,
       answer: data.answer,
-      question: generation,
-      files: images,
+      question: dataList&&dataList.question,
+      filesUrl: dataList.troubleImages,
+      files: newPostImages,
     };
-    dispatch(__addTrou(troubleDto));
+    dispatch(__updateTrouDetail(troubleDto, params.id));
+    console.log("g2",troubleDto);
+  
   };
+  
 
   return (
     <>
@@ -108,12 +127,16 @@ const TroubleAdd = () => {
           <QuestionBox>
             <QuestionFromBox>
               <LabelBox>질문 세대</LabelBox>
-              <QuestionFrom>{generation}가 물어봅니다</QuestionFrom>
+              <QuestionFrom>
+                {dataList && dataList.question}가 물어봅니다
+              </QuestionFrom>
             </QuestionFromBox>
             <QuestionToBox>
               <LabelBox>답변 세대</LabelBox>
               <Select
                 name="answer"
+                value={ans ? ans : dataList?.answer}
+                onChange={(e) => setAns(e.target.value)}
                 register={register({
                   required: true,
                   validate: (value) => value !== "none",
@@ -139,6 +162,7 @@ const TroubleAdd = () => {
               <ErrorXInput
                 type="text"
                 name="title"
+                defaultValue={dataList && dataList.title}
                 register={register({
                   required: {
                     value: true,
@@ -165,6 +189,7 @@ const TroubleAdd = () => {
                     message: "⚠ 내용을 입력해주세요",
                   },
                 })}
+                defaultValue={dataList && dataList.contents}
                 name="contents"
                 type="text"
                 placeholder="고민을 설명해줄 수 있는 내용을 적어주세요"
@@ -175,7 +200,7 @@ const TroubleAdd = () => {
             </TroubleTextArea>
 
             {/* 첨부파일 */}
-            <FileUpload />
+            <FileUpload file={dataList?.troubleImages} />
           </TroubleBox>
         </form>
         <TagWholeBox>

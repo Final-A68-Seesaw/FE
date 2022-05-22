@@ -93,7 +93,7 @@ const MyPageEdit = () => {
     });
     userApi.signupCharacter().then((res) => {
       setCharSelect(res.data);
-    })
+    });
   }, []);
 
   //데이터전송
@@ -102,7 +102,7 @@ const MyPageEdit = () => {
       nickname: data.nickname,
       profileImages: [charId[0], charId[1], charId[2]],
     };
-    dispatch(__editMyProfile(signDic))
+    dispatch(__editMyProfile(signDic));
   };
 
   return (
@@ -138,7 +138,9 @@ const MyPageEdit = () => {
             </PrevWorkStage>
 
             <UserNameTag>
-              <PreviewNick>{prevNick? prevNick: userData?.nickname}님은 </PreviewNick>
+              <PreviewNick>
+                {prevNick ? prevNick : userData?.nickname}님은{" "}
+              </PreviewNick>
               <Previewmbti>
                 {userData.mbti} {userData.generation}
               </Previewmbti>
@@ -149,7 +151,7 @@ const MyPageEdit = () => {
             <ErrorXInput
               type="text"
               name="nickname"
-              defaultValue = {userData.nickname}
+              defaultValue={userData.nickname}
               register={register({
                 required: {
                   value: true,
@@ -336,17 +338,15 @@ const CharContain = styled.div`
   height: 4rem;
 `;
 const SelectCharSource = styled.span`
-  margin: 1rem 0.5rem 2.5rem 0.5rem;
+  margin: 0.8rem 0.3rem 2.3rem 0.3rem;
   width: 4rem;
   height: 4rem;
   line-height: 4rem;
   background-color: var(--grayed);
-  border-color: transparent;
+  border: 3px solid transparent;
   border-radius: 0.75rem;
 
   display: inline-block;
-  /* justify-content: center;
-  align-items: center; */
   cursor: pointer;
 `;
 const SelectCharBox = styled.input`
@@ -359,12 +359,10 @@ const SelectCharBox = styled.input`
     line-height: 33px;
     font-weight: 500;
     display: none;
+    border: 3px solid transparent;
   }
   &:checked + ${SelectCharSource} {
-    color: var(--black24);
-    font-weight: bolder;
     border: 3px solid var(--yellow);
-    box-shadow: 0px 8px 16px -4px rgba(22, 34, 51, 0.08);
   }
   display: none;
 `;

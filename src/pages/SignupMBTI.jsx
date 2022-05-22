@@ -1,203 +1,214 @@
-import React, { useState } from 'react'
-import { userApi } from '../api/userApi';
-import { history } from '../redux/configStore'
-import { useForm } from "react-hook-form"
-import { userActions } from '../redux/modules/user';
+import React, { useState } from "react";
+import { userApi } from "../api/userApi";
+import { history } from "../redux/configStore";
+import { useForm } from "react-hook-form";
+import { userActions } from "../redux/modules/user";
 
 //element
-import Button from '../elements/Button';
-import { med18 } from '../themes/textStyle';
+import Button from "../elements/Button";
+import { med14, med18 } from "../themes/textStyle";
 
 //style
-import styled from 'styled-components'
-import { StepBar } from '../components/StepBar'
-import Hi  from '../asset/Signup_Mbti_imo.svg'
-import { useDispatch, useSelector } from 'react-redux';
-import Logo  from '../asset/Seeso_logo.svg'
-
-
+import styled from "styled-components";
+import { StepBar } from "../components/StepBar";
+import Hi from "../asset/Signup_Mbti_imo.svg";
+import { useDispatch, useSelector } from "react-redux";
+import Logo from "../asset/Seeso_logo.svg";
 
 const SignupMBTI = () => {
+  const dispatch = useDispatch();
 
-  const dispatch = useDispatch()
+  const userData = useSelector((state) => state.user.usersign);
+  const [Mbti, setMbti] = useState({
+    energy: null,
+    insight: null,
+    judgement: null,
+    lifePattern: null,
+    id: userData.id,
+  });
 
-  const [Mbti, setMbti] = useState({ energy: null, insight: null, judgement: null, lifePattern: null });
-  const userData = useSelector((state) => (state.user.usersign))
+  const { register, handleSubmit, 
+    formState: { errors },
+   } = useForm();
 
-  const {
-    register,
-    handleSubmit }
-    = useForm();
 
-  const onSubmit = async () => {
-    
-    try {
-      const user = await userApi.mbti(Mbti);
+  //라디오버튼
 
-      dispatch(userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data }))
+  const EandIoption = [
+    { value: "E", label: "밖에 무조건 나간다" },
+    { value: "I", label: "그냥 집에 있는다" },
+  ];
+  const SandNoption = [
+    { value: "S", label: "요리 할 때 정량계측한다" },
+    { value: "N", label: "요리는 감으로 해야 제맛이다" },
+  ];
+  const FandToption = [
+    { value: "F", label: "슬픔은 나누면 반이된다" },
+    { value: "T", label: "슬픔은 나누면 슬픈 사람이 둘이된다" },
+  ];
+  const JandPoption = [
+    { value: "J", label: "항상 방을 깨끗이 유지한다" },
+    { value: "P", label: "몰아서 한꺼번에 한다" },
+  ];
 
-      history.push("/signup/making/character");
-    } catch (e) {
-      console.log(e);
-      if (e.message === "Request failed with status code 400") {
-        alert("질문을 모두 체크해주세요!");
-        return;
-      }
+  const changeRadio = (e) => {
+    setMbti({ ...Mbti, [e.target.name]: e.target.value });
+  };
+//데이터전송
+const onSubmit = async () => {
+  try {
+    const user = await userApi.mbti(Mbti);
+    dispatch(
+      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data })
+    );
+    console.log(user);
+    history.push("/signup/making/character");
+  } catch (e) {
+    console.log(e);
+    if (e.message === "Request failed with status code 400") {
+      alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
+      return;
     }
+  }
+};
 
-  };
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Logo style={{ margin: "2rem 0 0 2rem" }} />
+      <Container>
+        <StepBar shape="step2" />
 
-  const changeRadio = e => {
-    setMbti({ ...Mbti, [e.target.name]: e.target.value })
-  };
+        <Hi />
 
-    return (
-      <form
-        onSubmit={handleSubmit(onSubmit)}>
-          <Logo style = {{margin : "2rem 0 0 2rem"}}/>
-        <Container>
-          <StepBar shape = "step2"/>
-          
-          <Hi/>
-        
-          <TextContainer>
-            <b>씨소 플레이그라운드</b>에 처음 오신 회원님을 환영합니다!
-          </TextContainer>
+        <TextContainer>
+          <b>씨소 플레이그라운드</b>에 처음 오신 회원님을 환영합니다!
+        </TextContainer>
 
-            <OutlineContaierBar>
-                나만의 캐릭터 생성을 위한 간단한 몇가지 질문에 답해주세요.
-            </OutlineContaierBar>  
-              
-            <OutlineContainer>
+        <OutlineContaierBar>
+          나만의 캐릭터 생성을 위한 간단한 몇가지 질문에 답해주세요.
+        </OutlineContaierBar>
 
-              
-                  <QuestionText>
-                  <QuestionLabel/>
-                    <QuestionNum>Q1</QuestionNum>
-                    주말이 왔어요, 심심한 당신은 어떤 선택을 하나요?
-                  </QuestionText> 
-                  <div>
-                    <label>
-                      <FormCheckLeft
-                        {...register("energy")}
-                        type="radio"
-                        name="energy"
-                        onChange={changeRadio}
-                        value="E"
-                      />
-                      <FormCheckText >밖에 무조건 나간다</FormCheckText>
-                    </label>
-                    <label>
-                      <FormCheckLeft
-                      {...register("energy")}
-                        type="radio"
-                        name="energy"
-                        onChange={changeRadio}
-                        value="I"
-                      />
-                      <FormCheckText >집에 그냥 있는다</FormCheckText>
-                    </label>
-                  </div>
+        <OutlineContainer>
+          <QuestionText>
+            <QuestionLabel />
+            <QuestionNum>Q1</QuestionNum>
+            주말이 왔어요, 심심한 당신은 어떤 선택을 하나요?
+          </QuestionText>
+          <div>
+            {EandIoption.map((a, i) => {
+              return (
+                <label key={i}>
+                  <FormCheckLeft
+                    {...register("energy")}
+                    ref = {register({
+                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    })}
+                    type="radio"
+                    name="energy"
+                    onChange={changeRadio}
+                    value={[a.value]}
+                  />
+                  <FormCheckText>{a.label}</FormCheckText>
+                </label>
+              );
+            })}
+          </div>
+          <SFormError>{errors?.energy?.message}</SFormError>
+          <Line />
 
-                  <Line/>
-                  
-                  <QuestionText>
-                  <QuestionLabel/>
-                  <QuestionNum>Q2</QuestionNum>
-                   오늘 저녁식사를 대접해야하네요! 당신의 요리 방식은?
-                  </QuestionText> 
+          <QuestionText>
+            <QuestionLabel />
+            <QuestionNum>Q2</QuestionNum>
+            오늘 저녁식사를 대접해야하네요! 당신의 요리 방식은?
+          </QuestionText>
 
-                  <div>
-                    <label>
-                      <FormCheckLeft
-                        type="radio"
-                        name="insight"
-                        onChange={changeRadio}
-                        value="S"
-                      />
-                      <FormCheckText>요리할 때 정량계측한다</FormCheckText>
-                    </label>
-                    <label>
-                      <FormCheckLeft
-                        type="radio"
-                        name="insight"
-                        onChange={changeRadio}
-                        value="N"
-                      />
-                      <FormCheckText >요리는 감으로 해야 제맛이다</FormCheckText>
-                    </label>
-                  </div>
-                
-                  <Line/>
+          <div>
+            {SandNoption.map((a, i) => {
+              return (
+                <label key={i}>
+                  <FormCheckLeft
+                    {...register("insight")}
+                    ref = {register({
+                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    })}
+                    type="radio"
+                    name="insight"
+                    onChange={changeRadio}
+                    value={[a.value]}
+                  />
+                  <FormCheckText>{a.label}</FormCheckText>
+                </label>
+              );
+            })}
+          </div>
+          <SFormError>{errors?.insight?.message}</SFormError>
 
-                  <QuestionText>
-                  <QuestionLabel/>
-                  <QuestionNum>Q3</QuestionNum>
-                   당신은 안좋은 일이 생긴다면 슬픔을 지인들과 나누나요?
-                  </QuestionText> 
+          <Line />
 
-                  <div>
-                    <label>
-                      <FormCheckLeft
-                        type="radio"
-                        name="judgement"
-                        onChange={changeRadio}
-                        value={"F"}
-                      />
-                      <FormCheckText >슬픔은 나누면 반이된다</FormCheckText>
-                    </label>
-                    <label>
-                      <FormCheckLeft
-                        type="radio"
-                        name="judgement"
-                        onChange={changeRadio}
-                        value={"T"}
-                      />
-                      <FormCheckText>슬픔을 나누면 슬픈 사람이 둘이된다</FormCheckText>
-                    </label>
-                  </div>
-                
-                  <Line/>
+          <QuestionText>
+            <QuestionLabel />
+            <QuestionNum>Q3</QuestionNum>
+            당신은 안좋은 일이 생긴다면 슬픔을 지인들과 나누나요?
+          </QuestionText>
+          <div>
+            {FandToption.map((a, i) => {
+              return (
+                <label key={i}>
+                  <FormCheckLeft
+                    {...register("judgement")}
+                    ref = {register({
+                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    })}
+                    type="radio"
+                    name="judgement"
+                    onChange={changeRadio}
+                    value={[a.value]}
+                  />
+                  <FormCheckText>{a.label}</FormCheckText>
+                </label>
+              );
+            })}
+          </div>
+          <SFormError>{errors?.judgement?.message}</SFormError>
+          <Line />
 
-                  <QuestionText>
-                    
-                    <QuestionLabel/>
-                    <QuestionNum>Q4</QuestionNum>
-
-                      너무 바쁜 당신, 방의 정리정돈 상태는 어떤가요?
-                  </QuestionText> 
-
-                  <div>
-                    <label>
-                      <FormCheckLeft
-                        type="radio"
-                        name="lifePattern"
-                        onChange={changeRadio}
-                        value="J"
-                      />
-                      <FormCheckText >항상 방을 깨끗이 유지한다</FormCheckText>
-                    </label>
-                    <label>
-                      <FormCheckLeft
-                        type="radio"
-                        name="lifePattern"
-                        onChange={changeRadio}
-                        value="P"
-                      />
-                      <FormCheckText>몰아서 한꺼번에 한다</FormCheckText>
-                    </label>
-                  </div>
-        
-            </OutlineContainer>
-          <MbtiConfirm width="24rem"type="submit"> 다음 단계 </MbtiConfirm>
-          </Container>
-        </form>
-    )
-}
+          <QuestionText>
+            <QuestionLabel />
+            <QuestionNum>Q4</QuestionNum>
+            너무 바쁜 당신, 방의 정리정돈 상태는 어떤가요?
+          </QuestionText>
+          <div>
+            {JandPoption.map((a, i) => {
+              return (
+                <label key={i}>
+                  <FormCheckLeft
+                    {...register("lifePattern")}
+                    ref = {register({
+                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    })}
+                    type="radio"
+                    name="lifePattern"
+                    onChange={changeRadio}
+                    value={[a.value]}
+                  />
+                  <FormCheckText>{a.label}</FormCheckText>
+                </label>
+              );
+            })}
+          </div>
+          <SFormError>{errors?.lifePattern?.message}</SFormError>
+        </OutlineContainer>
+        <MbtiConfirm width="24rem" type="submit">
+          다음 단계
+        </MbtiConfirm>
+      </Container>
+    </form>
+  );
+};
 
 const Container = styled.div`
-   text-align: center;
-   max-width: 100%;
+  text-align: center;
+  max-width: 100%;
 `;
 
 const TextContainer = styled.div`
@@ -217,16 +228,19 @@ const OutlineContaierBar = styled.section`
   color: var(--white);
   font-weight: bold;
   background: var(--black24);
-  box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08), 0px 16px 24px rgba(22, 34, 51, 0.08);
-  border-radius: 28px 28px 0px 0px ;
+  box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08),
+    0px 16px 24px rgba(22, 34, 51, 0.08);
+  border-radius: 28px 28px 0px 0px;
 `;
 
 const OutlineContainer = styled.div`
   margin: auto;
   width: 41rem;
   height: 57%;
+  padding-bottom: 0.5rem;
   background: var(--white);
-  box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08), 0px 16px 24px rgba(22, 34, 51, 0.08);
+  box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08),
+    0px 16px 24px rgba(22, 34, 51, 0.08);
   border-radius: 0px 0px 28px 28px;
 `;
 
@@ -237,16 +251,15 @@ const QuestionText = styled.div`
   color: var(--gray99);
   font-weight: 500;
   margin: 2rem 5rem 0 5rem;
-
 `;
 
 const FormCheckText = styled.span`
-  margin: 1rem 0.5rem 2.5rem 0.5rem;
+  margin: 0.8rem 0.3rem 0.5rem 0.3rem;
   width: 40%;
   height: 4rem;
   line-height: 4rem;
   background-color: var(--grayed);
-  border-color: transparent;
+  border: 3px solid transparent;
   border-radius: 0.75rem;
   justify-content: center;
   display: inline-block;
@@ -266,6 +279,7 @@ const FormCheckLeft = styled.input`
     line-height: 33px;
     font-weight: 500;
     display: none;
+    border: 3px solid transparent;
   }
   &:checked + ${FormCheckText} {
     background: var(--white);
@@ -273,7 +287,6 @@ const FormCheckLeft = styled.input`
     font-weight: bolder;
     border: 3px solid var(--black24);
     box-shadow: 0px 8px 16px -4px rgba(22, 34, 51, 0.08);
-
   }
   display: none;
 `;
@@ -287,26 +300,29 @@ const QuestionLabel = styled.div`
   height: 3.31rem;
   background-color: var(--red);
   border-radius: 0.5rem 0 0 0.5rem;
-  
+
   box-shadow: 0rem 1rem 1.5rem rgba(22, 34, 51, 0.08);
-`
+`;
 const QuestionNum = styled.div`
   color: var(--white);
   position: absolute;
   left: -7.2rem;
   display: flex;
   font-weight: bolder;
-`
+`;
 
 const Line = styled.div`
   position: relative;
   width: 100%;
   height: 0.3rem;
-  background: #F5F5F5;
-`
+  background: #f5f5f5;
+`;
 
-const MbtiConfirm = styled(Button)`
-  
-`
+const MbtiConfirm = styled(Button)``;
+const SFormError = styled.div`
+  margin-bottom: 1rem;
+  color: var(--red);
+  ${med14}
+`;
 
-export default SignupMBTI
+export default SignupMBTI;

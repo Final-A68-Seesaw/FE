@@ -79,7 +79,7 @@ const DictDetail = (props) => {
     setPageNum(page);
     dispatch(__loadDictDetail(params.cardTitleId, page));
   };
-
+  
   //댓글 데이터 전송
   const onSubmit = (data) => {
     console.log(data);

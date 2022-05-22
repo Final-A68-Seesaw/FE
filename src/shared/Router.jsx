@@ -27,6 +27,7 @@ import DictDetailEdit from '../pages/DictDetailEdit'
 import TroubleList from '../pages/TroubleList';
 import TroubleDetail from '../pages/TroubleDetail';
 import TroubleAdd from '../pages/TroubleAdd';
+import TroubleDetailEdit from '../pages/TroubleDetailEdit';
 
 //MyPage
 import MyPageScrap from '../pages/MyPageScrap';
@@ -64,6 +65,7 @@ const Router = () => {
         <Route path="/trouble" exact component={TroubleList}/>
         <Route path="/trouble/detail/:id" exact component={TroubleDetail}/>
         <Route path="/trouble/add" exact component={TroubleAdd}/>
+        <Route path="/trouble/detail/:id/edit" exact component={TroubleDetailEdit}/>
 
         <Route path="/mypage/scrap" exact component={MyPageScrap}/>
         <Route path="/mypage/myword" exact component={MyPageMyWord}/>
