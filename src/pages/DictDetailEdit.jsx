@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 
 //redux
-import { __addDict, __loadDictDetail, __updateDictDetail } from "../redux/modules/dictionary";
 import { useDispatch, useSelector } from "react-redux";
-import { __dictTitle } from "../redux/modules/dictionary";
+import {
+  __addDict,
+  __loadDictDetail,
+  __updateDictDetail,
+  __dictTitle,
+} from "../redux/modules/dictionary";
 
 //element & components
 import Header from "../components/Header";
@@ -14,13 +19,11 @@ import Button from "../elements/Button";
 import { BasicTextarea } from "../elements/Textarea";
 import { Select } from "../elements/Select";
 import FileUpload2 from "../components/FileUpload2";
+import Footer from "../components/Footer";
 
 //style
 import styled from "styled-components";
 import Book from "../asset/Dictionary_add_imo.svg";
-import Footer from "../components/Footer";
-import TextIcon from "../asset/DictAddIcon.svg";
-import { useParams } from "react-router-dom";
 
 const DictDetailEdit = (props) => {
   const {
@@ -36,31 +39,30 @@ const DictDetailEdit = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.dictionary.detailData);
-  const newPostImages = useSelector((state) => state.image)
+  const newPostImages = useSelector((state) => state.image);
 
   //디테일 데이터 로드
   useEffect(() => {
     dispatch(__loadDictDetail(params.cardTitleId, 1));
   }, []);
 
-  useEffect(()=>{
-    if(dataList)
-      setTagList(dataList.tagNames)
-  }, [dataList])
+  useEffect(() => {
+    if (dataList) setTagList(dataList.tagNames);
+  }, [dataList]);
 
-//단어 사용 세대
+  //단어 사용 세대
   const GenerationOptions = [
-    {value: "none", label: "선택하세요"},
-    {value: "X세대", label: "X세대(1965년 ~ 1979년)"},
-    {value: "Y세대", label: "Y세대(1980년 ~ 1994년)"},
-    {value: "Z세대", label: "Z세대(1995년 ~ 2005년)"},
-    {value: "알파세대", label: "알파세대(2006년~)"}
-  ]
+    { value: "none", label: "선택하세요" },
+    { value: "X세대", label: "X세대(1965년 ~ 1979년)" },
+    { value: "Y세대", label: "Y세대(1980년 ~ 1994년)" },
+    { value: "Z세대", label: "Z세대(1995년 ~ 2005년)" },
+    { value: "알파세대", label: "알파세대(2006년~)" },
+  ];
 
   //태그
   const [tagItem, setTagItem] = useState("");
   const [tagList, setTagList] = useState([]);
-  const [gen, setGen] = useState()
+  const [gen, setGen] = useState();
 
   const onKeyPress = (e) => {
     if (e.target.value.length !== 0 && e.key === "Enter") {
@@ -111,13 +113,13 @@ const DictDetailEdit = (props) => {
         <TextContainer>
           해당 신조어와 관련된 <b>새로운 내용</b>을 추가해주세요
         </TextContainer>
-      
+
         <GenerationBox>{dataList && dataList.generation} </GenerationBox>
         <TitleBox>{dataList && dataList.title}</TitleBox>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <BasicTextarea
-          defaultValue={dataList && dataList.contents}
+            defaultValue={dataList && dataList.contents}
             ref={register({
               required: {
                 value: true,
@@ -126,31 +128,34 @@ const DictDetailEdit = (props) => {
             })}
             name="contents"
             type="text"
-            // value = {dataList && dataList.contents}
             hasError={Boolean(errors?.contents?.message)}
           />
           <SFormError>{errors?.contents?.message}</SFormError>
 
           {/* 첨부파일 */}
-          <FileUpload2 file={dataList?.postImages}/>
+          <FileUpload2 file={dataList?.postImages} />
 
           <hr style={{ margin: "1rem 0 1rem 0", color: "var(--grayed)" }} />
 
           <Select
-          name="generation"
-          value={gen ? gen : dataList?.generation}
-          onChange={(e)=>setGen(e.target.value)}
-          register={register({
-            required: true,
-            validate: (value) => value !== "none",
-          })}
-          label = "단어 사용 세대"
-          width = "24rem"
-          error={errors?.generation?.type}
+            name="generation"
+            value={gen ? gen : dataList?.generation}
+            onChange={(e) => setGen(e.target.value)}
+            register={register({
+              required: true,
+              validate: (value) => value !== "none",
+            })}
+            label="단어 사용 세대"
+            width="24rem"
+            error={errors?.generation?.type}
           >
-          {GenerationOptions.map((item, index)=> {
-            return <option key = {index} value = {item.value}>{item.label}</option>
-          })}
+            {GenerationOptions.map((item, index) => {
+              return (
+                <option key={index} value={item.value}>
+                  {item.label}
+                </option>
+              );
+            })}
           </Select>
 
           <ErrorXInput
@@ -186,16 +191,16 @@ const DictDetailEdit = (props) => {
             </TagBox>
           </WholeBox>
         </div>
-     
+
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div style={{display: "flex", justifyContent:"center"}}>
-          <Button shape="confirmRed-B" type="submit" >
-            수정완료
-          </Button>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Button shape="confirmRed-B" type="submit">
+              수정완료
+            </Button>
           </div>
         </form>
       </Container>
-      <Footer/>
+      <Footer />
     </>
   );
 };
@@ -222,8 +227,8 @@ const TextContainer = styled.div`
 `;
 
 const Labelbox = styled.div`
-display: flex;
-justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
   ${med14}
   margin-top: 8px;
   margin-bottom: 8px;

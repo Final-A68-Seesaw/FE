@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { __loadTrouCardList } from "../redux/modules/touble";
+import { clearTrou, __loadTrouCardList } from "../redux/modules/touble";
 
 //element & component
 import Header from "../components/Header";
@@ -18,7 +18,9 @@ const TroubleList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(__loadTrouCardList());
+    dispatch(__loadTrouCardList(1));
+
+    return () => dispatch(clearTrou());
   }, []);
 
   const troubleList = useSelector((state) => state.trouble.list);

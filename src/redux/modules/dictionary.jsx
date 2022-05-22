@@ -156,7 +156,7 @@ export const __updateDictDetail = (data, postId) => {
 export const __loadDictCardList = (data) => {
   return (dispatch, getState, { history }) => {
     dictApi
-      .DictList()
+      .DictList(data)
       .then((res) => dispatch(getDict(res.data)))
       .catch((err) => console.log(err.response));
   };
@@ -177,7 +177,6 @@ export const __addDictComment = (cardTitleId, data, nickname) => {
     dictApi
       .addComment(cardTitleId, data)
       .then((res) => {
-        console.log(res.data)
         dispatch(addDictCom(res.data));
       })
       .catch((err) => console.log(err));
@@ -189,6 +188,7 @@ export const __deleteDictComment = (commentId, postId, pageNum) => {
     dictApi
       .delComment(commentId)
       .then((res) => {
+        console.log("gw", res)
         let getNextComment = {
           commentId: commentId,
           nextComment: res.data,
@@ -210,7 +210,6 @@ export const __updateDictComment = (data, commentId) => {
 
 export const __likeDictComment = (like, commentId) => {
   return (dispatch, getState, { history }) => {
-    console.log(like, commentId);
     dictApi
       .likeComment(commentId)
       .then((res) => dispatch(likeDictCom({ commentId, likeStatus: res.data })))
@@ -270,6 +269,7 @@ export default handleActions(
             0,
             4
           );
+          console.log(state.detailData)
 
         draft.detailData.commentCount = action.payload.commentCount;
       }),

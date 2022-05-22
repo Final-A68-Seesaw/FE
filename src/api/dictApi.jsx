@@ -5,7 +5,7 @@ export const dictApi = {
   addDictForm: (formdata) => formDatas.post("/api/post",formdata),
   addDictTitle: (title) => instance.post(`/api/post/${title}/present`,title),
   DictDetail: (cardTitleId, commentPageId) => instance.get(`/api/post/${cardTitleId}/detail?page=${commentPageId}`),
-  DictList: ()=> instance.get(`/api/post/list`),
+  DictList: (pageId)=> instance.get(`/api/post/list?page=${pageId}`),
   delDictDetail: (postId)=> instance.delete(`api/post/${postId}`),
   putDictDetail: (postId, data)=> formDatas.put(`api/post/${postId}/update`,data),
  

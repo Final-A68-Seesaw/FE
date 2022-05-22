@@ -20,7 +20,7 @@ const DictList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(__loadDictCardList());
+    dispatch(__loadDictCardList(1));
 
     return () => dispatch(DictionaryActions.clearDict())
   }, []);

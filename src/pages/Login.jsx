@@ -12,9 +12,8 @@ import { ErrorXInput } from "../elements/Input";
 import styled from "styled-components";
 import KakaoBtn from "../components/KakaoBtn";
 import { med14, bold30 } from "../themes/textStyle";
-import Logo from '../asset/Seeso_logo.svg'
-import Img from '../asset/LoginIMG.svg'
-
+import Logo from "../asset/Seeso_logo.svg";
+import Img from "../asset/LoginIMG.svg";
 
 const Login = () => {
   const {
@@ -33,9 +32,8 @@ const Login = () => {
 
   return (
     <>
-
       <Container>
-        <div style={{ Width:'200px', minHeight: '100vh' }}>
+        <div style={{ Width: "200px", minHeight: "100vh" }}>
           <Img />
         </div>
         <RightContainer>
@@ -43,7 +41,6 @@ const Login = () => {
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <LoginContainer>
-
               <TextBox>로그인</TextBox>
               <div>
                 <LabelBox>이메일</LabelBox>
@@ -82,15 +79,10 @@ const Login = () => {
                       value: true,
                       message: "⚠ 패스워드를 입력해주세요.",
                     },
-                    minLength: {
-                      value: 8,
-                      message: "⚠ 패스워드를 정확하게 입력해주세요.",
-                    },
                     pattern: {
-                      value:
-                        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,20}$/,
+                      value: /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z]{6,20}$/,
                       message:
-                        "⚠ 하나 이상의 숫자, 영어 대문자, 소문자, 특수문자 조합으로 8자리 이상 20자리 이하로 입력해주세요!",
+                        "⚠ 비밀번호는 숫자, 영문 조합으로 6자리 이상 20자리 이하입니다!",
                     },
                   })}
                   placeholder="********"
@@ -105,7 +97,12 @@ const Login = () => {
               </div>
             </LoginContainer>
 
-            <LoginBtn shape="confirmRed-B" type="submit" margin="0" width="24rem">
+            <LoginBtn
+              shape="confirmRed-B"
+              type="submit"
+              margin="0"
+              width="24rem"
+            >
               로그인하기
             </LoginBtn>
 
@@ -153,7 +150,6 @@ const TextBox = styled.div`
   ${bold30}
   margin: 0 0 2rem 0;
   text-align: left;
-
 `;
 const LabelBox = styled.div`
   ${med14}

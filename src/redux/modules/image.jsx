@@ -20,7 +20,7 @@ const initialState = {
 export default handleActions(
     {
         [GETIMG]: (state, action) => produce(state, (draft) => {
-            // console.log(action.payload);
+            console.log(action.payload);
             draft.imagelist = action.payload
         }),
         [ADDIMG]: (state, action) => produce(state, (draft) => {

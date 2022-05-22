@@ -35,7 +35,7 @@ const TroubleCard = (props) => {
           </ViewCountBox>
         </WordCard>
         <img
-          src={props.data.mainImage || props.data.troubleImages[0]}
+          src={props.data.mainImage || props.data.troubleImages}
           style={{
             display: "flex",
             width: "223px",

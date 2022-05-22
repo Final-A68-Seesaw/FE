@@ -88,7 +88,6 @@ const GenerationOptions = [
   };
 
   //데이터전송
-  const imageList = useSelector((state) => state.dictionary.files);
   const images = useSelector((state) => state.image.newimagelist)
   console.log(images);
   const onSubmit = (data) => {

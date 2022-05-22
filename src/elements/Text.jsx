@@ -6,6 +6,7 @@ import {
   bold24,
   bold22,
   bold20,
+  bold19,
   bold18,
   bold17,
   bold16,
@@ -15,6 +16,7 @@ import {
   med24,
   med22,
   med20,
+  med19,
   med18,
   med16,
   med15,
@@ -40,6 +42,8 @@ const Wrapper = styled.div`
         return `${bold22}`;
       case "bold20":
         return `${bold20}`;
+      case "bold19":
+        return `${bold19}`;
       case "bold18":
         return `${bold18}`;
       case "bold17":
@@ -58,6 +62,8 @@ const Wrapper = styled.div`
         return `${med22}`;
       case "med20":
         return `${med20}`;
+      case "med19":
+        return `${med19}`;
       case "med18":
         return `${med18}`;
       case "med16":
