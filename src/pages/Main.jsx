@@ -21,9 +21,11 @@ import GameCard from '../asset/GameCard.svg'
 import { MainApi } from '../api/mainApi';
 import isLogin from '../auth/isLogin';
 import { history } from '../redux/configStore';
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
+import { Swiper, SwiperSlide } from "swiper/react";
 
 const Main = () => {
-
+  const [swiperRef, setSwiperRef] = useState(null);
   const [showModal, setShowModal] = useState(false)
 
   const [getRand, setGetRand] = useState([])
@@ -60,7 +62,7 @@ const Main = () => {
       alert('검색할 단어를 입력해주세요 !')
     else
       history.push(`/searchresult/${searchInput}`);
-      
+
     setSearchInput("");
   }
 
@@ -162,7 +164,7 @@ const Main = () => {
         <RecentTitle>👍 최신 등록 신조어를 배워보세요</RecentTitle>
         <RecentCards>
 
-          {getBest && getBest.map((v, i) => {
+          {/* {getBest && getBest.map((v, i) => {
             return <RecentCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
               <GenBox>{v.generation}</GenBox>
               <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0', height: '168px' }} />
@@ -175,18 +177,45 @@ const Main = () => {
                 </div>
               </div>
             </RecentCard>
-          })}
+          })} */}
 
-          <div ref={RecentScrollRef}></div>
-          {console.log('wid', window.innerWidth)}
+          {/* <div ref={RecentScrollRef}></div>
+          {console.log('wid', window.innerWidth)} */}
 
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          {/* <div style={{ display: 'flex', alignItems: 'center' }}>
             <RightBtn>
               <BsChevronRight onClick={() => {
                 RecentScrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
               }} style={{ fontSize: '30px' }} />
             </RightBtn>
-          </div>
+          </div> */}
+
+          <Swiper
+            onSwiper={setSwiperRef}
+            slidesPerView={3}
+            centeredSlides={true}
+            spaceBetween={30}
+            navigation={true}
+            modules={[Navigation]}
+            className="mySwiper"
+          >
+            <div style={{ display: 'flex' }}>
+              {getBest && getBest.map((v, i) => {
+                return <RecentCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
+                  <GenBox>{v.generation}</GenBox>
+                  <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0', height: '168px' }} />
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <RecentCardTitle>{v.title}</RecentCardTitle>
+                    <RecentCardDesc>{v.contents}</RecentCardDesc>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <RecentCardView>조회수 {v.views}</RecentCardView>
+                      <RecentCardScrap>스크랩 {v.scrapCount}</RecentCardScrap>
+                    </div>
+                  </div>
+                </RecentCard>
+              })}
+            </div>
+          </Swiper>
 
         </RecentCards>
       </RecentWrap>
