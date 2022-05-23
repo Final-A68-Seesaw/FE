@@ -10,7 +10,7 @@ import GameInput1 from '../asset/GameInputBg1.svg'
 import GameInput2 from '../asset/GameInputBg2.svg'
 import CWword from '../components/CWword'
 import { MainApi } from '../api/mainApi'
-import GameOVerDiv from '../asset/GameOverDiv.svg'
+import GameOVerDiv from '../asset/GameOverdiv.svg'
 
 const CrossWord = () => {
 
