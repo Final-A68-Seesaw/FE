@@ -48,15 +48,21 @@ const Main = () => {
   const onBestWord = (data) => {
     setSelectBest(data)
   }
-  
+
   const mainSearch = (e) => {
     if (e.key === "Enter") {
-      history.push(`/searchresult/${searchInput}`);
-      setSearchInput("");
+      Searching()
     }
   };
 
-  console.log('env', process.env.REACT_APP_CLIENT_KEY)
+  const Searching = () => {
+    if (searchInput === '')
+      alert('검색할 단어를 입력해주세요 !')
+    else
+      history.push(`/searchresult/${searchInput}`);
+      
+    setSearchInput("");
+  }
 
   React.useEffect(() => {
     MainApi.mainGetRecent().then((res) => {
@@ -78,11 +84,11 @@ const Main = () => {
           <G1 />
           <G2 />
         </div>
-        <Y1 style={{ position: 'absolute', width: '140.42px', height: '175.92px', left: '85%', top: '36%', }} />
-        <Y2 style={{ position: 'absolute', width: '140.98px', height: '192.8px', left: '70%', top: '90%', }} />
+        <Y1 className='shake-vertical' style={{ position: 'absolute', width: '140.42px', height: '175.92px', left: '85%', top: '36%', }} />
+        <Y2 className='shake-vertical' style={{ position: 'absolute', width: '140.98px', height: '192.8px', left: '70%', top: '90%', }} />
         <MainText>우리들의 플레이그라운드</MainText>
 
-        <Seeso style={{ margin: '32px 0 91px 0' }} />
+        <Seeso className="jello-horizontal" style={{ margin: '32px 0 91px 0' }} />
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <MainSearch
             placeholder='궁금한 것을 검색해보세요'
@@ -90,7 +96,7 @@ const Main = () => {
             onChange={(e) => setSearchInput(e.target.value)}
             onKeyDown={mainSearch}
           />
-          <GoSearch style={{ width: '24px', height: '24px', color: '#9A9999', margin: '0 0 0 -40px' }} />
+          <GoSearch onClick={Searching} style={{ width: '24px', height: '24px', color: '#9A9999', margin: '0 0 0 -40px' }} />
         </div>
       </MainTop>
 
@@ -172,6 +178,7 @@ const Main = () => {
           })}
 
           <div ref={RecentScrollRef}></div>
+          {console.log('wid', window.innerWidth)}
 
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <RightBtn>
@@ -203,6 +210,22 @@ const ChatContainer = styled.div`
 
 const MainWrap = styled.div`
   /* overflow-x: hidden; */
+
+  .jello-horizontal {
+    :hover {
+      animation: jello-horizontal 0.9s both;
+    }
+  }
+
+  @keyframes jello-horizontal {
+    0% { transform: scale3d(1, 1, 1); }
+    30% { transform: scale3d(1.25, 0.75, 1); }
+    40% { transform: scale3d(0.75, 1.25, 1); }
+    50% { transform: scale3d(1.15, 0.85, 1); }
+    65% { transform: scale3d(0.95, 1.05, 1); }
+    75% { transform: scale3d(1.05, 0.95, 1); }
+    100% { transform: scale3d(1, 1, 1); }
+  }
 `
 
 const MainTop = styled.div`
@@ -210,9 +233,28 @@ const MainTop = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-width: 1423px;
   height: 100vh;
 
-  background: #FFC438;;
+  background: #FFC438;
+
+  .shake-vertical {
+	  animation: shake-vertical 0.8s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+  }
+
+  @keyframes shake-vertical {
+    0%,
+    100% { transform: translateY(0); }
+    10%,
+    30%,
+    50%,
+    70% { transform: translateY(-8px); }
+    20%,
+    40%,
+    60% { transform: translateY(8px); }
+    80% { transform: translateY(6.4px); }
+    90% { transform: translateY(-6.4px); }
+  }
 `
 
 const MainText = styled.p`
@@ -254,6 +296,7 @@ const MainSearch = styled.input`
 `
 
 const BestWordWrap = styled.div`
+  min-width: 1423px;
   height: 510px;
   padding: 72px 0;
 
@@ -494,6 +537,7 @@ const TestDesc = styled.p`
 `
 
 const RecentWrap = styled.div`
+  min-width: 1423px;
   max-width: 1423px;
   margin: 126px auto 115px auto;
 

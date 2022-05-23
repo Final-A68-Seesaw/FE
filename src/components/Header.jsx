@@ -37,10 +37,18 @@ const Header = (props) => {
   //검색 기능
   const HeadSearch = (e) => {
     if (e.key === "Enter") {
-      history.push(`/searchresult/${headInput}`);
-      setHeadInput("");
+      Searching()
     }
   };
+
+  const Searching = () => {
+    if(headInput === '')
+      alert('검색할 단어를 입력해주세요 !')
+    else
+      history.push(`/searchresult/${headInput}`);
+      
+    setHeadInput("");
+  }
 
   useEffect(() => {
     dispatch(userActions.loadUser());
@@ -58,7 +66,7 @@ const Header = (props) => {
           <HeaderIcon
             className="jello-horizontal"
             onClick={() => history.push("/main")}
-            style={{ cursor: "pointer" }}
+            style={{ margin:'0 10px', cursor: "pointer" }}
           />
           {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
 
@@ -66,7 +74,7 @@ const Header = (props) => {
               <HeaderMenu
                 className="jello-horizontal"
                 pathname = {location.pathname === "/dictionary"}
-                onClick={() => {history.replace("/dictionary");}}
+                onClick={() => {history.push("/dictionary")}}
               >
                 사전장
               </HeaderMenu>
@@ -75,7 +83,7 @@ const Header = (props) => {
             <HeaderMenu
                 className="jello-horizontal"
                 pathname = {location.pathname === "/trouble"}
-                onClick={() => {history.replace("/trouble");}}
+                onClick={() => {history.push("/trouble")}}
               >
                 질문장
               </HeaderMenu>
@@ -84,7 +92,7 @@ const Header = (props) => {
               <HeaderMenu
                 className="jello-horizontal"
                 pathname = {location.pathname === "/gamemain"}
-                onClick={() => {history.replace("/gamemain");}}
+                onClick={() => {history.push("/gamemain")}}
               >
                 게임장
               </HeaderMenu>
@@ -99,7 +107,7 @@ const Header = (props) => {
               onChange={(e) => setHeadInput(e.target.value)}
               onKeyDown={HeadSearch}
             />
-            <GoSearch style={{ margin: "0 0 0 -1.5rem", color: "#FAFAFA" }} />
+            <GoSearch onClick={Searching} style={{ margin: "0 0 0 -1.5rem", color: "#FAFAFA" }} />
           </SearchDiv>
         }
 
@@ -337,6 +345,8 @@ const WriteDicBtn = styled.div`
 `;
 const MyInfo = styled.div`
   height: 2rem;
+
+  cursor: pointer;
 `;
 const MyNickname = styled.div`
   ${med14}

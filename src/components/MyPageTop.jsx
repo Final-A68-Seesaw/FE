@@ -39,7 +39,9 @@ const MyPageTop = () => {
     <>
       <Container>
         <UserInfos>
-          <Character char={dataList && dataList.profileImages} size="9rem" />
+          <div style={{ margin: '0 14px 0 -14px' }}>
+            <Character char={dataList && dataList.profileImages} size="9rem" />
+          </div>
           <UserInfo>
             <UserNick>{dataList && dataList.nickname}</UserNick>
             <UserEmail>{dataList && dataList.username}</UserEmail>

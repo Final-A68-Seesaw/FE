@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 const CWword = (props) => {
 
-    console.log(props.IsOver);
-
     const searchlen = props.data.y * 10 + props.data.x
 
     const selecting = props.data.id === props.datakey

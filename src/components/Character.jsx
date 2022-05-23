@@ -22,7 +22,7 @@ const CharImg = styled.img`
     position: absolute;
     margin: ${(props) => (props.margin ? props.margin : 0)};
 
-    ${(props) => props.size ? `width: ${props.size}; height:${props.size}` : 
+    ${(props) => props.size ? `width: ${props.size}` : 
         `width: 2rem;`};
 
     border-radius: 3px;

@@ -166,7 +166,6 @@ const CrossWord = () => {
 
     useEffect(() => {
         MainApi.testgame().then((res) => {
-            console.log(res.data)
             setTestData(res.data)
         })
     }, [])

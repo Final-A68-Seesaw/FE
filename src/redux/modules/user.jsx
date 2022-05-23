@@ -64,8 +64,8 @@ export const __login =
         localStorage.setItem('profileImage1url', res.data.profileImages[1].profileImage)
         localStorage.setItem('profileImage2id', res.data.profileImages[2].charId)
         localStorage.setItem('profileImage2url', res.data.profileImages[2].profileImage)
+        dispatch(loadUser())
       })
-      dispatch(loadUser())
 
       history.replace("/main");
     } catch (e) {
