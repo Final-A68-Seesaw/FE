@@ -18,6 +18,8 @@ import Line from "../asset/Dictionary_list_line.svg";
 
 const DictList = (props) => {
 
+  const dispatch = useDispatch()
+
   const dictList = useSelector((state) => state.dictionary.list);
 
   const [page, setPage] = useState(1)

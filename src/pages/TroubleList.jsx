@@ -29,11 +29,11 @@ const TroubleList = () => {
         </MenuSelection>
         <Line style={{ width: "74.5rem" }} />
         <CardWholeBox>
-          {data.pages.map((page)=>
+          {/* {data.pages.map((page)=>
           page.data.map((v,i) =>{
             return<TroubleCard key={i} data={v}/>;
           })
-          )}
+          )} */}
         </CardWholeBox>
       </Container>
       <Footer />
