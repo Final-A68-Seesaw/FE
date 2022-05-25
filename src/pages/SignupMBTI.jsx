@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
-import { userActions } from "../redux/modules/user";
+import user, { userActions } from "../redux/modules/user";
 
 //element
 import Button from "../elements/Button";
@@ -19,12 +19,14 @@ const SignupMBTI = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.user.usersign);
+  console.log(userData)
   const [Mbti, setMbti] = useState({
     energy: null,
     insight: null,
     judgement: null,
     lifePattern: null,
     id: userData.id,
+    code: userData.code,
   });
 
   const { register, handleSubmit, 
@@ -54,6 +56,7 @@ const SignupMBTI = () => {
   const changeRadio = (e) => {
     setMbti({ ...Mbti, [e.target.name]: e.target.value });
   };
+  console.log(Mbti)
 //데이터전송
 const onSubmit = async () => {
   try {
@@ -61,12 +64,12 @@ const onSubmit = async () => {
     dispatch(
       userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data })
     );
-    console.log(user);
     history.push("/signup/making/character");
   } catch (e) {
     console.log(e);
     if (e.message === "Request failed with status code 400") {
       alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
+      history.push("/login")
       return;
     }
   }

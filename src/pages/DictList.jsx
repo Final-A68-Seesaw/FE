@@ -1,42 +1,75 @@
 import React, { useEffect, useState } from "react";
+import { dictApi } from "../api/dictApi";
+import { useInfiniteQuery } from "react-query";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
 import { __loadDictCardList, __scrapDict } from "../redux/modules/dictionary";
 import { actionCreators as DictionaryActions } from "../redux/modules/dictionary";
-import { history } from "../redux/configStore";
 
 //element & component
 import Header from "../components/Header";
 import DictionaryCard from "../components/DictionaryCard";
 import Footer from "../components/Footer";
-import { bold16, bold22, bold15, med15 } from "../themes/textStyle";
+import { bold16, bold22,} from "../themes/textStyle";
 
 //style
 import styled from "styled-components";
 import Line from "../asset/Dictionary_list_line.svg";
 
-const DictList = () => {
-  const dispatch = useDispatch();
 
+const DictList = (props) => {
+
+  const fetchList = async (pageId = 1) => {
+    const res = await dictApi.DictList(pageId);
+    console.log(res)
+    return res;
+  };
+  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
+    "cards",
+    ({ pageParam = 1 }) => fetchList(pageParam),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        const nextPage = allPages.length + 1;
+        return nextPage ? nextPage : undefined;
+      },
+
+    }
+  );
+console.log(data)
   useEffect(() => {
-    dispatch(__loadDictCardList(1));
+    let fetching = false;
+    const onScroll = async (e) => {
+      const { scrollHeight, scrollTop, clientHeight } =
+        e.target.scrollingElement;
 
-    return () => dispatch(DictionaryActions.clearDict())
+      if (!fetching && scrollHeight - scrollTop <= clientHeight * 1.5) {
+        fetching = true;
+        if (hasNextPage) await fetchNextPage();
+        fetching = false;
+      }
+    };
+    addEventListener("scroll", onScroll);
+    return () => {
+      removeEventListener("scroll", onScroll);
+    };
   }, []);
 
-  // onscroll = (e) => {
-  //   console.log(window.scrollY);
+
+  // //스크랩 기능
+  // const dispatch = useDispatch();
+  // const dictList = useSelector((state) => state.dictionary.list);
+
+  // useEffect(() => {
+  //   dispatch(__loadDictCardList(1));
+
+  //   return () => dispatch(DictionaryActions.clearDict())
+  // }, []);
+  // const [scrap, setScrap] = useState(false);
+  // const ChangeScrap = (postId) => {
+  //   setScrap(!scrap);
+  //   dispatch(__scrapDict(!scrap, postId));
   // };
-
-  //스크랩 기능
-  const [scrap, setScrap] = useState(false);
-  const ChangeScrap = (postId) => {
-    setScrap(!scrap);
-    dispatch(__scrapDict(!scrap, postId));
-  };
-
-  const dictList = useSelector((state) => state.dictionary.list);
 
   return (
     <>
@@ -47,11 +80,13 @@ const DictList = () => {
           <Newest>최신순</Newest>
         </MenuSelection>
         <Line style={{ width: "74.5rem" }} />
+        
         <CardWholeBox>
-          {dictList &&
-            dictList.map((v, i) => {
+          {data.pages.map((page) =>
+            page.data.map((v, i) => {
               return <DictionaryCard key={i} data={v} />;
-            })}
+            })
+          )}
         </CardWholeBox>
       </Container>
       <Footer />

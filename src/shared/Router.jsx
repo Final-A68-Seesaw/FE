@@ -12,7 +12,9 @@ import SignupCharacter from '../pages/SignupCharacter';
 import Login from '../pages/Login';
 
 //main
+import StartPage from '../pages/StartPage';
 import Main from '../pages/Main';
+import About from '../pages/About';
 
 //Search
 import SearchResult from '../pages/SearchResult';
@@ -42,10 +44,6 @@ import GameMain from '../pages/GameMain';
 // HOC (high order components)
 import PublicRoute from "../auth/PublicRoute";
 import PrivateRoute from "../auth/PrivateRoute";
-import StartPage from '../pages/StartPage';
-import About from '../pages/About';
-
-
 
 const Router = () => {
   return (

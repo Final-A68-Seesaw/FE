@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
-import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
+
+//redux
 import { useSelector } from "react-redux";
+import { history } from "../redux/configStore";
 
 //ele
 import Button from "../elements/Button";
@@ -13,7 +15,7 @@ import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
 import Pen from "../asset/Signup_Character_imo.svg";
 import Logo from "../asset/Seeso_logo.svg";
-import { bold18, med14, med18, med20 } from "../themes/textStyle";
+import { bold18, med14, med18 } from "../themes/textStyle";
 
 const SignupCharacter = () => {
   //react-hook-form
@@ -38,7 +40,6 @@ const SignupCharacter = () => {
   //이미지 선택시 charId로 값이 들어감
   const changeRadio = (e) => {
     const values = e.target.value.split(",");
-    console.log(values)
     switch (e.target.name) {
       case "faceUrl":
         setCharId([values[1], charId[1], charId[2]]);
@@ -82,26 +83,24 @@ const SignupCharacter = () => {
     });
   }, []);
   const userData = useSelector((state) => state.user.usersign);
-console.log(userData)
   //데이터전송
   const onSubmit = async (data) => {
     let signDic = {
-      pwd: userData.pwd,
       username: userData.username,
+      id: userData.id,      
       generation: userData.generation,
       energy: userData.energy,
       insight: userData.insight,
       judgement: userData.judgement,
       lifePattern: userData.lifePattern,
-      id: userData.id,
       nickname: data.nickname,
       charId: [charId[0], charId[1], charId[2]],
     };
 
     try {
       const user = await userApi.signupFinal(signDic);
-      console.log(user)
       history.replace("/login");
+      alert("회원가입이 완료됐습니다!")
     } catch (e) {
       if (e.message === "Request failed with status code 400") {
         alert("중복된 닉네임입니다.");
@@ -274,16 +273,7 @@ const OutlineContainer = styled.div`
   justify-content: space-between;
   display: flex;
 `;
-
-const PrevContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const PrevWorkStage = styled.div`
- 
-  /* width: 50rem; */
-  /* overflow-y: auto; */
 `;
 
 const FinalConfirm = styled(Button)`
@@ -298,7 +288,6 @@ const RightBox = styled.div`
   width: 21rem;
 `;
 const LeftBox = styled.div`
-  /* width: 20rem; */
 `;
 const UserNameTag = styled.div`
   border: 3px solid #ea8c00;

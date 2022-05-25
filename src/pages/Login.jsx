@@ -15,6 +15,8 @@ import { med14, bold30 } from "../themes/textStyle";
 import Logo from "../asset/Seeso_logo.svg";
 import Img from "../asset/LoginIMG.svg";
 
+import {KAKAO_AUTH_URL} from "../auth/kakao_AUTH_URL";
+
 const Login = () => {
   const {
     reset,
@@ -30,6 +32,7 @@ const Login = () => {
     dispatch(__login(data));
   };
 
+
   return (
     <>
       <Container>
@@ -37,11 +40,13 @@ const Login = () => {
           <Img style={{minWidth:'100%', height:'99.9vh'}}/>
         </div>
         <RightContainer>
-          <Logo style={{ display: "right" }} />
+          <LogoBox>
+          <Logo/>
+          <TextBox>로그인</TextBox>
+          </LogoBox>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <LoginContainer>
-              <TextBox>로그인</TextBox>
               <div>
                 <LabelBox>이메일</LabelBox>
 
@@ -96,29 +101,28 @@ const Login = () => {
                 /> */}
               </div>
             </LoginContainer>
-
-            <LoginBtn
-              shape="confirmRed-B"
+            <ButtonBox>
+            <Button
+              shape="login-B"
               type="submit"
-              margin="0"
               width="24rem"
             >
               로그인하기
-            </LoginBtn>
-
-            <LoginBtn
-              shape="confirmRed-B"
+            </Button>
+            <Button
+              shape="login-B"
               onClick={() => {
                 history.push("/signup");
               }}
-              margin="0"
               width="24rem"
             >
               회원가입하기
-            </LoginBtn>
+            </Button>
+            </ButtonBox>
           </form>
+          <hr/>
+          <KakaoBtn style= {{marginTop: "3rem"}} href = {KAKAO_AUTH_URL} />
 
-          {/* <KakaoBtn />/ */}
         </RightContainer>
       </Container>
     </>
@@ -135,20 +139,23 @@ const Container = styled.div`
 const RightContainer = styled.div`
   margin: auto;
   max-width: 26rem;
+
+`;
+const LogoBox = styled.div`
   text-align: left;
   align-items: left;
-`;
+`
+const ButtonBox = styled.div`
+width: 26rem;
+margin: auto !important;
 
-const LoginBtn = styled(Button)`
-  margin: 1rem;
-`;
-
+`
 const LoginContainer = styled.div`
-  padding: 1rem 0 2rem 0;
+  padding: 1rem 0 1.5rem 0;
 `;
 const TextBox = styled.div`
   ${bold30}
-  margin: 0 0 2rem 0;
+  padding: 0 0 1rem 0;
   text-align: left;
 `;
 const LabelBox = styled.div`

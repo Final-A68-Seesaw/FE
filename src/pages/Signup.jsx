@@ -48,7 +48,6 @@ const Signup = () => {
         username: data.username,
         pwd: data.pwd,
         pwdCheck: data.pwdCheck,
-
       });
 
       dispatch(
