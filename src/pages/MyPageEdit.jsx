@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
-import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,7 +11,6 @@ import Footer from "../components/Footer";
 
 //style
 import styled from "styled-components";
-import { StepBar } from "../components/StepBar";
 import { bold18, med14, med18, bold20 } from "../themes/textStyle";
 import { MypageApi } from "../api/mypageApi";
 import { __editMyProfile, __loadMypage } from "../redux/modules/mypage";

@@ -12,6 +12,15 @@ const Button = ({ shape, children, ...rest }) => {
         </Confirm>
       );
 
+      case "login-B":
+        return (
+          <Confirm 
+          margin = "0 0 1rem 0"
+          height = "3.31rem"
+          {...rest}>
+            {children}
+          </Confirm>
+        );
 
     case "smallBlack-B":
       return (
@@ -91,7 +100,7 @@ const Confirm = styled.button`
   background-color: ${(props) => (props.backgroundColor ? props.backgroundColor : "#c1c1c1;")};
   border-color: ${(props) => (props.borderColor ? props.borderColor : "transparent")};
   border-radius: ${(props) =>
-    props.borderRadius ? props.borderRadius : "12px"};
+    props.borderRadius ? props.borderRadius : "5px"};
   color: ${(props) => (props.maincolor ? props.maincolor : "white")};
   font-size: 16px;
   font-weight: bolder;

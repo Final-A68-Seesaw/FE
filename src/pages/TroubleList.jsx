@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 
 //redux
-import { useDispatch, useSelector } from "react-redux";
 import { clearTrou, __loadTrouCardList } from "../redux/modules/touble";
+import { useDispatch, useSelector } from "react-redux";
 
 //element & component
 import Header from "../components/Header";
@@ -13,19 +13,11 @@ import { bold16, bold22, bold15, med15, med18 } from "../themes/textStyle";
 import styled from "styled-components";
 import Line from "../asset/Dictionary_list_line.svg";
 import TroubleCard from "../components/TroubleCard";
+import { TroubleApi } from "../api/troubleApi";
+import { useInfiniteQuery, QueryResult } from "react-query";
 
 const TroubleList = () => {
-  const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(__loadTrouCardList(1));
-
-    return () => dispatch(clearTrou());
-  }, []);
-
-  const troubleList = useSelector((state) => state.trouble.list);
-
-  console.log(troubleList);
 
   return (
     <>
@@ -37,11 +29,11 @@ const TroubleList = () => {
         </MenuSelection>
         <Line style={{ width: "74.5rem" }} />
         <CardWholeBox>
-            {troubleList.map((v, i) => {
-              return (
-                <TroubleCard key={i} data={v}/>
-              );
-            })} 
+          {data.pages.map((page)=>
+          page.data.map((v,i) =>{
+            return<TroubleCard key={i} data={v}/>;
+          })
+          )}
         </CardWholeBox>
       </Container>
       <Footer />

@@ -1,42 +1,26 @@
 import React, { useEffect, useState } from "react";
+import { dictApi } from "../api/dictApi";
+import { useInfiniteQuery } from "react-query";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { __loadDictCardList, __scrapDict } from "../redux/modules/dictionary";
+import { __loadDictCardList, __scrapDict, getDict } from "../redux/modules/dictionary";
 import { actionCreators as DictionaryActions } from "../redux/modules/dictionary";
-import { history } from "../redux/configStore";
 
 //element & component
 import Header from "../components/Header";
 import DictionaryCard from "../components/DictionaryCard";
 import Footer from "../components/Footer";
-import { bold16, bold22, bold15, med15 } from "../themes/textStyle";
+import { bold16, bold22 } from "../themes/textStyle";
 
 //style
 import styled from "styled-components";
 import Line from "../asset/Dictionary_list_line.svg";
 
-const DictList = () => {
-  const dispatch = useDispatch();
+const DictList = (props) => {
 
-  useEffect(() => {
-    dispatch(__loadDictCardList(1));
 
-    return () => dispatch(DictionaryActions.clearDict())
-  }, []);
 
-  // onscroll = (e) => {
-  //   console.log(window.scrollY);
-  // };
-
-  //스크랩 기능
-  const [scrap, setScrap] = useState(false);
-  const ChangeScrap = (postId) => {
-    setScrap(!scrap);
-    dispatch(__scrapDict(!scrap, postId));
-  };
-
-  const dictList = useSelector((state) => state.dictionary.list);
 
   return (
     <>
@@ -47,11 +31,13 @@ const DictList = () => {
           <Newest>최신순</Newest>
         </MenuSelection>
         <Line style={{ width: "74.5rem" }} />
+
         <CardWholeBox>
-          {dictList &&
-            dictList.map((v, i) => {
+          {data.pages.map((page) =>
+            page.data.map((v, i) => {
               return <DictionaryCard key={i} data={v} />;
-            })}
+            })
+          )}
         </CardWholeBox>
       </Container>
       <Footer />

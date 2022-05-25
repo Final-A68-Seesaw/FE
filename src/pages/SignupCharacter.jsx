@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { userApi } from "../api/userApi";
-import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
+
+//redux
 import { useSelector } from "react-redux";
+import { history } from "../redux/configStore";
 
 //ele
 import Button from "../elements/Button";
 import { ErrorXInput } from "../elements/Input";
+import { Select } from "../elements/Select";
 
 //style
 import styled from "styled-components";
 import { StepBar } from "../components/StepBar";
 import Pen from "../asset/Signup_Character_imo.svg";
 import Logo from "../asset/Seeso_logo.svg";
-import { bold18, med14, med18, med20 } from "../themes/textStyle";
+import { bold18, med14, med18 } from "../themes/textStyle";
 
 const SignupCharacter = () => {
   //react-hook-form
@@ -38,7 +41,6 @@ const SignupCharacter = () => {
   //이미지 선택시 charId로 값이 들어감
   const changeRadio = (e) => {
     const values = e.target.value.split(",");
-    console.log(values)
     switch (e.target.name) {
       case "faceUrl":
         setCharId([values[1], charId[1], charId[2]]);
@@ -71,37 +73,79 @@ const SignupCharacter = () => {
       nickname: "",
     });
   };
+  //select option
+  const GenerationOptions = [
+    { value: "none", label: "선택하세요" },
+    { value: "X세대", label: "X세대(1965년생~1979년생)" },
+    { value: "Y세대", label: "Y세대(1980년생~1994년생)" },
+    { value: "Z세대", label: "Z세대(1995년생~2005년생)" },
+    { value: "알파세대", label: "알파세대(2006년생~)" },
+  ];
 
   //Api get
   useEffect(() => {
     userApi.signupCharacter().then((res) => {
       setCharSelect(res.data);
-      setCharId([res.data.faceUrl[0].charId, res.data.accessoryUrl[0].charId, res.data.backgroundUrl[0].charId ])
-      setCharPrev([res.data.faceUrl[0].profileImage, res.data.accessoryUrl[0].profileImage, res.data.backgroundUrl[0].profileImage ])
-      
+      setCharId([
+        res.data.faceUrl[0].charId,
+        res.data.accessoryUrl[0].charId,
+        res.data.backgroundUrl[0].charId,
+      ]);
+      setCharPrev([
+        res.data.faceUrl[0].profileImage,
+        res.data.accessoryUrl[0].profileImage,
+        res.data.backgroundUrl[0].profileImage,
+      ]);
     });
   }, []);
   const userData = useSelector((state) => state.user.usersign);
-console.log(userData)
   //데이터전송
   const onSubmit = async (data) => {
     let signDic = {
-      pwd: userData.pwd,
       username: userData.username,
+      id: userData.id,
       generation: userData.generation,
       energy: userData.energy,
       insight: userData.insight,
       judgement: userData.judgement,
       lifePattern: userData.lifePattern,
-      id: userData.id,
       nickname: data.nickname,
       charId: [charId[0], charId[1], charId[2]],
     };
 
+    let signKakao = {
+      id: userData.id,
+      generation: data.generation,
+      energy: userData.energy,
+      insight: userData.insight,
+      judgement: userData.judgement,
+      lifePattern: userData.lifePattern,
+      nickname: data.nickname,
+      charId: [charId[0], charId[1], charId[2]],
+    }
+
     try {
-      const user = await userApi.signupFinal(signDic);
-      console.log(user)
-      history.replace("/login");
+      if(userData.username)
+      {const user = await userApi.signupFinal(signDic);
+        history.replace("/login");
+        alert("회원가입이 완료됐습니다!");
+      }
+      else{const kakao = await userApi.kakaoCharacter(signKakao)
+
+        const Token = kakao.headers.authorization.split(";Bearer ");
+        const accessToken = Token[0].split(" ")[1];
+        const refreshToken = Token[1];
+  
+        cookies.set("accessToken", accessToken, {
+          path: "/",
+          maxAge: 86400, // 1일
+        });
+        cookies.set("refreshToken", refreshToken, {
+          path: "/",
+          maxAge: 604800, // 7일
+        });
+        history.replace("/main")      
+      }
     } catch (e) {
       if (e.message === "Request failed with status code 400") {
         alert("중복된 닉네임입니다.");
@@ -109,7 +153,7 @@ console.log(userData)
       }
       if (e.message === "Request failed with status code 500") {
         alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
-        history.replace("/signup");
+        history.replace("/login");
         return;
       }
     }
@@ -128,9 +172,15 @@ console.log(userData)
 
         <OutlineContainer>
           <LeftBox>
-  
-              <PrevWorkStage>
-              <div style={{ display: "flex", position: 'relative', justifyContent: 'center', top: '100px' }}>
+            <PrevWorkStage>
+              <div
+                style={{
+                  display: "flex",
+                  position: "relative",
+                  justifyContent: "center",
+                  top: "100px",
+                }}
+              >
                 <img
                   src={charPrev[0]}
                   style={{ width: "22rem", position: "absolute", zIndex: "3" }}
@@ -141,11 +191,11 @@ console.log(userData)
                 />
                 <img
                   src={charPrev[2]}
-                  style={{ width: "22rem", position: "absolute",  zIndex: "1" }}
+                  style={{ width: "22rem", position: "absolute", zIndex: "1" }}
                 />
-                </div>
-              </PrevWorkStage>
-     
+              </div>
+            </PrevWorkStage>
+
             <UserNameTag>
               <PreviewNick>{prevNick}님은 </PreviewNick>
               <Previewmbti>
@@ -154,6 +204,27 @@ console.log(userData)
             </UserNameTag>
           </LeftBox>
           <RightBox>
+            {userData.generation === null ? (
+              <>
+              <LabelBox>나의 세대는?</LabelBox>
+              <Select
+              width = "22rem"
+                name="generation"
+                register={register({
+                  required: true,
+                  validate: (value) => value !== "none",
+                })}
+                error={errors?.generation?.type}
+              >
+                {GenerationOptions.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </Select>
+              </>
+            ) : null}
+
             <LabelBox>닉네임</LabelBox>
             <ErrorXInput
               type="text"
@@ -194,7 +265,14 @@ console.log(userData)
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage} style = {{width:"4rem", height: "4rem", borderRadius: "0.75rem"}} />
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "0.75rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -216,7 +294,14 @@ console.log(userData)
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage } style = {{width:"4rem",height: "4rem", borderRadius: "0.75rem"}}/>
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "0.75rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -239,7 +324,14 @@ console.log(userData)
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage} style = {{width:"4rem",height: "4rem", borderRadius: "1rem"}} />
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "1rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -274,17 +366,7 @@ const OutlineContainer = styled.div`
   justify-content: space-between;
   display: flex;
 `;
-
-const PrevContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-const PrevWorkStage = styled.div`
- 
-  /* width: 50rem; */
-  /* overflow-y: auto; */
-`;
+const PrevWorkStage = styled.div``;
 
 const FinalConfirm = styled(Button)`
   width: 24rem;
@@ -297,9 +379,7 @@ const LabelBox = styled.div`
 const RightBox = styled.div`
   width: 21rem;
 `;
-const LeftBox = styled.div`
-  /* width: 20rem; */
-`;
+const LeftBox = styled.div``;
 const UserNameTag = styled.div`
   border: 3px solid #ea8c00;
   height: 2.5rem;
@@ -309,7 +389,6 @@ const UserNameTag = styled.div`
     0px 8px 16px -4px rgba(22, 34, 51, 0.08);
   color: #ea8c00;
   padding: 1rem 0;
-  
 `;
 const PreviewNick = styled.div`
   ${bold18}

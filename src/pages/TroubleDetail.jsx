@@ -37,7 +37,7 @@ const TroubleDetail = (props) => {
   const params = useParams();
   const dispatch = useDispatch();
   const DataList = useSelector((state) => state.trouble.detail);
-  const userinfo = useSelector((state) => state.user.userinfo)
+  const myInfo = useSelector((state) => state.mypage.list);
 
   useEffect(() => {
     dispatch(TroubleActions.getTrouDetailDB(params.id, pageNum));
@@ -62,10 +62,7 @@ const TroubleDetail = (props) => {
   const onSubmit = (data) => {
     console.log(data);
     dispatch(__addTrouComment(params.id, data, DataList.nickname));
-  };
-
-  const setTrouble = () => {
-    history.push(`/troublewrite/${params.id}`);
+    alert("댓글이 등록됐습니다!")
   };
 
   //pagenation
@@ -189,7 +186,7 @@ const TroubleDetail = (props) => {
         <HrLine />
         <CommentInputBox>
           <CommentCharBox>
-        <Character char={userinfo?.profileImages} />
+        <Character char={myInfo?.profileImages} />
         </CommentCharBox>
           <CommentUserName>{DataList && DataList.nickname}</CommentUserName>
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -417,7 +414,7 @@ const CommentCharBox = styled.div`
 const CommentUserName = styled.div`
   ${bold15}
   color: black;
-  margin: 1.2rem 0 0 3.5rem;
+  margin: 1.2rem 0 0.7rem 3.5rem;
 `;
 const CommentSubmitBtn = styled.button`
   background-color: var(--red);

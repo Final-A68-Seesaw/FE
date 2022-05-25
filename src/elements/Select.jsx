@@ -43,7 +43,7 @@ export const SelectText = styled.select`
   width: ${(props) => (props.width ? props.width : "103%")};
 
   border-radius: 0.3rem;;
-  height: 3rem;
+  height: ${(props) => (props.height ? props.height : "3rem")};
   color: var(--black24);
   border: 1px solid
     ${(props) => (props.hasError ? "var(--red)" : "var(--graydf)")};
