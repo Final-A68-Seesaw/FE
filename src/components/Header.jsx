@@ -42,7 +42,7 @@ const Header = (props) => {
       setHeadInput("");
     }
   };
-
+console.log(mypageInfo)
   useEffect(() => {
     dispatch(__loadMypage());
   }, []);

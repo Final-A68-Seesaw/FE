@@ -47,41 +47,6 @@ export const __login =
         maxAge: 604800, // 7일
       });
 
-      MypageApi.mypageGet().then((res) => {
-        cookies.set("generation", res.data.generation, {
-          path: "/",
-          maxAge: 604800,
-        });
-        cookies.set("nickname", res.data.nickname, {
-          path: "/",
-          maxAge: 604800,
-        });
-
-        localStorage.setItem(
-          "profileImage0id",
-          res.data.profileImages[0].charId
-        );
-        localStorage.setItem(
-          "profileImage0url",
-          res.data.profileImages[0].profileImage
-        );
-        localStorage.setItem(
-          "profileImage1id",
-          res.data.profileImages[1].charId
-        );
-        localStorage.setItem(
-          "profileImage1url",
-          res.data.profileImages[1].profileImage
-        );
-        localStorage.setItem(
-          "profileImage2id",
-          res.data.profileImages[2].charId
-        );
-        localStorage.setItem(
-          "profileImage2url",
-          res.data.profileImages[2].profileImage
-        );
-      });
       dispatch(loadUser());
 
       history.replace("/main");
@@ -151,25 +116,10 @@ const __loginCheck =
 
 const initialState = {
   isLogin: false,
-  user: {
-    email: null,
-    nickname: null,
-    userId: null,
-    avatar: null,
-    color: null,
-  },
-  tutorial: {
-    roomlist: null,
-    main: null,
-    document: null,
-    board: null,
-    calendar: null,
-    modal: null,
-  },
   usersign: {
     username: null,
-    id: null,
     code: null,
+    id: null,
     generation: null,
     energy: null,
     insight: null,
@@ -190,12 +140,6 @@ export default handleActions(
     [LOGIN_CHECK]: (state, action) =>
       produce(state, (draft) => {
         draft.isLogin = action.payload.isLogin;
-        draft.user.email = action.payload.email;
-        draft.user.nickname = action.payload.nickname;
-        draft.user.userId = action.payload._id;
-        draft.user.avatar = action.payload.avatar;
-        draft.user.color = action.payload.color;
-        draft.tutorial = action.payload.tutorial;
       }),
 
     [LOGOUT]: (state, action) =>
@@ -206,9 +150,9 @@ export default handleActions(
     [USERDATA]: (state, action) =>
       produce(state, (draft) => {
         draft.usersign = { ...initialState.usersign, ...action.payload };
-      console.log(action.payload)
-      console.log(state)
-      console.log(draft.usersign)
+      console.log("action",action.payload)
+      console.log("state",state)
+      console.log("draft",draft.usersign)
       }),
 
 

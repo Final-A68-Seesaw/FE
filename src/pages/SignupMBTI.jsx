@@ -14,6 +14,7 @@ import { StepBar } from "../components/StepBar";
 import Hi from "../asset/Signup_Mbti_imo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "../asset/Seeso_logo.svg";
+import { enableES5 } from "immer";
 
 const SignupMBTI = () => {
   const dispatch = useDispatch();
@@ -26,7 +27,6 @@ const SignupMBTI = () => {
     judgement: null,
     lifePattern: null,
     id: userData.id,
-    code: userData.code,
   });
 
   const { register, handleSubmit, 
@@ -54,15 +54,17 @@ const SignupMBTI = () => {
   ];
 
   const changeRadio = (e) => {
-    setMbti({ ...Mbti, [e.target.name]: e.target.value });
+    if(userData.code)
+    setMbti({ ...Mbti, [e.target.name]: e.target.value, id: userData.code });
+   else
+    setMbti({ ...Mbti, [e.target.name]: e.target.value })
   };
-  console.log(Mbti)
 //데이터전송
 const onSubmit = async () => {
   try {
     const user = await userApi.mbti(Mbti);
     dispatch(
-      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data })
+      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data})
     );
     history.push("/signup/making/character");
   } catch (e) {

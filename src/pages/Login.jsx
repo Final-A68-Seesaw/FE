@@ -15,7 +15,7 @@ import { med14, bold30 } from "../themes/textStyle";
 import Logo from "../asset/Seeso_logo.svg";
 import Img from "../asset/LoginIMG.svg";
 
-import {KAKAO_AUTH_URL} from "../auth/kakao_AUTH_URL";
+import { KAKAO_AUTH_URL } from "../auth/kakao_AUTH_URL";
 
 const Login = () => {
   const {
@@ -32,18 +32,18 @@ const Login = () => {
     dispatch(__login(data));
   };
 
-
   return (
     <>
       <Container>
-        <div style={{ Width:'200px', minHeight: '100vh' }}>
-          <Img style={{minWidth:'100%', height:'99.9vh'}}/>
+        <div style={{ Width: "200px", minHeight: "100vh" }}>
+          <Img style={{ minWidth: "100%", height: "99.9vh" }} />
         </div>
         <RightContainer>
           <LogoBox>
-          <Logo/>
-          <TextBox>로그인</TextBox>
+            <Logo />
           </LogoBox>
+
+          <TextBox>로그인</TextBox>
 
           <form onSubmit={handleSubmit(onSubmit)}>
             <LoginContainer>
@@ -102,27 +102,27 @@ const Login = () => {
               </div>
             </LoginContainer>
             <ButtonBox>
-            <Button
-              shape="login-B"
-              type="submit"
-              width="24rem"
-            >
-              로그인하기
-            </Button>
-            <Button
-              shape="login-B"
-              onClick={() => {
-                history.push("/signup");
-              }}
-              width="24rem"
-            >
-              회원가입하기
-            </Button>
+              <Button shape="login-B" type="submit" width="24rem" margin="auto">
+                로그인하기
+              </Button>
+            </ButtonBox>
+            <ButtonBox>
+              <Button
+                shape="login-B"
+                onClick={() => {
+                  history.push("/signup");
+                }}
+                width="24rem"
+                margin="auto"
+              >
+                회원가입하기
+              </Button>
             </ButtonBox>
           </form>
-          <hr/>
-          <KakaoBtn style= {{marginTop: "3rem"}} href = {KAKAO_AUTH_URL} />
-
+          <hr />
+          <KakaoBox>
+            <KakaoBtn style={{ marginTop: "3rem" }} href={KAKAO_AUTH_URL} />
+          </KakaoBox>
         </RightContainer>
       </Container>
     </>
@@ -139,19 +139,27 @@ const Container = styled.div`
 const RightContainer = styled.div`
   margin: auto;
   max-width: 26rem;
-
 `;
 const LogoBox = styled.div`
   text-align: left;
   align-items: left;
-`
+  margin-bottom: 1rem;
+`;
 const ButtonBox = styled.div`
-width: 26rem;
-margin: auto !important;
-
-`
+  width: 26rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 0 1.5rem 0;
+`;
+const KakaoBox = styled.div`
+  width: 26rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+`;
 const LoginContainer = styled.div`
-  padding: 1rem 0 1.5rem 0;
+  padding: 0.5rem 0 1rem 0;
 `;
 const TextBox = styled.div`
   ${bold30}

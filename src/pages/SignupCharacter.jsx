@@ -9,6 +9,7 @@ import { history } from "../redux/configStore";
 //ele
 import Button from "../elements/Button";
 import { ErrorXInput } from "../elements/Input";
+import { Select } from "../elements/Select";
 
 //style
 import styled from "styled-components";
@@ -72,14 +73,29 @@ const SignupCharacter = () => {
       nickname: "",
     });
   };
+  //select option
+  const GenerationOptions = [
+    { value: "none", label: "선택하세요" },
+    { value: "X세대", label: "X세대(1965년생~1979년생)" },
+    { value: "Y세대", label: "Y세대(1980년생~1994년생)" },
+    { value: "Z세대", label: "Z세대(1995년생~2005년생)" },
+    { value: "알파세대", label: "알파세대(2006년생~)" },
+  ];
 
   //Api get
   useEffect(() => {
     userApi.signupCharacter().then((res) => {
       setCharSelect(res.data);
-      setCharId([res.data.faceUrl[0].charId, res.data.accessoryUrl[0].charId, res.data.backgroundUrl[0].charId ])
-      setCharPrev([res.data.faceUrl[0].profileImage, res.data.accessoryUrl[0].profileImage, res.data.backgroundUrl[0].profileImage ])
-      
+      setCharId([
+        res.data.faceUrl[0].charId,
+        res.data.accessoryUrl[0].charId,
+        res.data.backgroundUrl[0].charId,
+      ]);
+      setCharPrev([
+        res.data.faceUrl[0].profileImage,
+        res.data.accessoryUrl[0].profileImage,
+        res.data.backgroundUrl[0].profileImage,
+      ]);
     });
   }, []);
   const userData = useSelector((state) => state.user.usersign);
@@ -87,7 +103,7 @@ const SignupCharacter = () => {
   const onSubmit = async (data) => {
     let signDic = {
       username: userData.username,
-      id: userData.id,      
+      id: userData.id,
       generation: userData.generation,
       energy: userData.energy,
       insight: userData.insight,
@@ -97,10 +113,39 @@ const SignupCharacter = () => {
       charId: [charId[0], charId[1], charId[2]],
     };
 
+    let signKakao = {
+      id: userData.id,
+      generation: data.generation,
+      energy: userData.energy,
+      insight: userData.insight,
+      judgement: userData.judgement,
+      lifePattern: userData.lifePattern,
+      nickname: data.nickname,
+      charId: [charId[0], charId[1], charId[2]],
+    }
+
     try {
-      const user = await userApi.signupFinal(signDic);
-      history.replace("/login");
-      alert("회원가입이 완료됐습니다!")
+      if(userData.username)
+      {const user = await userApi.signupFinal(signDic);
+        history.replace("/login");
+        alert("회원가입이 완료됐습니다!");
+      }
+      else{const kakao = await userApi.kakaoCharacter(signKakao)
+
+        const Token = kakao.headers.authorization.split(";Bearer ");
+        const accessToken = Token[0].split(" ")[1];
+        const refreshToken = Token[1];
+  
+        cookies.set("accessToken", accessToken, {
+          path: "/",
+          maxAge: 86400, // 1일
+        });
+        cookies.set("refreshToken", refreshToken, {
+          path: "/",
+          maxAge: 604800, // 7일
+        });
+        history.replace("/main")      
+      }
     } catch (e) {
       if (e.message === "Request failed with status code 400") {
         alert("중복된 닉네임입니다.");
@@ -108,7 +153,7 @@ const SignupCharacter = () => {
       }
       if (e.message === "Request failed with status code 500") {
         alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
-        history.replace("/signup");
+        history.replace("/login");
         return;
       }
     }
@@ -127,9 +172,15 @@ const SignupCharacter = () => {
 
         <OutlineContainer>
           <LeftBox>
-  
-              <PrevWorkStage>
-              <div style={{ display: "flex", position: 'relative', justifyContent: 'center', top: '100px' }}>
+            <PrevWorkStage>
+              <div
+                style={{
+                  display: "flex",
+                  position: "relative",
+                  justifyContent: "center",
+                  top: "100px",
+                }}
+              >
                 <img
                   src={charPrev[0]}
                   style={{ width: "22rem", position: "absolute", zIndex: "3" }}
@@ -140,11 +191,11 @@ const SignupCharacter = () => {
                 />
                 <img
                   src={charPrev[2]}
-                  style={{ width: "22rem", position: "absolute",  zIndex: "1" }}
+                  style={{ width: "22rem", position: "absolute", zIndex: "1" }}
                 />
-                </div>
-              </PrevWorkStage>
-     
+              </div>
+            </PrevWorkStage>
+
             <UserNameTag>
               <PreviewNick>{prevNick}님은 </PreviewNick>
               <Previewmbti>
@@ -153,6 +204,27 @@ const SignupCharacter = () => {
             </UserNameTag>
           </LeftBox>
           <RightBox>
+            {userData.generation === null ? (
+              <>
+              <LabelBox>나의 세대는?</LabelBox>
+              <Select
+              width = "22rem"
+                name="generation"
+                register={register({
+                  required: true,
+                  validate: (value) => value !== "none",
+                })}
+                error={errors?.generation?.type}
+              >
+                {GenerationOptions.map((item, index) => (
+                  <option key={index} value={item.value}>
+                    {item.label}
+                  </option>
+                ))}
+              </Select>
+              </>
+            ) : null}
+
             <LabelBox>닉네임</LabelBox>
             <ErrorXInput
               type="text"
@@ -193,7 +265,14 @@ const SignupCharacter = () => {
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage} style = {{width:"4rem", height: "4rem", borderRadius: "0.75rem"}} />
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "0.75rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -215,7 +294,14 @@ const SignupCharacter = () => {
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage } style = {{width:"4rem",height: "4rem", borderRadius: "0.75rem"}}/>
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "0.75rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -238,7 +324,14 @@ const SignupCharacter = () => {
                       />
                       <SelectCharSource>
                         <CharContain>
-                          <img src={a.profileImage} style = {{width:"4rem",height: "4rem", borderRadius: "1rem"}} />
+                          <img
+                            src={a.profileImage}
+                            style={{
+                              width: "4rem",
+                              height: "4rem",
+                              borderRadius: "1rem",
+                            }}
+                          />
                         </CharContain>
                       </SelectCharSource>
                     </label>
@@ -273,8 +366,7 @@ const OutlineContainer = styled.div`
   justify-content: space-between;
   display: flex;
 `;
-const PrevWorkStage = styled.div`
-`;
+const PrevWorkStage = styled.div``;
 
 const FinalConfirm = styled(Button)`
   width: 24rem;
@@ -287,8 +379,7 @@ const LabelBox = styled.div`
 const RightBox = styled.div`
   width: 21rem;
 `;
-const LeftBox = styled.div`
-`;
+const LeftBox = styled.div``;
 const UserNameTag = styled.div`
   border: 3px solid #ea8c00;
   height: 2.5rem;
@@ -298,7 +389,6 @@ const UserNameTag = styled.div`
     0px 8px 16px -4px rgba(22, 34, 51, 0.08);
   color: #ea8c00;
   padding: 1rem 0;
-  
 `;
 const PreviewNick = styled.div`
   ${bold18}

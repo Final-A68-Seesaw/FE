@@ -21,7 +21,7 @@ const DEL_DICT_COM = "DEL_DICT_COM";
 
 const LIKE_DICT_COM = "LIKE_DICT_COM";
 
-const getDict = createAction(GET_DICT, (data) => data);
+export const getDict = createAction(GET_DICT, (data) => data);
 const getDictDetail = createAction(GET_DICT_DETAIL, (detailData) => detailData);
 const addDict = createAction(ADD_DICT, (data) => ({ data }));
 const delDict = createAction(DEL_DICT, (dict) => dict);
@@ -220,8 +220,7 @@ export default handleActions(
   {
     [GET_DICT]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.splice(0, 10));
-        draft.list = action.payload.splice(0, 30);
+        draft.list = action.payload
       }),
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
@@ -250,15 +249,15 @@ export default handleActions(
       produce(state, (draft) => {
         console.log(state);
         console.log(action.payload);
-        // if (draft.list.length === 0)
-        //   draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus;
-        // else {
-        //   let index = draft.list.findIndex((v) => {
-        //     return v.postId == action.payload.postId;
-        //   });
-        //   draft.list[index].scrapStatus =
-        //     action.payload.scrapStatus.scrapStatus;
-        // }
+        if (draft.list.length === 0)
+          draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus;
+        else {
+          let index = draft.list.findIndex((v) => {
+            return v.postId == action.payload.postId;
+          });
+          draft.list[index].scrapStatus =
+            action.payload.scrapStatus.scrapStatus;
+        }
       }),
 
     [ADD_DICT_COM]: (state, action) =>

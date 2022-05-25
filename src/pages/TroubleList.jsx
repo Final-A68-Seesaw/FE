@@ -17,51 +17,6 @@ import { TroubleApi } from "../api/troubleApi";
 import { useInfiniteQuery, QueryResult } from "react-query";
 
 const TroubleList = () => {
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(__loadTrouCardList(1));
-    return () => dispatch(clearTrou());
-
-  }, []);
-  const troubleList = useSelector((state) => state.trouble.list);
-
-
-  const fetchList = async (pageId = 1) => {
-    const res = await TroubleApi.troubleget(pageId);
-    return res;
-  };
-  const { data, hasNextPage, fetchNextPage } = useInfiniteQuery(
-    "cards",
-    ({ pageParam = 1 }) => fetchList(pageParam),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length + 1;
-        return nextPage ? nextPage : undefined;
-      },
-    }
-  );
-
-  useEffect(() => {
-    let fetching = false;
-    const onScroll = async (e) => {
-      const { scrollHeight, scrollTop, clientHeight } =
-        e.target.scrollingElement;
-
-      if (!fetching && scrollHeight - scrollTop <= clientHeight * 1.5) {
-        fetching = true;
-        if (hasNextPage) await fetchNextPage();
-        fetching = false;
-      }
-      console.log(fetching)
-    };
-    addEventListener("scroll", onScroll);
-    return () => {
-      removeEventListener("scroll", onScroll);
-    };
-  }, []);
-
-
 
 
   return (
