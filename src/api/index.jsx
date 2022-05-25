@@ -3,10 +3,7 @@ import { cookies } from "../shared/cookie";
 
 const env = process.env.NODE_ENV;
 
-const targetServer = "https://sparta-hm.site"
-  // env === "http://3.38.104.97/"
-  // https://walbu.shop
-//env설정하기
+const targetServer = process.env.SERVER_URL
 
 export const instance = axios.create({
   baseURL: targetServer,
@@ -74,26 +71,34 @@ instance.interceptors.response.use(
   },
 
   async (error) => {
+    console.log('token err');
     const { config, response } = error;
     const { status } = response;
     const originalReq = config; // 에러가 난 요청정보들
 
-    if (status === 401) {
+    if (status === 401 || status === 500) {
+      console.log('?', isTokenRefreshing);
       // 토큰이 없고,
       if (!isTokenRefreshing) {
         // 토큰 생성중이면, if 실행되지 않도록
         isTokenRefreshing = true; // false 일때는 true로 바꿔주고.
         const refreshToken = cookies.get("refreshToken"); // 리프레시 토큰을 쿠키에서 가져와서
 
+        console.log(refreshToken);
+
         const { data } = await axios.post(`${targetServer}token`, {
           refreshToken,
         });
 
+        console.log('data', data);
+
         const { accessToken: newAccessToken } = data;
         cookies.set("accessToken", newAccessToken, {
           path: "/",
-          maxAge: 1800, // 5분
+          maxAge: 604800, // 
         }); // 쿠키에 다시 저장
+
+        console.log('data', data);
 
         console.log("토큰 재생성 완료!"); // 토큰 생성이 완료되면
         isTokenRefreshing = false; // 토큰 생성중 상태를 fasle로 바꿔주고

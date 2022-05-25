@@ -56,6 +56,7 @@ const CrossWord = () => {
     const [selQuiz, setSelQuiz] = useState()
     const [writeAnswer, setWriteAnswer] = useState('')
     const [answerCheck, setAnswerCheck] = useState(true)
+    const [pass, setPass] = useState(0)
     const [giveup, setGiveup] = useState(false)
     const [gameover, setGameover] = useState(false)
 
@@ -139,7 +140,12 @@ const CrossWord = () => {
     }
 
     const GameGiveUp = () => {
-        setGiveup(true)
+        if (pass === 0 && testData.length === 0)
+            window.location.reload()
+        else {
+            setGiveup(true)
+            setGameover(true)
+        }
     }
 
     const CheckAnswer = () => {
@@ -151,6 +157,7 @@ const CrossWord = () => {
             let test = (testData.findIndex((v, i) => selQuiz.id === v.id))
             testData[test].pass = true
             setAnswerCheck(true)
+            setPass(pass + 1)
             setSelQuiz()
             if (AllCheck()) {
                 setGameover(true);
@@ -165,7 +172,8 @@ const CrossWord = () => {
     }
 
     useEffect(() => {
-        MainApi.testgame().then((res) => {
+        MainApi.crossgame().then((res) => {
+            console.log(res.data);
             setTestData(res.data)
         })
     }, [])
@@ -191,34 +199,48 @@ const CrossWord = () => {
                         {/* <GameInput2 style={{ position: 'absolute', right: '0px', bottom: '0px', zIndex: '3' }} /> */}
 
                         <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', width: '594px', minHeight: '755px', height: '100vh', right: '0px', background: '#111111' }}>
-                            <div style={{ display: 'flex', width: '494px', height: '23px', margin: '127px auto 0 auto', justifyContent: 'space-between' }}>
-                                <Questlabel>단어 설명</Questlabel>
-                                <QuestCnt>남은단어</QuestCnt>
-                            </div>
-                            <Questdesc>{selQuiz ? selQuiz.contents : `맞출 칸을 선택해 주세요`}</Questdesc>
-                            <AnswerDiv>
-                                {/* <AnswerCell
-                                id={AnswerLength++}
-                                ref={(ref)=> aref = ref}
-                                maxLength={1}
-                                onChange={AnswerPut}
-                            /> */}
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <AnswerInput
-                                        ref={inputRef}
-                                        value={writeAnswer}
-                                        onChange={(e) => setWriteAnswer(e.target.value)}
-                                        onKeyDown={(e) => onkeydown(e)}
-                                    />
-                                    <AnswerWrong>{!answerCheck ? <WrongMsg>{`다시한번 생각해보세요!`}</WrongMsg> : null}</AnswerWrong>
+                            {gameover ? null : <>
+                                <div style={{ display: 'flex', width: '494px', height: '23px', margin: '127px auto 0 auto', justifyContent: 'space-between' }}>
+                                    <Questlabel>단어 설명</Questlabel>
+                                    <QuestCnt>남은단어 : {testData.length - pass}</QuestCnt>
                                 </div>
-                            </AnswerDiv>
+                                <Questdesc>{selQuiz ? selQuiz.contents : `맞출 칸을 선택해 주세요`}</Questdesc>
+                                <AnswerDiv>
+                                    <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <AnswerInput
+                                            ref={inputRef}
+                                            value={writeAnswer}
+                                            onChange={(e) => setWriteAnswer(e.target.value)}
+                                            onKeyDown={(e) => onkeydown(e)}
+                                        />
+                                        <AnswerWrong>{!answerCheck ? <WrongMsg>{`다시한번 생각해보세요!`}</WrongMsg> : null}</AnswerWrong>
+                                    </div>
+                                </AnswerDiv>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', marginTop: '70px', alignItems: 'center', zIndex: '4' }}>
-                                <CheckBtn margin='0' onClick={CheckAnswer}>확인</CheckBtn>
-                                <GameOver onClick={GameGiveUp}><u>포기할래요</u></GameOver>
-                            </div>
-                            {/* <GameOVerDiv /> */}
+                                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '70px', alignItems: 'center', zIndex: '4' }}>
+                                    <CheckBtn margin='0' onClick={CheckAnswer}>확인</CheckBtn>
+                                    <GameOver onClick={GameGiveUp}><u>포기할래요</u></GameOver>
+                                </div>
+                            </>
+                            }
+
+                            {gameover ? <GameOverWrap>
+                                <div style={{ margin: '127px auto 0 auto' }}>
+                                    <GameoverMsg className='bounce-in-top'>{testData.length - pass === 0 ? `훌륭해요!` : `수고하셨어요`}</GameoverMsg>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <GameOVerDiv style={{ position: 'absolute', bottom: '0px' }} />
+                                    <div className='slit-in-horizontal' style={{ position: 'absolute', bottom: '138px', display: 'flex', justifyContent: 'center' }}>
+                                        <PassMiss>
+                                            <OverMsg><p>맞힌 단어 수</p><p>{pass}개</p></OverMsg>
+                                            <OverMsg style={{ color: testData.length - pass === 0 ? '#FFC438' : '#FF4E4E' }}><p>미완료 단어 수</p><p>{testData.length - pass}개</p></OverMsg>
+                                        </PassMiss>
+                                        <ReplayBtn onClick={() => window.location.reload()}>다시 도전</ReplayBtn>
+                                    </div>
+                                </div>
+                            </GameOverWrap>
+                                : null}
+
                         </div>
                     </QuestDiv>
                 </QuestContainer>
@@ -241,8 +263,8 @@ const GameBack = styled.div`
 
 const CellContainer = styled.div`
     position: absolute;
-    min-width: 624px;
-    width: 624px;
+    min-width: 630px;
+    width: 630px;
     height: 534.6px;
     gap: 8.61px;
     margin: 127px 126px 0 126px;
@@ -503,6 +525,148 @@ const GameOver = styled.p`
     text-align: center;
 
     color: #C0C4C9;
+
+    cursor: pointer;
+`
+
+const GameOverWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .bounce-in-top {
+        animation: bounce-in-top 1.1s both;
+    }
+
+    @keyframes bounce-in-top {
+        0% {
+            transform: translateY(-500px);
+            animation-timing-function: ease-in;
+            opacity: 0;
+        }
+        38% {
+            transform: translateY(0);
+            animation-timing-function: ease-out;
+            opacity: 1;
+        }
+        55% {
+            transform: translateY(-65px);
+            animation-timing-function: ease-in;
+        }
+        72% {
+            transform: translateY(0);
+            animation-timing-function: ease-out;
+        }
+        81% {
+            transform: translateY(-28px);
+            animation-timing-function: ease-in;
+        }
+        90% {
+            transform: translateY(0);
+            animation-timing-function: ease-out;
+        }
+        95% {
+            transform: translateY(-8px);
+            animation-timing-function: ease-in;
+        }
+        100% {
+            transform: translateY(0);
+            animation-timing-function: ease-out;
+        }
+    }
+
+    .slit-in-horizontal {
+        animation: slit-in-horizontal 0.8s ease-out both;
+    }
+
+    @keyframes slit-in-horizontal {
+        0% {
+            transform: translateZ(-800px) rotateX(90deg);
+            opacity: 0;
+        }
+        54% {
+            transform: translateZ(-160px) rotateX(87deg);
+            opacity: 1;
+        }
+        100% {
+            transform: translateZ(0) rotateX(0);
+        }
+    }
+`
+
+const GameoverMsg = styled.div`
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 64px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFFFF;
+`
+
+const PassMiss = styled.div`
+    box-sizing: border-box;
+    width: 494px;
+    height: 150px;
+    padding: 30px 26px;
+    margin-bottom: 154px;
+
+    background: #333333;
+    border: 1px solid #555555;
+    backdrop-filter: blur(15px);
+    /* Note: backdrop-filter has minimal browser support */
+
+    border-radius: 5px;
+`
+
+const OverMsg = styled.div`
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 18px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 36px;
+    /* identical to box height, or 150% */
+
+    letter-spacing: -0.05em;
+    
+    color: #FFFFFF;
+`
+
+const ReplayBtn = styled.div`
+    position: absolute;
+
+    width: 212px;
+    height: 52px;
+    bottom: 0px;
+    
+    background: #FF4E4E;
+    border-radius: 56.9524px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* White_#ffffff */
+
+    color: #FFFFFF;
 
     cursor: pointer;
 `

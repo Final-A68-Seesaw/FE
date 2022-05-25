@@ -12,6 +12,7 @@ import { ChatUrls } from '../shared/ChatApi'
 import { BsChevronDown } from 'react-icons/bs'
 import { FaRegDotCircle } from 'react-icons/fa'
 import { FiSend } from 'react-icons/fi'
+import { cookies } from '../shared/cookie';
 
 let stompClient = null
 
@@ -24,8 +25,8 @@ const Mainchat = (props) => {
   const messageRef = useRef();
   const modalref = useRef()
 
-  const Token = 'Bearer ' + (localStorage.getItem('accessToken'))
-  const userToken = jwtDecode(localStorage.getItem('accessToken'))
+  const Token = 'Bearer ' + cookies.get('accessToken')
+  const userToken = jwtDecode(cookies.get('accessToken'))
 
   const [userData, setUserData] = React.useState({
     nickname: userToken.NICKNAME,

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 //redux
 import { useDispatch, useSelector } from 'react-redux'
@@ -16,6 +17,7 @@ import Footer from '../components/Footer'
 import styled from 'styled-components'
 import Line from '../asset/Dictionary_list_line.svg'
 import { bold16, bold22, bold15, med15 } from '../themes/textStyle'
+import Result0 from '../asset/Result0.svg'
 
 
 const DictList = () => {
@@ -37,24 +39,37 @@ const DictList = () => {
         <div>
             <Header />
             <Container>
-                <MenuSelection>
+                {/* <MenuSelection>
                     <DictSelect>고민글</DictSelect>
                     <DictSelect>단어</DictSelect>
 
                 </MenuSelection>
-                <Line style={{ width: "74rem" }} />
-                <CardWholeBox>
-                    {dictSearchList?.map((v, i) => <DictionaryCard key={i} data={v} />)}
-                </CardWholeBox>
+                <Line style={{ width: "74rem", margin: '14px' }} /> */}
+
+                {dictSearchList ?
+                    <CardWholeBox>
+                        {dictSearchList?.map((v, i) => <DictionaryCard key={i} data={v} />)}
+                    </CardWholeBox>
+                    : <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '106px auto 0 auto' }} >
+                        <Result0 />
+                        <NoResultMsg>아직 등록된 정보가 없습니다!
+                            단어를 추가해주세요
+                        </NoResultMsg>
+                    </div>}
 
             </Container>
-            <Footer />
+            
+            <div style={{ width: '100%', position: dictSearchList?.length > 10 ? 'relative' : 'absolute', bottom: '0px' }}>
+                <Footer />
+            </div>
         </div>
     )
 }
 
 export default DictList
 const Container = styled.div`
+    display: flex;
+    flex-direction: column;
   margin: auto;
   max-width: 75rem;
   padding-top: 5rem;
@@ -81,6 +96,22 @@ flex-wrap: wrap;
 max-width: 75rem;
 margin-top: 2rem;
 
+`
+
+const NoResultMsg = styled.p`
+    width: 242px;
+    margin-top: 20.78px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 29px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #222222;
 `
 
 const CardImage = styled.div`

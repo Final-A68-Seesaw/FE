@@ -52,7 +52,13 @@ const RowCelldiv = styled.div`
     z-index: 5;
     
     ${(props) => props.pass ? `z-index: 15` : `cursor: pointer`};
-    ${(props) => props.sel ? `z-index: 10` : null};
+    ${(props) => props.sel ? 
+        `z-index: 10;
+        background-color: #e93131;
+        border: 5px solid #e93131;
+        border-radius: 10px;
+        margin: -5px 0 0 -5px;`
+     : null};
 `
 
 const ColCelldiv = styled.div`
@@ -62,7 +68,13 @@ const ColCelldiv = styled.div`
     z-index: 5;
 
     ${(props) => props.pass ? `z-index: 15` : `cursor: pointer`};
-    ${(props) => props.sel ? `z-index: 10` : null};
+    ${(props) => props.sel ? 
+        `z-index: 10;
+        background-color: #e93131;
+        border: 5px solid #e93131;
+        border-radius: 10px;
+        margin: -5px 0 0 -5px;`
+    : null};
 `
 
 const BlankDiv = styled.div`
@@ -70,8 +82,8 @@ const BlankDiv = styled.div`
     flex-direction: row;
     flex-wrap: wrap;
 
-    min-width: 624px;
-    width: 624px;
+    min-width: 630px;
+    width: 630px;
     height: 0px;
     gap: 8.61px;
 `

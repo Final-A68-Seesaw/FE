@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { FixedSizeList as List } from "react-window"
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -19,6 +21,10 @@ import Line from "../asset/Dictionary_list_line.svg";
 const DictList = () => {
   const dispatch = useDispatch();
 
+  const dictList = useSelector((state) => state.dictionary.list);
+
+  const [page, setPage] = useState(1)
+
   useEffect(() => {
     dispatch(__loadDictCardList(1));
 
@@ -26,17 +32,19 @@ const DictList = () => {
   }, []);
 
   // onscroll = (e) => {
-  //   console.log(window.scrollY);
+  //   console.log(e);
   // };
 
-  //스크랩 기능
-  const [scrap, setScrap] = useState(false);
-  const ChangeScrap = (postId) => {
-    setScrap(!scrap);
-    dispatch(__scrapDict(!scrap, postId));
-  };
+  const getData = () => {
+    let newPage = page + 1
+    if (dictList.length < 30) return
 
-  const dictList = useSelector((state) => state.dictionary.list);
+    dispatch(__loadDictCardList(newPage))
+
+    setPage(newPage)
+  }
+
+  // console.log(dictList);
 
   return (
     <>
@@ -47,12 +55,23 @@ const DictList = () => {
           <Newest>최신순</Newest>
         </MenuSelection>
         <Line style={{ width: "74.5rem" }} />
-        <CardWholeBox>
-          {dictList &&
+
+        <InfiniteScroll
+          dataLength={dictList.length}
+          next={getData}
+          hasMore={true}
+        >
+          <CardWholeBox>
+            {dictList &&
+              dictList.map((v, i) => {
+                return <DictionaryCard key={i} data={v} />;
+              })}
+          </CardWholeBox>
+        </InfiniteScroll>
+        {/* {dictList &&
             dictList.map((v, i) => {
               return <DictionaryCard key={i} data={v} />;
-            })}
-        </CardWholeBox>
+            })} */}
       </Container>
       <Footer />
     </>

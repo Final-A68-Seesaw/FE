@@ -139,7 +139,7 @@ export const __updateDictDetail = (data, postId) => {
         { type: "application/json" }
       )
     );
-    
+
     if (data.files.newimagelist !== 0) {
       data.files.newimagelist.map((e) => {
         return formData.append("files", e);
@@ -221,8 +221,11 @@ export default handleActions(
   {
     [GET_DICT]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload.splice(0, 10));
-        draft.list = action.payload.splice(0, 30);
+        // console.log(action.payload);
+        if (draft.list.length === 0)
+          draft.list = action.payload
+        else
+          draft.list.push(...action.payload)
       }),
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
@@ -235,8 +238,8 @@ export default handleActions(
         console.log(action.payload);
         draft.data.unshift(action.payload.data);
       }),
-      
-      
+
+
     [SET_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.files.push(action.payload.files);
@@ -252,6 +255,7 @@ export default handleActions(
     [SCRAP_DICT]: (state, action) =>
       produce(state, (draft) => {
         console.log(state);
+        console.log(action.payload);
         if (draft.list.length === 0)
           draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus
         else {
@@ -272,7 +276,7 @@ export default handleActions(
             0,
             4
           );
-          console.log(state.detailData)
+        console.log(state.detailData)
 
         draft.detailData.commentCount = action.payload.commentCount;
       }),

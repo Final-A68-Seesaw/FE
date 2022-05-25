@@ -21,11 +21,8 @@ import GameCard from '../asset/GameCard.svg'
 import { MainApi } from '../api/mainApi';
 import isLogin from '../auth/isLogin';
 import { history } from '../redux/configStore';
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-import { Swiper, SwiperSlide } from "swiper/react";
 
 const Main = () => {
-  const [swiperRef, setSwiperRef] = useState(null);
   const [showModal, setShowModal] = useState(false)
 
   const [getRand, setGetRand] = useState([])
@@ -67,24 +64,31 @@ const Main = () => {
   }
 
   React.useEffect(() => {
-    MainApi.mainGetRecent().then((res) => {
-      console.log(res.data);
+    MainApi.mainGetBest().then((res) => {
+      // console.log('16', res.data)
       setGetRecent(res.data)
     })
-    MainApi.mainGetRand().then((res) => setGetRand(res.data))
-    MainApi.mainGetBest().then((res) => {
+    MainApi.mainGetRand().then((res) => {
+      // console.log('2', res.data)
+      setGetRand(res.data)
+    })
+    MainApi.mainGetRecent().then((res) => {
+      // console.log('9', res.data)
       setGetBest(res.data)
       setSelectBest(res.data[0])
     })
   }, [])
+
+  // console.log(window.pageYOffset);
+  // console.log('ttt', document.getElementsByClassName('shake-vertical')[0]?.getBoundingClientRect().top);
 
   return (
     <MainWrap>
       <Header />
       <MainTop>
         <div style={{ display: 'flex', position: 'absolute', width: '286px', height: '176.97px', gap: '14.4px', left: '7%', top: '60%', }}>
-          <G1 />
-          <G2 />
+          <G1 className='wobble-hor-bottom' />
+          <G2 className='wobble-hor-bottom' />
         </div>
         <Y1 className='shake-vertical' style={{ position: 'absolute', width: '140.42px', height: '175.92px', left: '85%', top: '36%', }} />
         <Y2 className='shake-vertical' style={{ position: 'absolute', width: '140.98px', height: '192.8px', left: '70%', top: '90%', }} />
@@ -133,7 +137,7 @@ const Main = () => {
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px', gap: '10px' }}>
 
           {getRand && getRand.map((v, i) => {
-            return <TestCard key={i} >
+            return <TestCard key={i} onClick={() => history.push('/gamemain')}>
               {/* <img src={v.postImage} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} /> */}
               <div style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} >
                 <GameCard style={{ width: '682px', height: '435px' }} />
@@ -164,7 +168,7 @@ const Main = () => {
         <RecentTitle>👍 최신 등록 신조어를 배워보세요</RecentTitle>
         <RecentCards>
 
-          {/* {getBest && getBest.map((v, i) => {
+          {getBest && getBest.map((v, i) => {
             return <RecentCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
               <GenBox>{v.generation}</GenBox>
               <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0', height: '168px' }} />
@@ -177,47 +181,19 @@ const Main = () => {
                 </div>
               </div>
             </RecentCard>
-          })} */}
+          })}
 
-          {/* <div ref={RecentScrollRef}></div>
-          {console.log('wid', window.innerWidth)} */}
-
-          {/* <div style={{ display: 'flex', alignItems: 'center' }}>
-            <RightBtn>
-              <BsChevronRight onClick={() => {
-                RecentScrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
-              }} style={{ fontSize: '30px' }} />
-            </RightBtn>
-          </div> */}
-
-          <Swiper
-            onSwiper={setSwiperRef}
-            slidesPerView={3}
-            centeredSlides={true}
-            spaceBetween={30}
-            navigation={true}
-            modules={[Navigation]}
-            className="mySwiper"
-          >
-            <div style={{ display: 'flex' }}>
-              {getBest && getBest.map((v, i) => {
-                return <RecentCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
-                  <GenBox>{v.generation}</GenBox>
-                  <img src={v.postImages} style={{ borderRadius: '10px', margin: '10px 0', height: '168px' }} />
-                  <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <RecentCardTitle>{v.title}</RecentCardTitle>
-                    <RecentCardDesc>{v.contents}</RecentCardDesc>
-                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <RecentCardView>조회수 {v.views}</RecentCardView>
-                      <RecentCardScrap>스크랩 {v.scrapCount}</RecentCardScrap>
-                    </div>
-                  </div>
-                </RecentCard>
-              })}
-            </div>
-          </Swiper>
+          <div ref={RecentScrollRef}></div>
 
         </RecentCards>
+
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <RightBtn>
+            <BsChevronRight onClick={() => {
+              RecentScrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
+            }} style={{ fontSize: '30px' }} />
+          </RightBtn>
+        </div>
       </RecentWrap>
 
       <Footer />
@@ -284,6 +260,24 @@ const MainTop = styled.div`
     80% { transform: translateY(6.4px); }
     90% { transform: translateY(-6.4px); }
   }
+
+  .wobble-hor-bottom {
+    animation: wobble-hor-bottom 0.8s both;
+  }
+
+  @keyframes wobble-hor-bottom {
+    0%,
+    100% {
+      transform: translateX(0%);
+      transform-origin: 50% 50%;
+    }
+    15% { transform: translateX(-30px) rotate(-6deg); }
+    30% { transform: translateX(15px) rotate(6deg); }
+    45% { transform: translateX(-15px) rotate(-3.6deg); }
+    60% { transform: translateX(9px) rotate(2.4deg); }
+    75% { transform: translateX(-6px) rotate(-1.2deg); }
+  }
+
 `
 
 const MainText = styled.p`
@@ -665,7 +659,7 @@ const RecentCardView = styled.p`
 `
 
 const RecentCardScrap = styled.p`
-  width: 82px;
+  /* width: 82px; */
   height: 14px;
 
   font-family: 'Noto Sans KR';
@@ -681,7 +675,7 @@ const RightBtn = styled.div`
   position: absolute;
   width: 70px;
   height: 70px;
-  right: 3%;
+  margin: 0 0 350px 1350px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -748,4 +742,32 @@ const ChatBtn = styled.div`
     order: 1;
     flex-grow: 0;
   }
+`
+
+const FeedBackBtn = styled.div`
+  box-sizing: border-box;
+
+  /* Auto layout */
+
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 20px;
+  gap: 6px;
+
+  position: absolute;
+  width: 161px;
+  height: 58px;
+  left: 1244px;
+  top: 607px;
+
+  /* Secondary_purple_#8E41FF */
+
+  background: #8E41FF;
+  border: 1.4px solid #EEEEEE;
+  backdrop-filter: blur(60px);
+  /* Note: backdrop-filter has minimal browser support */
+
+  border-radius: 259.276px;
 `

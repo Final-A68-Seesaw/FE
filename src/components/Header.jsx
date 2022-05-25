@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import isLogin from "../auth/isLogin";
+import { throttle } from 'lodash'
 
 //redux
 import { history } from "../redux/configStore";
@@ -13,7 +14,7 @@ import Character from "./Character";
 import { bold15, bold16, med14, med19 } from "../themes/textStyle";
 
 //style
-import styled, {css} from "styled-components";
+import styled, { css } from "styled-components";
 import HeaderIcon from "../asset/HeaderIcon.svg";
 import { GoSearch } from "react-icons/go";
 import DropdownBtn from "../asset/HeaderDropdownBtn.svg";
@@ -42,11 +43,11 @@ const Header = (props) => {
   };
 
   const Searching = () => {
-    if(headInput === '')
+    if (headInput === '')
       alert('검색할 단어를 입력해주세요 !')
     else
       history.push(`/searchresult/${headInput}`);
-      
+
     setHeadInput("");
   }
 
@@ -55,7 +56,7 @@ const Header = (props) => {
   }, []);
 
   return (
-    <Head>
+    <Head >
       {/* {showModal ?
                 <ModalContainer className='slide-in-left'>
                     <div>메뉴</div>
@@ -66,37 +67,37 @@ const Header = (props) => {
           <HeaderIcon
             className="jello-horizontal"
             onClick={() => history.push("/main")}
-            style={{ margin:'0 10px', cursor: "pointer" }}
+            style={{ margin: '0 10px', cursor: "pointer" }}
           />
           {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
 
-            <div style={{ display: "flex", margin: "0 0.1rem" }}>
-              <HeaderMenu
-                className="jello-horizontal"
-                pathname = {location.pathname === "/dictionary"}
-                onClick={() => {history.push("/dictionary")}}
-              >
-                사전장
-              </HeaderMenu>
-            </div>
-            <div style={{ display: "flex", margin: "0 0.1rem" }}>
+          <div style={{ display: "flex", margin: "0 0.1rem" }}>
             <HeaderMenu
-                className="jello-horizontal"
-                pathname = {location.pathname === "/trouble"}
-                onClick={() => {history.push("/trouble")}}
-              >
-                질문장
-              </HeaderMenu>
-            </div>
-            <div style={{ display: "flex", margin: "0 0.1rem" }}>
-              <HeaderMenu
-                className="jello-horizontal"
-                pathname = {location.pathname === "/gamemain"}
-                onClick={() => {history.push("/gamemain")}}
-              >
-                게임장
-              </HeaderMenu>
-            </div>
+              className="jello-horizontal"
+              pathname={location.pathname === "/dictionary"}
+              onClick={() => { history.push("/dictionary") }}
+            >
+              사전장
+            </HeaderMenu>
+          </div>
+          <div style={{ display: "flex", margin: "0 0.1rem" }}>
+            <HeaderMenu
+              className="jello-horizontal"
+              pathname={location.pathname === "/trouble"}
+              onClick={() => { history.push("/trouble") }}
+            >
+              질문장
+            </HeaderMenu>
+          </div>
+          <div style={{ display: "flex", margin: "0 0.1rem" }}>
+            <HeaderMenu
+              className="jello-horizontal"
+              pathname={location.pathname === "/gamemain"}
+              onClick={() => { history.push("/gamemain") }}
+            >
+              게임장
+            </HeaderMenu>
+          </div>
         </div>
 
         {
@@ -276,7 +277,7 @@ const HeaderMenu = styled.p`
   align-items: center;
   text-align: center;
   /* margin-right: 30px; */
- color: ${(props)=>(props.pathname ? "var(--yellow)" : "white")} !important;
+ color: ${(props) => (props.pathname ? "var(--yellow)" : "white")} !important;
   cursor: pointer;
 `;
 

@@ -7,7 +7,7 @@ import { history } from '../redux/configStore'
 const StartPage = () => {
     return (
         <div style={{ background: '#8E41FF', width: '100vw', height: '100vh' }}>
-            <TitleText>우리들의 플레이드라운드</TitleText>
+            <TitleText>우리들의 플레이그라운드</TitleText>
             <SubTitle>세대별 신조어도 배우고 내 고민 해결책을 세대별로 얻어보세요.</SubTitle>
             <StartBtn onClick={() => history.push('/login')}>놀러 가기</StartBtn>
             <Starting style={{ minWidth: '100vw', maxHeight: '99vh' }} />
@@ -19,7 +19,7 @@ export default StartPage
 
 const TitleText = styled.p`
     position: absolute;
-    width: 362px;
+    width: 380px;
     height: 142px;
     left: 106px;
     top: 247px;
