@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import isLogin from "../auth/isLogin";
 import { throttle } from 'lodash'
@@ -28,6 +28,8 @@ const Header = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [headInput, setHeadInput] = useState("");
 
+  const ModRef = useRef()
+
   // onscroll = (e) => {
   //   setScrolly(scrollY);
   // };
@@ -52,108 +54,136 @@ const Header = (props) => {
     setHeadInput("");
   }
 
+  const ModalOut = () => {
+    setTimeout(() => {
+      setShowModal(false)
+    }, 800)
+
+    ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
+  }
+
   useEffect(() => {
     dispatch(__loadMypage());
   }, []);
 
   return (
-    <Head >
-      {/* {showModal ?
-                <ModalContainer className='slide-in-left'>
-                    <div>메뉴</div>
-                </ModalContainer> : null} */}
-
-      <HeadInner>
-        <div style={{ display: "flex" }}>
-          <HeaderIcon
-            className="jello-horizontal"
-            onClick={() => history.push("/main")}
-            style={{ cursor: "pointer", marginRight:"1.5rem" }}
-          />
-          {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
-
-          <div style={{ display: "flex", margin: "0 0.1rem" }}>
-            <HeaderMenu
-              className="jello-horizontal"
-              pathname={location.pathname === "/dictionary"}
-              onClick={() => { history.push("/dictionary") }}
-            >
-              사전장
-            </HeaderMenu>
-          </div>
-          <div style={{ display: "flex", margin: "0 0.1rem" }}>
-            <HeaderMenu
-              className="jello-horizontal"
-              pathname={location.pathname === "/trouble"}
-              onClick={() => { history.push("/trouble") }}
-            >
-              질문장
-            </HeaderMenu>
-          </div>
-          <div style={{ display: "flex", margin: "0 0.1rem" }}>
-            <HeaderMenu
-              className="jello-horizontal"
-              pathname={location.pathname === "/gamemain"}
-              onClick={() => { history.push("/gamemain") }}
-            >
-              게임장
-            </HeaderMenu>
-          </div>
-        </div>
-
-        {
-          <SearchDiv>
-            <SearchInput
-              placeholder="검색어를 입력해주세요"
-              value={headInput}
-              onChange={(e) => setHeadInput(e.target.value)}
-              onKeyDown={HeadSearch}
-            />
-            <GoSearch onClick={Searching} style={{ margin: "0 0 0 -1.5rem", color: "#FAFAFA" }} />
-          </SearchDiv>
-        }
-
-        {!isLogin() ? (
+    <HeadWrap>
+      <Head >
+        <HeadInner onMouseOver={() => setShowModal(true)}>
           <div style={{ display: "flex" }}>
-            <WriteDicBtn onClick={() => history.push("/login")}>
-              <p>로그인</p>
-            </WriteDicBtn>
-            <WriteDicBtn onClick={() => history.push("/signup")}>
-              <p>회원가입</p>
-            </WriteDicBtn>
-          </div>
-        ) : (
-          <RightGroup>
-            <WordAddBtn
+            <HeaderIcon
               className="jello-horizontal"
-              onClick={() => history.push("/dictionary/add")}
-            >
-              단어 등재하기
-            </WordAddBtn>
+              onClick={() => history.push("/main")}
+              style={{ cursor: "pointer", marginRight: "1.5rem" }}
+            />
 
-            <TroubleAddBtn
-              className="jello-horizontal"
-              onClick={() => history.push("/trouble/add")}
-            >
-              고민 상담하기
-            </TroubleAddBtn>
-            <MyInfo className="jello-horizontal">
-              <Character char={mypageInfo.profileImages} />
-              <MyNickname onClick={() => history.push("/mypage/scrap")}>
-                {mypageInfo.nickname}
-                <div style={{ margin: "0.2rem 0 0 0.5rem" }}>
-                  <DropdownBtn />
-                </div>
-              </MyNickname>
-            </MyInfo>
-          </RightGroup>
-        )}
-      </HeadInner>
-    </Head>
+            <div style={{ display: "flex", margin: "0 0.1rem" }}>
+              <HeaderMenu
+                className="jello-horizontal"
+                pathname={location.pathname === "/dictionary"}
+                onClick={() => { history.push("/dictionary") }}
+              >
+                사전장
+              </HeaderMenu>
+            </div>
+            <div style={{ display: "flex", margin: "0 0.1rem" }}>
+              <HeaderMenu
+                className="jello-horizontal"
+                pathname={location.pathname === "/trouble"}
+                onClick={() => { history.push("/trouble") }}
+              >
+                질문장
+              </HeaderMenu>
+            </div>
+            <div style={{ display: "flex", margin: "0 0.1rem" }}>
+              <HeaderMenu
+                className="jello-horizontal"
+                pathname={location.pathname === "/gamemain"}
+                onClick={() => { history.push("/gamemain") }}
+              >
+                게임장
+              </HeaderMenu>
+            </div>
+          </div>
+
+          {
+            <SearchDiv>
+              <SearchInput
+                placeholder="검색어를 입력해주세요"
+                value={headInput}
+                onChange={(e) => setHeadInput(e.target.value)}
+                onKeyDown={HeadSearch}
+              />
+              <GoSearch onClick={Searching} style={{ margin: "0 0 0 -1.5rem", color: "#FAFAFA" }} />
+            </SearchDiv>
+          }
+
+          {!isLogin() ? (
+            <div style={{ display: "flex" }}>
+              <WriteDicBtn onClick={() => history.push("/login")}>
+                <p>로그인</p>
+              </WriteDicBtn>
+              <WriteDicBtn onClick={() => history.push("/signup")}>
+                <p>회원가입</p>
+              </WriteDicBtn>
+            </div>
+          ) : (
+            <RightGroup>
+              <WordAddBtn
+                className="jello-horizontal"
+                onClick={() => history.push("/dictionary/add")}
+              >
+                단어 등재하기
+              </WordAddBtn>
+
+              <TroubleAddBtn
+                className="jello-horizontal"
+                onClick={() => history.push("/trouble/add")}
+              >
+                고민 상담하기
+              </TroubleAddBtn>
+              <MyInfo className="jello-horizontal">
+                <Character char={mypageInfo.profileImages} />
+                <MyNickname onClick={() => history.push("/mypage/scrap")}>
+                  {mypageInfo.nickname}
+                  <div style={{ margin: "0.2rem 0 0 0.5rem" }}>
+                    <DropdownBtn />
+                  </div>
+                </MyNickname>
+              </MyInfo>
+            </RightGroup>
+          )}
+        </HeadInner>
+
+
+      </Head>
+
+      {showModal ?
+        <ModalContainer ref={ModRef} className="slide-in-top slide-out-top" onMouseLeave={ModalOut}></ModalContainer>
+        : null}
+    </HeadWrap>
   );
 };
 
 export default Header;
+
+const HeadWrap = styled.div`
+  
+  .slide-in-top {
+    animation: slide-in-top 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+  }
+
+  @keyframes slide-in-top {
+    0% {
+      transform: translateY(-1000px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+`
 
 const Head = styled.div`
   position: fixed;
@@ -194,42 +224,14 @@ const Head = styled.div`
       transform: scale3d(1, 1, 1);
     }
   }
-
-  .slide-in-left {
-    animation: slide-in-left 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  }
-
-  @keyframes slide-in-left {
-    0% {
-      transform: translateX(-1000px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-  }
-
-  .slide-out-left {
-    animation: slide-out-left 0.5s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
-  }
-
-  @keyframes slide-out-left {
-    0% {
-      transform: translateX(0);
-      opacity: 1;
-    }
-    100% {
-      transform: translateX(-1000px);
-      opacity: 0;
-    }
-  }
+  
 `;
 
 const HeadInner = styled.div`
   max-width: 80rem;
   height: 74px;
   margin: auto;
+  z-index: 90;
 
   display: flex;
   align-items: center;
@@ -284,16 +286,30 @@ const HeaderMenu = styled.p`
 
 const ModalContainer = styled.div`
   position: fixed;
-  left: 10px;
-  top: 110px;
-  /* transform: translate(-50%, -50%); */
-  max-height: 80%;
-  width: 20rem;
-  height: 80%;
-  padding: 16px;
-  background: rgba(200, 200, 200, 0.8);
-  border-radius: 10px;
-  text-align: center;
+  width: 100%;
+  height: 107px;
+  left: 0px;
+  top: 74px;
+  z-index: 80;
+
+  background: #444444;
+  border-radius: 0px 0px 15px 15px;
+
+  .slide-out-top {
+    animation: slide-out-top 0.8s ease-in-out both;
+  }
+  
+  @keyframes slide-out-top {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-1000px);
+      opacity: 0;
+    }
+  }
+
 `;
 
 const SearchDiv = styled.div`

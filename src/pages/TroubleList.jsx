@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import InfiniteScroll from 'react-infinite-scroll-component'
 
 //redux
 import { clearTrou, __loadTrouCardList } from "../redux/modules/touble";
@@ -18,6 +19,20 @@ import { TroubleApi } from "../api/troubleApi";
 
 const TroubleList = () => {
 
+  const TroubleList = useSelector((state) => state.trouble.list)
+
+  console.log(TroubleList);
+
+  const dispatch = useDispatch()
+
+  const getData = () => {
+    let newPage = page + 1
+    if (TroubleList.length < 30) return
+
+    dispatch(__loadDictCardList(newPage))
+
+    setPage(newPage)
+  }
 
   return (
     <>
@@ -28,7 +43,22 @@ const TroubleList = () => {
           <Newest>최신순</Newest>
         </MenuSelection>
         <Line style={{ width: "74.5rem" }} />
+
+        <InfiniteScroll
+          dataLength={TroubleList.length}
+          next={getData}
+          hasMore={true}
+        >
+          <CardWholeBox>
+            {TroubleList &&
+              TroubleList.map((v, i) => {
+                return <DictionaryCard key={i} data={v} />;
+              })}
+          </CardWholeBox>
+        </InfiniteScroll>
+
         <CardWholeBox>
+
           {/* {data.pages.map((page)=>
           page.data.map((v,i) =>{
             return<TroubleCard key={i} data={v}/>;
