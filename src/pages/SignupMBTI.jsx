@@ -55,7 +55,7 @@ const SignupMBTI = () => {
 
   const changeRadio = (e) => {
     if(userData.code)
-    setMbti({ ...Mbti, [e.target.name]: e.target.value, id: userData.code });
+    setMbti({ ...Mbti, [e.target.name]: e.target.value, id: userData.id });
    else
     setMbti({ ...Mbti, [e.target.name]: e.target.value })
   };
@@ -64,7 +64,7 @@ const onSubmit = async () => {
   try {
     const user = await userApi.mbti(Mbti);
     dispatch(
-      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data})
+      userActions.userSave({ ...userData, ...Mbti, kakaoId: userData.id, mbtiRes: user.data})
     );
     history.push("/signup/making/character");
   } catch (e) {
