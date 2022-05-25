@@ -39,14 +39,17 @@ const MyPageTop = () => {
     <>
       <Container>
         <UserInfos>
-          <div style={{ margin: '0 14px 0 -14px' }}>
+        <UserInfo>
+          <BigCharBox>
             <Character char={dataList && dataList.profileImages} size="9rem" />
-          </div>
-          <UserInfo>
+            </BigCharBox>
+         
             <UserNick>{dataList && dataList.nickname}</UserNick>
             <UserEmail>{dataList && dataList.username}</UserEmail>
           </UserInfo>
-        </UserInfos>
+          </UserInfos>
+
+
         <form onSubmit={handleSubmit(onSubmit)}>
           <ButtonsBox>
             <div>
@@ -112,7 +115,7 @@ const Container = styled.div`
 const UserInfos = styled.div`
   justify-content: center;
   display: flex;
-  margin-left: 0.5rem;
+  margin: auto;
 `;
 
 const UserInfo = styled.div`
@@ -120,7 +123,7 @@ const UserInfo = styled.div`
 `;
 const UserNick = styled.div`
   ${bold22}
-  margin-top: 10rem;
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
 `;
 const UserEmail = styled.div`
@@ -166,4 +169,9 @@ const MyWriting = styled.div`
 const HrLine = styled.hr`
   margin-bottom: 2rem;
   margin-top: 0;
+`;
+const BigCharBox = styled.div`
+  display: flex;
+  width: 9rem;
+  height: 9rem;
 `;

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import isLogin from "../auth/isLogin";
-import { throttle } from 'lodash'
+import { throttle } from "lodash";
 
 //redux
 import { history } from "../redux/configStore";
@@ -11,7 +11,7 @@ import { userActions } from "../redux/modules/user";
 
 //element & component
 import Character from "./Character";
-import { bold15, bold16, med14, med19 } from "../themes/textStyle";
+import { bold15, bold16, med14, med16, med19 } from "../themes/textStyle";
 
 //style
 import styled, { css } from "styled-components";
@@ -28,7 +28,7 @@ const Header = (props) => {
   const [showModal, setShowModal] = useState(false);
   const [headInput, setHeadInput] = useState("");
 
-  const ModRef = useRef()
+  const ModRef = useRef();
 
   // onscroll = (e) => {
   //   setScrolly(scrollY);
@@ -41,26 +41,24 @@ const Header = (props) => {
   //검색 기능
   const HeadSearch = (e) => {
     if (e.key === "Enter") {
-      Searching()
+      Searching();
     }
   };
 
   const Searching = () => {
-    if (headInput === '')
-      alert('검색할 단어를 입력해주세요 !')
-    else
-      history.push(`/searchresult/${headInput}`);
+    if (headInput === "") alert("검색할 단어를 입력해주세요 !");
+    else history.push(`/searchresult/${headInput}`);
 
     setHeadInput("");
-  }
+  };
 
   const ModalOut = () => {
     setTimeout(() => {
-      setShowModal(false)
-    }, 800)
+      setShowModal(false);
+    }, 800);
 
-    ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
-  }
+    ModRef.current.style.animation = "slide-out-top 0.8s ease-in-out both";
+  };
 
   useEffect(() => {
     dispatch(__loadMypage());
@@ -68,7 +66,7 @@ const Header = (props) => {
 
   return (
     <HeadWrap>
-      <Head >
+      <Head>
         <HeadInner onMouseOver={() => setShowModal(true)}>
           <div style={{ display: "flex" }}>
             <HeaderIcon
@@ -78,31 +76,74 @@ const Header = (props) => {
             />
 
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
-              <HeaderMenu
-                className="jello-horizontal"
-                pathname={location.pathname === "/dictionary"}
-                onClick={() => { history.push("/dictionary") }}
-              >
+              <HeaderMenu>
                 사전장
+                {showModal ? (
+                  <ModalContainer
+                    ref={ModRef}
+                    className="slide-in-top slide-out-top"
+                    onMouseLeave={ModalOut}
+                  >
+                    <DictMenu
+                      pathname={location.pathname === "/dictionary"}
+                      onClick={() => {
+                        history.push("/dictionary");
+                      }}
+                    >
+                      신조어 사전 둘러보기
+                    </DictMenu>
+                    <DictMenu
+                      pathname={location.pathname === "/dictionary/add"}
+                      onClick={() => {
+                        history.push("/dictionary/add");
+                      }}
+                    >
+                      신조어 단어 추가하기
+                    </DictMenu>
+                  </ModalContainer>
+                ) : null}
               </HeaderMenu>
             </div>
+
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
-              <HeaderMenu
-                className="jello-horizontal"
-                pathname={location.pathname === "/trouble"}
-                onClick={() => { history.push("/trouble") }}
-              >
+              <HeaderMenu>
                 질문장
+                {showModal ? (
+                  <ModalContainer
+                    ref={ModRef}
+                    className="slide-in-top slide-out-top"
+                    onMouseLeave={ModalOut}
+                  >
+                    <TroubleMenu
+                      pathname={location.pathname === "/trouble"}
+                      onClick={() => {
+                        history.push("/trouble");
+                      }}
+                    >
+                      고민상담 둘러보기
+                    </TroubleMenu>
+                    <TroubleMenu
+                      pathname={location.pathname === "/trouble/add"}
+                      onClick={() => {
+                        history.push("/trouble/add");
+                      }}
+                    >
+                      고민상담 추가하기
+                    </TroubleMenu>
+                  </ModalContainer>
+                ) : null}
               </HeaderMenu>
             </div>
+
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
-              <HeaderMenu
-                className="jello-horizontal"
+              <GameMenu
                 pathname={location.pathname === "/gamemain"}
-                onClick={() => { history.push("/gamemain") }}
+                onClick={() => {
+                  history.push("/gamemain");
+                }}
               >
                 게임장
-              </HeaderMenu>
+              </GameMenu>
             </div>
           </div>
 
@@ -114,7 +155,10 @@ const Header = (props) => {
                 onChange={(e) => setHeadInput(e.target.value)}
                 onKeyDown={HeadSearch}
               />
-              <GoSearch onClick={Searching} style={{ margin: "0 0 0 -1.5rem", color: "#FAFAFA" }} />
+              <GoSearch
+                onClick={Searching}
+                style={{ margin: "0 0 0 -1.5rem", color: "#FAFAFA" }}
+              />
             </SearchDiv>
           }
 
@@ -127,40 +171,54 @@ const Header = (props) => {
                 <p>회원가입</p>
               </WriteDicBtn>
             </div>
-          ) : (
-            <RightGroup>
+          ) : null}
+          
+          <RightGroup>
               <WordAddBtn
                 className="jello-horizontal"
-                onClick={() => history.push("/dictionary/add")}
+                onClick={() => {}}
               >
-                단어 등재하기
+                피드백 참여하기
               </WordAddBtn>
-
-              <TroubleAddBtn
-                className="jello-horizontal"
-                onClick={() => history.push("/trouble/add")}
-              >
-                고민 상담하기
-              </TroubleAddBtn>
-              <MyInfo className="jello-horizontal">
-                <Character char={mypageInfo.profileImages} />
-                <MyNickname onClick={() => history.push("/mypage/scrap")}>
+              
+            <HeaderMenu>
+            <MyInfo >
+              <ProfileDiv>
+            <Character char={mypageInfo.profileImages} />
+            </ProfileDiv>
+                <MyNickname >
                   {mypageInfo.nickname}
                   <div style={{ margin: "0.2rem 0 0 0.5rem" }}>
                     <DropdownBtn />
                   </div>
                 </MyNickname>
               </MyInfo>
+              {showModal ? (
+                <ModalContainer
+                  ref={ModRef}
+                  className="slide-in-top slide-out-top"
+                  onMouseLeave={ModalOut}
+                >
+                  <MypageMenu
+                    pathname={location.pathname === "/mypage/scrap"}
+                    onClick={() => history.push("/mypage/scrap")}
+                  >
+                    마이페이지
+                  </MypageMenu>
+                  <MypageMenu
+                    pathname={location.pathname === "/about"}
+                    onClick={() => {
+                      history.push("/about");
+                    }}
+                  >
+                    제작자 소개
+                  </MypageMenu>
+                </ModalContainer>
+              ) : null}
+            </HeaderMenu>
             </RightGroup>
-          )}
         </HeadInner>
-
-
       </Head>
-
-      {showModal ?
-        <ModalContainer ref={ModRef} className="slide-in-top slide-out-top" onMouseLeave={ModalOut}></ModalContainer>
-        : null}
     </HeadWrap>
   );
 };
@@ -168,9 +226,8 @@ const Header = (props) => {
 export default Header;
 
 const HeadWrap = styled.div`
-  
   .slide-in-top {
-    animation: slide-in-top 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-in-top 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 
   @keyframes slide-in-top {
@@ -183,7 +240,7 @@ const HeadWrap = styled.div`
       opacity: 1;
     }
   }
-`
+`;
 
 const Head = styled.div`
   position: fixed;
@@ -224,7 +281,6 @@ const Head = styled.div`
       transform: scale3d(1, 1, 1);
     }
   }
-  
 `;
 
 const HeadInner = styled.div`
@@ -252,7 +308,7 @@ const WordAddBtn = styled.div`
   border: 0.1rem solid rgba(255, 255, 255, 0.2);
   border-radius: 2rem;
 
-cursor: pointer;
+  cursor: pointer;
 `;
 
 const TroubleAddBtn = styled.div`
@@ -268,28 +324,41 @@ const TroubleAddBtn = styled.div`
   background: #333333;
   border: 0.1rem solid rgba(255, 196, 56, 0.3);
   border-radius: 2rem;
-
   cursor: pointer;
 `;
 
-const HeaderMenu = styled.p`
+const GameMenu = styled.div`
   margin-right: 1.5rem;
   ${med19}
   line-height: 1.75rem;
   display: flex;
   align-items: center;
   text-align: center;
+  color: white !important;
+  color: ${(props) => (props.pathname ? "var(--yellow)" : "white")};
+
   /* margin-right: 30px; */
- color: ${(props) => (props.pathname ? "var(--yellow)" : "white")} !important;
+  cursor: pointer;
+`
+const HeaderMenu = styled.div`
+  margin-right: 1.5rem;
+  ${med19}
+  line-height: 1.75rem;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: white !important;
+
+  /* margin-right: 30px; */
   cursor: pointer;
 `;
 
 const ModalContainer = styled.div`
   position: fixed;
-  width: 100%;
+  width: 80rem;
   height: 107px;
-  left: 0px;
-  top: 74px;
+  left: ${(props) => (props.left ? "props.left" : "200px")} !important;
+  top: 72px;
   z-index: 80;
 
   background: #444444;
@@ -298,7 +367,7 @@ const ModalContainer = styled.div`
   .slide-out-top {
     animation: slide-out-top 0.8s ease-in-out both;
   }
-  
+
   @keyframes slide-out-top {
     0% {
       transform: translateY(0);
@@ -309,7 +378,6 @@ const ModalContainer = styled.div`
       opacity: 0;
     }
   }
-
 `;
 
 const SearchDiv = styled.div`
@@ -363,12 +431,12 @@ const WriteDicBtn = styled.div`
 `;
 const MyInfo = styled.div`
   height: 2rem;
-
+display: flex;
   cursor: pointer;
 `;
 const MyNickname = styled.div`
-  ${med14}
-  margin: 0.5rem 0.5rem 0 2.5rem;
+  ${med16}
+  margin: 0 0.5rem 0 0rem;
   display: flex;
   align-items: center;
   color: #ffffff;
@@ -378,15 +446,30 @@ const RightGroup = styled.div`
   justify-content: space-between;
   align-items: center;
 `;
+
+const DictMenu = styled.div`
+  ${bold16}
+  margin: 0.5rem 0 0 8rem;
+  text-align: left;
+  color: ${(props) => (props.pathname ? "var(--yellow)" : "white")};
+`;
+const TroubleMenu = styled.div`
+ ${bold16}
+  margin: 0.5rem 0 0 12rem;
+  text-align: left;
+  color: ${(props) => (props.pathname ? "var(--yellow)" : "white")};
+`
+const MypageMenu = styled.div`
+ ${bold16}
+  margin: 0.5rem 2rem 0 0;
+  text-align: right;
+  color: ${(props) => (props.pathname ? "var(--yellow)" : "white")};
+
+`
 const ProfileDiv = styled.div`
   display: flex;
-  width: 48px;
-  height: 30px;
+  width: 2.5rem;
+  height: 2rem;
 `;
 
-const HeadNick = styled.div`
-  ${med14}
-  align-items: center;
 
-  color: #ffffff;
-`;
