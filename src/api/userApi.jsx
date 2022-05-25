@@ -11,4 +11,5 @@ export const userApi = {
 
   //kakao 로그인
   kakao: (code) => nonTokenInstance.get(`/user/kakao/callback?code=${code}`),
+  kakaoCharacter: (data) => nonTokenInstance.post("/user/kakao/signup", data),
 }

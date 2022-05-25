@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 //redux
-import { useDispatch } from "react-redux";
+import { useDispatch,useSelector } from "react-redux";
 import { history } from "../redux/configStore";
 import { __scrapDict } from "../redux/modules/dictionary";
 import { __scrapMyPage } from "../redux/modules/mypage";
@@ -16,6 +16,7 @@ import { BsSuitHeartFill } from "react-icons/bs";
 
 const DictionaryCard = (props) => {
   const dispatch = useDispatch();
+  const dictList = useSelector((state) => state.dictionary.list);
 
 
   //스크랩 기능
@@ -29,7 +30,6 @@ const DictionaryCard = (props) => {
     } 
   };
 
-
   return (
     <div style={{ margin: "0.5rem" }}>
       <WordCard
@@ -42,6 +42,7 @@ const DictionaryCard = (props) => {
 
           <ScrapBtn
             onClick={(e) => {
+              console.log(props.data)
               ChangeScrap(props.data.postId);
               e.stopPropagation();
             }}

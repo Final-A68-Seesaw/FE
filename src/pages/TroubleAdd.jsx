@@ -80,8 +80,7 @@ const TroubleAdd = () => {
 
   //데이터전송
   const images = useSelector((state) => state.image.newimagelist)
-  const userinfo = useSelector((state) => state.user.userinfo);
-  const generation = userinfo.generation;
+  const myInfo = useSelector((state) => state.mypage.list);
   const onSubmit = (data) => {
     console.log(data, tagList, images);
     let troubleDto = {
@@ -89,7 +88,7 @@ const TroubleAdd = () => {
       contents: data.contents,
       tagNames: tagList,
       answer: data.answer,
-      question: generation,
+      question: myInfo.generation,
       files: images,
     };
     dispatch(__addTrou(troubleDto));
@@ -108,7 +107,7 @@ const TroubleAdd = () => {
           <QuestionBox>
             <QuestionFromBox>
               <LabelBox>질문 세대</LabelBox>
-              <QuestionFrom>{generation}가 물어봅니다</QuestionFrom>
+              <QuestionFrom>{myInfo.generation}가 물어봅니다</QuestionFrom>
             </QuestionFromBox>
             <QuestionToBox>
               <LabelBox>답변 세대</LabelBox>

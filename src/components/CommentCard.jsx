@@ -26,16 +26,7 @@ const CommentCard = (props) => {
   });
   const dispatch = useDispatch();
 
-  //좋아요
-  const [like, setLike] = useState(false);
-  const ChangeLike = () => {
-    setLike(!like);
-    if (props.data.commentCount!==undefined) {
-      dispatch(__likeDictComment(!like, props.data.commentId));
-    } else {
-      dispatch(__likeTrouComment(!like, props.data.commentId));
-    }
-  };
+
   //댓글 수정 클릭시 인풋 열고 닫기
   const [updateInput, setUpdateInput] = useState(false);
   const updateCmt = () => {
@@ -67,7 +58,17 @@ const CommentCard = (props) => {
       dispatch(__deleteTrouComment(data, props.postId, props.pageNum))
     }
   };
-  console.log(props)
+  
+  //좋아요
+  const [like, setLike] = useState(false);
+  const ChangeLike = () => {
+    setLike(!like);
+    if (props.data.commentCount!==undefined) {
+      dispatch(__likeDictComment(!like, props.data.commentId));
+    } else {
+      dispatch(__likeTrouComment(!like, props.data.commentId));
+    }
+  };
 
   return (
     <>

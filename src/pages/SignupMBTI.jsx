@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
-import { userActions } from "../redux/modules/user";
+import user, { userActions } from "../redux/modules/user";
 
 //element
 import Button from "../elements/Button";
@@ -14,11 +14,13 @@ import { StepBar } from "../components/StepBar";
 import Hi from "../asset/Signup_Mbti_imo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "../asset/Seeso_logo.svg";
+import { enableES5 } from "immer";
 
 const SignupMBTI = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.user.usersign);
+  console.log(userData)
   const [Mbti, setMbti] = useState({
     energy: null,
     insight: null,
@@ -52,21 +54,24 @@ const SignupMBTI = () => {
   ];
 
   const changeRadio = (e) => {
-    setMbti({ ...Mbti, [e.target.name]: e.target.value });
+    if(userData.code)
+    setMbti({ ...Mbti, [e.target.name]: e.target.value, id: userData.code });
+   else
+    setMbti({ ...Mbti, [e.target.name]: e.target.value })
   };
 //데이터전송
 const onSubmit = async () => {
   try {
     const user = await userApi.mbti(Mbti);
     dispatch(
-      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data })
+      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data})
     );
-    console.log(user);
     history.push("/signup/making/character");
   } catch (e) {
     console.log(e);
     if (e.message === "Request failed with status code 400") {
       alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
+      history.push("/login")
       return;
     }
   }

@@ -18,11 +18,12 @@ import styled, { css } from "styled-components";
 import HeaderIcon from "../asset/HeaderIcon.svg";
 import { GoSearch } from "react-icons/go";
 import DropdownBtn from "../asset/HeaderDropdownBtn.svg";
+import { __loadMypage } from "../redux/modules/mypage";
 
 const Header = (props) => {
   const location = useLocation();
   const dispatch = useDispatch();
-  const userinfo = useSelector((state) => state.user.userinfo);
+  const mypageInfo = useSelector((state) => state.mypage.list);
   const [scrolly, setScrolly] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [headInput, setHeadInput] = useState("");
@@ -52,7 +53,7 @@ const Header = (props) => {
   }
 
   useEffect(() => {
-    dispatch(userActions.loadUser());
+    dispatch(__loadMypage());
   }, []);
 
   return (
@@ -67,7 +68,7 @@ const Header = (props) => {
           <HeaderIcon
             className="jello-horizontal"
             onClick={() => history.push("/main")}
-            style={{ margin: '0 10px', cursor: "pointer" }}
+            style={{ cursor: "pointer", marginRight:"1.5rem" }}
           />
           {/* <div style={{ margin: '0 30px', cursor: 'pointer' }} onClick={openModal}>오잉</div> */}
 
@@ -137,9 +138,9 @@ const Header = (props) => {
               고민 상담하기
             </TroubleAddBtn>
             <MyInfo className="jello-horizontal">
-              <Character char={userinfo.profileImages} />
+              <Character char={mypageInfo.profileImages} />
               <MyNickname onClick={() => history.push("/mypage/scrap")}>
-                {userinfo.nickname}
+                {mypageInfo.nickname}
                 <div style={{ margin: "0.2rem 0 0 0.5rem" }}>
                   <DropdownBtn />
                 </div>

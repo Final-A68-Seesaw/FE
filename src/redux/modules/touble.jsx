@@ -175,7 +175,7 @@ export const __likeTrouComment = (commentLikeStatus, commentId) => {
   return (dispatch, getState, { history }) => {
     TroubleApi.troublecommentlike(commentId)
       .then((res) => 
-      console.log(res))
+      dispatch(likeTrouCom({commentId, comments: res.data})))
       .catch((err) => console.log(err));
   };
 };
@@ -247,10 +247,13 @@ export default handleActions(
     [LIKE_TROU_COM]: (state, action) =>
       produce(state, (draft) => {
         let index = draft.detail.troubleComments.findIndex((v) => {
-          return v.commentId == action.payload.commentId;
+          return v.commentId == action.payload.comments.commentId;
         });
         draft.detail.troubleComments[index].commentLikeStatus =
-          action.payload.likeStatus;
+          action.payload.comments.commentLikeStatus;
+          draft.detail.troubleComments[index].commentLikeCount =
+          action.payload.comments.commentLikeCount;
+
         console.log(action.payload);
         console.log(state)
       }),

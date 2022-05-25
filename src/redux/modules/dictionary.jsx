@@ -21,13 +21,13 @@ const DEL_DICT_COM = "DEL_DICT_COM";
 
 const LIKE_DICT_COM = "LIKE_DICT_COM";
 
-const getDict = createAction(GET_DICT, (data) => data);
+export const getDict = createAction(GET_DICT, (data) => data);
 const getDictDetail = createAction(GET_DICT_DETAIL, (detailData) => detailData);
 const addDict = createAction(ADD_DICT, (data) => ({ data }));
 const delDict = createAction(DEL_DICT, (dict) => dict);
 const putDict = createAction(PUT_DICT, (data) => data);
 export const setDict = createAction(SET_DICT, (files) => ({ files }));
-const clearDict = createAction(CLEAR_DICT, (data) => data)
+const clearDict = createAction(CLEAR_DICT, (data) => data);
 
 const scrapDict = createAction(SCRAP_DICT, (data) => data);
 
@@ -99,7 +99,7 @@ export const __loadDictDetail = (cardTitle, commentPage) => {
     dictApi
       .DictDetail(cardTitle, commentPage)
       .then((res) => {
-        dispatch(ImageActions.getimg(res.data.postImages))
+        dispatch(ImageActions.getimg(res.data.postImages));
         dispatch(getDictDetail(res.data));
       })
       .catch((err) => console.log(err.response));
@@ -165,10 +165,9 @@ export const __loadDictCardList = (page) => {
 export const __scrapDict = (scrap, postId) => {
   return (dispatch, getState, { history }) => {
     console.log(scrap, postId);
-    dictApi
-      .scrapDict(postId)
-      .then((res) => dispatch(scrapDict({ postId, scrapStatus: res.data })))
-      .catch((err) => console.log(err));
+    dictApi.scrapDict(postId).then((res) => {
+      return dispatch(scrapDict({ postId, scrapStatus: res.data }));
+    });
   };
 };
 
@@ -188,7 +187,7 @@ export const __deleteDictComment = (commentId, postId, pageNum) => {
     dictApi
       .delComment(commentId)
       .then((res) => {
-        console.log("gw", res)
+        console.log("gw", res);
         let getNextComment = {
           commentId: commentId,
           nextComment: res.data,
@@ -230,7 +229,7 @@ export default handleActions(
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailData = action.payload;
-        console.log(action.payload)
+        console.log(action.payload);
       }),
 
     [ADD_DICT]: (state, action) =>
@@ -239,17 +238,15 @@ export default handleActions(
         draft.data.unshift(action.payload.data);
       }),
 
-
     [SET_DICT]: (state, action) =>
       produce(state, (draft) => {
         draft.files.push(action.payload.files);
-
       }),
     [CLEAR_DICT]: (state, action) =>
       produce(state, (draft) => {
-        draft.list = []
-        draft.files = []
-        draft.detailData = null
+        draft.list = [];
+        draft.files = [];
+        draft.detailData = null;
       }),
 
     [SCRAP_DICT]: (state, action) =>
@@ -257,14 +254,14 @@ export default handleActions(
         console.log(state);
         console.log(action.payload);
         if (draft.list.length === 0)
-          draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus
+          draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus;
         else {
           let index = draft.list.findIndex((v) => {
             return v.postId == action.payload.postId;
           });
-          draft.list[index].scrapStatus = action.payload.scrapStatus.scrapStatus
+          draft.list[index].scrapStatus =
+            action.payload.scrapStatus.scrapStatus;
         }
-
       }),
 
     [ADD_DICT_COM]: (state, action) =>
@@ -309,9 +306,11 @@ export default handleActions(
           return v.commentId == action.payload.likeStatus.commentId;
         });
 
-        draft.detailData.postComments[index].commentLikeStatus = action.payload.likeStatus.commentLikeStatus;
-        draft.detailData.postComments[index].commentLikeCount = action.payload.likeStatus.commentLikeCount;
-        console.log(action.payload)
+        draft.detailData.postComments[index].commentLikeStatus =
+          action.payload.likeStatus.commentLikeStatus;
+        draft.detailData.postComments[index].commentLikeCount =
+          action.payload.likeStatus.commentLikeCount;
+        console.log(action.payload);
       }),
   },
   initialState

@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { FixedSizeList as List } from "react-window"
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { __loadDictCardList, __scrapDict } from "../redux/modules/dictionary";
+import { __loadDictCardList, __scrapDict, getDict } from "../redux/modules/dictionary";
 import { actionCreators as DictionaryActions } from "../redux/modules/dictionary";
-import { history } from "../redux/configStore";
 
 //element & component
 import Header from "../components/Header";
 import DictionaryCard from "../components/DictionaryCard";
 import Footer from "../components/Footer";
-import { bold16, bold22, bold15, med15 } from "../themes/textStyle";
+import { bold16, bold22 } from "../themes/textStyle";
 
 //style
 import styled from "styled-components";
 import Line from "../asset/Dictionary_list_line.svg";
 
-const DictList = () => {
-  const dispatch = useDispatch();
+const DictList = (props) => {
 
   const dictList = useSelector((state) => state.dictionary.list);
 
@@ -27,9 +24,7 @@ const DictList = () => {
 
   useEffect(() => {
     dispatch(__loadDictCardList(1));
-
-    return () => dispatch(DictionaryActions.clearDict())
-  }, []);
+  }, [])
 
   // onscroll = (e) => {
   //   console.log(e);
