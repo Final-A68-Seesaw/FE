@@ -79,9 +79,6 @@ const Main = () => {
     })
   }, [])
 
-  // console.log(window.pageYOffset);
-  // console.log('ttt', document.getElementsByClassName('shake-vertical')[0]?.getBoundingClientRect().top);
-
   return (
     <MainWrap>
       <Header />
