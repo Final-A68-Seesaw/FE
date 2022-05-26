@@ -11,23 +11,16 @@ import { useParams } from "react-router-dom";
 const FileUpload2 = (props) => {
   const dispatch = useDispatch();
 
-  // console.log(props.file);
-
   const dbimages = useSelector((state) => state.image.imagelist)
-  // console.log('db', dbimages);
+  
   const detailData = useSelector((state) => state.dictionary.detailData)
-  // console.log('detail', detailData?.postImages)
+  
   const params = useParams()
-  // console.log(params);
-
-  // console.log(dbimages);
 
   const [Files, setFiles] = useState([]);
   const [oversize, setOversize] = useState(false)
   const [overlength, setOverlength] = useState(false)
   const [imgUrlList, setImgUrlList] = useState([])
-
-  console.log('urllist', imgUrlList);
 
   useEffect(() => {
     // console.log('list' ,imgUrlList);

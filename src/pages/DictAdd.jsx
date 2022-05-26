@@ -89,7 +89,7 @@ const GenerationOptions = [
 
   //데이터전송
   const images = useSelector((state) => state.image.newimagelist)
-  console.log(images);
+  
   const onSubmit = (data) => {
     let postDto = {
       title: data.title,
