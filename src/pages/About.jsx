@@ -3,9 +3,16 @@ import styled from 'styled-components'
 
 import { history } from '../redux/configStore'
 import AboutCard from '../components/AboutCard'
+import Header from '../components/Header'
 
 // import Starting from '../asset/Starting.svg'
-import Design2 from '../asset/Design2.svg'
+import CHM from '../asset/TeamSeeso/Seeso_Char_CHM.svg'
+import PJY from '../asset/TeamSeeso/Seeso_Char_PJY.svg'
+import PMS from '../asset/TeamSeeso/Seeso_Char_PMS.svg'
+import CEH from '../asset/TeamSeeso/Seeso_Char_CEH.svg'
+import KYR from '../asset/TeamSeeso/Seeso_Char_KYR.svg'
+import SJM from '../asset/TeamSeeso/Seeso_Char_SJM.svg'
+import YJW from '../asset/TeamSeeso/Seeso_Char_YJW.svg'
 
 const About = () => {
 
@@ -83,25 +90,28 @@ const About = () => {
     ]
 
     return (
-        <div style={{ background: '#8E41FF', width: '100vw', height: '900px' }}>
+        <>
+        <Header/>
+        <div style={{ background: '#8E41FF', width: '100%', height: '900px'}}>
             <TitleText>우리들의 플레이그라운드</TitleText>
             <SubTitle>
                 <SubIcon>seeso</SubIcon>
                 <SubText>제작자들을 소개합니다</SubText>
             </SubTitle>
-            <AboutCard char={Design2} data={Developers[0]} tcolor='#FFFFFF'/>
-            <AboutCard char={Design2} data={Developers[1]} tcolor='#FFFFFF'/>
-            <AboutCard char={Design2} data={Developers[2]} tcolor='#8E41FF'/>
-            <AboutCard char={Design2} data={Developers[3]} tcolor='#8E41FF'/>
-            <AboutCard char={Design2} data={Developers[4]} tcolor='#8E41FF'/>
-            <AboutCard char={Design2} data={Developers[5]} tcolor='#8E41FF'/>
-            <AboutCard char={Design2} data={Developers[6]} tcolor='#8E41FF'/>
-
+            <AboutCard char={CHM} data={Developers[0]} tcolor='#FFFFFF'/>
+            <AboutCard char={PJY} data={Developers[1]} tcolor='#FFFFFF'/>
+            <AboutCard char={PMS} data={Developers[2]} tcolor='#8E41FF'/>
+            <AboutCard char={CEH} data={Developers[3]} tcolor='#8E41FF'/>
+            <AboutCard char={KYR} data={Developers[4]} tcolor='#8E41FF'/>
+            <AboutCard char={SJM} data={Developers[5]} tcolor='#8E41FF'/>
+            <AboutCard char={YJW} data={Developers[6]} tcolor='#8E41FF'/>
             {/* <Design2Div>
             <Design2 />
             </Design2Div> */}
             {/* <Starting style={{ minWidth: '100vw', maxHeight: '99vh' }} /> */}
         </div>
+        
+        </>
     )
 }
 
