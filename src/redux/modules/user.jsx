@@ -63,6 +63,7 @@ const __kakao = (code) => {
     console.log(code);
     try {
       const login = await userApi.kakao(code);
+      console.log(login);
       if(login.data.email !== ''){
         dispatch(userSave({id: login.data.kakaoId, username: login.data.email}))
         history.push("/signup/making")
@@ -70,6 +71,7 @@ const __kakao = (code) => {
         const Token = login.headers.authorization.split(";Bearer ");
         const accessToken = Token[0].split(" ")[1];
         const refreshToken = Token[1];
+        console.log(Token);
         cookies.set("accessToken", accessToken, {
           path: "/",
           maxAge: 259200, // 3일
