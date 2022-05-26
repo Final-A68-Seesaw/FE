@@ -110,7 +110,6 @@ const Header = (props) => {
             </div>
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
               <HeaderMenu
-                onMouseOver={() => setShowModal('game')}
                 className="jello-horizontal"
                 pathname={location.pathname === "/gamemain"}
                 onClick={() => { history.push("/gamemain") }}
@@ -143,12 +142,12 @@ const Header = (props) => {
             </div>
           ) : (
             <RightGroup>
-              <WordAddBtn
+              <FeedBackBtn
                 className="jello-horizontal"
                 onClick={() => history.push("/dictionary/add")}
               >
-                단어 등재하기
-              </WordAddBtn>
+                피드백 참여하기
+              </FeedBackBtn>
 
               {/* <TroubleAddBtn
                 className="jello-horizontal"
@@ -175,11 +174,14 @@ const Header = (props) => {
         <ModalContainer ref={ModRef} className="slide-in-top slide-out-top">
           {showModal === 'dict' ?
             <DictHead>
-              <p
-                // onClick={() => history.push('/dictionary')}
-                // pathname={location.pathname === '/dictionary'}
-                >신조어 사전 둘러보기</p>
-              <p>신조어 단어 추가하기</p>
+              <HeadDown
+                onClick={() => history.push('/dictionary')}
+                pathname={location.pathname === '/dictionary'}
+                >신조어 사전 둘러보기</HeadDown>
+              <HeadDown
+                onClick={() => history.push('/dictionary/add')}
+                pathname={location.pathname === '/dictionary/add'}
+                >신조어 단어 추가하기</HeadDown>
             </DictHead>
             : null}
           {showModal === 'ques' ?
@@ -273,6 +275,23 @@ const HeadInner = styled.div`
   justify-content: space-between;
 `;
 
+const FeedBackBtn = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0.625rem 1rem;
+  gap: 0.625rem;
+  ${bold15}
+  margin-right: 1rem;
+  color: #eeeeee;
+  background: #333333;
+  border: 0.1rem solid rgba(255, 255, 255, 0.2);
+  border-radius: 2rem;
+
+cursor: pointer;
+`;
+
 const WordAddBtn = styled.div`
   display: flex;
   flex-direction: row;
@@ -344,8 +363,6 @@ const ModalContainer = styled.div`
       opacity: 0;
     }
   }
-
-  color: ${(props) => (props.pathname ? "#FFC438" : "#FFFFFF")}
 `;
 
 const SearchDiv = styled.div`
@@ -491,4 +508,11 @@ const ProfileHead = styled.div`
   align-items: center;
 
   color: #FFFFFF;
+`
+
+const HeadDown = styled.p`
+
+  color: ${(props) => (props.pathname ? "#FFC438" : "#FFFFFF")};
+  
+  cursor: pointer;
 `
