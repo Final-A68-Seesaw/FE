@@ -56,10 +56,21 @@ const Header = (props) => {
 
   const ModalOut = () => {
     setTimeout(() => {
-      setShowModal(false)
+      // setShowModal(null)
     }, 800)
 
-    ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
+    // ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
+  }
+
+  const ModalList = (cate) => {
+    setShowModal(cate)
+
+    switch (cate) {
+      case 'dict': console.log('didi'); return
+      case 'ques': console.log('ques'); return
+      case 'profile': console.log('pro'); return
+      default: return
+    }
   }
 
   useEffect(() => {
@@ -67,9 +78,9 @@ const Header = (props) => {
   }, []);
 
   return (
-    <HeadWrap>
+    <HeadWrap onMouseLeave={ModalOut}>
       <Head >
-        <HeadInner onMouseOver={() => setShowModal(true)}>
+        <HeadInner >
           <div style={{ display: "flex" }}>
             <HeaderIcon
               className="jello-horizontal"
@@ -79,6 +90,7 @@ const Header = (props) => {
 
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
               <HeaderMenu
+                onMouseOver={() => setShowModal('dict')}
                 className="jello-horizontal"
                 pathname={location.pathname === "/dictionary"}
                 onClick={() => { history.push("/dictionary") }}
@@ -88,6 +100,7 @@ const Header = (props) => {
             </div>
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
               <HeaderMenu
+                onMouseOver={() => setShowModal('ques')}
                 className="jello-horizontal"
                 pathname={location.pathname === "/trouble"}
                 onClick={() => { history.push("/trouble") }}
@@ -97,6 +110,7 @@ const Header = (props) => {
             </div>
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
               <HeaderMenu
+                onMouseOver={() => setShowModal('game')}
                 className="jello-horizontal"
                 pathname={location.pathname === "/gamemain"}
                 onClick={() => { history.push("/gamemain") }}
@@ -142,7 +156,8 @@ const Header = (props) => {
               >
                 고민 상담하기
               </TroubleAddBtn>
-              <MyInfo className="jello-horizontal">
+              <MyInfo className="jello-horizontal"
+                onMouseOver={() => setShowModal('profile')}>
                 <Character char={mypageInfo.profileImages} />
                 <MyNickname onClick={() => history.push("/mypage/scrap")}>
                   {mypageInfo.nickname}
@@ -154,12 +169,32 @@ const Header = (props) => {
             </RightGroup>
           )}
         </HeadInner>
-
-
       </Head>
 
       {showModal ?
-        <ModalContainer ref={ModRef} className="slide-in-top slide-out-top" onMouseLeave={ModalOut}></ModalContainer>
+        <ModalContainer ref={ModRef} className="slide-in-top slide-out-top">
+          {showModal === 'dict' ?
+            <DictHead>
+              <p
+                // onClick={() => history.push('/dictionary')}
+                // pathname={location.pathname === '/dictionary'}
+                >신조어 사전 둘러보기</p>
+              <p>신조어 단어 추가하기</p>
+            </DictHead>
+            : null}
+          {showModal === 'ques' ?
+            <TrouHead>
+              <p>고민상담 둘러보기</p>
+              <p>고민상담 추가하기</p>
+            </TrouHead>
+            : null}
+          {showModal === 'profile' ?
+            <ProfileHead>
+              <p>마이페이지</p>
+              <p>제작자 소개</p>
+            </ProfileHead>
+            : null}
+        </ModalContainer>
         : null}
     </HeadWrap>
   );
@@ -310,6 +345,7 @@ const ModalContainer = styled.div`
     }
   }
 
+  color: ${(props) => (props.pathname ? "#FFC438" : "#FFFFFF")}
 `;
 
 const SearchDiv = styled.div`
@@ -390,3 +426,68 @@ const HeadNick = styled.div`
 
   color: #ffffff;
 `;
+
+const DictHead = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  width: 140px;
+  height: 58px;
+  left: 212px;
+  top: 98px;
+  gap: 12px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+
+  /* White_#ffffff */
+
+  color: #FFFFFF;
+`
+
+const TrouHead = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  width: 122px;
+  height: 58px;
+  left: 293px;
+  top: 98px;
+  gap: 12px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+
+  color: #FFFFFF;
+`
+
+const ProfileHead = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  width: 78px;
+  height: 58px;
+  left: 1288px;
+  top: 98px;
+  gap: 12px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  display: flex;
+  align-items: center;
+
+  color: #FFFFFF;
+`
