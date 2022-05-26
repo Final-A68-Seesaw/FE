@@ -11,9 +11,8 @@ const AuthRedirectHandler = (props) => {
   // 인가코드
   let code = new URL(window.location.href).searchParams.get("code");
   React.useEffect(() => {
-    console.log(code);
     dispatch(userActions.__kakao(code));
-  }, []);
+  }, [code]);
 
   return null;
 };
