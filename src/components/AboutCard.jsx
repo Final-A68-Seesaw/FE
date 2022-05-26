@@ -14,7 +14,7 @@ const AboutCard = (props) => {
                 <DevTag>{props.data.tag}</DevTag>
                 <DevSay>{props.data.say}</DevSay>
                 <DevEmail>{props.data.email}</DevEmail>
-                <DevProfile>Profile : <a href={props.data.profile}>{props.data.profile}</a></DevProfile>
+                <a href={props.data.profile}><DevProfile style={{ color: props.tcolor }}>Profile : {props.data.profile}</DevProfile></a>
             </div>
         </div>
     )
