@@ -33,6 +33,7 @@ const SignupCharacter = () => {
   const [charId, setCharId] = useState([null, null, null]);
   const [charSelect, setCharSelect] = useState([]);
   const [charPrev, setCharPrev] = useState([null, null, null]);
+  const [gen, setGen] = useState('')
 
   //map의 기준점이 될 이미지 URL LIST
   const selectFaceList = charSelect.faceUrl;
@@ -203,7 +204,7 @@ const SignupCharacter = () => {
             <UserNameTag>
               <PreviewNick>{prevNick}님은 </PreviewNick>
               <Previewmbti>
-                {userData.mbtiRes} {userData.generation}
+                {userData.mbtiRes} {userData.generation || gen}
               </Previewmbti>
             </UserNameTag>
           </LeftBox>
@@ -214,6 +215,7 @@ const SignupCharacter = () => {
               <Select
               width = "22rem"
                 name="generation"
+                onChange={(e)=>setGen(e.target.value)}
                 register={register({
                   required: true,
                   validate: (value) => value !== "none",
