@@ -62,7 +62,7 @@ const Main = () => {
 
     setSearchInput("");
   }
-
+   
   React.useEffect(() => {
     MainApi.mainGetBest().then((res) => {
       // console.log('16', res.data)
