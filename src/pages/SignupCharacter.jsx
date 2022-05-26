@@ -17,6 +17,7 @@ import { StepBar } from "../components/StepBar";
 import Pen from "../asset/Signup_Character_imo.svg";
 import Logo from "../asset/Seeso_logo.svg";
 import { bold18, med14, med18 } from "../themes/textStyle";
+import { cookies } from "../shared/cookie";
 
 const SignupCharacter = () => {
   //react-hook-form
@@ -114,7 +115,8 @@ const SignupCharacter = () => {
     };
 
     let signKakao = {
-      id: userData.id,
+      kakaoId: userData.kakaoId,
+      username: userData.username,
       generation: data.generation,
       energy: userData.energy,
       insight: userData.insight,
@@ -124,14 +126,15 @@ const SignupCharacter = () => {
       charId: [charId[0], charId[1], charId[2]],
     }
 
-    try {
-      if(userData.username)
+    try {  
+      if(userData.generation !== null)
       {const user = await userApi.signupFinal(signDic);
         history.replace("/login");
         alert("회원가입이 완료됐습니다!");
       }
-      else{const kakao = await userApi.kakaoCharacter(signKakao)
-
+      else{
+        const kakao = await userApi.kakaoCharacter(signKakao)
+        console.log(kakao)
         const Token = kakao.headers.authorization.split(";Bearer ");
         const accessToken = Token[0].split(" ")[1];
         const refreshToken = Token[1];
@@ -147,6 +150,7 @@ const SignupCharacter = () => {
         history.replace("/main")      
       }
     } catch (e) {
+      console.log(e);
       if (e.message === "Request failed with status code 400") {
         alert("중복된 닉네임입니다.");
         return;

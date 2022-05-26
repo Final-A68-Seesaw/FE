@@ -62,19 +62,23 @@ const __kakao = (code) => {
   return async function (dispatch, getState, { history }) {
     try {
       const login = await userApi.kakao(code);
-      console.log(code)
-      const Token = login.headers.authorization.split(";Bearer ");
-      const accessToken = Token[0].split(" ")[1];
-      const refreshToken = Token[1];
-      cookies.set("accessToken", accessToken, {
-        path: "/",
-        maxAge: 259200, // 3일
-      });
-      cookies.set("refreshToken", refreshToken, {
-        path: "/",
-        maxAge: 604800, // 7일
-      });
-      history.replace("/main");
+      if(login.data.email !== ''){
+        dispatch(userSave({id: login.data.kakaoId, username: login.data.email}))
+        history.push("/signup/making")
+      }else{
+        const Token = login.headers.authorization.split(";Bearer ");
+        const accessToken = Token[0].split(" ")[1];
+        const refreshToken = Token[1];
+        cookies.set("accessToken", accessToken, {
+          path: "/",
+          maxAge: 259200, // 3일
+        });
+        cookies.set("refreshToken", refreshToken, {
+          path: "/",
+          maxAge: 604800, // 7일
+        });
+        history.replace("/main");
+      }
     } catch (e) {
       if(e.message === "Request failed with status code 400") {
         history.replace("/signup/making");
@@ -118,8 +122,8 @@ const initialState = {
   isLogin: false,
   usersign: {
     username: null,
-    code: null,
     id: null,
+    kakaoId: null,
     generation: null,
     energy: null,
     insight: null,
