@@ -60,6 +60,7 @@ export const __login =
 
 const __kakao = (code) => {
   return async function (dispatch, getState, { history }) {
+    console.log(code);
     try {
       const login = await userApi.kakao(code);
       if(login.data.email !== ''){
