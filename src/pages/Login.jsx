@@ -32,6 +32,8 @@ const Login = () => {
     dispatch(__login(data));
   };
 
+  console.log(process.env.SERVER_URL);
+
   return (
     <>
       <Container>
