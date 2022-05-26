@@ -1,5 +1,5 @@
 
-const server = process.env.REACT_APP_SERVER_URL
+const server = 'https://walbu.shop'
 
 const sockUrl = server + '/ws-seesaw'
 const sockUrls = server + '/wss-seesaw'
