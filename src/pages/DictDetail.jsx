@@ -48,8 +48,8 @@ const DictDetail = (props) => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
     dispatch(__loadDictDetail(params.cardTitleId, pageNum));
-    
-    return ()=>{ dispatch(DictionaryActions.clearDict()) }
+
+    return () => { dispatch(DictionaryActions.clearDict()) }
   }, []);
 
   //스크랩 기능
@@ -79,14 +79,24 @@ const DictDetail = (props) => {
     setPageNum(page);
     dispatch(__loadDictDetail(params.cardTitleId, page));
   };
-  
+
+  const httpCheck = (url) => {
+    const check = (/https:\/\//)
+    if (check.test(url))
+      return url
+    else
+      return `https://${url}`
+  }
+
   //댓글 데이터 전송
   const onSubmit = (data) => {
     console.log(data);
     dispatch(__addDictComment(params.cardTitleId, data, dataList.nickname));
-    alert ("댓글이 등록됐습니다!")
+    alert("댓글이 등록됐습니다!")
   };
-  
+
+  console.log(dataList);
+
   return (
     <>
       <Header />
@@ -177,7 +187,7 @@ const DictDetail = (props) => {
           <>
             <LabelTag>
               참고 영상 URL |
-              <VideoUrlTag href={dataList && dataList.videoUrl}>
+              <VideoUrlTag href={dataList && httpCheck(dataList.videoUrl)}>
                 {dataList && dataList.videoUrl}
               </VideoUrlTag>
             </LabelTag>
@@ -229,7 +239,7 @@ const DictDetail = (props) => {
               name="comment"
               type="text"
               maxLength="500"
-              onChange = {onInputChange}
+              onChange={onInputChange}
               placeholder="주제와 무관한 댓글, 홍보, 욕설, 일방적인 비난이나 악플 등은 삭제될 수 있습니다."
             />
             <InputCountBox>{inputCount}/500</InputCountBox>
@@ -270,19 +280,19 @@ const DictDetail = (props) => {
         >
           {dataList &&
             Array(Math.ceil(dataList.commentCount / 4)).fill().map((v, i) => {
-                if (pageNum === i + 1)
-                  return (
-                    <SelectNumberBox key={i} >
-                      {i + 1}
-                    </SelectNumberBox>
-                  );
-                else
-                  return (
-                    <NumberBox key={i} onClick={() => pageChange(i + 1)}>
-                      {i + 1}
-                    </NumberBox>
-                  );
-              })}
+              if (pageNum === i + 1)
+                return (
+                  <SelectNumberBox key={i} >
+                    {i + 1}
+                  </SelectNumberBox>
+                );
+              else
+                return (
+                  <NumberBox key={i} onClick={() => pageChange(i + 1)}>
+                    {i + 1}
+                  </NumberBox>
+                );
+            })}
         </div>
       </Container>
       <Footer />
@@ -379,8 +389,22 @@ const ImageArea = styled.div`
   margin: 2rem 0 1rem 0;
 
   overflow-x: scroll;
-  ::-webkit-scrollbar {
-    display: none;
+  
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: #ffffff;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 3.75px;
+    background-color: var(--grayc0);
+
+    &:hover {
+      background-color: #adb5bd;
+    }
+  }
+  &::-webkit-scrollbar-track {
+    background: var(--grayed);
   }
 `;
 const Images = styled.div`

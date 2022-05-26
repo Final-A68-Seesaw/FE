@@ -66,7 +66,7 @@ const __kakao = (code) => {
       console.log(login);
       if(login.data.email !== ''){
         dispatch(userSave({id: login.data.kakaoId, username: login.data.email}))
-        // history.push("/signup/making")
+        history.push("/signup/making")
       }else{
         const Token = login.headers.authorization.split(";Bearer ");
         const accessToken = Token[0].split(" ")[1];
@@ -80,7 +80,7 @@ const __kakao = (code) => {
           path: "/",
           maxAge: 604800, // 7일
         });
-        // history.replace("/main");
+        history.replace("/main");
       }
     } catch (e) {
       console.log(e);

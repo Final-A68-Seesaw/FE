@@ -12,7 +12,7 @@ const AuthRedirectHandler = (props) => {
   let code = new URL(window.location.href).searchParams.get("code");
   React.useEffect(() => {
     dispatch(userActions.__kakao(code));
-  }, [code]);
+  }, []);
 
   return null;
 };

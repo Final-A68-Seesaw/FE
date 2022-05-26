@@ -207,6 +207,8 @@ const Header = (props) => {
 export default Header;
 
 const HeadWrap = styled.div`
+  display: flex;
+  justify-content: center;
   
   .slide-in-top {
     animation: slide-in-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
@@ -342,9 +344,9 @@ const HeaderMenu = styled.p`
 
 const ModalContainer = styled.div`
   position: fixed;
-  width: 100%;
+  width: 80rem;
   height: 107px;
-  left: 0px;
+  /* left: 300px; */
   top: 74px;
   z-index: 80;
 
@@ -450,11 +452,9 @@ const HeadNick = styled.div`
 const DictHead = styled.div`
   display: flex;
   flex-direction: column;
-  position: sticky;
   width: 140px;
   height: 58px;
-  left: 212px;
-  top: 98px;
+  margin: 1rem 0 0 7rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';
@@ -473,11 +473,10 @@ const DictHead = styled.div`
 const TrouHead = styled.div`
   display: flex;
   flex-direction: column;
-  position: sticky;
+  /* position: sticky; */
   width: 122px;
   height: 58px;
-  left: 293px;
-  top: 98px;
+  margin: 1rem 0 0 12rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';
@@ -494,11 +493,9 @@ const TrouHead = styled.div`
 const ProfileHead = styled.div`
   display: flex;
   flex-direction: column;
-  position: sticky;
   width: 78px;
   height: 58px;
-  left: 1288px;
-  top: 98px;
+  margin: 1rem 0 0 72rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';

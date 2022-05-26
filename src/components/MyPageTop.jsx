@@ -119,6 +119,9 @@ const UserInfos = styled.div`
 `;
 
 const UserInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 `;
 const UserNick = styled.div`
@@ -132,7 +135,7 @@ const UserEmail = styled.div`
 `;
 const ButtonsBox = styled.div`
   margin: auto;
-  width: 13rem;
+  width: 13.5rem;
 `;
 const MyMenu = styled.div`
   ${bold18}
