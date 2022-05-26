@@ -1,6 +1,6 @@
 
 // const BASE_URL = process.env.REACT_APP_BASE_URL;
-const REDIRECT_URI = 'https://play-seeso.com/user/kakao/callback';
+const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 const CLIENT_KEY = process.env.REACT_APP_CLIENT_KEY;
 
 const Url = {
