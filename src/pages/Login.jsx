@@ -32,7 +32,7 @@ const Login = () => {
     dispatch(__login(data));
   };
 
-  console.log(process.env.SERVER_URL);
+  console.log(process.env.REACT_APP_SERVER_URL);
 
   return (
     <>
