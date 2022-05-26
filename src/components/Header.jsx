@@ -56,21 +56,10 @@ const Header = (props) => {
 
   const ModalOut = () => {
     setTimeout(() => {
-      // setShowModal(null)
+      setShowModal(null)
     }, 800)
 
-    // ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
-  }
-
-  const ModalList = (cate) => {
-    setShowModal(cate)
-
-    switch (cate) {
-      case 'dict': console.log('didi'); return
-      case 'ques': console.log('ques'); return
-      case 'profile': console.log('pro'); return
-      default: return
-    }
+    ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
   }
 
   useEffect(() => {
@@ -78,7 +67,7 @@ const Header = (props) => {
   }, []);
 
   return (
-    <HeadWrap onMouseLeave={ModalOut}>
+    <HeadWrap>
       <Head >
         <HeadInner >
           <div style={{ display: "flex" }}>
@@ -144,7 +133,7 @@ const Header = (props) => {
             <RightGroup>
               <FeedBackBtn
                 className="jello-horizontal"
-                onClick={() => history.push("/dictionary/add")}
+                onClick={() => {}}
               >
                 피드백 참여하기
               </FeedBackBtn>
@@ -171,29 +160,41 @@ const Header = (props) => {
       </Head>
 
       {showModal ?
-        <ModalContainer ref={ModRef} className="slide-in-top slide-out-top">
+        <ModalContainer ref={ModRef} onMouseLeave={ModalOut} className="slide-in-top slide-out-top">
           {showModal === 'dict' ?
             <DictHead>
               <HeadDown
                 onClick={() => history.push('/dictionary')}
                 pathname={location.pathname === '/dictionary'}
-                >신조어 사전 둘러보기</HeadDown>
+              >신조어 사전 둘러보기</HeadDown>
               <HeadDown
                 onClick={() => history.push('/dictionary/add')}
                 pathname={location.pathname === '/dictionary/add'}
-                >신조어 단어 추가하기</HeadDown>
+              >신조어 단어 추가하기</HeadDown>
             </DictHead>
             : null}
           {showModal === 'ques' ?
             <TrouHead>
-              <p>고민상담 둘러보기</p>
-              <p>고민상담 추가하기</p>
+              <HeadDown
+                onClick={() => history.push('/trouble')}
+                pathname={location.pathname === '/trouble'}
+              >고민상담 둘러보기</HeadDown>
+              <HeadDown
+                onClick={() => history.push('/trouble/add')}
+                pathname={location.pathname === '/trouble/add'}
+              >고민상담 추가하기</HeadDown>
             </TrouHead>
             : null}
           {showModal === 'profile' ?
             <ProfileHead>
-              <p>마이페이지</p>
-              <p>제작자 소개</p>
+              <HeadDown
+                onClick={() => history.push('/mypage/scrap')}
+                pathname={location.pathname === '/mypage/scrap'}
+              >마이페이지</HeadDown>
+              <HeadDown
+                onClick={() => history.push('/about')}
+                pathname={location.pathname === '/about'}
+              >제작자 소개</HeadDown>
             </ProfileHead>
             : null}
         </ModalContainer>
