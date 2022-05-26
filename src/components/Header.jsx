@@ -150,12 +150,12 @@ const Header = (props) => {
                 단어 등재하기
               </WordAddBtn>
 
-              <TroubleAddBtn
+              {/* <TroubleAddBtn
                 className="jello-horizontal"
                 onClick={() => history.push("/trouble/add")}
               >
                 고민 상담하기
-              </TroubleAddBtn>
+              </TroubleAddBtn> */}
               <MyInfo className="jello-horizontal"
                 onMouseOver={() => setShowModal('profile')}>
                 <Character char={mypageInfo.profileImages} />
@@ -398,6 +398,7 @@ const WriteDicBtn = styled.div`
   cursor: pointer;
 `;
 const MyInfo = styled.div`
+  margin-right: 1.5rem;
   height: 2rem;
 
   cursor: pointer;
