@@ -131,12 +131,13 @@ const Header = (props) => {
             </div>
           ) : (
             <RightGroup>
-              <FeedBackBtn
-                className="jello-horizontal"
-                onClick={() => {}}
-              >
-                피드백 참여하기
-              </FeedBackBtn>
+              <a href="https://forms.gle/Fi1mPK4LkLGR36Ar5">
+                <FeedBackBtn
+                  className="jello-horizontal"
+                >
+                  피드백 참여하기
+                </FeedBackBtn>
+              </a>
 
               {/* <TroubleAddBtn
                 className="jello-horizontal"
