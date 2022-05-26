@@ -208,7 +208,7 @@ export default Header;
 const HeadWrap = styled.div`
   
   .slide-in-top {
-    animation: slide-in-top 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    animation: slide-in-top 0.3s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
   }
 
   @keyframes slide-in-top {
@@ -351,7 +351,7 @@ const ModalContainer = styled.div`
   border-radius: 0px 0px 15px 15px;
 
   .slide-out-top {
-    animation: slide-out-top 0.8s ease-in-out both;
+    animation: slide-out-top 0.3s ease-in-out both;
   }
   
   @keyframes slide-out-top {
