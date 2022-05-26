@@ -62,7 +62,7 @@ const __kakao = (code) => {
   return async function (dispatch, getState, { history }) {
     try {
       const login = await userApi.kakao(code);
-      if(login.data.email !== null){
+      if(login.data.email !== ''){
         dispatch(userSave({id: login.data.kakaoId, username: login.data.email}))
         history.push("/signup/making")
       }else{
