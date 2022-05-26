@@ -13,6 +13,7 @@ import CEH from '../asset/TeamSeeso/Seeso_Char_CEH.svg'
 import KYR from '../asset/TeamSeeso/Seeso_Char_KYR.svg'
 import SJM from '../asset/TeamSeeso/Seeso_Char_SJM.svg'
 import YJW from '../asset/TeamSeeso/Seeso_Char_YJW.svg'
+import AboutFootImg from '../asset/AboutFooter.svg'
 
 const About = () => {
 
@@ -91,26 +92,28 @@ const About = () => {
 
     return (
         <>
-        <Header/>
-        <div style={{ background: '#8E41FF', width: '100%', height: '900px'}}>
-            <TitleText>우리들의 플레이그라운드</TitleText>
-            <SubTitle>
-                <SubIcon>seeso</SubIcon>
-                <SubText>제작자들을 소개합니다</SubText>
-            </SubTitle>
-            <AboutCard char={CHM} data={Developers[0]} tcolor='#FFFFFF'/>
-            <AboutCard char={PJY} data={Developers[1]} tcolor='#FFFFFF'/>
-            <AboutCard char={PMS} data={Developers[2]} tcolor='#8E41FF'/>
-            <AboutCard char={CEH} data={Developers[3]} tcolor='#8E41FF'/>
-            <AboutCard char={KYR} data={Developers[4]} tcolor='#8E41FF'/>
-            <AboutCard char={SJM} data={Developers[5]} tcolor='#8E41FF'/>
-            <AboutCard char={YJW} data={Developers[6]} tcolor='#8E41FF'/>
-            {/* <Design2Div>
+            <Header />
+            <div style={{ background: '#8E41FF', width: '100%', height: '900px' }}>
+                <TitleText>우리들의 플레이그라운드</TitleText>
+                <SubTitle>
+                    <SubIcon>seeso</SubIcon>
+                    <SubText>제작자들을 소개합니다</SubText>
+                </SubTitle>
+                <AboutCard char={CHM} data={Developers[0]} tcolor='#FFFFFF' />
+                <AboutCard char={PJY} data={Developers[1]} tcolor='#FFFFFF' />
+                <AboutCard char={PMS} data={Developers[2]} tcolor='#8E41FF' />
+                <AboutCard char={CEH} data={Developers[3]} tcolor='#8E41FF' />
+                <AboutCard char={KYR} data={Developers[4]} tcolor='#8E41FF' />
+                <AboutCard char={SJM} data={Developers[5]} tcolor='#8E41FF' />
+                <AboutCard char={YJW} data={Developers[6]} tcolor='#8E41FF' />
+                {/* <Design2Div>
             <Design2 />
             </Design2Div> */}
-            {/* <Starting style={{ minWidth: '100vw', maxHeight: '99vh' }} /> */}
-        </div>
-        
+                {/* <Starting style={{ minWidth: '100vw', maxHeight: '99vh' }} /> */}
+            </div>
+            <AboutFooter>
+                <AboutFootImg style={{ width: '439px', marginTop: '70px' }} />
+            </AboutFooter>
         </>
     )
 }
@@ -245,4 +248,17 @@ const Design2Div = styled.div`
     left: 630px;
     top: 1942px;
 
+`
+
+const AboutFooter = styled.div`
+    display: flex;
+    justify-content: center;
+    z-index: -1;
+    
+    position: absolute;
+    width: 100%;
+    height: 577px;
+    top: 2210px;
+
+    background: #F7F7F7;
 `
