@@ -54,7 +54,6 @@ const Main = () => {
     }
   };
 
-  
   const Searching = () => {
     if (searchInput === '')
       alert('검색할 단어를 입력해주세요 !')
