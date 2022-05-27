@@ -41,7 +41,7 @@ import AuthRedirectHandler from "../auth/AuthRedirectHandeler";
 import CrossWord from "../pages/CrossWord";
 import GameMain from "../pages/GameMain";
 
-import MetaTag from "./MetaTag";
+import MetaTag from "../pages/MetaTag";
 
 // HOC (high order components)
 import PublicRoute from "../auth/PublicRoute";
