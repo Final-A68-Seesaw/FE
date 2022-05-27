@@ -54,7 +54,6 @@ const CommentCard = (props) => {
 
   //삭제 데이터 전송
   const deleteCmt = (data) => {
-    console.log(data)
     if (props.data.commentCount!==undefined) {
     dispatch(__deleteDictComment(data, props.postId, props.pageNum));
     } else {

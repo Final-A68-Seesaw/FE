@@ -14,43 +14,6 @@ import GameOVerDiv from '../asset/GameOverdiv.svg'
 
 const CrossWord = () => {
 
-    let AnswerLength = 0
-    let an = '0'
-    let aref = []
-
-    const AnswerPut = (e) => {
-
-        // console.log(aref)
-
-        // let getAnswer = e.target.value
-
-        // if (getAnswer.length >= 2) {
-        //     e.target.value = getAnswer.slice(0, 1)
-
-        //     if (an < AnswerLength - 1) {
-        //         an++
-        //         document.getElementById(an.toString()).focus()
-        //     }
-        // }
-
-        // if (e.target.value.length >= 2) {
-        //     if (an < AnswerLength - 1) {
-        //         an++
-        //         document.getElementById(an.toString()).focus()
-        //     }
-        // }
-
-        // return
-        // // console.log(aref)
-        // console.log(e.target.id)
-        // // e.current.focus()
-        // an++
-        // console.log(an.toString())
-        // // console.log(Answercell)
-        // console.log(document.getElementById(e.target.id))
-        // document.getElementById(an.toString()).focus()
-    }
-
     const inputRef = useRef()
 
     const [selQuiz, setSelQuiz] = useState()
@@ -60,35 +23,7 @@ const CrossWord = () => {
     const [giveup, setGiveup] = useState(false)
     const [gameover, setGameover] = useState(false)
 
-    const [testData, setTestData] = useState([
-        // {
-        //     num: 1,
-        //     word: '피카츄',
-        //     desc: '전기쥐',
-        //     line: 'right',
-        //     row: 3,
-        //     col: 3,
-        //     pass: false,
-        // },
-        // {
-        //     num: 2,
-        //     word: '라이츄파이리',
-        //     desc: '전기쥐진화+스타트불',
-        //     line: 'down',
-        //     row: 5,
-        //     col: 1,
-        //     pass: false,
-        // },
-        // {
-        //     num: 3,
-        //     word: '이상해씨',
-        //     desc: '스타트풀',
-        //     line: 'right',
-        //     row: 5,
-        //     col: 2,
-        //     pass: false,
-        // },
-    ])
+    const [testData, setTestData] = useState([])
 
     const SelWord = (data) => {
         if (data.pass || giveup)
@@ -99,10 +34,6 @@ const CrossWord = () => {
         setAnswerCheck(true)
         inputRef.current.focus()
     }
-
-
-    // console.log(selQuiz);
-    // console.log(writeAnswer);
 
     const SettingLine = (data, ikey) => {
         return <CellContainer key={ikey}>
@@ -153,7 +84,6 @@ const CrossWord = () => {
             return
 
         if (selQuiz.word === writeAnswer) {
-            console.log('ok')
             let test = (testData.findIndex((v, i) => selQuiz.id === v.id))
             testData[test].pass = true
             setAnswerCheck(true)
@@ -164,7 +94,6 @@ const CrossWord = () => {
             }
         }
         else {
-            console.log('no')
             setAnswerCheck(false)
         }
 
@@ -173,7 +102,6 @@ const CrossWord = () => {
 
     useEffect(() => {
         MainApi.crossgame().then((res) => {
-            console.log(res.data);
             setTestData(res.data)
         })
     }, [])

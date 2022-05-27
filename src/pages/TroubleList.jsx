@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InfiniteScroll from 'react-infinite-scroll-component'
 
 //redux
@@ -23,9 +23,8 @@ const TroubleList = () => {
 
   const TroubleList = useSelector((state) => state.trouble.list)
 
-  console.log(TroubleList);
-
   const dispatch = useDispatch()
+  const [page, setPage] = useState(1)
 
   useEffect(() => {
     dispatch(TroubleActions.__loadTrouCardList(1))

@@ -65,15 +65,12 @@ const Main = () => {
    
   React.useEffect(() => {
     MainApi.mainGetBest().then((res) => {
-      // console.log('16', res.data)
       setGetRecent(res.data)
     })
     MainApi.mainGetRand().then((res) => {
-      // console.log('2', res.data)
       setGetRand(res.data)
     })
     MainApi.mainGetRecent().then((res) => {
-      // console.log('9', res.data)
       setGetBest(res.data)
       setSelectBest(res.data[0])
     })

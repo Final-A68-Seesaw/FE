@@ -80,9 +80,11 @@ const TroubleAdd = () => {
 
   //엔터키 프레스 후 태그의 내용이 중복되면 얼럿이 뜨고 없으면 추가된 후 태그 인풋이 리셋됨
   const submitTagItem = () => {
-    if (!tagList.find((v) => v === tagItem) && tagList.length < 10) {
+    const tag = tagItem.replace(/^\s+|\s+$/g, '')
+
+    if (!tagList.find((v) => v === tag) && tagList.length < 10) {
       let updatedTagList = [...tagList];
-      updatedTagList.push(tagItem);
+      updatedTagList.push(tag);
       setTagList(updatedTagList);
     }
     setTagItem("");
@@ -109,8 +111,6 @@ const TroubleAdd = () => {
       files: newPostImages,
     };
     dispatch(__updateTrouDetail(troubleDto, params.id));
-    console.log("g2",troubleDto);
-  
   };
   
 

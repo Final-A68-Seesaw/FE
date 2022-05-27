@@ -20,7 +20,7 @@ const SignupMBTI = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.user.usersign);
-  console.log(userData)
+  
   const [Mbti, setMbti] = useState({
     energy: null,
     insight: null,
@@ -68,7 +68,6 @@ const onSubmit = async () => {
     );
     history.push("/signup/making/character");
   } catch (e) {
-    console.log(e);
     if (e.message === "Request failed with status code 400") {
       alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
       history.push("/login")

@@ -30,10 +30,6 @@ const DictList = (props) => {
     return () => dispatch(DictionaryActions.clearDict())
   }, [])
 
-  // onscroll = (e) => {
-  //   console.log(e);
-  // };
-
   const getData = () => {
     let newPage = page + 1
     if (dictList.length < 30) return
@@ -42,8 +38,6 @@ const DictList = (props) => {
 
     setPage(newPage)
   }
-
-  // console.log(dictList);
 
   return (
     <>

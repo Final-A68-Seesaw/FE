@@ -136,7 +136,6 @@ const Mainchat = (props) => {
   const sendPublicMessage = () => {
 
     if (!userData.message) {
-      console.log("내용을 입력해주세요!");
     } else {
       try {
         let chatMessage = {
@@ -198,7 +197,7 @@ const Mainchat = (props) => {
             </div>
 
           return <div key={i} style={{ display: 'flex' }}>
-            <div className='chatImg'></div>
+            {/* <div className='chatImg'></div> */}
             <p className='usernick'>{v.senderName}</p>
             <p className='userchat' style={{ justifyContent: 'left', wordBreak: 'break-all', width: '240px', height: '100%', margin: '-2px 10px 20px 0' }}>{v.message}</p>
             {/* <p className='chattime' style={{ margin: '4px 0 20px 0', fontSize: '10px' }}>{v.createdAt}</p> */}

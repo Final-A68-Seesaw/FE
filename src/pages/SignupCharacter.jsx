@@ -135,7 +135,6 @@ const SignupCharacter = () => {
       }
       else{
         const kakao = await userApi.kakaoCharacter(signKakao)
-        console.log(kakao)
         const Token = kakao.headers.authorization.split(";Bearer ");
         const accessToken = Token[0].split(" ")[1];
         const refreshToken = Token[1];
@@ -151,7 +150,6 @@ const SignupCharacter = () => {
         history.replace("/main")      
       }
     } catch (e) {
-      console.log(e);
       if (e.message === "Request failed with status code 400") {
         alert("중복된 닉네임입니다.");
         return;

@@ -18,7 +18,6 @@ import styled from "styled-components";
 const MyPageScrap = () => {
   const dispatch = useDispatch();
   const dataList = useSelector((state) => state.mypage.scrap);
-  console.log(dataList && dataList);
 
   //마이페이지 scrap 데이터 로드
   useEffect(() => {

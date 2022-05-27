@@ -23,8 +23,6 @@ const FileUpload2 = (props) => {
   const [imgUrlList, setImgUrlList] = useState([])
 
   useEffect(() => {
-    // console.log('list' ,imgUrlList);
-    // dispatch(ImageActions.getimg())
     if (props.file)
       dispatch(__loadDictDetail(params.cardTitleId, 1));
 
@@ -49,7 +47,6 @@ const FileUpload2 = (props) => {
     for (let i = 0; i < fileLength; i++) {
       if (FileList[i].size > 10 * 1024 * 1024) {
         setOversize(true)
-        console.log(oversize);
         return
       }
       UrlList.push(URL.createObjectURL(FileList[i]));

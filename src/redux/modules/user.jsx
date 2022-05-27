@@ -60,10 +60,8 @@ export const __login =
 
 const __kakao = (code) => {
   return async function (dispatch, getState, { history }) {
-    console.log(code);
     try {
       const login = await userApi.kakao(code);
-      console.log(login);
       if(login.data.email !== ''){
         dispatch(userSave({id: login.data.kakaoId, username: login.data.email}))
         history.push("/signup/making")
@@ -71,7 +69,6 @@ const __kakao = (code) => {
         const Token = login.headers.authorization.split(";Bearer ");
         const accessToken = Token[0].split(" ")[1];
         const refreshToken = Token[1];
-        console.log(Token);
         cookies.set("accessToken", accessToken, {
           path: "/",
           maxAge: 259200, // 3일
@@ -83,15 +80,14 @@ const __kakao = (code) => {
         history.replace("/main");
       }
     } catch (e) {
-      console.log(e);
-      // if(e.message === "Request failed with status code 400") {
-      //   history.replace("/signup/making");
-      //   dispatch(userSave({code: code,}))
-      //   return;
-      // }
-      // console.log("kakao error", e);
-      // window.alert("로그인에 실패했습니다.");
-      // history.replace("/login");
+      if(e.message === "Request failed with status code 400") {
+        history.replace("/signup/making");
+        dispatch(userSave({code: code,}))
+        return;
+      }
+      console.log("kakao error", e);
+      window.alert("로그인에 실패했습니다.");
+      history.replace("/login");
     }
   };
 };
@@ -158,9 +154,6 @@ export default handleActions(
     [USERDATA]: (state, action) =>
       produce(state, (draft) => {
         draft.usersign = { ...initialState.usersign, ...action.payload };
-      console.log("action",action.payload)
-      console.log("state",state)
-      console.log("draft",draft.usersign)
       }),
 
 

@@ -18,7 +18,6 @@ const FileUpload = (props) => {
   const [Files, setFiles] = useState([]);
   const [imgUrlList, setImgUrlList] = useState(props.file ? props.file : []);
 
-  console.log(props)
   useEffect(() => {
     if (props.file)
       dispatch(TroubleActions.getTrouDetailDB(params.id, 1));

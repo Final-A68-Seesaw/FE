@@ -42,7 +42,6 @@ const DictionaryCard = (props) => {
 
           <ScrapBtn
             onClick={(e) => {
-              console.log(props.data)
               ChangeScrap(props.data.postId);
               e.stopPropagation();
             }}

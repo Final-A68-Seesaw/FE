@@ -53,7 +53,6 @@ export const __loadMypageScrap = (data) =>{
 
 export const __scrapMyPage = (scrap, postId) => {
   return (dispatch, getState, { history }) => {
-    console.log(scrap, postId);
     dictApi
       .scrapDict(postId)
       .then((res) => dispatch(scrapMypage({ postId, scrapStatus: res.data })))
@@ -85,7 +84,6 @@ export const __loadMypageWriting = (data) =>{
 
 export const __editMyProfile = (data) =>{
   return(dispatch, getState, {history}) =>{
-    console.log(data)
     MypageApi
     .mypagePutProfile(data)
     .then((res)=>{

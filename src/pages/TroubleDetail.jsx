@@ -38,6 +38,8 @@ const TroubleDetail = (props) => {
   const dispatch = useDispatch();
   const DataList = useSelector((state) => state.trouble.detail);
   const myInfo = useSelector((state) => state.mypage.list);
+  
+  const [cmt, setCmt] = useState('')
 
   useEffect(() => {
     dispatch(TroubleActions.getTrouDetailDB(params.id, pageNum));
@@ -51,18 +53,20 @@ const TroubleDetail = (props) => {
   const [inputCount, setInputCount] = useState("0");
   const onInputChange = (e) => {
     setInputCount(e.target.value.length);
+    setCmt(e.target.value)
   };
 
   // //디테일 삭제 전송
   const deleteDetail = (data) => {
-    dispatch(__deleteTrouDetail(data));
+    if (window.confirm('해당 고민글을 삭제 할까요?'))
+      dispatch(__deleteTrouDetail(data));
   };
 
   //댓글 데이터 전송
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(__addTrouComment(params.id, data, DataList.nickname));
     alert("댓글이 등록됐습니다!")
+    setCmt('')
   };
 
   //pagenation
@@ -99,6 +103,7 @@ const TroubleDetail = (props) => {
               </CharacterAlign>
             </OutCharAlign>
           </WriterInfo>
+          {DataList?.nickname === DataList?.writer ? 
           <EditDeleteBox>
             <div
               style={{ margin: "0 0.25rem", cursor: "pointer" }}
@@ -107,7 +112,7 @@ const TroubleDetail = (props) => {
               }}
             >
               수정
-            </div>{" "}
+            </div> 
             |
             <div
               style={{ margin: "0 0.25rem", cursor: "pointer" }}
@@ -118,6 +123,7 @@ const TroubleDetail = (props) => {
               삭제
             </div>
           </EditDeleteBox>
+          : null}
         </UserInfoBox>
 
         <ContentsBox>{DataList && DataList.contents} </ContentsBox>
@@ -185,14 +191,15 @@ const TroubleDetail = (props) => {
         <HrLine />
         <CommentInputBox>
           <CommentCharBox>
-        <Character char={myInfo?.profileImages} />
-        </CommentCharBox>
+            <Character char={myInfo?.profileImages} />
+          </CommentCharBox>
           <CommentUserName>{DataList && DataList.nickname}</CommentUserName>
           <form onSubmit={handleSubmit(onSubmit)}>
             <CommentTextarea
               ref={register}
               name="comment"
               type="text"
+              value={cmt}
               onChange={onInputChange}
               maxLength="500"
               placeholder="주제와 무관한 댓글, 홍보, 욕설, 일방적인 비난이나 악플 등은 삭제될 수 있습니다."
@@ -234,7 +241,7 @@ const TroubleDetail = (props) => {
             Array(Math.ceil(DataList.commentCount / 4))
               .fill()
               .map((v, i) => {
-                
+
                 if (pageNum === i + 1)
                   return (
                     <SelectNumberBox key={i} onClick={() => pageChange(i + 1)}>
