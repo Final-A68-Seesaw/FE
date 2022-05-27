@@ -18,6 +18,7 @@ import styled from 'styled-components'
 import Line from '../asset/Dictionary_list_line.svg'
 import { bold16, bold22, bold15, med15 } from '../themes/textStyle'
 import Result0 from '../asset/Result0.svg'
+import ResultCard from '../components/ResultCard'
 
 
 const DictList = () => {
@@ -46,7 +47,7 @@ const DictList = () => {
 
                 {dictSearchList ?
                     <CardWholeBox>
-                        {dictSearchList?.map((v, i) => <DictionaryCard key={i} data={v} />)}
+                        {dictSearchList?.map((v, i) => <ResultCard key={i} data={v} />)}
                     </CardWholeBox>
                     : <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '106px auto 0 auto' }} >
                         <Result0 />
