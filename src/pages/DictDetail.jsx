@@ -182,11 +182,11 @@ const DictDetail = (props) => {
           ) : null}
         </>
 
-        {dataList && dataList.videoUrl === "null" || "" ? null : (
+        {dataList && dataList.videoUrl === "" ? null : (
           <>
             <LabelTag>
               참고 영상 URL |
-              <VideoUrlTag href={dataList && httpCheck(dataList.videoUrl)}>
+              <VideoUrlTag onClick = {()=>{window.open(httpCheck(dataList.videoUrl))}}>
                 {dataList && dataList.videoUrl}
               </VideoUrlTag>
             </LabelTag>
@@ -429,6 +429,7 @@ const VideoUrlTag = styled.a`
   ${med14}
   margin-left : 8px;
   text-decoration-line: none;
+  cursor: pointer;
 `;
 
 const TagArea = styled.div`
