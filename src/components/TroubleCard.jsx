@@ -24,9 +24,9 @@ const TroubleCard = (props) => {
       >
         <WordCard>
           <GenBox>
-            <GenerationTag> {props.data.answer} </GenerationTag>
-            <Arrow />
             <GenerationTag> {props.data.question} </GenerationTag>
+            <Arrow />
+            <GenerationTag> {props.data.answer} </GenerationTag>
           </GenBox>
           <CardTitle>{props.data.title}</CardTitle>
           <ViewCountBox>
