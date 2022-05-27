@@ -18,7 +18,6 @@ const DictionaryCard = (props) => {
   const dispatch = useDispatch();
   const dictList = useSelector((state) => state.dictionary.list);
 
-
   //스크랩 기능
   const [scrap, setScrap] = useState(false);
   const ChangeScrap = (postId) => {

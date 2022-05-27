@@ -3,7 +3,7 @@ import { cookies } from "../shared/cookie";
 
 const env = process.env.NODE_ENV;
 
-const targetServer = 'https://www.walbu.shop'
+const targetServer = process.env.REACT_APP_SERVER_URL
 
 export const instance = axios.create({
   baseURL: targetServer,

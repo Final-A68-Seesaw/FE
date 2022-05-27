@@ -54,6 +54,8 @@ const Mainchat = (props) => {
   }, [chatList])
 
   const onKeyDown = (e) => {
+    if (e.nativeEvent.isComposing) { return; } 
+
     if (e.key === "Enter") {
       sendPublicMessage()
     }

@@ -58,6 +58,8 @@ const CrossWord = () => {
     }
 
     const onkeydown = (e) => {
+        if (e.nativeEvent.isComposing) { return; } 
+
         if (e.key === 'Enter')
             CheckAnswer()
     }
