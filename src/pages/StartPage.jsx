@@ -1,21 +1,19 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import styled from "styled-components";
 
 import Starting from "../asset/Starting.svg";
 import { history } from "../redux/configStore";
-import MetaTag from "./MetaTag";
 
 const StartPage = () => {
   return (
     <>
-      <MetaTag
-        imgsrc={
-          "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FVXUEC%2FbtrDi354mZE%2FLwRhmHgrWnhU4xkfGM1ir0%2Fimg.png"
-        }
-        url={"https://play-seeso.com/"}
-        title={"SEESO"}
-        description={"신조어도 배우고, 고민 해결책을 세대별로 얻어보세요!"}
-      />
+     <Helmet>
+       <title>SEESO</title>
+      <meta name="description" content="신조어도 배우고, 고민의 해결책을 세대별로 얻어보세요!"  data-react-helmet="true"/>
+      <meta property="og:image" content="../asset/SEOLogo.png"/>
+      <meta property="og:url" content="https://play-seeso.com/"/>
+     </Helmet>
       <div style={{ background: "#8E41FF", width: "100vw", height: "100vh" }}>
         <TitleText>우리들의 플레이그라운드</TitleText>
         <SubTitle>
