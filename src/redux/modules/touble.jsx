@@ -2,6 +2,7 @@ import produce from "immer";
 import { handleActions } from "redux-actions";
 import { createAction } from "redux-actions";
 import { TroubleApi } from "../../api/troubleApi";
+import { actionCreators as ImageActions } from "./image";
 
 const GET_TROU = "GETTROU";
 const ADD_TROU = "ADDTROU";
@@ -84,38 +85,39 @@ export const __addTrou = (data) => {
 export const __updateTrouDetail = (data, id) => {
   return (dispatch, getState, { history }) => {
 
-    console.log(getState());
-    // const formData = new FormData();
-    // formData.append(
-    //   "troubleRequestDto",
-    //   new Blob(
-    //     [
-    //       JSON.stringify({
-    //         title: data.title,
-    //         contents: data.contents,
-    //         question: data.question,
-    //         answer: data.answer,
-    //         tagNames: data.tagNames,
-    //         troubleImages: data.filesUrl,
-    //       }),
-    //     ],
-    //     {
-    //       type: "application/json",
-    //     }
-    //   )
-    // );
+    console.log(data, id);
 
-    // if (data.files.newimagelist !== 0) {
-    //   data.files.newimagelist.map((e) => {
-    //     return formData.append("files", e);
-    //   });
-    // }
+    const formData = new FormData();
+    formData.append(
+      "troubleRequestDto",
+      new Blob(
+        [
+          JSON.stringify({
+            title: data.title,
+            contents: data.contents,
+            question: data.question,
+            answer: data.answer,
+            tagNames: data.tagNames,
+            troubleImages: data.files.imagelist,
+          }),
+        ],
+        {
+          type: "application/json",
+        }
+      )
+    );
 
-    // TroubleApi.troubleput(id, formData)
-    //   .then((res) => {
-    //     history.replace(`/trouble/detail/${id}`);
-    //   })
-    //   .catch((err) => console.log(err));
+    if (data.files.newimagelist !== 0) {
+      data.files.newimagelist.map((e) => {
+        return formData.append("files", e);
+      });
+    }
+
+    TroubleApi.troubleput(id, formData)
+      .then((res) => {
+        history.replace(`/trouble/detail/${id}`);
+      })
+      .catch((err) => console.log(err));
   };
 };
 
@@ -166,7 +168,10 @@ export const __deleteTrouComment = (commentId, postId, pageNum) => {
 const getTrouDetailDB = (id, commentId) => {
   return (dispatch, getState, { history }) => {
     TroubleApi.troubledetail(id, commentId)
-      .then((res) => dispatch(getDetail(res.data)))
+      .then((res) => {
+        dispatch(getDetail(res.data))
+        dispatch(ImageActions.getimg(res.data.troubleImages))
+      })
       .catch((err) => console.log(err));
   };
 };

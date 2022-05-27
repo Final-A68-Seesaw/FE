@@ -15,9 +15,7 @@ const FileUpload = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
-  const dbimages = useSelector((state) => state.trouble.detail)
-
-  console.log(dbimages);
+  const dbimages = useSelector((state) => state.image.imagelist)
 
   const [Files, setFiles] = useState([]);
   const [oversize, setOversize] = useState(false)
@@ -73,12 +71,13 @@ const FileUpload = (props) => {
           <p>파일 첨부</p>
           <div style={{ display: 'flex', color: '#999999' }}>
             <p style={{ margin: '0 5px' }}>파일 제한</p>
-            <p style={{ color: overlength ? 'red' : '#999999' }}>({imgUrlList?.length + dbimages?.length}/10)</p>
+            <p style={{ color: overlength ? 'red' : '#999999' }}>({imgUrlList.length + dbimages?.length}/10)</p>
             <p style={{ margin: '0 5px' }}>/</p>
             <p style={{ color: oversize ? 'red' : '#999999' }}>10MB</p>
           </div>
         </OversizeMsg>
-        {dbimages?.length === 0 && imgUrlList?.length === 0 ? null : <PreviewBox style={{ justifyContent: "flex-start" }}>
+        {dbimages?.length === 0 && imgUrlList.length === 0 ? null : 
+        <PreviewBox style={{ justifyContent: "flex-start" }}>
           <Previews>
             {dbimages?.map((v, i) => {
               return (
@@ -88,7 +87,7 @@ const FileUpload = (props) => {
               );
             })}
 
-            {imgUrlList?.map((v, i) => {
+            {imgUrlList.map((v, i) => {
               return (
                 <div key={i} style={{ margin: "10px" }}>
                   <Preview src={v} onClick={() => delFile(i)} />

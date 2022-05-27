@@ -113,8 +113,6 @@ const TroubleAdd = () => {
     };
     dispatch(__updateTrouDetail(troubleDto, params.id));
   };
-
-  console.log(dataList);
   
 
   return (
