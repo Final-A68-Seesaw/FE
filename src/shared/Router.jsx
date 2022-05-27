@@ -41,8 +41,6 @@ import AuthRedirectHandler from "../auth/AuthRedirectHandeler";
 import CrossWord from "../pages/CrossWord";
 import GameMain from "../pages/GameMain";
 
-import MetaTag from "../pages/MetaTag";
-
 // HOC (high order components)
 import PublicRoute from "../auth/PublicRoute";
 import PrivateRoute from "../auth/PrivateRoute";
@@ -51,9 +49,6 @@ const Router = () => {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
-        
-        <MetaTag />
-
         <Route path="/" exact component={StartPage} />
         <Route path="/about" exact component={About} />
 

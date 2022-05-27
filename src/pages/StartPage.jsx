@@ -7,13 +7,6 @@ import { history } from "../redux/configStore";
 
 const StartPage = () => {
   return (
-    <>
-     <Helmet>
-       <title>SEESO</title>
-      <meta name="description" content="신조어도 배우고, 고민의 해결책을 세대별로 얻어보세요!"  data-react-helmet="true"/>
-      <meta property="og:image" content="../asset/SEOLogo.png"/>
-      <meta property="og:url" content="https://play-seeso.com/"/>
-     </Helmet>
       <div style={{ background: "#8E41FF", width: "100vw", height: "100vh" }}>
         <TitleText>우리들의 플레이그라운드</TitleText>
         <SubTitle>
@@ -22,7 +15,6 @@ const StartPage = () => {
         <StartBtn onClick={() => history.push("/login")}>놀러 가기</StartBtn>
         <Starting style={{ minWidth: "100vw", maxHeight: "99vh" }} />
       </div>
-    </>
   );
 };
 
