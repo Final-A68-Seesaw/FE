@@ -24,14 +24,14 @@ const TroubleCard = (props) => {
       >
         <WordCard>
           <GenBox>
-            <GenerationTag> {props.data.answer} </GenerationTag>
-            <Arrow />
             <GenerationTag> {props.data.question} </GenerationTag>
+            <Arrow />
+            <GenerationTag> {props.data.answer} </GenerationTag>
           </GenBox>
           <CardTitle>{props.data.title}</CardTitle>
           <ViewCountBox>
             <div>조회수 {props.data.views}</div>
-            {/* <div>댓글 {props.data.commentCount} </div> */}
+            <div>댓글 {props.data.commentCount} </div>
           </ViewCountBox>
         </WordCard>
         <img
