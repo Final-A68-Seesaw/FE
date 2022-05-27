@@ -31,7 +31,7 @@ const TroubleCard = (props) => {
           <CardTitle>{props.data.title}</CardTitle>
           <ViewCountBox>
             <div>조회수 {props.data.views}</div>
-            {/* <div>댓글 {props.data.commentCount} </div> */}
+            <div>댓글 {props.data.commentCount} </div>
           </ViewCountBox>
         </WordCard>
         <img
