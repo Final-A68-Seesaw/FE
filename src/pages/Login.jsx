@@ -119,9 +119,9 @@ const Login = () => {
               </Button>
             </ButtonBox>
           </form>
-          <hr />
+          {/* <hr /> */}
           <KakaoBox>
-            <KakaoBtn style={{ marginTop: "3rem" }} href={KAKAO_AUTH_URL} />
+            {/* <KakaoBtn style={{ marginTop: "3rem" }} href={KAKAO_AUTH_URL} /> */}
           </KakaoBox>
         </RightContainer>
       </Container>

@@ -26,6 +26,8 @@ const DictList = (props) => {
 
   useEffect(() => {
     dispatch(__loadDictCardList(1));
+
+    return () => dispatch(DictionaryActions.clearDict())
   }, [])
 
   // onscroll = (e) => {

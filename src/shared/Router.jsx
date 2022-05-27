@@ -75,7 +75,7 @@ const Router = () => {
         <Route path="/mypage/writing" exact component={MyPageWriting}/>
         <Route path="/mypage/edit" exact component={MyPageEdit}/>
 
-        <Route path="/user/kakao/callback" exact component={AuthRedirectHandler}/>
+        {/* <Route path="/user/kakao/callback" exact component={AuthRedirectHandler}/> */}
 
         <Route path="/gamemain" exact component={GameMain}/>
         <Route path="/game" exact component={CrossWord}/>

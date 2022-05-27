@@ -244,6 +244,7 @@ export default handleActions(
       }),
     [CLEAR_DICT]: (state, action) =>
       produce(state, (draft) => {
+        console.log('clear');
         draft.list = [];
         draft.files = [];
         draft.detailData = null;
@@ -251,16 +252,17 @@ export default handleActions(
 
     [SCRAP_DICT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(state);
         console.log(action.payload);
-        if (draft.list.length === 0)
+        console.log(draft.list.length);
+        if (draft.list.length === 0) {
           draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus;
+          draft.detailData.scrapCount = action.payload.scrapStatus.scrapCount;
+        }
         else {
           let index = draft.list.findIndex((v) => {
             return v.postId == action.payload.postId;
           });
-          draft.list[index].scrapStatus =
-            action.payload.scrapStatus.scrapStatus;
+          draft.list[index].scrapStatus = action.payload.scrapStatus.scrapStatus;
         }
       }),
 

@@ -4,6 +4,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 //redux
 import { clearTrou, __loadTrouCardList } from "../redux/modules/touble";
 import { useDispatch, useSelector } from "react-redux";
+import { actionCreators as TroubleActions } from "../redux/modules/touble";
 
 //element & component
 import Header from "../components/Header";
@@ -24,6 +25,10 @@ const TroubleList = () => {
   console.log(TroubleList);
 
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(TroubleActions.__loadTrouCardList(1))
+  }, [])
 
   const getData = () => {
     let newPage = page + 1

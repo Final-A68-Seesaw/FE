@@ -262,6 +262,7 @@ export default handleActions(
 );
 
 const actionCreators = {
+  __loadTrouCardList,
   getTrouDetailDB,
 };
 
