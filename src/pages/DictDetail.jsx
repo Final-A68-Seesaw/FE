@@ -120,7 +120,6 @@ const DictDetail = (props) => {
                 >
                   삭제
                   </div> */}
-            | 신고
           </EditDeleteBox>
         </BetweenBox>
         <UserInfoBox>

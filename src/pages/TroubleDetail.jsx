@@ -117,7 +117,6 @@ const TroubleDetail = (props) => {
             >
               삭제
             </div>
-            | 신고
           </EditDeleteBox>
         </UserInfoBox>
 
