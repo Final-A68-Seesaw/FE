@@ -18,6 +18,7 @@ import { BasicTextarea } from "../elements/Textarea";
 //style
 import styled from "styled-components";
 import Book from "../asset/Dictionary_add_imo.svg";
+import FileUpload2 from "../components/FileUpload2";
 
 const TroubleAdd = () => {
   const {
@@ -61,9 +62,11 @@ const TroubleAdd = () => {
 
   //엔터키 프레스 후 태그의 내용이 중복되면 얼럿이 뜨고 없으면 추가된 후 태그 인풋이 리셋됨
   const submitTagItem = () => {
-    if (!tagList.find((v) => v === tagItem) && tagList.length < 10) {
+    const tag = tagItem.replace(/^\s+|\s+$/g, '')
+
+    if (!tagList.find((v) => v === tag) && tagList.length < 10) {
       let updatedTagList = [...tagList];
-      updatedTagList.push(tagItem);
+      updatedTagList.push(tag);
       setTagList(updatedTagList);
     }
     setTagItem("");
@@ -82,7 +85,6 @@ const TroubleAdd = () => {
   const images = useSelector((state) => state.image.newimagelist)
   const myInfo = useSelector((state) => state.mypage.list);
   const onSubmit = (data) => {
-    console.log(data, tagList, images);
     let troubleDto = {
       title: data.title,
       contents: data.contents,
@@ -174,7 +176,7 @@ const TroubleAdd = () => {
             </TroubleTextArea>
 
             {/* 첨부파일 */}
-            <FileUpload />
+            <FileUpload2 />
           </TroubleBox>
         </form>
         <TagWholeBox>

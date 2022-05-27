@@ -27,8 +27,6 @@ const DictList = () => {
 
     const params = useParams()
 
-    console.log(params, dictSearchList);
-
     const [dicSel, setDicSel] = useState()
 
     useEffect(() => {

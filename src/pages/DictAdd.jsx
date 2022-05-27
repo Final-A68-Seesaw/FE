@@ -102,8 +102,6 @@ const DictAdd = (props) => {
       files: images,
     };
 
-    console.log(postDto, data)
-
     dispatch(__addDict(postDto));
   };
 

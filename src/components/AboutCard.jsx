@@ -3,8 +3,6 @@ import styled from 'styled-components';
 
 const AboutCard = (props) => {
 
-    console.log(props);
-
     return (
         <div style={{ position: 'absolute', width: '80vw', display: 'flex', margin: '0 100px', justifyContent: props.data.pos === 'l' ? 'flex-start' : 'flex-end', alignItems: 'center', top: props.data.top }}>
             <props.char />

@@ -45,7 +45,6 @@ const initialState = {
 
 export const __addDict = (data) => {
   return (dispatch, getState, { history }) => {
-    console.log(data);
     const formData = new FormData();
     formData.append(
       "postRequestDto",
@@ -108,11 +107,9 @@ export const __loadDictDetail = (cardTitle, commentPage) => {
 
 export const __deleteDictDetail = (postId) => {
   return (dispatch, getState, { history }) => {
-    console.log(postId);
     dictApi
       .delDictDetail(postId)
       .then((res) => {
-        console.log(res);
         history.push("/dictionary");
       })
       .catch((err) => console.log(err));
@@ -121,7 +118,6 @@ export const __deleteDictDetail = (postId) => {
 
 export const __updateDictDetail = (data, postId) => {
   return (dispatch, getState, { history }) => {
-    console.log(data);
     const formData = new FormData();
     formData.append(
       "postRequestDto",
@@ -164,7 +160,6 @@ export const __loadDictCardList = (page) => {
 
 export const __scrapDict = (scrap, postId) => {
   return (dispatch, getState, { history }) => {
-    console.log(scrap, postId);
     dictApi.scrapDict(postId).then((res) => {
       return dispatch(scrapDict({ postId, scrapStatus: res.data }));
     });
@@ -187,7 +182,6 @@ export const __deleteDictComment = (commentId, postId, pageNum) => {
     dictApi
       .delComment(commentId)
       .then((res) => {
-        console.log("gw", res);
         let getNextComment = {
           commentId: commentId,
           nextComment: res.data,
@@ -220,7 +214,6 @@ export default handleActions(
   {
     [GET_DICT]: (state, action) =>
       produce(state, (draft) => {
-        // console.log(action.payload);
         if (draft.list.length === 0)
           draft.list = action.payload
         else
@@ -229,12 +222,10 @@ export default handleActions(
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailData = action.payload;
-        console.log('dt', action.payload);
       }),
 
     [ADD_DICT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         draft.data.unshift(action.payload.data);
       }),
 
@@ -244,7 +235,6 @@ export default handleActions(
       }),
     [CLEAR_DICT]: (state, action) =>
       produce(state, (draft) => {
-        console.log('clear');
         draft.list = [];
         draft.files = [];
         draft.detailData = null;
@@ -274,7 +264,6 @@ export default handleActions(
             0,
             4
           );
-        console.log(state.detailData)
 
         draft.detailData.commentCount = action.payload.commentCount;
       }),
@@ -289,7 +278,6 @@ export default handleActions(
       }),
     [DEL_DICT_COM]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         let comList = state.detailData.postComments.filter(
           (v) => v.commentId !== action.payload.commentId
         );
@@ -311,7 +299,6 @@ export default handleActions(
           action.payload.likeStatus.commentLikeStatus;
         draft.detailData.postComments[index].commentLikeCount =
           action.payload.likeStatus.commentLikeCount;
-        console.log(action.payload);
       }),
   },
   initialState

@@ -139,7 +139,6 @@ export const __addTrouComment = (troubleid, data, nickname) => {
 
 export const __updateTrouComment = (data, commentId) => {
   return (dispatch, getState, { history }) => {
-    console.log(data, commentId);
     TroubleApi.troublecommentput(commentId, data)
       .then(
         (res) =>dispatch(putTrouCom({comment: data.comment, commentId }))
@@ -152,7 +151,6 @@ export const __deleteTrouComment = (commentId, postId, pageNum) => {
   return (dispatch, getState, { history }) => {
     TroubleApi.troublecommentdelete(commentId)
       .then((res) => {
-        console.log(res)
         let getNextComment = {
           commentId: commentId,
           nextComment: res.data,
@@ -189,14 +187,12 @@ export default handleActions(
 
     [ADD_TROU]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
         // draft.list = action.payload
       }),
 
     [SET_TROU]: (state, action) =>
       produce(state, (draft) => {
         draft.files.push(action.payload.files);
-        console.log(state);
       }),
 
       [CLEAR_TROU]: (state, action) =>
@@ -253,9 +249,6 @@ export default handleActions(
           action.payload.comments.commentLikeStatus;
           draft.detail.troubleComments[index].commentLikeCount =
           action.payload.comments.commentLikeCount;
-
-        console.log(action.payload);
-        console.log(state)
       }),
   },
   initialState

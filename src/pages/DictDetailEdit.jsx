@@ -71,9 +71,13 @@ const DictDetailEdit = (props) => {
   };
 
   const submitTagItem = () => {
-    let updatedTagList = [...tagList];
-    updatedTagList.push(tagItem);
-    setTagList(updatedTagList);
+    const tag = tagItem.replace(/^\s+|\s+$/g, '')
+
+    if (!tagList.find((v) => v === tag) && tagList.length < 10) {
+      let updatedTagList = [...tagList];
+      updatedTagList.push(tag);
+      setTagList(updatedTagList);
+    }
     setTagItem("");
   };
 
