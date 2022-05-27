@@ -12,6 +12,7 @@ import {
 } from "../redux/modules/dictionary";
 import { history } from "../redux/configStore";
 import { actionCreators as DictionaryActions } from "../redux/modules/dictionary";
+import { actionCreators as ImageActions } from "../redux/modules/image";
 
 //element & component
 import Header from "../components/Header";
@@ -49,7 +50,10 @@ const DictDetail = (props) => {
     window.scrollTo({ top: 0 });
     dispatch(__loadDictDetail(params.cardTitleId, pageNum));
 
-    return () => { dispatch(DictionaryActions.clearDict()) }
+    return () => {
+      dispatch(DictionaryActions.clearDict())
+      dispatch(ImageActions.clrimg())
+    }
   }, []);
 
   //스크랩 기능
@@ -69,8 +73,10 @@ const DictDetail = (props) => {
 
   //인풋 글자수 count
   const [inputCount, setInputCount] = useState("0");
+  const [cmt, setCmt] = useState('')
   const onInputChange = (e) => {
     setInputCount(e.target.value.length);
+    setCmt(e.target.value)
   };
 
   //pagenation
@@ -90,12 +96,10 @@ const DictDetail = (props) => {
 
   //댓글 데이터 전송
   const onSubmit = (data) => {
-    console.log(data);
-    dispatch(__addDictComment(params.cardTitleId, data, dataList.nickname));
+    dispatch(__addDictComment(params.cardTitleId, {comment: cmt}, dataList.nickname));
+    setCmt('')
     alert("댓글이 등록됐습니다!")
   };
-
-  console.log(dataList);
 
   return (
     <>
@@ -182,11 +186,13 @@ const DictDetail = (props) => {
           ) : null}
         </>
 
-        {dataList && dataList.videoUrl === "null" ? null : (
+        {dataList && (dataList.videoUrl === "" || dataList.videoUrl === null) ? null : (
           <>
             <LabelTag>
               참고 영상 URL |
-              <VideoUrlTag href={dataList && httpCheck(dataList.videoUrl)}>
+              <VideoUrlTag
+                onClick={() => window.open(httpCheck(dataList.videoUrl))}
+              >
                 {dataList && dataList.videoUrl}
               </VideoUrlTag>
             </LabelTag>
@@ -236,6 +242,7 @@ const DictDetail = (props) => {
             <CommentTextarea
               ref={register}
               name="comment"
+              value={cmt}
               type="text"
               maxLength="500"
               onChange={onInputChange}
@@ -429,6 +436,8 @@ const VideoUrlTag = styled.a`
   ${med14}
   margin-left : 8px;
   text-decoration-line: none;
+
+  cursor: pointer;
 `;
 
 const TagArea = styled.div`

@@ -48,14 +48,14 @@ const DictAdd = (props) => {
     dispatch(__dictTitle(realtitle.title));
   };
 
-//단어 사용 세대
-const GenerationOptions = [
-  {value: "none", label: "선택하세요"},
-  {value: "X세대", label: "X세대(1965년 ~ 1979년)"},
-  {value: "Y세대", label: "Y세대(1980년 ~ 1994년)"},
-  {value: "Z세대", label: "Z세대(1995년 ~ 2005년)"},
-  {value: "알파세대", label: "알파세대(2006년~)"}
-]
+  //단어 사용 세대
+  const GenerationOptions = [
+    { value: "none", label: "선택하세요" },
+    { value: "X세대", label: "X세대(1965년 ~ 1979년)" },
+    { value: "Y세대", label: "Y세대(1980년 ~ 1994년)" },
+    { value: "Z세대", label: "Z세대(1995년 ~ 2005년)" },
+    { value: "알파세대", label: "알파세대(2006년~)" }
+  ]
 
   //태그
   const [tagItem, setTagItem] = useState("");
@@ -70,9 +70,11 @@ const GenerationOptions = [
 
   //엔터키 프레스 후 태그의 내용이 중복되면 얼럿이 뜨고 없으면 추가된 후 태그 인풋이 리셋됨
   const submitTagItem = () => {
-    if (!tagList.find((v) => v === tagItem) && tagList.length < 10) {
+    const tag = tagItem.replace(/^\s+|\s+$/g, '')
+
+    if (!tagList.find((v) => v === tag) && tagList.length < 10) {
       let updatedTagList = [...tagList];
-      updatedTagList.push(tagItem);
+      updatedTagList.push(tag);
       setTagList(updatedTagList);
     }
     setTagItem("");
@@ -89,7 +91,7 @@ const GenerationOptions = [
 
   //데이터전송
   const images = useSelector((state) => state.image.newimagelist)
-  
+
   const onSubmit = (data) => {
     let postDto = {
       title: data.title,
@@ -188,17 +190,17 @@ const GenerationOptions = [
           <hr style={{ margin: "1rem 0 1rem 0", color: "var(--grayed)" }} />
 
           <Select
-          name="generation"
-          register={register({
-            required: true,
-            validate: (value) => value !== "none",
-          })}
-          label = "단어 사용 세대"
-          width = "24rem"
-          error={errors?.generation?.type}
+            name="generation"
+            register={register({
+              required: true,
+              validate: (value) => value !== "none",
+            })}
+            label="단어 사용 세대"
+            width="24rem"
+            error={errors?.generation?.type}
           >
-            {GenerationOptions.map((item, index)=> (
-              <option key = {index} value = {item.value}>{item.label}</option>
+            {GenerationOptions.map((item, index) => (
+              <option key={index} value={item.value}>{item.label}</option>
             ))}
           </Select>
 
@@ -218,17 +220,17 @@ const GenerationOptions = [
           <WholeBox>
             {tagList.length === 0 ? null : (
               <div>
-              <TagBox>
-                {tagList.map((tagItem, index) => {
-                  return (
-                    <TagItem key={index}>
-                      <Text>#{tagItem}</Text>
-                      <TagXButton onClick={deleteTagItem}>X</TagXButton>
-                    </TagItem>
-                  );
-                })}
-              </TagBox>
-              <HrLine />
+                <TagBox>
+                  {tagList.map((tagItem, index) => {
+                    return (
+                      <TagItem key={index}>
+                        <Text>#{tagItem}</Text>
+                        <TagXButton onClick={deleteTagItem}>X</TagXButton>
+                      </TagItem>
+                    );
+                  })}
+                </TagBox>
+                <HrLine />
               </div>
             )}
 

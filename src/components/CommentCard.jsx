@@ -29,14 +29,17 @@ const CommentCard = (props) => {
 
   //댓글 수정 클릭시 인풋 열고 닫기
   const [updateInput, setUpdateInput] = useState(false);
+  const [upcomment, setUpcomment] = useState('')
   const updateCmt = () => {
     setUpdateInput(!updateInput);
+    setUpcomment(props.data.comment)
   };
 
   //댓글 인풋 글자수 count
   const [inputCount, setInputCount] = useState("0");
   const onInputChange = (e) => {
     setInputCount(e.target.value.length);
+    setUpcomment(e.target.value)
   };
 
   //수정 데이터 전송
@@ -110,6 +113,7 @@ const CommentCard = (props) => {
               <CommentTextarea
                 ref={register}
                 name="comment"
+                value={upcomment}
                 type="text"
                 onChange={onInputChange}
                 maxLength="500"

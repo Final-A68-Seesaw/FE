@@ -229,7 +229,7 @@ export default handleActions(
     [GET_DICT_DETAIL]: (state, action) =>
       produce(state, (draft) => {
         draft.detailData = action.payload;
-        console.log(action.payload);
+        console.log('dt', action.payload);
       }),
 
     [ADD_DICT]: (state, action) =>
@@ -252,8 +252,6 @@ export default handleActions(
 
     [SCRAP_DICT]: (state, action) =>
       produce(state, (draft) => {
-        console.log(action.payload);
-        console.log(draft.list.length);
         if (draft.list.length === 0) {
           draft.detailData.scrapStatus = action.payload.scrapStatus.scrapStatus;
           draft.detailData.scrapCount = action.payload.scrapStatus.scrapCount;
@@ -263,6 +261,7 @@ export default handleActions(
             return v.postId == action.payload.postId;
           });
           draft.list[index].scrapStatus = action.payload.scrapStatus.scrapStatus;
+          draft.list[index].scrapCount = action.payload.scrapStatus.scrapCount;
         }
       }),
 
