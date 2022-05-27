@@ -55,11 +55,13 @@ const Header = (props) => {
   }
 
   const ModalOut = () => {
-    setTimeout(() => {
-      setShowModal(null)
-    }, 800)
+    if (showModal) {
+      setTimeout(() => {
+        setShowModal(null)
+      }, 800)
 
-    ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
+      ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
+    }
   }
 
   useEffect(() => {
@@ -67,7 +69,7 @@ const Header = (props) => {
   }, []);
 
   return (
-    <HeadWrap>
+    <HeadWrap onMouseLeave={ModalOut} >
       <Head >
         <HeadInner >
           <div style={{ display: "flex" }}>
@@ -160,7 +162,7 @@ const Header = (props) => {
       </Head>
 
       {showModal ?
-        <ModalContainer ref={ModRef} onMouseLeave={ModalOut} className="slide-in-top slide-out-top">
+        <ModalContainer ref={ModRef} className="slide-in-top slide-out-top">
           {showModal === 'dict' ?
             <DictHead>
               <HeadDown

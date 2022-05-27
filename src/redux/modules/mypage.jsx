@@ -121,6 +121,7 @@ export default handleActions(
               return v.postId == action.payload.postId;
             });
             draft.scrap[index].scrapStatus = action.payload.scrapStatus.scrapStatus
+            draft.scrap[index].scrapCount = action.payload.scrapStatus.scrapCount
           }),
   
         
