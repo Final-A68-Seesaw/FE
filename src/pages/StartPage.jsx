@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Starting from "../asset/Starting.svg";
 import { history } from "../redux/configStore";
-import MetaTag from "../shared/MetaTag";
+import MetaTag from "./MetaTag";
 
 const StartPage = () => {
   return (
@@ -12,6 +12,7 @@ const StartPage = () => {
         imgsrc={
           "https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FVXUEC%2FbtrDi354mZE%2FLwRhmHgrWnhU4xkfGM1ir0%2Fimg.png"
         }
+        url = {"https://play-seeso.com/"}
         title={"SEESO"}
         description={"신조어도 배우고, 고민 해결책을 세대별로 얻어보세요!"}
       />
