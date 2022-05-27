@@ -45,6 +45,31 @@ module.exports = {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       },
+      {
+        test: /\.html$/i,
+        loader: "html-loader",
+        options: {
+          sources: {
+            list: [
+              {
+                tag: "meta",
+                attribute: "content",
+                type: "src",
+                filter: (tag, attribute, attributes, resourcePath) => {
+                  if (
+                    attributes.value === "og:image" ||
+                    attributes.name === "twitter:image"
+                  ) {
+                    return true;
+                  }
+
+                  return false;
+                },
+              },
+            ],
+          },
+        },
+      },
     ]
   },
 
