@@ -96,7 +96,7 @@ module.exports = {
       
       meta: {
         'description': { name: 'description', contnet: '신조어도 배우고, 고민 해결책을 세대별로 얻어보세요!' },
-        'og:title': { property: 'og:title', content: '우리들의 플레이그라운드 SEESO!' },
+        'og:title': { property: 'og:title', content: '우리들의 플레이그라운드 SEESO' },
         'og:type': { property: 'og:type', content: 'website' },
         'og:url': { property: 'og:url', content: 'https://play-seeso.com' },
         'og:image': { property: 'og:image', content: 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fl1fzW%2FbtrDiIPtqli%2FmrqSE5d7bttCPpnos8a35K%2Fimg.png' },
