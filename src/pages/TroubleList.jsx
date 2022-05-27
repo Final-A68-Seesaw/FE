@@ -58,7 +58,7 @@ const TroubleList = () => {
           <CardWholeBox>
             {TroubleList &&
               TroubleList.map((v, i) => {
-                return <DictionaryCard key={i} data={v} />;
+                return <TroubleCard key={i} data={v} />;
               })}
           </CardWholeBox>
         </InfiniteScroll>
