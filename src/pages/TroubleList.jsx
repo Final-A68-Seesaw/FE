@@ -16,6 +16,7 @@ import styled from "styled-components";
 import Line from "../asset/Dictionary_list_line.svg";
 import TroubleCard from "../components/TroubleCard";
 import { TroubleApi } from "../api/troubleApi";
+import DictionaryCard from "../components/DictionaryCard";
 // import { useInfiniteQuery, QueryResult } from "react-query";
 
 const TroubleList = () => {
