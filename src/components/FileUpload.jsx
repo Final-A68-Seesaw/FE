@@ -15,8 +15,14 @@ const FileUpload = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
+  const dbimages = useSelector((state) => state.trouble.detail)
+
+  console.log(dbimages);
+
   const [Files, setFiles] = useState([]);
-  const [imgUrlList, setImgUrlList] = useState(props.file ? props.file : []);
+  const [oversize, setOversize] = useState(false)
+  const [overlength, setOverlength] = useState(false)
+  const [imgUrlList, setImgUrlList] = useState([])
 
   useEffect(() => {
     if (props.file)
@@ -28,39 +34,71 @@ const FileUpload = (props) => {
   const ImageFile = (e) => {
     const FileList = e.target.files;
     const UrlList = [];
+    const FilesLength = FileList.length + imgUrlList.length + dbimages.length
 
-    setFiles([...Files, ...FileList]);
+    if (imgUrlList.length + dbimages.length > 10) {
+      return
+    }
 
-    for (let i = 0; i < FileList.length; i++) {
+    if (FilesLength > 10) {
+      setOverlength(true)
+    }
+
+    const fileLength = FilesLength > 10 ? 10 - imgUrlList.length - dbimages.length : FileList.length
+
+    for (let i = 0; i < fileLength; i++) {
+      if (FileList[i].size > 10 * 1024 * 1024) {
+        setOversize(true)
+        return
+      }
       UrlList.push(URL.createObjectURL(FileList[i]));
     }
 
+    setOversize(false)
+    setFiles([...Files, ...FileList]);
+
     setImgUrlList([...imgUrlList, ...UrlList]);
-    dispatch(ImageActions.addimg(...FileList));
+    dispatch(ImageActions.addimg({ FileList }));
   };
+
   const delFile = (id) => {
     setImgUrlList(imgUrlList.filter((v, i) => i !== id));
-    dispatch(ImageActions.delimg(id));
+    dispatch(ImageActions.delimg(id))
   };
 
   return (
     <div>
-      {imgUrlList.length !== 0 && imgUrlList ? (
-        <>
-          <PreviewBox style={{ justifyContent: "flex-start" }}>
-            <Previews>
-              {imgUrlList.map((v, i) => {
-                return (
-                  <div key={i} style={{ margin: "10px" }}>
-                    <Preview src={v} onClick={() => delFile(i)} />
-                  </div>
-                );
-              })}
-            </Previews>
-          </PreviewBox>
-          <hr style={{ width: "100%" }} />
-        </>
-      ) : null}
+      <>
+        <OversizeMsg>
+          <p>파일 첨부</p>
+          <div style={{ display: 'flex', color: '#999999' }}>
+            <p style={{ margin: '0 5px' }}>파일 제한</p>
+            <p style={{ color: overlength ? 'red' : '#999999' }}>({imgUrlList?.length + dbimages?.length}/10)</p>
+            <p style={{ margin: '0 5px' }}>/</p>
+            <p style={{ color: oversize ? 'red' : '#999999' }}>10MB</p>
+          </div>
+        </OversizeMsg>
+        {dbimages?.length === 0 && imgUrlList?.length === 0 ? null : <PreviewBox style={{ justifyContent: "flex-start" }}>
+          <Previews>
+            {dbimages?.map((v, i) => {
+              return (
+                <div key={i} style={{ margin: "10px" }}>
+                  <Preview src={v} onClick={() => delFile(i)} />
+                </div>
+              );
+            })}
+
+            {imgUrlList?.map((v, i) => {
+              return (
+                <div key={i} style={{ margin: "10px" }}>
+                  <Preview src={v} onClick={() => delFile(i)} />
+                </div>
+              );
+            })}
+          </Previews>
+        </PreviewBox>}
+        <hr style={{ width: "100%" }} />
+      </>
 
       <PreviewBox>
         <DropzoneImg style={{ position: "absolute", maxWidth: "500px" }} />
@@ -150,3 +188,18 @@ const Deletebtn = styled.div`
   right: -5px;
   top: -5px;
 `;
+
+const OversizeMsg = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  /* 14pt_Medium */
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+
+  color: #666666;
+`

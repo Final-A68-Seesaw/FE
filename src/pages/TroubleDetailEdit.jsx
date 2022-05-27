@@ -22,6 +22,7 @@ import { BasicTextarea } from "../elements/Textarea";
 //style
 import styled from "styled-components";
 import Book from "../asset/Dictionary_add_imo.svg";
+import FileUpload2 from "../components/FileUpload2";
 
 const TroubleAdd = () => {
   const {
@@ -112,6 +113,8 @@ const TroubleAdd = () => {
     };
     dispatch(__updateTrouDetail(troubleDto, params.id));
   };
+
+  console.log(dataList);
   
 
   return (
