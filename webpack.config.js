@@ -65,8 +65,21 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       // index.html에 output에서 만들어진 bundle.js를 적용하여, build에 새로운 html 파일 생성
-      template: `./public/index.html`
+      template: `./public/index.html`,
+      
+      meta: {
+        'description': { name: 'description', contnet: '신조어도 배우고, 고민 해결책을 세대별로 얻어보세요!' },
+        'og:title': { property: 'og:title', content: '우리들의 플레이그라운드 SEESO' },
+        'og:type': { property: 'og:type', content: 'website' },
+        'og:url': { property: 'og:url', content: 'https://play-seeso.com' },
+        'og:image': { property: 'og:image', content: '../asset/ogimage.png' },
+        'twitter:title': { name: 'twitter:title', content: '우리들의 플레이그라운드 SEESO' },
+        'twitter:description': { name: 'twitter:description', content: '신조어도 배우고, 고민 해결책을 세대별로 얻어보세요!' },
+        'twitter:image': { name: 'twitter:image', content: '../asset/ogimage.png' }
+      }
+    
     }),
     new Dotenv(),
+    
   ]
 };
