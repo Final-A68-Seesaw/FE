@@ -182,7 +182,7 @@ const DictDetail = (props) => {
           ) : null}
         </>
 
-        {dataList && dataList.videoUrl === "null" ? null : (
+        {dataList && dataList.videoUrl === "null" || "" ? null : (
           <>
             <LabelTag>
               참고 영상 URL |
