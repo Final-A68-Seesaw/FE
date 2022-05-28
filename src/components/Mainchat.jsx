@@ -58,6 +58,7 @@ const Mainchat = (props) => {
 
     if (e.key === "Enter") {
       sendPublicMessage()
+      return
     }
   };
 
