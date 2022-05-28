@@ -62,7 +62,7 @@ const Main = () => {
 
     setSearchInput("");
   }
-   
+
   React.useEffect(() => {
     MainApi.mainGetBest().then((res) => {
       setGetRecent(res.data)
@@ -118,7 +118,7 @@ const Main = () => {
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12.88px', width: '903px', justifyContent: 'right' }}>
             {getRecent && getRecent.map((v, i) => {
-              return <BestWords key={i} onClick={() => onBestWord(v)}>{v.title}</BestWords>
+              return <BestWords className='shadow-drop-2-center' key={i} onClick={() => onBestWord(v)}>{v.title}</BestWords>
             })}
           </div>
 
@@ -147,7 +147,7 @@ const Main = () => {
                   </TestAnswer>
                 </div>
                 <TestCellBox>
-                  {Array(v.title.length).fill().map((v, i) => <TestCell key={i} />)}
+                  {Array(v.title.length).fill().map((w, i) => <TestCell key={i}>{(v.title[i])}</TestCell>)}
                 </TestCellBox>
                 <TestDescBox>
                   <TestDesc>{v.contents}</TestDesc>
@@ -318,6 +318,23 @@ const BestWordWrap = styled.div`
   padding: 72px 0;
 
   background: #8E41FF;
+
+  .shadow-drop-2-center {
+    :hover {
+      animation: shadow-drop-2-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+    }
+  }
+
+  @keyframes shadow-drop-2-center {
+    0% {
+      transform: translateZ(0);
+      box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+    }
+    100% {
+      transform: translateZ(50px);
+      box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+    }
+  }
 `
 
 const BestWordTitle = styled.p`
@@ -514,6 +531,14 @@ const TestCellBox = styled.div`
   height: 61px; 
   margin: 60px auto;
   gap: 10px;
+  
+  color: rgba(0,0,0,0);
+
+  transition: ease-in-out 1s;
+
+  :hover {
+    color: #ff6363;
+  }
 `
 
 const TestCell = styled.div`
@@ -525,6 +550,16 @@ const TestCell = styled.div`
   background: rgba(255, 255, 255, 0.7);
   border: 1.3px solid #FFFFFF;
   border-radius: 5px;
+
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 `
 
 const TestDescBox = styled.div`
