@@ -4,8 +4,8 @@ import styled from 'styled-components';
 const AboutCard = (props) => {
 
     return (
-        <div style={{ position: 'absolute', width: '80vw', display: 'flex', margin: '0 100px', justifyContent: props.data.pos === 'l' ? 'flex-start' : 'flex-end', alignItems: 'center', top: props.data.top }}>
-            <props.char />
+        <CardWarp pos={props.data.pos} top={props.data.top}>
+            <props.char className='jello-horizontal'/>
             <div style={{ color: props.tcolor, maxWidth: '420px' }}>
                 <DevName>{props.data.name}</DevName>
                 <DevWork>{props.data.work}</DevWork>
@@ -14,11 +14,129 @@ const AboutCard = (props) => {
                 <DevEmail>{props.data.email}</DevEmail>
                 <a href={props.data.profile}><DevProfile style={{ color: props.tcolor }}>Profile : {props.data.profile}</DevProfile></a>
             </div>
-        </div>
+        </CardWarp>
     )
 }
 
 export default AboutCard
+
+const CardWarp = styled.div`
+    position: absolute;
+    width: 80vw;
+    display: flex;
+    margin: 0 100px;
+    align-items: center;
+
+    justify-content: ${(props) => props.pos === 'l' ? 'flex-start' : 'flex-end'};
+    top: ${(props) => `${props.top}px`};
+
+    .jello-horizontal {
+        animation: jello-horizontal 0.9s both;
+    }
+    @keyframes jello-horizontal {
+        0% {
+            transform: scale3d(1, 1, 1);
+        }
+        30% {
+            transform: scale3d(1.25, 0.75, 1);
+        }
+        40% {
+            transform: scale3d(0.75, 1.25, 1);
+        }
+        50% {
+            transform: scale3d(1.15, 0.85, 1);
+        }
+        65% {
+            transform: scale3d(0.95, 1.05, 1);
+        }
+        75% {
+            transform: scale3d(1.05, 0.95, 1);
+        }
+        100% {
+            transform: scale3d(1, 1, 1);
+        }
+    }
+    .jello-vertical {
+        animation: jello-vertical 0.9s both;
+    }
+    @keyframes jello-vertical {
+        0% {
+            transform: scale3d(1, 1, 1);
+        }
+        30% {
+            transform: scale3d(0.75, 1.25, 1);
+        }
+        40% {
+            transform: scale3d(1.25, 0.75, 1);
+        }
+        50% {
+            transform: scale3d(0.85, 1.15, 1);
+        }
+        65% {
+            transform: scale3d(1.05, 0.95, 1);
+        }
+        75% {
+            transform: scale3d(0.95, 1.05, 1);
+        }
+        100% {
+            transform: scale3d(1, 1, 1);
+        }
+    }
+    .jello-diagonal-1 {
+        animation: jello-diagonal-1 0.8s both;
+    }
+    @keyframes jello-diagonal-1 {
+        0% {
+            transform: skew(0deg 0deg);
+        }
+        30% {
+            transform: skew(25deg 25deg);
+        }
+        40% {
+            transform: skew(-15deg, -15deg);
+        }
+        50% {
+            transform: skew(15deg, 15deg);
+        }
+        65% {
+            transform: skew(-5deg, -5deg);
+        }
+        75% {
+            transform: skew(5deg, 5deg);
+        }
+        100% {
+            transform: skew(0deg 0deg);
+        }
+    }
+    .jello-diagonal-2 {
+        animation: jello-diagonal-2 0.8s both;
+    }
+    @keyframes jello-diagonal-2 {
+        0% {
+            transform: skew(0deg 0deg);
+        }
+        30% {
+            transform: skew(-25deg -25deg);
+        }
+        40% {
+            transform: skew(15deg, 15deg);
+        }
+        50% {
+            transform: skew(-15deg, -15deg);
+        }
+        65% {
+            transform: skew(5deg, 5deg);
+        }
+        75% {
+            transform: skew(-5deg, -5deg);
+        }
+        100% {
+            transform: skew(0deg 0deg);
+        }
+    }
+
+
+`
 
 const DevName = styled.div`
     /* width: 67px; */
