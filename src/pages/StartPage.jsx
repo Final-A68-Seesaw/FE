@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { history } from "../redux/configStore";
 
 import Starting from "../asset/Starting.svg";
-import { history } from "../redux/configStore";
+import Walking from '../asset/Walking.gif'
 
 const StartPage = () => {
   return (
@@ -11,6 +12,7 @@ const StartPage = () => {
         <SubTitle>
           세대별 신조어도 배우고 내 고민 해결책을 세대별로 얻어보세요!
         </SubTitle>
+        <WalkImg src={Walking} />
         <StartBtn onClick={() => history.push("/login")}>놀러 가기</StartBtn>
         <Starting style={{ minWidth: "100vw", maxHeight: "99vh" }} />
       </div>
@@ -18,6 +20,13 @@ const StartPage = () => {
 };
 
 export default StartPage;
+
+const WalkImg = styled.img`
+    position: absolute;
+    left: 260px;
+    top: 470px;
+    height: 100px;
+`
 
 const TitleText = styled.p`
   position: absolute;
