@@ -85,8 +85,6 @@ export const __addTrou = (data) => {
 export const __updateTrouDetail = (data, id) => {
   return (dispatch, getState, { history }) => {
 
-    console.log(data, id);
-
     const formData = new FormData();
     formData.append(
       "troubleRequestDto",

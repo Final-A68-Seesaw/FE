@@ -58,10 +58,17 @@ const CrossWord = () => {
     }
 
     const onkeydown = (e) => {
-        if (e.nativeEvent.isComposing) { return; } 
+        if (e.nativeEvent.isComposing) { return; }
 
         if (e.key === 'Enter')
             CheckAnswer()
+    }
+
+    const NoSee = () => {
+        for (let i = 0; i < testData.length; i++) {
+            if (!testData[i].pass)
+                return SelWord(testData[i])
+        }
     }
 
     const AllCheck = () => {
@@ -147,9 +154,10 @@ const CrossWord = () => {
                                     </div>
                                 </AnswerDiv>
 
-                                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '70px', alignItems: 'center', zIndex: '4' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', marginTop: '10px', alignItems: 'center', zIndex: '4' }}>
                                     <CheckBtn margin='0' onClick={CheckAnswer}>확인</CheckBtn>
-                                    <GameOver onClick={GameGiveUp}><u>포기할래요</u></GameOver>
+                                    <NoSeeBtn style={{ marginTop: '30px' }} onClick={NoSee}>문제가 안 보여요 !</NoSeeBtn>
+                                    <GameOver style={{ marginTop: '30px' }} onClick={GameGiveUp}><u>포기할래요</u></GameOver>
                                 </div>
                             </>
                             }
@@ -438,6 +446,34 @@ const CheckBtn = styled.div`
 
     :hover {
         background: #444444;
+        transition: ease-in-out 0.5s;
+    }
+`
+
+const NoSeeBtn = styled.div`
+    width: 212px;
+    height: 52px;
+
+    background: #ff7878;
+    border-radius: 56.9524px;
+
+    font-family: 'Noto Sans KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 26px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFFFF;
+
+    cursor: pointer;
+
+    :hover {
+        background: #46b5ff;
         transition: ease-in-out 0.5s;
     }
 `
