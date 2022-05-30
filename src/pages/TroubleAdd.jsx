@@ -6,19 +6,20 @@ import { useDispatch, useSelector } from "react-redux";
 import { __addTrou } from "../redux/modules/touble";
 
 //element & component
-import { med12, med15, med14, med20 } from "../themes/textStyle";
+import { med12, med15, med14, med20, bold18 } from "../themes/textStyle";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import { ErrorXInput, SFormError } from "../elements/Input";
 import { Select } from "../elements/Select";
 import Button from "../elements/Button";
-import FileUpload from "../components/FileUpload";
 import { BasicTextarea } from "../elements/Textarea";
+import FileUpload2 from "../components/FileUpload2";
 
 //style
 import styled from "styled-components";
 import Book from "../asset/Dictionary_add_imo.svg";
-import FileUpload2 from "../components/FileUpload2";
+import TextIcon from "../asset/DictAddIcon.svg";
+
 
 const TroubleAdd = () => {
   const {
@@ -62,7 +63,7 @@ const TroubleAdd = () => {
 
   //엔터키 프레스 후 태그의 내용이 중복되면 얼럿이 뜨고 없으면 추가된 후 태그 인풋이 리셋됨
   const submitTagItem = () => {
-    const tag = tagItem.replace(/^\s+|\s+$/g, '')
+    const tag = tagItem.replace(/^\s+|\s+$/g, "");
 
     if (!tagList.find((v) => v === tag) && tagList.length < 10) {
       let updatedTagList = [...tagList];
@@ -82,7 +83,7 @@ const TroubleAdd = () => {
   };
 
   //데이터전송
-  const images = useSelector((state) => state.image.newimagelist)
+  const images = useSelector((state) => state.image.newimagelist);
   const myInfo = useSelector((state) => state.mypage.list);
   const onSubmit = (data) => {
     let troubleDto = {
@@ -104,7 +105,17 @@ const TroubleAdd = () => {
           <Book />
         </BookContianer>
         <TextContainer>회원님의 해결이 필요한 고민을 적어주세요</TextContainer>
-
+        <WhatisNew>
+          <WhatBoxText>
+            <TextIcon /> '고민상담하기'는 무엇인가요?
+          </WhatBoxText>
+          <hr />
+          <WhatsmallText>
+            {" "}
+            최근 고민중 처음 겪는 일이어서 해결하지 못한 고민을
+            나누고 다양한 세대에게 해결책을 얻어볼 수 있습니다.
+          </WhatsmallText>
+        </WhatisNew>
         <form onSubmit={handleSubmit(onSubmit)}>
           <QuestionBox>
             <QuestionFromBox>
@@ -250,6 +261,24 @@ const TextContainer = styled.div`
   margin-bottom: 2.5rem;
   ${med20}
   color: var(--black24);
+`;
+const WhatisNew = styled.div`
+  text-align: left;
+  padding: 3rem 1.5rem;
+  margin-bottom: 2rem;
+  background-color: #f5f7ff;
+  border-radius: 0.47rem;
+`;
+const WhatBoxText = styled.div`
+  ${bold18}
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+`;
+const WhatsmallText = styled.div`
+  ${med15} margin-left: 0.5rem;
+  line-height: 24px;
 `;
 const QuestionBox = styled.div`
   justify-content: space-between;
