@@ -13,8 +13,7 @@
 <br>
 
 
-![logo_2_se](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fl1fzW%2FbtrDiIPtqli%2FmrqSE5d7bttCPpnos8a35K%2Fimg.png )
-
+   <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fl1fzW%2FbtrDiIPtqli%2FmrqSE5d7bttCPpnos8a35K%2Fimg.png" width="800">
 
 <br><br>
 ## 🔧 주요 기능
