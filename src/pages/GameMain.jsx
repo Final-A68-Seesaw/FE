@@ -10,7 +10,7 @@ const GameMain = () => {
     return (
         <div>
             <Header />
-
+            <div style={{ position: 'absolute', width: '100vw', height: '100vh', backgroundColor: '#F4F4F4', zIndex: '-1' }}></div>
             <Gamemain style={{ maxWidth: '100vw' }} />
             <div style={{ display: 'flex', justifyContent: 'center', margin: '-88px auto' }}>
                 <GameBtn onClick={() => history.push('/game')}>시작하기</GameBtn>

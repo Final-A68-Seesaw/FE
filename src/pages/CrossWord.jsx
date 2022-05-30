@@ -24,6 +24,7 @@ const CrossWord = () => {
     const [gameover, setGameover] = useState(false)
 
     const [crData, setCrData] = useState([])
+    const [loaderr, setLoaderr] = useState(false)
 
     const SelWord = (data) => {
         if (data.pass || giveup)
@@ -113,10 +114,15 @@ const CrossWord = () => {
         MainApi.crossgame()
             .then((res) => {
                 setCrData(res.data)
+                setLoaderr(false)
             })
             .catch((err) => {
-                if (err.response.data.status === 500)
-                    GameReload()
+                if (err.response.data.status === 500) {
+                    setLoaderr(true)
+                    setTimeout(() => {
+                        GameReload()
+                    }, 1000)
+                }
             })
     }
 
@@ -126,8 +132,12 @@ const CrossWord = () => {
                 setCrData(res.data)
             })
             .catch((err) => {
-                if (err.response.data.status === 500)
-                    GameReload()
+                if (err.response.data.status === 500) {
+                    setLoaderr(true)
+                    setTimeout(() => {
+                        GameReload()
+                    }, 1000)
+                }
             })
     }, [])
 
@@ -154,7 +164,7 @@ const CrossWord = () => {
                                     <Questlabel>단어 설명</Questlabel>
                                     <QuestCnt>남은단어 : {crData.length - pass}</QuestCnt>
                                 </div>
-                                <Questdesc>{selQuiz ? selQuiz.contents : `맞출 칸을 선택해 주세요`}</Questdesc>
+                                <Questdesc>{loaderr ? `에러 ! 다시 불러오는중...` : selQuiz ? selQuiz.contents : `맞출 칸을 선택해 주세요`}</Questdesc>
                                 <AnswerDiv>
                                     <div style={{ display: 'flex', flexDirection: 'column' }}>
                                         <AnswerInput
@@ -305,6 +315,7 @@ const QuestContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
+    z-index: 50;
 `
 
 const AnswerDiv = styled.div`

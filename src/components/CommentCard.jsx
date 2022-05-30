@@ -168,8 +168,7 @@ const LoadCmtTime = styled.div`
 `;
 const LoadCmt = styled.div`
   margin: 0 1rem 1rem 2.5rem;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  word-break: break-word;
   ${med15}
 `;
 const LikeBtn = styled.button`
