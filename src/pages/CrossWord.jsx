@@ -23,7 +23,7 @@ const CrossWord = () => {
     const [giveup, setGiveup] = useState(false)
     const [gameover, setGameover] = useState(false)
 
-    const [testData, setTestData] = useState([])
+    const [crData, setCrData] = useState([])
 
     const SelWord = (data) => {
         if (data.pass || giveup)
@@ -65,22 +65,22 @@ const CrossWord = () => {
     }
 
     const NoSee = () => {
-        for (let i = 0; i < testData.length; i++) {
-            if (!testData[i].pass)
-                return SelWord(testData[i])
+        for (let i = 0; i < crData.length; i++) {
+            if (!crData[i].pass)
+                return SelWord(crData[i])
         }
     }
 
     const AllCheck = () => {
-        for (let i = 0; i < testData.length; i++) {
-            if (!testData[i].pass)
+        for (let i = 0; i < crData.length; i++) {
+            if (!crData[i].pass)
                 return false
         }
         return true
     }
 
     const GameGiveUp = () => {
-        if (pass === 0 && testData.length === 0)
+        if (pass === 0 && crData.length === 0)
             window.location.reload()
         else {
             setGiveup(true)
@@ -93,8 +93,8 @@ const CrossWord = () => {
             return
 
         if (selQuiz.word === writeAnswer) {
-            let test = (testData.findIndex((v, i) => selQuiz.id === v.id))
-            testData[test].pass = true
+            let test = (crData.findIndex((v, i) => selQuiz.id === v.id))
+            crData[test].pass = true
             setAnswerCheck(true)
             setPass(pass + 1)
             setSelQuiz()
@@ -109,10 +109,26 @@ const CrossWord = () => {
         setWriteAnswer('')
     }
 
+    const GameReload = () => {
+        MainApi.crossgame()
+            .then((res) => {
+                setCrData(res.data)
+            })
+            .catch((err) => {
+                if (err.response.data.status === 500)
+                    GameReload()
+            })
+    }
+
     useEffect(() => {
-        MainApi.crossgame().then((res) => {
-            setTestData(res.data)
-        })
+        MainApi.crossgame()
+            .then((res) => {
+                setCrData(res.data)
+            })
+            .catch((err) => {
+                if (err.response.data.status === 500)
+                    GameReload()
+            })
     }, [])
 
 
@@ -123,7 +139,7 @@ const CrossWord = () => {
                 <img src={GameBgPng} style={{ position: 'absolute', width: '-webkit-fill-available', minHeight: '755px', height: '100vh', overflow: 'hidden', top: '0px' }} />
 
                 {SettingData()}
-                {testData?.map((v, i) => {
+                {crData?.map((v, i) => {
                     return SettingLine(v, i)
                 })}
 
@@ -136,7 +152,7 @@ const CrossWord = () => {
                             {gameover ? null : <>
                                 <div style={{ display: 'flex', width: '494px', height: '23px', margin: '127px auto 0 auto', justifyContent: 'space-between' }}>
                                     <Questlabel>단어 설명</Questlabel>
-                                    <QuestCnt>남은단어 : {testData.length - pass}</QuestCnt>
+                                    <QuestCnt>남은단어 : {crData.length - pass}</QuestCnt>
                                 </div>
                                 <Questdesc>{selQuiz ? selQuiz.contents : `맞출 칸을 선택해 주세요`}</Questdesc>
                                 <AnswerDiv>
@@ -161,16 +177,16 @@ const CrossWord = () => {
 
                             {gameover ? <GameOverWrap>
                                 <div style={{ margin: '127px auto 0 auto' }}>
-                                    <GameoverMsg className='bounce-in-top'>{testData.length - pass === 0 ? `훌륭해요!` : `수고하셨어요`}</GameoverMsg>
+                                    <GameoverMsg className='bounce-in-top'>{crData.length - pass === 0 ? `훌륭해요!` : `수고하셨어요`}</GameoverMsg>
                                 </div>
                                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                                     <GameOVerDiv style={{ position: 'absolute', bottom: '0px' }} />
                                     <div className='slit-in-horizontal' style={{ position: 'absolute', bottom: '138px', display: 'flex', justifyContent: 'center' }}>
                                         <PassMiss>
                                             <OverMsg><p>맞힌 단어 수</p><p>{pass}개</p></OverMsg>
-                                            <OverMsg style={{ color: testData.length - pass === 0 ? '#FFC438' : '#FF4E4E' }}><p>미완료 단어 수</p><p>{testData.length - pass}개</p></OverMsg>
+                                            <OverMsg style={{ color: crData.length - pass === 0 ? '#FFC438' : '#FF4E4E' }}><p>미완료 단어 수</p><p>{crData.length - pass}개</p></OverMsg>
                                         </PassMiss>
-                                        <ReplayBtn onClick={() => window.location.reload()}>{testData.length - pass === 0 ? `한번더!` : `다시 도전!`}</ReplayBtn>
+                                        <ReplayBtn onClick={() => window.location.reload()}>{crData.length - pass === 0 ? `한번더!` : `다시 도전!`}</ReplayBtn>
                                     </div>
                                 </div>
                             </GameOverWrap>

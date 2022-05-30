@@ -10,6 +10,7 @@ import {
   __deleteTrouDetail,
   clearDetail,
 } from "../redux/modules/touble";
+import { actionCreators as ImageActions } from "../redux/modules/image";
 import { history } from "../redux/configStore";
 
 //element & component
@@ -45,6 +46,7 @@ const TroubleDetail = (props) => {
     dispatch(TroubleActions.getTrouDetailDB(params.id, pageNum));
 
     return () => {
+      dispatch(ImageActions.clrimg())
       dispatch(clearDetail());
     };
   }, []);

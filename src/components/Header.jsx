@@ -68,7 +68,7 @@ const Header = (props) => {
             <HeaderIcon
               className="jello-horizontal"
               onClick={() => history.push("/main")}
-              style={{ cursor: "pointer", marginRight: "1.5rem" }}
+              style={{ cursor: "pointer", marginRight: "1rem", width: '6rem' }}
             />
 
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
@@ -126,12 +126,12 @@ const Header = (props) => {
             </div>
           ) : (
             <RightGroup>
-                <FeedBackBtn
-                onClick={()=> window.open("https://forms.gle/Fi1mPK4LkLGR36Ar5", '_blank')}
-                  className="jello-horizontal"
-                >
-                  피드백 참여하기
-                </FeedBackBtn>
+              <FeedBackBtn
+                onClick={() => window.open("https://forms.gle/Fi1mPK4LkLGR36Ar5", '_blank')}
+                className="jello-horizontal"
+              >
+                피드백 참여하기
+              </FeedBackBtn>
 
               {/* <TroubleAddBtn
                 className="jello-horizontal"
@@ -287,10 +287,21 @@ const FeedBackBtn = styled.div`
   border-radius: 2rem;
 
 cursor: pointer;
+  
+  @media screen and (max-width: 1300px) {
+    font-size: 0.5rem;
+    font-weight: 500;
+    margin: 0 1rem;
+  }
+  
+  @media screen and (max-width: 800px) {
+    display: none;
+  }
 `;
 
 const HeaderMenu = styled.p`
   ${med19}
+  width: max-content;
   margin-right: 1.5rem;
   line-height: 1.75rem;
   display: flex;
@@ -299,16 +310,24 @@ const HeaderMenu = styled.p`
   /* margin-right: 30px; */
   color: ${(props) => (props.pathname ? "var(--yellow)" : "white")} !important;
   cursor: pointer;
+  
+  @media screen and (max-width: 1300px) {
+    font-size: 0.8rem;
+    font-weight: 500;
+    margin-right: 0.5rem;
+  }
 `;
 
 const ModalContainer = styled.div`
   position: fixed;
-  min-width: 80rem;
+  /* min-width: 80rem; */
+  width: 99vw;
   height: 107px;
   /* left: 300px; */
   top: 74px;
   z-index: 80;
   display: flex;
+  justify-content: center;
   align-items: center;
 
   background: #444444;
@@ -351,6 +370,10 @@ const SearchInput = styled.input`
     align-items: center;
     color: #a2a2a2;
   }
+  
+  @media screen and (max-width: 1000px) {
+    width: max-content;
+  }
 `;
 
 const WriteDicBtn = styled.div`
@@ -385,9 +408,16 @@ const MyInfo = styled.div`
   height: 2rem;
 
   cursor: pointer;
+  
+  @media screen and (max-width: 1300px) {
+    font-size: 0.5rem;
+    font-weight: 500;
+    margin: 0 auto 0 1rem;
+  }
 `;
 const MyNickname = styled.div`
   ${med14}
+  width: max-content;
   margin: 0.5rem 0.5rem 0 2.5rem;
   display: flex;
   align-items: center;
@@ -416,7 +446,7 @@ const DictHead = styled.div`
   flex-direction: column;
   width: 140px;
   height: 58px;
-  margin: 0 0 0 7rem;
+  margin: 0 64rem 0 7rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';
@@ -430,6 +460,12 @@ const DictHead = styled.div`
   /* White_#ffffff */
 
   color: #FFFFFF;
+  
+  @media screen and (max-width: 1300px) {
+    font-size: 0.5rem;
+    font-weight: 500;
+    margin: 0 auto 0 5rem;
+  }
 `
 
 const TrouHead = styled.div`
@@ -438,7 +474,7 @@ const TrouHead = styled.div`
   /* position: sticky; */
   width: 122px;
   height: 58px;
-  margin: 0 0 0 12rem;
+  margin: 0 60rem 0 12rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';
@@ -450,6 +486,12 @@ const TrouHead = styled.div`
   align-items: center;
 
   color: #FFFFFF;
+  
+  @media screen and (max-width: 1300px) {
+    font-size: 0.5rem;
+    font-weight: 500;
+    margin: 0 auto 0 9rem;
+  }
 `
 
 const ProfileHead = styled.div`
@@ -469,6 +511,12 @@ const ProfileHead = styled.div`
   align-items: center;
 
   color: #FFFFFF;
+  
+  @media screen and (max-width: 1300px) {
+    font-size: 0.5rem;
+    font-weight: 500;
+    margin: 0 2rem 0 auto;
+  }
 `
 
 const HeadDown = styled.p`
