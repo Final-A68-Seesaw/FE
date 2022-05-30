@@ -62,6 +62,7 @@ export const BasicTextarea = styled.textarea`
 
   ::placeholder{
     color: var(--grayc1);
+    line-height: 1.5rem;
     margin: 5px;
   }
 

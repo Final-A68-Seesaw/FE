@@ -384,6 +384,7 @@ const ContentsBox = styled.div`
   height: 14rem;
   border: 1.5px solid var(--graydf);
   border-radius: 3px;
+  line-height: 1.5rem;
   padding: 1rem;
 `;
 
@@ -447,6 +448,7 @@ const TagArea = styled.div`
 const Tags = styled.div`
   display: flex;
   flex-direction: row;
+  width: max-content;
 `;
 
 const Tag = styled.div`
@@ -508,7 +510,7 @@ const CommentSubmitBtn = styled.button`
   height: 3rem;
   display: right;
   border: transparent;
-  border-radius: 3px;
+  /* border-radius: 3px; */
   ${med15}
 `;
 const CommentHr = styled.div`

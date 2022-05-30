@@ -333,6 +333,7 @@ const ContentsBox = styled.div`
   height: 14rem;
   border: 1.5px solid var(--graydf);
   border-radius: 3px;
+  line-height: 1.5rem;
   padding: 1rem;
 `;
 const ImageArea = styled.div`

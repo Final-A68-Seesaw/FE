@@ -13,7 +13,7 @@ const StartPage = () => {
           세대별 신조어도 배우고 내 고민 해결책을 세대별로 얻어보세요!
         </SubTitle>
         <WalkImg src={Walking} />
-        <StartBtn onClick={() => history.push("/login")}>놀러 가기</StartBtn>
+        <StartBtn onClick={() => history.push("/login")}>놀러가기</StartBtn>
         <Starting style={{ minWidth: "100vw", maxHeight: "99vh" }} />
       </div>
   );
@@ -34,6 +34,7 @@ const TitleText = styled.p`
   height: 142px;
   left: 106px;
   top: 247px;
+  word-break: keep-all;
 
   font-family: "Noto Sans KR";
   font-style: normal;

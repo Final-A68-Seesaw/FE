@@ -290,7 +290,9 @@ const WhatisNew = styled.div`
 `;
 const WhatBoxText = styled.div`
   ${bold18}
-  align-items: top;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
   margin-bottom: 1rem;
 `;
 const WhatsmallText = styled.div`

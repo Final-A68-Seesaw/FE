@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { __logout } from '../redux/modules/user';
 
 import Mainchat from '../components/Mainchat'
@@ -8,7 +8,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 
 import { GoSearch } from 'react-icons/go'
-import { BsChevronRight } from 'react-icons/bs'
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs'
 
 import Seeso from '../asset/MainSeeso.svg'
 import ChatIcon from '../asset/ChatIcon.svg'
@@ -32,9 +32,12 @@ const Main = () => {
   const [selectBest, setSelectBest] = useState()
   const [searchInput, setSearchInput] = useState("");
 
+  const userInfo = useSelector((state) => state.mypage.list)
+
   const dispatch = useDispatch();
 
-  const RecentScrollRef = useRef()
+  const RecentScrollStartRef = useRef()
+  const RecentScrollEndRef = useRef()
 
   const openModal = () => {
     setShowModal(true);
@@ -127,7 +130,7 @@ const Main = () => {
 
       <TestWrap>
 
-        <TestTitle>✍️ 닉네임 님의 능력을 테스트해보세요</TestTitle>
+        <TestTitle>✍️ {userInfo?.nickname}님의 능력을 테스트해보세요</TestTitle>
         <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '24px', gap: '10px' }}>
 
           {getRand && getRand.map((v, i) => {
@@ -160,7 +163,18 @@ const Main = () => {
 
       <RecentWrap>
         <RecentTitle>👍 최신 등록 신조어를 배워보세요</RecentTitle>
+
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <LeftBtn>
+            <BsChevronLeft onClick={() => {
+              RecentScrollStartRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
+            }} style={{ fontSize: '30px' }} />
+          </LeftBtn>
+        </div>
+
         <RecentCards>
+
+          <div ref={RecentScrollStartRef}></div>
 
           {getBest && getBest.map((v, i) => {
             return <RecentCard key={i} onClick={() => history.push(`/dictionary/detail/${v.postId}`)}>
@@ -177,14 +191,14 @@ const Main = () => {
             </RecentCard>
           })}
 
-          <div ref={RecentScrollRef}></div>
+          <div ref={RecentScrollEndRef}></div>
 
         </RecentCards>
 
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <RightBtn>
             <BsChevronRight onClick={() => {
-              RecentScrollRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
+              RecentScrollEndRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'end' })
             }} style={{ fontSize: '30px' }} />
           </RightBtn>
         </div>
@@ -585,7 +599,7 @@ const TestDesc = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
 
-  color: #CCCCCC;
+  color: #FFFFFF;
 `
 
 const RecentWrap = styled.div`
@@ -698,6 +712,22 @@ const RecentCardScrap = styled.p`
   line-height: 14px;
 
   color: #555555;
+`
+
+const LeftBtn = styled.div`
+  position: absolute;
+  width: 70px;
+  height: 70px;
+  margin: 350px 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: #FFFFFF;
+  border-radius: 100px;
+  
+  box-shadow: 0px 4px 8px -4px rgba(22, 34, 51, 0.08);
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.25)) drop-shadow(0px 16px 24px rgba(22, 34, 51, 0.08));
 `
 
 const RightBtn = styled.div`
