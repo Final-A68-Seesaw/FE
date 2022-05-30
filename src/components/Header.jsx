@@ -30,14 +30,6 @@ const Header = (props) => {
 
   const ModRef = useRef()
 
-  // onscroll = (e) => {
-  //   setScrolly(scrollY);
-  // };
-
-  // const openModal = () => {
-  //     setShowModal(!showModal);
-  // }
-
   //검색 기능
   const HeadSearch = (e) => {
     if (e.key === "Enter") {
@@ -58,9 +50,9 @@ const Header = (props) => {
     if (showModal) {
       setTimeout(() => {
         setShowModal(null)
-      }, 800)
+      }, 100)
 
-      ModRef.current.style.animation = 'slide-out-top 0.8s ease-in-out both'
+      ModRef.current.style.animation = 'slide-out-top 0.3s ease-in-out both'
     }
   }
 
@@ -101,6 +93,7 @@ const Header = (props) => {
             </div>
             <div style={{ display: "flex", margin: "0 0.1rem" }}>
               <HeaderMenu
+                onMouseOver={ModalOut}
                 className="jello-horizontal"
                 pathname={location.pathname === "/gamemain"}
                 onClick={() => { history.push("/gamemain") }}
@@ -118,7 +111,7 @@ const Header = (props) => {
                 onChange={(e) => setHeadInput(e.target.value)}
                 onKeyDown={HeadSearch}
               />
-              <GoSearch onClick={Searching} style={{ margin: "0 0 0 -1.5rem", color: "#FAFAFA" }} />
+              <GoSearch onClick={Searching} style={{ margin: "0 0 0 -1.8rem", color: "#FAFAFA" }} />
             </SearchDiv>
           }
 
@@ -266,7 +259,6 @@ const Head = styled.div`
       transform: scale3d(1, 1, 1);
     }
   }
-  
 `;
 
 const HeadInner = styled.div`
@@ -297,59 +289,27 @@ const FeedBackBtn = styled.div`
 cursor: pointer;
 `;
 
-const WordAddBtn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0.625rem 1rem;
-  gap: 0.625rem;
-  ${bold15}
-  margin-right: 1rem;
-  color: #eeeeee;
-  background: #333333;
-  border: 0.1rem solid rgba(255, 255, 255, 0.2);
-  border-radius: 2rem;
-
-cursor: pointer;
-`;
-
-const TroubleAddBtn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0.625rem 1rem;
-  gap: 0.625rem;
-  ${bold15}
-  margin-right: 1rem;
-  color: var(--yellow);
-  background: #333333;
-  border: 0.1rem solid rgba(255, 196, 56, 0.3);
-  border-radius: 2rem;
-
-  cursor: pointer;
-`;
-
 const HeaderMenu = styled.p`
-  margin-right: 1.5rem;
   ${med19}
+  margin-right: 1.5rem;
   line-height: 1.75rem;
   display: flex;
   align-items: center;
   text-align: center;
   /* margin-right: 30px; */
- color: ${(props) => (props.pathname ? "var(--yellow)" : "white")} !important;
+  color: ${(props) => (props.pathname ? "var(--yellow)" : "white")} !important;
   cursor: pointer;
 `;
 
 const ModalContainer = styled.div`
   position: fixed;
-  width: 80rem;
+  min-width: 80rem;
   height: 107px;
   /* left: 300px; */
   top: 74px;
   z-index: 80;
+  display: flex;
+  align-items: center;
 
   background: #444444;
   border-radius: 0px 0px 15px 15px;
@@ -380,6 +340,7 @@ const SearchInput = styled.input`
   height: 2.25rem;
   color: var(--white);
   background: #494949;
+  border: 0px;
   border-radius: 0.125rem;
   padding: 0px 1rem;
   /* margin: 23px 0 15px 0; */
@@ -455,7 +416,7 @@ const DictHead = styled.div`
   flex-direction: column;
   width: 140px;
   height: 58px;
-  margin: 1rem 0 0 7rem;
+  margin: 0 0 0 7rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';
@@ -477,7 +438,7 @@ const TrouHead = styled.div`
   /* position: sticky; */
   width: 122px;
   height: 58px;
-  margin: 1rem 0 0 12rem;
+  margin: 0 0 0 12rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';
@@ -496,7 +457,7 @@ const ProfileHead = styled.div`
   flex-direction: column;
   width: 78px;
   height: 58px;
-  margin: 1rem 0 0 72rem;
+  margin: 0 0 0 72rem;
   gap: 12px;
 
   font-family: 'Noto Sans KR';

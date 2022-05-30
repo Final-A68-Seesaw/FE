@@ -28,12 +28,13 @@ margin-top: 3rem;
 `
 
 const FooterContainer = styled.div`
-  min-width: 89rem;
-  width: 100%;
+  /* min-width: 89rem; */
+  width: 80%;
+  margin: auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 4rem 0 2rem 0;
+  padding: 4rem 0 4rem 0;
   background-color: var(--white);
   border-top: 1.5px solid E5E5E5;
 `;

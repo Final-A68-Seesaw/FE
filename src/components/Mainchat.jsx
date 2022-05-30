@@ -4,7 +4,6 @@ import SockJS from "sockjs-client";
 import styled from 'styled-components'
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import jwtDecode from 'jwt-decode';
 
 import { actionCreators as ChatActions } from '../redux/modules/chat'
 import { ChatUrls } from '../shared/ChatApi'
@@ -26,10 +25,10 @@ const Mainchat = (props) => {
   const modalref = useRef()
 
   const Token = 'Bearer ' + cookies.get('accessToken')
-  const userToken = jwtDecode(cookies.get('accessToken'))
+  const userInfo = useSelector((state) => state.mypage.list)
 
   const [userData, setUserData] = React.useState({
-    nickname: userToken.NICKNAME,
+    nickname: userInfo.nickname,
     message: null,
   });
 
@@ -54,7 +53,7 @@ const Mainchat = (props) => {
   }, [chatList])
 
   const onKeyDown = (e) => {
-    if (e.nativeEvent.isComposing) { return; } 
+    if (e.nativeEvent.isComposing) { return; }
 
     if (e.key === "Enter") {
       sendPublicMessage()
@@ -196,7 +195,7 @@ const Mainchat = (props) => {
         {chatList.map((v, i) => {
           if (!v.senderName)
             return <div key={i} style={{ display: 'flex', justifyContent: 'center' }}>
-              <p className='userchat' style={{ wordBreak: 'break-all', width: '240px', height: '100%', margin: '20px 0' }}>{v.message}</p>
+              <p className='userchat' style={{ wordBreak: 'break-all', width: 'auto', height: '100%', margin: '20px 0' }}>{v.message}</p>
             </div>
 
           return <div key={i} style={{ display: 'flex' }}>

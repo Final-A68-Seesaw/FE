@@ -119,10 +119,8 @@ const CrossWord = () => {
     return (
         <div>
             <Header />
-
             <GameContainer>
                 <img src={GameBgPng} style={{ position: 'absolute', width: '-webkit-fill-available', minHeight: '755px', height: '100vh', overflow: 'hidden', top: '0px' }} />
-                {/* <GameBack ><GameBg style={{ position: 'absolute', width: '-webkit-fill-available', minHeight: '626px', height: '-webkit-fill-available', top: '0px' }} /></GameBack> */}
 
                 {SettingData()}
                 {testData?.map((v, i) => {
@@ -133,7 +131,6 @@ const CrossWord = () => {
                     <QuestDiv>
 
                         <GameInput1 style={{ position: 'absolute', right: '0px' }} />
-                        {/* <GameInput2 style={{ position: 'absolute', right: '0px', bottom: '0px', zIndex: '3' }} /> */}
 
                         <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', width: '594px', minHeight: '755px', height: '100vh', right: '0px', background: '#111111' }}>
                             {gameover ? null : <>
@@ -173,7 +170,7 @@ const CrossWord = () => {
                                             <OverMsg><p>맞힌 단어 수</p><p>{pass}개</p></OverMsg>
                                             <OverMsg style={{ color: testData.length - pass === 0 ? '#FFC438' : '#FF4E4E' }}><p>미완료 단어 수</p><p>{testData.length - pass}개</p></OverMsg>
                                         </PassMiss>
-                                        <ReplayBtn onClick={() => window.location.reload()}>다시 도전</ReplayBtn>
+                                        <ReplayBtn onClick={() => window.location.reload()}>{testData.length - pass === 0 ? `한번더!` : `다시 도전!`}</ReplayBtn>
                                     </div>
                                 </div>
                             </GameOverWrap>
