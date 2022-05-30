@@ -16,6 +16,12 @@
    <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fl1fzW%2FbtrDiIPtqli%2FmrqSE5d7bttCPpnos8a35K%2Fimg.png" width="800">
 
 <br><br>
+
+## 📖 서비스 아키텍쳐
+
+![image](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb1GZ6C%2FbtrDk6WVI16%2FKUf7nwdsnpWL5ICNtCpyNK%2Fimg.png)
+
+
 ## 🔧 주요 기능
 <br>
 
@@ -61,7 +67,7 @@
 </details>
 
 <details> 
-  <summary><strong>🎈가로세로 신조어 십자말 풀이 게임</strong></summary>
+  <summary><strong>🕹️가로세로 신조어 십자말 풀이 게임</strong></summary>
   <br/>
   <ul>
     <li>단조로울 수 있는 세대별 단어 등록과 검색 기능 외에 재미 요소를 더한 십자말 풀이 게임을 구현했습니다.</li>
@@ -81,7 +87,7 @@
 | 김예림   | [https://github.com/yerim1104](https://github.com/yerim1104)                       |
 <br>
 
-## 프론트엔드 기술 스택
+## 💻프론트엔드 기술 스택
 <p align="center">
 <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
 <img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
@@ -106,6 +112,3 @@
 <br>
 <br>
 
-## 📖 서비스 아키텍쳐
-
-![image](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb1GZ6C%2FbtrDk6WVI16%2FKUf7nwdsnpWL5ICNtCpyNK%2Fimg.png)
