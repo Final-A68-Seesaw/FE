@@ -65,7 +65,7 @@ const TroubleDetail = (props) => {
   //댓글 데이터 전송
   const onSubmit = (data) => {
     dispatch(__addTrouComment(params.id, data, DataList.nickname));
-    alert("댓글이 등록됐습니다!")
+    alert("댓글이 등록되었습니다!")
     setCmt('')
   };
 

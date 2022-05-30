@@ -66,6 +66,7 @@ const Header = (props) => {
 
   useEffect(() => {
     dispatch(__loadMypage());
+    return () => setShowModal(false);
   }, []);
 
   return (
