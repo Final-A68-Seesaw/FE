@@ -98,7 +98,7 @@ const DictDetail = (props) => {
   const onSubmit = (data) => {
     dispatch(__addDictComment(params.cardTitleId, {comment: cmt}, dataList.nickname));
     setCmt('')
-    alert("댓글이 등록됐습니다!")
+    alert("댓글이 등록되었습니다!")
   };
 
   return (

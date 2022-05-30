@@ -613,7 +613,7 @@ const RecentWrap = styled.div`
 
 const RecentTitle = styled.p`
   /* 👍 최신 등록 신조어를 배워보세요 */
-  width: 310px;
+  width: 30rem;
   height: 32px;
 
   font-family: 'Noto Sans KR';

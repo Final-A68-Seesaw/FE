@@ -90,7 +90,11 @@ export const __editMyProfile = (data) =>{
     alert("프로필 수정이 완료되었습니다!")
     history.replace("/mypage/scrap");
   })
-    .catch((err) => console.log(err.response))
+    .catch((err) =>{
+    if(err.message === "Request failed with status code 400"){
+      alert("중복된 닉네임입니다.")
+    }
+  })
   }
 }
 
