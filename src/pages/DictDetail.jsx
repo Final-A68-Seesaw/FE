@@ -20,9 +20,11 @@ import {
   bold12,
   bold15,
   bold17,
+  bold18,
   bold30,
   med14,
   med15,
+  med18,
 } from "../themes/textStyle";
 import { CommentTextarea } from "../elements/Textarea";
 import Character from "../components/Character";
@@ -34,6 +36,7 @@ import styled from "styled-components";
 import Line from "../asset/Dictionary_detail_line.svg";
 import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
+import TextIcon from "../asset/DictAddIcon.svg";
 
 const DictDetail = (props) => {
   const { reset, getValues, register, handleSubmit, formState } = useForm({
@@ -51,10 +54,13 @@ const DictDetail = (props) => {
     dispatch(__loadDictDetail(params.cardTitleId, pageNum));
 
     return () => {
-      dispatch(DictionaryActions.clearDict())
-      dispatch(ImageActions.clrimg())
-    }
+      dispatch(DictionaryActions.clearDict());
+      dispatch(ImageActions.clrimg());
+    };
   }, []);
+
+  // 상단 모달
+  const [modal, setModal] = useState(true);
 
   //스크랩 기능
   const [scrap, setScrap] = useState(false);
@@ -73,10 +79,10 @@ const DictDetail = (props) => {
 
   //인풋 글자수 count
   const [inputCount, setInputCount] = useState("0");
-  const [cmt, setCmt] = useState('')
+  const [cmt, setCmt] = useState("");
   const onInputChange = (e) => {
     setInputCount(e.target.value.length);
-    setCmt(e.target.value)
+    setCmt(e.target.value);
   };
 
   //pagenation
@@ -87,23 +93,36 @@ const DictDetail = (props) => {
   };
 
   const httpCheck = (url) => {
-    const check = (/https:\/\//)
-    if (check.test(url))
-      return url
-    else
-      return `https://${url}`
-  }
+    const check = /https:\/\//;
+    if (check.test(url)) return url;
+    else return `https://${url}`;
+  };
 
   //댓글 데이터 전송
   const onSubmit = (data) => {
-    dispatch(__addDictComment(params.cardTitleId, {comment: cmt}, dataList.nickname));
-    setCmt('')
-    alert("댓글이 등록되었습니다!")
+    dispatch(
+      __addDictComment(params.cardTitleId, { comment: cmt }, dataList.nickname)
+    );
+    setCmt("");
+    alert("댓글이 등록되었습니다!");
   };
 
   return (
     <>
       <Header />
+      <ContainerOut/>
+   {modal === true ? (<ModifyModal>
+          <CenterBox>
+            <TextIcon /> <Textbox> 누구나 단어를 수정할 수 있어요.</Textbox>{" "}
+            <TextBoldbox>
+              내용을 추가하거나 새로운 이미지를 추가해주세요!
+            </TextBoldbox>
+          </CenterBox>
+          <CloseBox onClick={()=>{setModal(false)}}> 창닫기 X</CloseBox>
+        </ModifyModal>): null}
+        
+       
+
       <Container>
         <GenerationBox>{dataList && dataList.generation} </GenerationBox>
         <BetweenBox>
@@ -186,7 +205,8 @@ const DictDetail = (props) => {
           ) : null}
         </>
 
-        {dataList && (dataList.videoUrl === "" || dataList.videoUrl === null) ? null : (
+        {dataList &&
+        (dataList.videoUrl === "" || dataList.videoUrl === null) ? null : (
           <>
             <LabelTag>
               참고 영상 URL |
@@ -251,9 +271,7 @@ const DictDetail = (props) => {
             <InputCountBox>{inputCount}/500</InputCountBox>
             <div style={{ display: "flex", justifyContent: "top" }}>
               <CommentHr width="90%" />
-              <CommentSubmitBtn type="submit">
-                등록
-              </CommentSubmitBtn>
+              <CommentSubmitBtn type="submit">등록</CommentSubmitBtn>
             </div>
           </form>
         </CommentInputBox>
@@ -285,20 +303,18 @@ const DictDetail = (props) => {
           }}
         >
           {dataList &&
-            Array(Math.ceil(dataList.commentCount / 4)).fill().map((v, i) => {
-              if (pageNum === i + 1)
-                return (
-                  <SelectNumberBox key={i} >
-                    {i + 1}
-                  </SelectNumberBox>
-                );
-              else
-                return (
-                  <NumberBox key={i} onClick={() => pageChange(i + 1)}>
-                    {i + 1}
-                  </NumberBox>
-                );
-            })}
+            Array(Math.ceil(dataList.commentCount / 4))
+              .fill()
+              .map((v, i) => {
+                if (pageNum === i + 1)
+                  return <SelectNumberBox key={i}>{i + 1}</SelectNumberBox>;
+                else
+                  return (
+                    <NumberBox key={i} onClick={() => pageChange(i + 1)}>
+                      {i + 1}
+                    </NumberBox>
+                  );
+              })}
         </div>
       </Container>
       <Footer />
@@ -309,9 +325,38 @@ const DictDetail = (props) => {
 const Container = styled.div`
   margin: auto;
   max-width: 46rem;
-  padding-top: 4rem;
+  margin-top: 5rem;
 `;
-
+const ContainerOut = styled.div`
+height:4.5rem;
+`
+const ModifyModal = styled.div`
+  width: 100%;
+  padding-top: 1.5rem;
+  height: 3.5rem;
+  background-color: #f5f7ff;
+  justify-content: center;
+`;
+const CenterBox = styled.div`
+  align-items: center;
+  display: flex;
+  justify-content: center;
+`;
+const Textbox = styled.div`
+  ${med18}
+  margin-left: 0.5rem;
+`;
+const TextBoldbox = styled.div`
+  ${bold18}
+  margin-left: 0.5rem;
+`;
+const CloseBox = styled.div`
+margin-right: 10rem;
+cursor: pointer;
+  color: var(--gray99);
+  ${med14}
+text-align: right;
+`;
 const GenerationBox = styled.div`
   display: flex;
   flex-direction: row;
@@ -396,7 +441,7 @@ const ImageArea = styled.div`
   margin: 2rem 0 1rem 0;
 
   overflow-x: scroll;
-  
+
   &::-webkit-scrollbar {
     width: 8px;
     height: 8px;
