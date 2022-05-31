@@ -39,7 +39,7 @@
   <summary><strong> 🗨️실시간 토크장: 아무말 대잔치 채팅방</strong></summary>
   <br/>
   <ul>
-    <li>단어나 고민 상담 후 실시간으로 게시글, 댓글 외에도 실시간으로 빠른 소통이 가능한 창구입니다.</li>
+    <li>단어나 고민 상담을 게시글, 댓글 외에도 실시간으로 빠른 소통이 가능한 창구입니다.</li>
     <li>여러 유저가 함께 대화할 수 있도록 메인 페이지에 다대다 채팅 기능을 구현했습니다.</li>
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F1IK8r%2FbtrDzx6boYh%2FD3cgCKUXNKV9s346poAZk1%2Fimg.png" width="500">
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbQQhc5%2FbtrDuvWvAyD%2Fro0Y69Q0fTeayMyn9GkL20%2Fimg.png" width="230">
