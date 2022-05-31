@@ -21,6 +21,27 @@
 
 ![image](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fb1GZ6C%2FbtrDk6WVI16%2FKUf7nwdsnpWL5ICNtCpyNK%2Fimg.png)
 
+## 💻프론트엔드 기술 스택
+<p align="center">
+<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
+<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
+<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
+<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/webpack-04ACE6?style=for-the-badge&logo=webpack&logoColor=white">
+<img src="https://img.shields.io/badge/babel-F7A81B?style=for-the-badge&logo=babel&logoColor=white">
+
+</br>
+<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=react&logoColor=black">
+<img src="https://img.shields.io/badge/ReactHookForm-FF6D70?style=for-the-badge&logo=ReactHookForm&logoColor=white"> 
+<img src="https://img.shields.io/badge/axios-512BD4?style=for-the-badge&logo=axios&logoColor=white"> 
+<img src="https://img.shields.io/badge/styledComponent-DB7093?style=for-the-badge&logo=styledComponent&logoColor=white"> 
+
+</br>
+<img src="https://img.shields.io/badge/AWSAmplify-569A31?style=for-the-badge&logo=AWSAamplify&logoColor=white"> 
+<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
+<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
+
+</br>
 
 ## 🔧 주요 기능
 <br>
@@ -39,7 +60,7 @@
   <summary><strong> 🗨️실시간 토크장: 아무말 대잔치 채팅방</strong></summary>
   <br/>
   <ul>
-    <li>단어나 고민 상담 후 실시간으로 게시글, 댓글 외에도 실시간으로 빠른 소통이 가능한 창구입니다.</li>
+    <li>단어나 고민 상담을 게시글, 댓글 외에도 실시간으로 빠른 소통이 가능한 창구입니다.</li>
     <li>여러 유저가 함께 대화할 수 있도록 메인 페이지에 다대다 채팅 기능을 구현했습니다.</li>
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2F1IK8r%2FbtrDzx6boYh%2FD3cgCKUXNKV9s346poAZk1%2Fimg.png" width="500">
     <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbQQhc5%2FbtrDuvWvAyD%2Fro0Y69Q0fTeayMyn9GkL20%2Fimg.png" width="230">
@@ -87,27 +108,7 @@
 | 김예림   | [https://github.com/yerim1104](https://github.com/yerim1104)                       |
 <br>
 
-## 💻프론트엔드 기술 스택
-<p align="center">
-<img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black">
-<img src="https://img.shields.io/badge/html5-E34F26?style=for-the-badge&logo=html5&logoColor=white">
-<img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white">
-<img src="https://img.shields.io/badge/react-61DAFB?style=for-the-badge&logo=react&logoColor=black">
-<img src="https://img.shields.io/badge/webpack-04ACE6?style=for-the-badge&logo=webpack&logoColor=white">
-<img src="https://img.shields.io/badge/babel-F7A81B?style=for-the-badge&logo=babel&logoColor=white">
 
-</br>
-<img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=react&logoColor=black">
-<img src="https://img.shields.io/badge/ReactHookForm-FF6D70?style=for-the-badge&logo=ReactHookForm&logoColor=white"> 
-<img src="https://img.shields.io/badge/axios-512BD4?style=for-the-badge&logo=axios&logoColor=white"> 
-<img src="https://img.shields.io/badge/styledComponent-DB7093?style=for-the-badge&logo=styledComponent&logoColor=white"> 
-
-</br>
-<img src="https://img.shields.io/badge/AWSAmplify-569A31?style=for-the-badge&logo=AWSAamplify&logoColor=white"> 
-<img src="https://img.shields.io/badge/github-181717?style=for-the-badge&logo=github&logoColor=white">
-<img src="https://img.shields.io/badge/git-F05032?style=for-the-badge&logo=git&logoColor=white">
-
-</br>
 </p>
 <br>
 <br>

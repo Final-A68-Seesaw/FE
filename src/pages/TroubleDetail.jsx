@@ -23,6 +23,7 @@ import {
   bold30,
   med14,
   med15,
+  med19
 } from "../themes/textStyle";
 import Character from "../components/Character";
 import { CommentTextarea } from "../elements/Textarea";
@@ -30,6 +31,8 @@ import CommentCard from "../components/CommentCard.jsx";
 
 //style
 import styled from "styled-components";
+import Result0 from "../asset/Result0.svg";
+
 
 const TroubleDetail = (props) => {
   const { register, handleSubmit, formState } = useForm({
@@ -77,7 +80,6 @@ const TroubleDetail = (props) => {
     setPageNum(page);
     dispatch(TroubleActions.getTrouDetailDB(params.id, page));
   };
-
 
   return (
     <>
@@ -214,7 +216,17 @@ const TroubleDetail = (props) => {
           </form>
         </CommentInputBox>
 
-        {DataList &&
+        {DataList?.troubleComments.length === 0?
+        (
+          <NoResultBox>
+            <Result0 style={{ width: "15%", height: "15%" }} />
+            <NoResultMsg>
+              아직 등록된 해결책이 없습니다. <br />
+              회원님의 해결책을 등록해주세요!
+            </NoResultMsg>
+          </NoResultBox>
+        ): (
+          DataList &&
           DataList.troubleComments.map((v, i) => {
             return (
               <div key={i}>
@@ -227,9 +239,10 @@ const TroubleDetail = (props) => {
                 />
               </div>
             );
-          })}
+          }))}
 
-        <FooterHrLine />
+{DataList?.troubleComments.length === 0? null : (<>
+  <FooterHrLine />
         <div
           style={{
             width: "309px",
@@ -258,6 +271,8 @@ const TroubleDetail = (props) => {
                   );
               })}
         </div>
+</>)}
+        
       </Container>
       <Footer />
     </>
@@ -491,4 +506,21 @@ const SelectNumberBox = styled.div`
   border-radius: 1.5px;
 
   cursor: pointer;
+`;
+const NoResultMsg = styled.p`
+width: 17rem;
+margin-top: 2rem;
+
+${med19}
+display: flex;
+align-items: center;
+text-align: center;
+
+color: #222222;
+`;
+const NoResultBox = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+margin: 3rem auto 0 auto;
 `;
