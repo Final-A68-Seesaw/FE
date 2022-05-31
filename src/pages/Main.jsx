@@ -486,7 +486,7 @@ const TestWrap = styled.div`
 
 const TestTitle = styled.p`
   /* ✍️ 닉네임 님의 능력을 테스트해보세요 */
-  width: 360px;
+  width: 400px;
   height: 32px;
 
   font-family: 'Noto Sans KR';
@@ -718,7 +718,7 @@ const LeftBtn = styled.div`
   position: absolute;
   width: 70px;
   height: 70px;
-  margin: 350px 0 0 0;
+  margin: 405px 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
