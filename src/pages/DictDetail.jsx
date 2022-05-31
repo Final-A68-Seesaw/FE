@@ -25,6 +25,7 @@ import {
   med14,
   med15,
   med18,
+  med19,
 } from "../themes/textStyle";
 import { CommentTextarea } from "../elements/Textarea";
 import Character from "../components/Character";
@@ -37,6 +38,7 @@ import Line from "../asset/Dictionary_detail_line.svg";
 import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
 import TextIcon from "../asset/DictAddIcon.svg";
+import Result0 from "../asset/Result0.svg";
 
 const DictDetail = (props) => {
   const { reset, getValues, register, handleSubmit, formState } = useForm({
@@ -110,18 +112,25 @@ const DictDetail = (props) => {
   return (
     <>
       <Header />
-      <ContainerOut/>
-   {modal === true ? (<ModifyModal>
+      <ContainerOut />
+      {modal === true ? (
+        <ModifyModal>
           <CenterBox>
             <TextIcon /> <Textbox> 누구나 단어를 수정할 수 있어요.</Textbox>{" "}
             <TextBoldbox>
               내용을 추가하거나 새로운 이미지를 추가해주세요!
             </TextBoldbox>
           </CenterBox>
-          <CloseBox onClick={()=>{setModal(false)}}> 창닫기 X</CloseBox>
-        </ModifyModal>): null}
-        
-       
+          <CloseBox
+            onClick={() => {
+              setModal(false);
+            }}
+          >
+            {" "}
+            창닫기 X
+          </CloseBox>
+        </ModifyModal>
+      ) : null}
 
       <Container>
         <GenerationBox>{dataList && dataList.generation} </GenerationBox>
@@ -276,7 +285,16 @@ const DictDetail = (props) => {
           </form>
         </CommentInputBox>
 
-        {dataList &&
+        {dataList?.postComments.length === 0 ? (
+          <NoResultBox>
+            <Result0 style={{ width: "15%", height: "15%" }} />
+            <NoResultMsg>
+              아직 등록된 예문이 없습니다. <br />
+              사용해본 경험을 등록해주세요!
+            </NoResultMsg>
+          </NoResultBox>
+        ) : (
+          dataList &&
           dataList.postComments.map((v, i) => {
             return (
               <div key={i}>
@@ -289,33 +307,37 @@ const DictDetail = (props) => {
                 />
               </div>
             );
-          })}
+          })
+        )}
 
-        <FooterHrLine />
-
-        <div
-          style={{
-            width: "309px",
-            height: "32px",
-            margin: "45px auto",
-            display: "flex",
-            gap: "17.75px",
-          }}
-        >
-          {dataList &&
-            Array(Math.ceil(dataList.commentCount / 4))
-              .fill()
-              .map((v, i) => {
-                if (pageNum === i + 1)
-                  return <SelectNumberBox key={i}>{i + 1}</SelectNumberBox>;
-                else
-                  return (
-                    <NumberBox key={i} onClick={() => pageChange(i + 1)}>
-                      {i + 1}
-                    </NumberBox>
-                  );
-              })}
-        </div>
+        {dataList?.postComments.length === 0 ? null : (
+          <>
+            <FooterHrLine />
+            <div
+              style={{
+                width: "309px",
+                height: "32px",
+                margin: "45px auto",
+                display: "flex",
+                gap: "17.75px",
+              }}
+            >
+              {dataList &&
+                Array(Math.ceil(dataList.commentCount / 4))
+                  .fill()
+                  .map((v, i) => {
+                    if (pageNum === i + 1)
+                      return <SelectNumberBox key={i}>{i + 1}</SelectNumberBox>;
+                    else
+                      return (
+                        <NumberBox key={i} onClick={() => pageChange(i + 1)}>
+                          {i + 1}
+                        </NumberBox>
+                      );
+                  })}
+            </div>
+          </>
+        )}
       </Container>
       <Footer />
     </>
@@ -328,8 +350,8 @@ const Container = styled.div`
   margin-top: 5rem;
 `;
 const ContainerOut = styled.div`
-height:4.5rem;
-`
+  height: 4.5rem;
+`;
 const ModifyModal = styled.div`
   width: 100%;
   padding-top: 1.5rem;
@@ -351,11 +373,11 @@ const TextBoldbox = styled.div`
   margin-left: 0.5rem;
 `;
 const CloseBox = styled.div`
-margin-right: 10rem;
-cursor: pointer;
+  margin-right: 10rem;
+  cursor: pointer;
   color: var(--gray99);
   ${med14}
-text-align: right;
+  text-align: right;
 `;
 const GenerationBox = styled.div`
   display: flex;
@@ -616,5 +638,21 @@ const SelectNumberBox = styled.div`
 
   cursor: pointer;
 `;
+const NoResultMsg = styled.p`
+  width: 17rem;
+  margin-top: 2rem;
 
+  ${med19}
+  display: flex;
+  align-items: center;
+  text-align: center;
+
+  color: #222222;
+`;
+const NoResultBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem auto 0 auto;
+`;
 export default DictDetail;
