@@ -718,7 +718,7 @@ const LeftBtn = styled.div`
   position: absolute;
   width: 70px;
   height: 70px;
-  margin: 405px 0 0 0;
+  margin: 396px 0 0 0;
   display: flex;
   align-items: center;
   justify-content: center;
