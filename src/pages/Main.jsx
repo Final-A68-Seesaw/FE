@@ -395,7 +395,7 @@ const GenBox = styled.div`
   align-items: center;
   padding: 10px;
 
-  width: 73px;
+  width: max-content;
   height: 29px;
 
   border: 1.4px solid #FFFFFF;
