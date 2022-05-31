@@ -486,7 +486,7 @@ const TestWrap = styled.div`
 
 const TestTitle = styled.p`
   /* ✍️ 닉네임 님의 능력을 테스트해보세요 */
-  width: 400px;
+  width: max-content;
   height: 32px;
 
   font-family: 'Noto Sans KR';
