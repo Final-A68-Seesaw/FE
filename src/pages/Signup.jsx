@@ -20,11 +20,9 @@ const Signup = () => {
   const dispatch = useDispatch();
 
   const {
-    reset,
     register,
     watch,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
@@ -90,11 +88,6 @@ const Signup = () => {
             placeholder="example@email.com"
             error={errors?.username?.message}
           />
-          {/* <Button
-          shape="inputReset"
-          type="button"
-          onClick={() => reset({ ...getValues(), username: "" })}
-        /> */}
         </div>
 
         <Select
@@ -131,11 +124,6 @@ const Signup = () => {
             placeholder="********"
             error={errors?.pwd?.message}
           />
-          {/* <Button
-          shape="inputReset"
-          type="button"
-          onClick={() => reset({ ...getValues(), pwd: "" })}
-        /> */}
         </div>
 
         <div>
@@ -155,11 +143,6 @@ const Signup = () => {
             maxLength={"20"}
             error={errors?.pwdCheck?.message}
           />
-          {/* <Button
-          shape="inputReset"
-          type="button"
-          onClick={() => reset({ ...getValues(), pwdCheck: "" })}
-        /> */}
         </div>
         <FirstSignupBtn shpae="confirmRed-B" type="submit">
           다음 단계

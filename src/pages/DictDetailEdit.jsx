@@ -27,10 +27,8 @@ import Book from "../asset/Dictionary_add_imo.svg";
 
 const DictDetailEdit = (props) => {
   const {
-    reset,
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -90,8 +88,6 @@ const DictDetailEdit = (props) => {
   };
 
   //데이터전송
-
-  const imageList = useSelector((state) => state.dictionary.files);
 
   const onSubmit = (data) => {
     let postDto = {

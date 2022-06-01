@@ -1,4 +1,4 @@
-import { instance, nonTokenInstance, formDatas } from "./index";
+import { instance, formDatas } from "./index";
 
 export const TroubleApi = {
     troubleget: (pageId) => instance.get(`/api/trouble/list?page=${pageId}`),

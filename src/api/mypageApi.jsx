@@ -1,4 +1,4 @@
-import { instance, nonTokenInstance } from "./index";
+import { instance } from "./index";
 
 export const MypageApi = {
   mypageGet: () => instance.get('api/mypage'),

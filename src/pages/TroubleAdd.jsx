@@ -23,10 +23,8 @@ import TextIcon from "../asset/DictAddIcon.svg";
 
 const TroubleAdd = () => {
   const {
-    reset,
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -44,10 +42,8 @@ const TroubleAdd = () => {
 
   //인풋 글자수 count
   const [inputCount, setInputCount] = useState("0");
-  const [title, setTitle] = useState("");
   const onInputChange = (e) => {
     setInputCount(e.target.value.length);
-    setTitle(e.target.value);
   };
 
   //태그
@@ -163,11 +159,6 @@ const TroubleAdd = () => {
                 onChange={onInputChange}
                 error={errors?.title?.message}
               />
-              {/* <Button
-              shape="inputReset"
-              type="button"
-              onClick={() => reset({ ...getValues(), title: "" })}
-            /> */}
             </TroubleTitle>
             <TroubleTextArea>
               <BasicTextarea

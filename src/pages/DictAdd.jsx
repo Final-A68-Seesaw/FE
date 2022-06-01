@@ -23,10 +23,8 @@ import TextIcon from "../asset/DictAddIcon.svg";
 
 const DictAdd = (props) => {
   const {
-    reset,
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({
     mode: "onChange",
@@ -151,11 +149,6 @@ const DictAdd = (props) => {
               onChange={onInputChange}
               error={errors?.title?.message}
             />
-            {/* <Button
-              shape="inputReset"
-              type="button"
-              onClick={() => reset({ ...getValues(), title: "" })}
-            /> */}
           </form>
           <Button shape="smallBlack-B" onClick={onTitleChange}>
             중복확인

@@ -1,4 +1,4 @@
-import { instance, nonTokenInstance } from "./index";
+import { instance } from "./index";
 
 export const MainApi = {
   mainGetBest: () => instance.get('/api/main/post/scrap'),

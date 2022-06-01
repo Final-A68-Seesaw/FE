@@ -21,7 +21,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiTwotoneLike } from "react-icons/ai";
 
 const CommentCard = (props) => {
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
   const dispatch = useDispatch();

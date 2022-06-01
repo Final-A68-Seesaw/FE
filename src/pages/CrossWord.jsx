@@ -1,13 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import Header from '../components/Header'
-import Button from '../elements/Button'
-import { InputText } from '../elements/Input'
 import { bold41 } from '../themes/textStyle'
-import GameBg from '../asset/GameBg.svg'
 import GameBgPng from '../asset/GameBg.png'
 import GameInput1 from '../asset/GameInputBg1.svg'
-import GameInput2 from '../asset/GameInputBg2.svg'
 import CWword from '../components/CWword'
 import { MainApi } from '../api/mainApi'
 import GameOVerDiv from '../asset/GameOverdiv.svg'
@@ -216,12 +212,6 @@ const GameContainer = styled.div`
     display: flex;
 `
 
-const GameBack = styled.div`
-    /* position: absolute;
-    width: auto;
-    height: 754px; */
-`
-
 const CellContainer = styled.div`
     position: absolute;
     min-width: 630px;
@@ -234,26 +224,6 @@ const CellContainer = styled.div`
     flex-wrap: wrap;
 `
 
-const BlankCelldiv = styled.div`
-    display: flex;
-    gap: 8.61px;
-
-    ${(props) => props.row ? `width: ${60.26 * props.row}px` : null}
-    ${(props) => props.col ? `height: ${60.26 * 10 * props.col}px` : null}
-`
-
-const RowCelldiv = styled.div`
-    display: flex;
-    flex-direction: row;
-    gap: 8.61px;
-`
-
-const ColCelldiv = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 8.61px;
-`
-
 const Cell = styled.div`
     width: 51.65px;
     height: 51.65px;
@@ -262,53 +232,6 @@ const Cell = styled.div`
     background: rgba(255, 255, 255, 0.25);
     border-radius: 4.30434px;
     transform: matrix(0, -1, -1, 0, 0, 0);
-`
-
-const QCell = styled.div`
-    width: 51.65px;
-    height: 51.65px;
-
-    background: #FFFFFF;
-    border: 1.5px solid #FFFFFF;
-    border-radius: 4.30434px;
-    transform: matrix(0, -1, -1, 0, 0, 0);
-`
-
-const BCell = styled.div`
-    width: 51.65px;
-    height: 51.65px;
-`
-
-const SelCell = styled.div`
-    box-sizing: border-box;
-
-    width: 51.65px;
-    height: 51.65px;
-
-    background: #8E41FF;
-    border: 1.5px solid #FFFFFF;
-    border-radius: 4.30434px;
-    transform: matrix(0, -1, -1, 0, 0, 0);
-`
-
-const AnswerCell = styled.input`
-    ${bold41}
-    width: 60px;
-    height: 60px;
-    margin: 5px;
-
-    border: 1px solid black;
-    text-align: center;
-
-    background: #C0C4C9;
-    border-radius: 5px;
-    
-    color: transparent;
-    text-shadow: 0 0 0 #222;
-
-    &:focus {
-        outline: none;
-    }
 `
 
 const QuestContainer = styled.div`

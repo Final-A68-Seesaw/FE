@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 
 //redux
-import { useDispatch } from "react-redux";
 import { history } from "../redux/configStore";
 import { __scrapDict } from "../redux/modules/dictionary";
 
@@ -15,7 +14,6 @@ import Arrow from "../asset/Trouble_arrow.svg"
 
 
 const TroubleCard = (props) => {
-  const dispatch = useDispatch();
 
   return (
       <div

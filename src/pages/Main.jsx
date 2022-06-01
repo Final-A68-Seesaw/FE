@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { __logout } from '../redux/modules/user';
 
 import Mainchat from '../components/Mainchat'
@@ -34,18 +34,12 @@ const Main = () => {
 
   const userInfo = useSelector((state) => state.mypage.list)
 
-  const dispatch = useDispatch();
-
   const RecentScrollStartRef = useRef()
   const RecentScrollEndRef = useRef()
 
   const openModal = () => {
     setShowModal(true);
   }
-
-  const clickLogout = () => {
-    dispatch(__logout());
-  };
 
   const onBestWord = (data) => {
     setSelectBest(data)
@@ -103,8 +97,6 @@ const Main = () => {
         </div>
       </MainTop>
 
-      {/* <div></div> */}
-
       <BestWordWrap>
         <BestWordTitle>💥 최근 인기 신조어를 배워보세요</BestWordTitle>
 
@@ -135,7 +127,6 @@ const Main = () => {
 
           {getRand && getRand.map((v, i) => {
             return <TestCard key={i} onClick={() => history.push('/gamemain')}>
-              {/* <img src={v.postImage} style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} /> */}
               <div style={{ width: '682px', height: '435px', position: 'absolute', borderRadius: '11.1667px' }} >
                 <GameCard style={{ width: '682px', height: '435px' }} />
               </div>
@@ -145,7 +136,6 @@ const Main = () => {
                   <GenBox>{v.generation}</GenBox>
                   <TestAnswer>
                     <TestAnswerText>테스트 하러 가기</TestAnswerText>
-                    {/* <div style={{ width: '20px', height: '20px', background: '#C4C4C4', }}></div> */}
                     <BsChevronRight style={{ color: '#FAFAFA' }} />
                   </TestAnswer>
                 </div>
@@ -801,32 +791,4 @@ const ChatBtn = styled.div`
     order: 1;
     flex-grow: 0;
   }
-`
-
-const FeedBackBtn = styled.div`
-  box-sizing: border-box;
-
-  /* Auto layout */
-
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 20px;
-  gap: 6px;
-
-  position: absolute;
-  width: 161px;
-  height: 58px;
-  left: 1244px;
-  top: 607px;
-
-  /* Secondary_purple_#8E41FF */
-
-  background: #8E41FF;
-  border: 1.4px solid #EEEEEE;
-  backdrop-filter: blur(60px);
-  /* Note: backdrop-filter has minimal browser support */
-
-  border-radius: 259.276px;
 `

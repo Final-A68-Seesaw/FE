@@ -5,7 +5,6 @@ import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { actionCreators as TroubleActions } from "../redux/modules/touble";
 import { actionCreators as ImageActions } from "../redux/modules/image";
-import { setTrou } from "../redux/modules/touble";
 
 //style
 import styled from "styled-components";
@@ -172,20 +171,6 @@ const Preview = styled.img`
   background-position: center;
   margin: 0.25rem;
   cursor: pointer;
-`;
-
-const Deletebtn = styled.div`
-  color: #fff;
-  font-size: 3px;
-  text-align: center;
-  line-height: 13px;
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  background-color: #000;
-  position: absolute;
-  right: -5px;
-  top: -5px;
 `;
 
 const OversizeMsg = styled.div`

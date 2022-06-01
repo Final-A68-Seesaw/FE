@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { history } from '../redux/configStore'
 import AboutCard from '../components/AboutCard'
 import Header from '../components/Header'
 
@@ -106,10 +105,6 @@ const About = () => {
                 <AboutCard char={KYR} data={Developers[4]} tcolor='#8E41FF' />
                 <AboutCard char={SJM} data={Developers[5]} tcolor='#8E41FF' />
                 <AboutCard char={YJW} data={Developers[6]} tcolor='#8E41FF' />
-                {/* <Design2Div>
-            <Design2 />
-            </Design2Div> */}
-                {/* <Starting style={{ minWidth: '100vw', maxHeight: '99vh' }} /> */}
             </div>
             <AboutFooter>
                 <AboutFootImg style={{ width: '439px', marginTop: '70px' }} />
@@ -208,46 +203,6 @@ const SubText = styled.p`
     align-items: center;
 
     color: #FFFFFF;
-`
-
-const StartBtn = styled.div`
-    position: absolute;
-    width: 180px;
-    height: 52px;
-    left: 106px;
-    top: 496.72px;
-
-    border-radius: 200px;
-
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid #FFFFFF;
-    border-radius: 200px;
-
-    font-family: 'Noto Sans KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16.5px;
-    line-height: 24px;
-    /* identical to box height */
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    /* White_#ffffff */
-
-    color: #FFFFFF;
-
-    cursor: pointer;
-`
-
-const Design2Div = styled.div`
-    position: absolute;
-    width: 755px;
-    height: 320.01px;
-    left: 630px;
-    top: 1942px;
-
 `
 
 const AboutFooter = styled.div`

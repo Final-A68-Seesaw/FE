@@ -5,7 +5,6 @@ import { TroubleApi } from "../../api/troubleApi";
 import { actionCreators as ImageActions } from "./image";
 
 const GET_TROU = "GETTROU";
-const ADD_TROU = "ADDTROU";
 const SET_TROU = "SETTROU";
 const CLEAR_TROU = "CLEARTROU"
 
@@ -19,7 +18,6 @@ const DEL_TROU_COM = "DEL_TROU_COM";
 const LIKE_TROU_COM = "LIKE_TROU_COM";
 
 const getTrou = createAction(GET_TROU, (trouble) => trouble);
-const addTrou = createAction(ADD_TROU, (trouble) => trouble);
 export const setTrou = createAction(SET_TROU, (files) => ({ files }));
 export const clearTrou = createAction(CLEAR_TROU, (data)=>data)
 
@@ -188,11 +186,6 @@ export default handleActions(
     [GET_TROU]: (state, action) =>
       produce(state, (draft) => {
         draft.list = action.payload;
-      }),
-
-    [ADD_TROU]: (state, action) =>
-      produce(state, (draft) => {
-        // draft.list = action.payload
       }),
 
     [SET_TROU]: (state, action) =>

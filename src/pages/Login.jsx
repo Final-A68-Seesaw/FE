@@ -10,19 +10,14 @@ import { ErrorXInput } from "../elements/Input";
 
 //style
 import styled from "styled-components";
-import KakaoBtn from "../components/KakaoBtn";
 import { med14, bold30 } from "../themes/textStyle";
 import Logo from "../asset/Seeso_logo.svg";
 import Img from "../asset/LoginIMG.svg";
 
-import { KAKAO_AUTH_URL } from "../auth/kakao_AUTH_URL";
-
 const Login = () => {
   const {
-    reset,
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
@@ -68,11 +63,6 @@ const Login = () => {
                   error={errors?.username?.message}
                   width="24rem"
                 />
-                {/* <Button
-                  shape="inputReset"
-                  type="button"
-                  onClick={() => reset({ ...getValues(), username: "" })}
-                /> */}
               </div>
               <div>
                 <LabelBox>비밀번호</LabelBox>
@@ -94,11 +84,6 @@ const Login = () => {
                   error={errors?.pwd?.message}
                   width="24rem"
                 />
-                {/* <Button
-                  shape="inputReset"
-                  type="button"
-                  onClick={() => reset({ ...getValues(), pwd: "" })}
-                /> */}
               </div>
             </LoginContainer>
             <ButtonBox>
@@ -119,10 +104,6 @@ const Login = () => {
               </Button>
             </ButtonBox>
           </form>
-          {/* <hr /> */}
-          <KakaoBox>
-            {/* <KakaoBtn style={{ marginTop: "3rem" }} href={KAKAO_AUTH_URL} /> */}
-          </KakaoBox>
         </RightContainer>
       </Container>
     </>
@@ -151,12 +132,6 @@ const ButtonBox = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 0 0 1.5rem 0;
-`;
-const KakaoBox = styled.div`
-  width: 26rem;
-  display: flex;
-  justify-content: center;
-  margin-top: 1.5rem;
 `;
 const LoginContainer = styled.div`
   padding: 0.5rem 0 1rem 0;

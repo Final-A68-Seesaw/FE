@@ -21,10 +21,8 @@ const MyPageEdit = () => {
 
   //react-hook-form
   const {
-    reset,
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
@@ -65,15 +63,6 @@ const MyPageEdit = () => {
     setPrevNick(e.target.value);
   };
 
-  //인풋의 엑스버튼 클릭시 인풋과 닉네임 미리보기 내용 함께 리셋
-  const onReset = () => {
-    setPrevNick("");
-    reset({
-      ...getValues(),
-      nickname: "",
-    });
-  };
-
   //Api get
   useEffect(() => {
     dispatch(__loadMypage());
@@ -112,27 +101,18 @@ const MyPageEdit = () => {
         <OutlineContainer>
           <LeftBox>
             <PrevWorkStage>
-              <div
-                style={{
-                  display: "flex",
-                  position: "relative",
-                  justifyContent: "center",
-                  top: "100px",
-                }}
-              >
-                <img
-                  src={charPrev[0]}
-                  style={{ width: "22rem", position: "absolute", zIndex: "3" }}
-                />
-                <img
-                  src={charPrev[1]}
-                  style={{ width: "22rem", position: "absolute", zIndex: "2" }}
-                />
-                <img
-                  src={charPrev[2]}
-                  style={{ width: "22rem", position: "absolute", zIndex: "1" }}
-                />
-              </div>
+              <img
+                src={charPrev[0]}
+                style={{ width: "22rem", position: "absolute", zIndex: "3" }}
+              />
+              <img
+                src={charPrev[1]}
+                style={{ width: "22rem", position: "absolute", zIndex: "2" }}
+              />
+              <img
+                src={charPrev[2]}
+                style={{ width: "22rem", position: "absolute", zIndex: "1" }}
+              />
             </PrevWorkStage>
 
             <UserNameTag>
@@ -169,7 +149,6 @@ const MyPageEdit = () => {
               error={errors?.nickname?.message}
               onChange={onInputChange}
             />
-            {/* <Button shape="inputReset" onClick={onReset} type="button" /> */}
 
             <div>
               <LabelBox>표정</LabelBox>
@@ -290,14 +269,11 @@ const OutlineContainer = styled.div`
   display: flex;
 `;
 
-const PrevContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 const PrevWorkStage = styled.div`
-  /* width: 50rem; */
-  /* overflow-y: auto; */
+  display: flex;
+  position: relative;
+  justify-content: center;
+  top: 100px;
 `;
 
 const FinalConfirm = styled(Button)`

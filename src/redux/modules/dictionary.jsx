@@ -9,7 +9,6 @@ const GET_DICT = "GETDICT";
 const GET_DICT_DETAIL = "GETDICTDETAIL";
 const ADD_DICT = "ADDDICT";
 const DEL_DICT = "DELDICT";
-const PUT_DICT = "PUTDICT";
 const SET_DICT = "SETDICT";
 const CLEAR_DICT = "CREARDICT";
 
@@ -25,7 +24,6 @@ export const getDict = createAction(GET_DICT, (data) => data);
 const getDictDetail = createAction(GET_DICT_DETAIL, (detailData) => detailData);
 const addDict = createAction(ADD_DICT, (data) => ({ data }));
 const delDict = createAction(DEL_DICT, (dict) => dict);
-const putDict = createAction(PUT_DICT, (data) => data);
 export const setDict = createAction(SET_DICT, (files) => ({ files }));
 const clearDict = createAction(CLEAR_DICT, (data) => data);
 

@@ -37,13 +37,8 @@ import MyPageMyWord from "../pages/MyPageMyWord";
 import MyPageWriting from "../pages/MyPageWriting";
 import MyPageEdit from "../pages/MyPageEdit";
 
-import AuthRedirectHandler from "../auth/AuthRedirectHandeler";
 import CrossWord from "../pages/CrossWord";
 import GameMain from "../pages/GameMain";
-
-// HOC (high order components)
-import PublicRoute from "../auth/PublicRoute";
-import PrivateRoute from "../auth/PrivateRoute";
 
 const Router = () => {
   return (
@@ -90,12 +85,6 @@ const Router = () => {
         <Route path="/mypage/myword" exact component={MyPageMyWord} />
         <Route path="/mypage/writing" exact component={MyPageWriting} />
         <Route path="/mypage/edit" exact component={MyPageEdit} />
-
-        <Route
-          path="/user/kakao/callback"
-          exact
-          component={AuthRedirectHandler}
-        />
 
         <Route path="/gamemain" exact component={GameMain} />
         <Route path="/game" exact component={CrossWord} />

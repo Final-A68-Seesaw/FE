@@ -1,20 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import isLogin from "../auth/isLogin";
-import { throttle } from 'lodash'
 
 //redux
 import { history } from "../redux/configStore";
 import { __logout } from "../redux/modules/user";
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../redux/modules/user";
 
 //element & component
 import Character from "./Character";
 import { bold15, bold16, med14, med19 } from "../themes/textStyle";
 
 //style
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import HeaderIcon from "../asset/HeaderIcon.svg";
 import { GoSearch } from "react-icons/go";
 import DropdownBtn from "../asset/HeaderDropdownBtn.svg";
@@ -24,7 +22,6 @@ const Header = (props) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const mypageInfo = useSelector((state) => state.mypage.list);
-  const [scrolly, setScrolly] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [headInput, setHeadInput] = useState("");
 
@@ -133,13 +130,7 @@ const Header = (props) => {
               >
                 피드백 참여하기
               </FeedBackBtn>
-
-              {/* <TroubleAddBtn
-                className="jello-horizontal"
-                onClick={() => history.push("/trouble/add")}
-              >
-                고민 상담하기
-              </TroubleAddBtn> */}
+              
               <MyInfo className="jello-horizontal"
                 onMouseOver={() => setShowModal('profile')}>
                 <Character char={mypageInfo.profileImages} />
@@ -428,18 +419,6 @@ const RightGroup = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
-const ProfileDiv = styled.div`
-  display: flex;
-  width: 48px;
-  height: 30px;
-`;
-
-const HeadNick = styled.div`
-  ${med14}
-  align-items: center;
-
-  color: #ffffff;
 `;
 
 const DictHead = styled.div`

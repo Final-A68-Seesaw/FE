@@ -2,8 +2,6 @@ import produce from "immer";
 import { handleActions } from "redux-actions";
 import { createAction } from "redux-actions"
 
-
-
 const GET_CHAT = 'GETCHAT'
 const ADD_CHAT = 'ADDCHAT'
 const CLEAR_CHAR = 'CLEARCHAT'
@@ -24,9 +22,8 @@ export default handleActions(
     {
         [GET_CHAT]: (state, action) => produce(state, (draft) => {
             action.payload.map((v) => {
-                draft.list.push({ ...v, createdAt: v.createdAt.match(/(\d*-\d*-\d*).(\d*:\d*:\d*)/)[2] })
+                draft.list.push({ ...v })
             })
-            // draft.list = action.payload
         }),
 
         [CLEAR_CHAR]: (state, action) => produce(state, (draft) => {
@@ -35,7 +32,7 @@ export default handleActions(
 
         [ADD_CHAT]: (state, action) => produce(state, (draft) => {
             if (action.payload.createdAt)
-                draft.list.push({ ...action.payload, createdAt: action.payload.createdAt.match(/(\d*-\d*-\d*).(\d*:\d*:\d*)/)[2] })
+                draft.list.push({ ...action.payload })
             else
                 draft.list.push({ ...action.payload })
         }),

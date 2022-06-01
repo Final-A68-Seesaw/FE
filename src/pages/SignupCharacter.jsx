@@ -22,10 +22,8 @@ import { cookies } from "../shared/cookie";
 const SignupCharacter = () => {
   //react-hook-form
   const {
-    reset,
     register,
     handleSubmit,
-    getValues,
     formState: { errors },
   } = useForm({ mode: "onChange" });
 
@@ -65,15 +63,6 @@ const SignupCharacter = () => {
 
   const onInputChange = (e) => {
     setPrevNick(e.target.value);
-  };
-
-  //인풋의 엑스버튼 클릭시 인풋과 닉네임 미리보기 내용 함께 리셋
-  const onReset = () => {
-    setPrevNick("");
-    reset({
-      ...getValues(),
-      nickname: "",
-    });
   };
   //select option
   const GenerationOptions = [
@@ -115,40 +104,10 @@ const SignupCharacter = () => {
       charId: [charId[0], charId[1], charId[2]],
     };
 
-    let signKakao = {
-      kakaoId: userData.kakaoId,
-      username: userData.username,
-      generation: data.generation,
-      energy: userData.energy,
-      insight: userData.insight,
-      judgement: userData.judgement,
-      lifePattern: userData.lifePattern,
-      nickname: data.nickname,
-      charId: [charId[0], charId[1], charId[2]],
-    }
-
-    try {  
-      if(userData.generation !== null)
-      {const user = await userApi.signupFinal(signDic);
-        history.replace("/login");
-        alert("회원가입이 완료됐습니다!");
-      }
-      else{
-        const kakao = await userApi.kakaoCharacter(signKakao)
-        const Token = kakao.headers.authorization.split(";Bearer ");
-        const accessToken = Token[0].split(" ")[1];
-        const refreshToken = Token[1];
-  
-        cookies.set("accessToken", accessToken, {
-          path: "/",
-          maxAge: 86400, // 1일
-        });
-        cookies.set("refreshToken", refreshToken, {
-          path: "/",
-          maxAge: 604800, // 7일
-        });
-        history.replace("/main")      
-      }
+    try {
+      const user = await userApi.signupFinal(signDic);
+      history.replace("/login");
+      alert("회원가입이 완료됐습니다!");
     } catch (e) {
       if (e.message === "Request failed with status code 400") {
         alert("중복된 닉네임입니다.");
@@ -209,23 +168,23 @@ const SignupCharacter = () => {
           <RightBox>
             {userData.generation === null ? (
               <>
-              <LabelBox>나의 세대는?</LabelBox>
-              <Select
-              width = "22rem"
-                name="generation"
-                onChange={(e)=>setGen(e.target.value)}
-                register={register({
-                  required: true,
-                  validate: (value) => value !== "none",
-                })}
-                error={errors?.generation?.type}
-              >
-                {GenerationOptions.map((item, index) => (
-                  <option key={index} value={item.value}>
-                    {item.label}
-                  </option>
-                ))}
-              </Select>
+                <LabelBox>나의 세대는?</LabelBox>
+                <Select
+                  width="22rem"
+                  name="generation"
+                  onChange={(e) => setGen(e.target.value)}
+                  register={register({
+                    required: true,
+                    validate: (value) => value !== "none",
+                  })}
+                  error={errors?.generation?.type}
+                >
+                  {GenerationOptions.map((item, index) => (
+                    <option key={index} value={item.value}>
+                      {item.label}
+                    </option>
+                  ))}
+                </Select>
               </>
             ) : null}
 
@@ -252,7 +211,6 @@ const SignupCharacter = () => {
               error={errors?.nickname?.message}
               onChange={onInputChange}
             />
-            {/* <Button shape="inputReset" onClick={onReset} type="button" /> */}
 
             <div>
               <LabelBox>표정</LabelBox>

@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 //redux
@@ -35,7 +35,7 @@ import Result0 from "../asset/Result0.svg";
 
 
 const TroubleDetail = (props) => {
-  const { register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
   const params = useParams();
@@ -144,23 +144,6 @@ const TroubleDetail = (props) => {
                       </div>
                     );
                   })}
-                  {/* <div ref={RecentScrollRef}></div> 
-                   <BsChevronRight
-                    onClick={() => {
-                      RecentScrollRef.current.scrollIntoView({
-                        behavior: "smooth",
-                        block: "nearest",
-                        inline: "end",
-                      });
-                    }}
-                    style={{
-                      fontSize: "30px",
-                      cursor: "pointer",
-                      position: "absolute",
-                      top: "700px",
-                      right: "30%",
-                    }}
-                  />  */}
                 </Images>
               </ImageArea>
               <HrLine />

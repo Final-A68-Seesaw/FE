@@ -1,8 +1,6 @@
 import axios from "axios";
 import { cookies } from "../shared/cookie";
 
-const env = process.env.NODE_ENV;
-
 const targetServer = 'https://www.walbu.shop'
 
 export const instance = axios.create({

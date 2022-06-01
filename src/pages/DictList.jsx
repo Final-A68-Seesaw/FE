@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
-import { __loadDictCardList, __scrapDict, getDict } from "../redux/modules/dictionary";
+import { __loadDictCardList, __scrapDict } from "../redux/modules/dictionary";
 import { actionCreators as DictionaryActions } from "../redux/modules/dictionary";
 
 //element & component
@@ -61,10 +61,6 @@ const DictList = (props) => {
               })}
           </CardWholeBox>
         </InfiniteScroll>
-        {/* {dictList &&
-            dictList.map((v, i) => {
-              return <DictionaryCard key={i} data={v} />;
-            })} */}
       </Container>
       <Footer />
     </>

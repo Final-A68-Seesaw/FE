@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
@@ -41,7 +41,7 @@ import TextIcon from "../asset/DictAddIcon.svg";
 import Result0 from "../asset/Result0.svg";
 
 const DictDetail = (props) => {
-  const { reset, getValues, register, handleSubmit, formState } = useForm({
+  const { register, handleSubmit } = useForm({
     mode: "onChange",
   });
 
@@ -70,14 +70,6 @@ const DictDetail = (props) => {
     setScrap(!scrap);
     dispatch(__scrapDict(!scrap, params.cardTitleId));
   };
-
-  // //디테일 페이지 삭제 전송
-  // const deleteDetail = (data) => {
-  //   dispatch(__deleteDictDetail(data));
-  // };
-
-  //이미지 더보기 버튼 애니메이션
-  const RecentScrollRef = useRef();
 
   //인풋 글자수 count
   const [inputCount, setInputCount] = useState("0");
@@ -145,13 +137,6 @@ const DictDetail = (props) => {
             >
               수정
             </div>{" "}
-            {/*  |
-              <div
-                style={{ margin: "0 0.25rem", cursor: "pointer" }}
-                onClick={() => {deleteDetail(params.cardTitleId)}}
-                >
-                  삭제
-                  </div> */}
           </EditDeleteBox>
         </BetweenBox>
         <UserInfoBox>
@@ -190,23 +175,6 @@ const DictDetail = (props) => {
                       </div>
                     );
                   })}
-                  <div ref={RecentScrollRef}></div>
-                  {/* <BsChevronRight
-                    onClick={() => {
-                      RecentScrollRef.current.scrollIntoView({
-                        behavior: "smooth",
-                        block: "nearest",
-                        inline: "end",
-                      });
-                    }}
-                    style={{
-                      fontSize: "30px",
-                      cursor: "pointer",
-                      position: "absolute",
-                      top: "700px",
-                      right: "30%",
-                    }}
-                  /> */}
                 </Images>
               </ImageArea>
               <HrLine />

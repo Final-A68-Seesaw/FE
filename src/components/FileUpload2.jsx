@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 
 import { useDispatch, useSelector } from "react-redux";
-import { setDict, __loadDictDetail } from "../redux/modules/dictionary";
+import { __loadDictDetail } from "../redux/modules/dictionary";
 import { actionCreators as ImageActions } from "../redux/modules/image";
 
 import DropzoneImg from "../asset/Dictionary_add_dropzone.svg";
@@ -12,8 +12,6 @@ const FileUpload2 = (props) => {
   const dispatch = useDispatch();
 
   const dbimages = useSelector((state) => state.image.imagelist)
-  
-  const detailData = useSelector((state) => state.dictionary.detailData)
   
   const params = useParams()
 
@@ -186,18 +184,4 @@ const Preview = styled.img`
   background-position: center;
   margin: 0.25rem;
   cursor: pointer;
-`;
-
-const Deletebtn = styled.div`
-  color: #fff;
-  font-size: 3px;
-  text-align: center;
-  line-height: 13px;
-  width: 15px;
-  height: 15px;
-  border-radius: 15px;
-  background-color: #000;
-  position: absolute;
-  right: -5px;
-  top: -5px;
 `;

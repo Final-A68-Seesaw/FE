@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { userApi } from "../api/userApi";
 import { history } from "../redux/configStore";
 import { useForm } from "react-hook-form";
-import user, { userActions } from "../redux/modules/user";
+import { userActions } from "../redux/modules/user";
 
 //element
 import Button from "../elements/Button";
@@ -14,7 +14,6 @@ import { StepBar } from "../components/StepBar";
 import Hi from "../asset/Signup_Mbti_imo.svg";
 import { useDispatch, useSelector } from "react-redux";
 import Logo from "../asset/Seeso_logo.svg";
-import { enableES5 } from "immer";
 
 const SignupMBTI = () => {
   const dispatch = useDispatch();
@@ -64,7 +63,7 @@ const onSubmit = async () => {
   try {
     const user = await userApi.mbti(Mbti);
     dispatch(
-      userActions.userSave({ ...userData, ...Mbti, kakaoId: userData.id, mbtiRes: user.data})
+      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data})
     );
     history.push("/signup/making/character");
   } catch (e) {

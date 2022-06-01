@@ -19,7 +19,6 @@ import { bold18, bold22, bold15 } from "../themes/textStyle";
 const MyPageTop = () => {
   const {
     handleSubmit,
-    formState: { errors },
   } = useForm({ mode: "onChange" });
 
   const location = useLocation();
