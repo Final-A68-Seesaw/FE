@@ -14,11 +14,13 @@ const FileUpload = (props) => {
   const dispatch = useDispatch();
   const params = useParams();
 
+  //서버에서 받아온 이미지
   const dbimages = useSelector((state) => state.image.imagelist)
 
   const [Files, setFiles] = useState([]);
   const [oversize, setOversize] = useState(false)
   const [overlength, setOverlength] = useState(false)
+  //현재 추가중인 이미지파일
   const [imgUrlList, setImgUrlList] = useState([])
 
   useEffect(() => {
@@ -29,6 +31,7 @@ const FileUpload = (props) => {
   }, []);
 
   const ImageFile = (e) => {
+    //방금 추가한 이미지파일
     const FileList = e.target.files;
     const UrlList = [];
     const FilesLength = FileList.length + imgUrlList.length + dbimages.length

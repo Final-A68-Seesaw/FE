@@ -12,16 +12,25 @@ const CrossWord = () => {
 
     const inputRef = useRef()
 
+    //유저가 풀기위해 선택한 문제
     const [selQuiz, setSelQuiz] = useState()
+    //유저가 문제푸는 인풋창
     const [writeAnswer, setWriteAnswer] = useState('')
+    //틀렸을때 틀렸다는메세지 띄우기위해 체크하는 변수
     const [answerCheck, setAnswerCheck] = useState(true)
+    //문제 맞춘개수
     const [pass, setPass] = useState(0)
+    //포기했는지 체크하는 변수
     const [giveup, setGiveup] = useState(false)
+    //게임이 끝난상태인지 체크하는 변수
     const [gameover, setGameover] = useState(false)
 
+    //게임 데이터 담는 변수
     const [crData, setCrData] = useState([])
+    //게임을 불러왔는지 체크하는 변수
     const [loaderr, setLoaderr] = useState(false)
 
+    //문제 선택했을때 실행되는 함수
     const SelWord = (data) => {
         if (data.pass || giveup)
             return
@@ -32,6 +41,7 @@ const CrossWord = () => {
         inputRef.current.focus()
     }
 
+    //문제 단어단위의 네모박스
     const SettingLine = (data, ikey) => {
         return <CellContainer key={ikey}>
             <CWword
@@ -42,6 +52,7 @@ const CrossWord = () => {
         </CellContainer>
     }
 
+    //시작 네모박스 100개 찍어주는 함수
     const SettingData = () => {
         let gameMap = []
 
@@ -61,6 +72,8 @@ const CrossWord = () => {
             CheckAnswer()
     }
 
+    //문제가 안보여요 버튼
+    //문제를 선택할수 없을때 포커스 맞춰주는 함수
     const NoSee = () => {
         for (let i = 0; i < crData.length; i++) {
             if (!crData[i].pass)
@@ -68,6 +81,7 @@ const CrossWord = () => {
         }
     }
 
+    //문제를 다 맞췄는지 체크하는 함수
     const AllCheck = () => {
         for (let i = 0; i < crData.length; i++) {
             if (!crData[i].pass)
@@ -76,15 +90,13 @@ const CrossWord = () => {
         return true
     }
 
+    //포기할래요 눌렀을때 실행되는 함수
     const GameGiveUp = () => {
-        if (pass === 0 && crData.length === 0)
-            window.location.reload()
-        else {
-            setGiveup(true)
-            setGameover(true)
-        }
+        setGiveup(true)
+        setGameover(true)
     }
 
+    //문제를 풀고 답을 확인하기 위한 함수
     const CheckAnswer = () => {
         if (!selQuiz)
             return
@@ -106,27 +118,13 @@ const CrossWord = () => {
         setWriteAnswer('')
     }
 
-    const GameReload = () => {
-        MainApi.crossgame()
-            .then((res) => {
-                setCrData(res.data)
-                setLoaderr(false)
-            })
-            .catch((err) => {
-                if (err.response.data.status === 500) {
-                    setLoaderr(true)
-                    setTimeout(() => {
-                        GameReload()
-                    }, 1000)
-                }
-            })
-    }
-
     useEffect(() => {
+        //게임 전체 데이터 받아오기
         MainApi.crossgame()
             .then((res) => {
                 setCrData(res.data)
             })
+            //데이터 못받아왔을때 GameReload() 함수를 실행 -> setTimeout으로 1초뒤에 실행
             .catch((err) => {
                 if (err.response.data.status === 500) {
                     setLoaderr(true)
@@ -136,6 +134,24 @@ const CrossWord = () => {
                 }
             })
     }, [])
+
+    //게임 데이터를 못받아왔을때 실행하는 함수
+    const GameReload = () => {
+        MainApi.crossgame()
+            .then((res) => {
+                setCrData(res.data)
+                setLoaderr(false)
+            })
+            //데이터 못받아왔을때 GameReload() 함수를 재실행 -> setTimeout으로 1초마다 실행
+            .catch((err) => {
+                if (err.response.data.status === 500) {
+                    setLoaderr(true)
+                    setTimeout(() => {
+                        GameReload()
+                    }, 1000)
+                }
+            })
+    }
 
 
     return (
@@ -151,7 +167,7 @@ const CrossWord = () => {
 
                 <QuestContainer>
                     <QuestDiv>
-
+                        {/* 오른쪽 검정배경화면 */}
                         <GameInput1 style={{ position: 'absolute', right: '0px' }} />
 
                         <div style={{ display: 'flex', flexDirection: 'column', position: 'absolute', width: '594px', minHeight: '755px', height: '100vh', right: '0px', background: '#111111' }}>

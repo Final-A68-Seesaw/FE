@@ -9,19 +9,25 @@ const CWword = (props) => {
 
     return (
         <BlankDiv key={props.datakey}>
+            {/* 길이만큼 이동하기 위한 배열생성 */}
             {Array(searchlen).fill().map((v, i) => {
                 return <BCell key={i} />
             })}
 
+            {/* oriental이 false이면 세로 */}
             {!props.data.oriental
                 ? <ColCelldiv onClick={props?.onClick} pass={props.data.pass || props.IsOver} sel={selecting}>
                     {Array(props.data.wordCount).fill().map((v, i) => {
+                        // 맞췄을때 주황색네모박스
                         if (props.data.pass)
                             return <PassCell key={i}>{props.data.word.slice(i, i + 1)}</PassCell>
+                        // 포기했을때 흰네모박스
                         else if (props.IsOver)
                             return <GiveUp key={i}>{props.data.word.slice(i, i + 1)}</GiveUp>
+                        // 선택했을때 보라색네모박스
                         else if (selecting)
                             return <SelCell key={i} />
+                        // 기본상태 흰네모박스
                         else
                             return <QCell key={i} />
                     })}
