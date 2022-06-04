@@ -30,6 +30,7 @@ const DictList = (props) => {
     return () => dispatch(DictionaryActions.clearDict())
   }, [])
 
+  //무한스크롤로 받아오는 데이터
   const getData = () => {
     let newPage = page + 1
     if (dictList.length < 30) return

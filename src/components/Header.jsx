@@ -124,13 +124,6 @@ const Header = (props) => {
             </div>
           ) : (
             <RightGroup>
-              <FeedBackBtn
-                onClick={() => window.open("https://forms.gle/Fi1mPK4LkLGR36Ar5", '_blank')}
-                className="jello-horizontal"
-              >
-                피드백 참여하기
-              </FeedBackBtn>
-              
               <MyInfo className="jello-horizontal"
                 onMouseOver={() => setShowModal('profile')}>
                 <Character char={mypageInfo.profileImages} />
@@ -262,33 +255,6 @@ const HeadInner = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`;
-
-const FeedBackBtn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 0.625rem 1rem;
-  gap: 0.625rem;
-  ${bold15}
-  margin-right: 1rem;
-  color: #eeeeee;
-  background: #333333;
-  border: 0.1rem solid rgba(255, 255, 255, 0.2);
-  border-radius: 2rem;
-
-cursor: pointer;
-  
-  @media screen and (max-width: 1300px) {
-    font-size: 0.5rem;
-    font-weight: 500;
-    margin: 0 1rem;
-  }
-  
-  @media screen and (max-width: 800px) {
-    display: none;
-  }
 `;
 
 const HeaderMenu = styled.p`

@@ -17,21 +17,24 @@ let stompClient = null
 
 const Mainchat = (props) => {
 
+  //대화 리스트
   const chatList = useSelector((state) => state.chat.list)
+  const userInfo = useSelector((state) => state.mypage.list)
 
   const dispatch = useDispatch()
 
   const messageRef = useRef();
   const modalref = useRef()
 
+  //채팅 중 토큰전달을 위한 토큰
   const Token = 'Bearer ' + cookies.get('accessToken')
-  const userInfo = useSelector((state) => state.mypage.list)
 
   const [userData, setUserData] = React.useState({
     nickname: userInfo.nickname,
     message: null,
   });
 
+  //채팅 시작시 소켓연결, 서버에서 채팅내용 불러오기
   const ConnectReady = () => {
     stompConnect()
 
@@ -43,8 +46,10 @@ const Mainchat = (props) => {
   }
 
   useEffect(() => {
+    //채팅 시작시 소켓연결
     ConnectReady()
 
+    //채팅방 나갈때 연결,구독 해제
     return () => stompDisConnect()
   }, [])
 
@@ -80,14 +85,17 @@ const Mainchat = (props) => {
   }
 
 
-
+  //소켓 연결
   const stompConnect = () => {
     let sock = new SockJS(ChatUrls.sockUrl)
 
+    //stomp와 socket을 연결
     stompClient = Stomp.over(sock);
+    //연결, 구독
     stompClient.connect({}, onConnected, onError);
   };
 
+  //연결, 구독해제하는 함수
   const stompDisConnect = () => {
     try {
       const user_join = {
@@ -110,6 +118,7 @@ const Mainchat = (props) => {
     }
   };
 
+  //연결 및 구독하는 함수
   const onConnected = () => {
     try {
       const user_join = {
@@ -135,6 +144,7 @@ const Mainchat = (props) => {
     console.log('Error! : ' + err)
   };
 
+  //메세지 보낼때 실행되는 함수
   const sendPublicMessage = () => {
 
     if (!userData.message) {
@@ -161,6 +171,7 @@ const Mainchat = (props) => {
     }
   };
 
+  //서버와 연결된 상태에 따라 다른 dispatch를 실행해주는 함수
   const onPublicMessageReceived = (payload) => {
     let payloadData = JSON.parse(payload.body);
 
