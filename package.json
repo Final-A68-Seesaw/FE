@@ -8,6 +8,14 @@
     "dev": "webpack-dev-server --open",
     "build": "webpack --mode production"
   },
+  "browserslist": {
+    "production": [
+      "ie 11"
+    ],
+    "development": [
+      "ie 11"
+    ]
+  },
   "author": "Yerim Kim, Eunho Cheon",
   "license": "ISC",
   "dependencies": {
