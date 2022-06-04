@@ -33,15 +33,17 @@ module.exports = {
           },
         ],
       },
-
+      {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: "file-loader",
+          },
+        ],
+      },
       {
         test: /\.svg$/,
         use: ["@svgr/webpack"],
-      },
-      {
-        test: /\.(png|jpg|jpeg|gif|webp)$/i,
-        loader: "image-webpack-loader",
-        enforce: "pre",
       },
       {
         test: /\.html$/i,
