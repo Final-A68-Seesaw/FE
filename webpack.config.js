@@ -1,6 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const Dotenv = require("dotenv-webpack"); //env 사용 플러그인
+const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
 
 module.exports = {
   // 개발모드, development or production
@@ -76,8 +77,8 @@ module.exports = {
   // 빌드 설정
   output: {
     path: path.resolve(__dirname, "build"), // 빌드되는 파일들이 만들어지는 위치, __dirname: 현재 디렉토리
-    filename: "bundle.js", // 번들파일 이름
-    publicPath: "/",
+    filename: "[name].bundle.js", // 번들파일 이름
+    publicPath: "/", //output 위치 지정
   },
 
   // webpack 서버 설정
@@ -90,6 +91,13 @@ module.exports = {
   },
 
   plugins: [
+    new BundleAnalyzerPlugin({
+      analyzerMode: "static",
+      reportFilename: "bundle-report.html",
+      openAnalyzer: false,
+      generateStatsFile: true,
+      statsFilename: "bundle-status.json",
+    }),
     new HtmlWebpackPlugin({
       // index.html에 output에서 만들어진 bundle.js를 적용하여, build에 새로운 html 파일 생성
       template: `./public/index.html`,
