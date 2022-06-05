@@ -10,6 +10,7 @@ import Signup from "../pages/Signup";
 import SignupMBTI from "../pages/SignupMBTI";
 import SignupCharacter from "../pages/SignupCharacter";
 import Login from "../pages/Login";
+import AuthRedirectHandler from "../auth/AuthRedirectHandler";
 
 //main
 import StartPage from "../pages/StartPage";
@@ -55,6 +56,12 @@ const Router = () => {
           component={SignupCharacter}
         />
         <Route path="/login" exact component={Login} />
+
+        <Route
+          path="/user/kakao/callback"
+          exact
+          component={AuthRedirectHandler}
+        />
 
         <Route path="/main" exact component={Main} />
         <Route path="/searchresult/:keyword" exact component={SearchResult} />

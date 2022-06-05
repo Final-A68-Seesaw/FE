@@ -8,4 +8,8 @@ export const userApi = {
   mbti: (Mbti) => nonTokenInstance.post("/user/mbti", Mbti),
   signupFinal: (data) => nonTokenInstance.post("/user/signup", data),
   signupCharacter: () => nonTokenInstance.get("/user/profiles"),
-}
+
+  //kakao 로그인
+  kakao: (code) => nonTokenInstance.get(`/user/kakao/callback?code=${code}`),
+  kakaoCharacter: (data) => nonTokenInstance.post("/user/kakao/signup", data),
+};

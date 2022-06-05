@@ -19,7 +19,7 @@ const SignupMBTI = () => {
   const dispatch = useDispatch();
 
   const userData = useSelector((state) => state.user.usersign);
-  
+
   const [Mbti, setMbti] = useState({
     energy: null,
     insight: null,
@@ -28,10 +28,11 @@ const SignupMBTI = () => {
     id: userData.id,
   });
 
-  const { register, handleSubmit, 
+  const {
+    register,
+    handleSubmit,
     formState: { errors },
-   } = useForm();
-
+  } = useForm();
 
   //라디오버튼
 
@@ -53,27 +54,32 @@ const SignupMBTI = () => {
   ];
 
   const changeRadio = (e) => {
-    if(userData.code)
-    setMbti({ ...Mbti, [e.target.name]: e.target.value, id: userData.id });
-   else
-    setMbti({ ...Mbti, [e.target.name]: e.target.value })
+    if (userData.code)
+      setMbti({ ...Mbti, [e.target.name]: e.target.value, id: userData.id });
+    else setMbti({ ...Mbti, [e.target.name]: e.target.value });
   };
-//데이터전송
-const onSubmit = async () => {
-  try {
-    const user = await userApi.mbti(Mbti);
-    dispatch(
-      userActions.userSave({ ...userData, ...Mbti, mbtiRes: user.data})
-    );
-    history.push("/signup/making/character");
-  } catch (e) {
-    if (e.message === "Request failed with status code 400") {
-      alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
-      history.push("/login")
-      return;
+  //데이터전송
+  const onSubmit = async () => {
+    try {
+      const user = await userApi.mbti(Mbti);
+      dispatch(
+        userActions.userSave({
+          ...userData,
+          ...Mbti,
+          kakaoId: userData.id,
+          mbtiRes: user.data,
+        })
+      );
+      history.push("/signup/making/character");
+    } catch (e) {
+      console.log(e);
+      if (e.message === "Request failed with status code 400") {
+        alert("잘못된 접근입니다. 회원가입을 처음부터 다시 시도해주세요.");
+        history.push("/login");
+        return;
+      }
     }
-  }
-};
+  };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -103,8 +109,8 @@ const onSubmit = async () => {
                 <label key={i}>
                   <FormCheckLeft
                     {...register("energy")}
-                    ref = {register({
-                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    ref={register({
+                      required: { value: true, message: "⚠ 선택해주세요!" },
                     })}
                     type="radio"
                     name="energy"
@@ -131,8 +137,8 @@ const onSubmit = async () => {
                 <label key={i}>
                   <FormCheckLeft
                     {...register("insight")}
-                    ref = {register({
-                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    ref={register({
+                      required: { value: true, message: "⚠ 선택해주세요!" },
                     })}
                     type="radio"
                     name="insight"
@@ -159,8 +165,8 @@ const onSubmit = async () => {
                 <label key={i}>
                   <FormCheckLeft
                     {...register("judgement")}
-                    ref = {register({
-                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    ref={register({
+                      required: { value: true, message: "⚠ 선택해주세요!" },
                     })}
                     type="radio"
                     name="judgement"
@@ -186,8 +192,8 @@ const onSubmit = async () => {
                 <label key={i}>
                   <FormCheckLeft
                     {...register("lifePattern")}
-                    ref = {register({
-                      required:{value: true, message:"⚠ 선택해주세요!"}
+                    ref={register({
+                      required: { value: true, message: "⚠ 선택해주세요!" },
                     })}
                     type="radio"
                     name="lifePattern"

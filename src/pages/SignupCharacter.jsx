@@ -31,7 +31,7 @@ const SignupCharacter = () => {
   const [charId, setCharId] = useState([null, null, null]);
   const [charSelect, setCharSelect] = useState([]);
   const [charPrev, setCharPrev] = useState([null, null, null]);
-  const [gen, setGen] = useState('')
+  const [gen, setGen] = useState("");
 
   //map의 기준점이 될 이미지 URL LIST
   const selectFaceList = charSelect.faceUrl;
@@ -104,11 +104,42 @@ const SignupCharacter = () => {
       charId: [charId[0], charId[1], charId[2]],
     };
 
+    let signKakao = {
+      kakaoId: userData.kakaoId,
+      username: userData.username,
+      generation: data.generation,
+      energy: userData.energy,
+      insight: userData.insight,
+      judgement: userData.judgement,
+      lifePattern: userData.lifePattern,
+      nickname: data.nickname,
+      charId: [charId[0], charId[1], charId[2]],
+    };
+
     try {
-      const user = await userApi.signupFinal(signDic);
-      history.replace("/login");
-      alert("회원가입이 완료됐습니다!");
+      if (userData.generation !== null) {
+        const user = await userApi.signupFinal(signDic);
+        history.replace("/login");
+        alert("회원가입이 완료됐습니다!");
+      } else {
+        const kakao = await userApi.kakaoCharacter(signKakao);
+        console.log(kakao);
+        const Token = kakao.headers.authorization.split(";Bearer ");
+        const accessToken = Token[0].split(" ")[1];
+        const refreshToken = Token[1];
+
+        cookies.set("accessToken", accessToken, {
+          path: "/",
+          maxAge: 86400, // 1일
+        });
+        cookies.set("refreshToken", refreshToken, {
+          path: "/",
+          maxAge: 604800, // 7일
+        });
+        history.replace("/main");
+      }
     } catch (e) {
+      console.log(e);
       if (e.message === "Request failed with status code 400") {
         alert("중복된 닉네임입니다.");
         return;
@@ -120,7 +151,6 @@ const SignupCharacter = () => {
       }
     }
   };
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Logo style={{ margin: "2rem 0 0 2rem" }} />

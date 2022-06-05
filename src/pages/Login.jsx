@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { __login } from "../redux/modules/user";
 import { history } from "../redux/configStore";
+import { KAKAO_AUTH_URL } from "../auth/kakao_AUTH_URL";
 
 //ele
 import Button from "../elements/Button";
@@ -12,6 +13,7 @@ import { ErrorXInput } from "../elements/Input";
 import styled from "styled-components";
 import { med14, bold30 } from "../themes/textStyle";
 import Logo from "../asset/Seeso_logo.svg";
+import KakaoBtn from "../components/KakaoBtn";
 import Img from "../asset/LoginIMG.svg";
 
 const Login = () => {
@@ -104,6 +106,9 @@ const Login = () => {
               </Button>
             </ButtonBox>
           </form>
+          <KakaoBox>
+            <KakaoBtn style={{ marginTop: "3rem" }} href={KAKAO_AUTH_URL} />
+          </KakaoBox>
         </RightContainer>
       </Container>
     </>
@@ -132,6 +137,12 @@ const ButtonBox = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 0 0 1.5rem 0;
+`;
+const KakaoBox = styled.div`
+  width: 26rem;
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
 `;
 const LoginContainer = styled.div`
   padding: 0.5rem 0 1rem 0;
