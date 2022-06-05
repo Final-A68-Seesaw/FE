@@ -16,6 +16,7 @@ import { bold16, bold22 } from "../themes/textStyle";
 import styled from "styled-components";
 import Line from "../asset/Dictionary_list_line.svg";
 
+
 const DictList = (props) => {
 
   const dispatch = useDispatch()

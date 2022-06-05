@@ -26,19 +26,19 @@ import { Suspense } from "react";
 // import DictDetail from "../pages/DictDetail";
 // import DictList from "../pages/DictList";
 // import DictDetailEdit from "../pages/DictDetailEdit";
-const DictAdd = lazy(() => import("../pages/DictAdd"));
-const DictDetail = lazy(() => import("../pages/DictDetail"));
-const DictList = lazy(() => import("../pages/DictList"));
-const DictDetailEdit = lazy(() => import("../pages/DictDetailEdit"));
-const SearchResult = lazy(() => import("../pages/SearchResult"));
-const About = lazy(() => import("../pages/About"));
-const Main = lazy(() => import("../pages/Main"));
-const StartPage = lazy(() => import("../pages/StartPage"));
-const AuthRedirectHandler = lazy(() => import("../auth/AuthRedirectHandler"));
-const Login = lazy(() => import("../pages/Login"));
-const SignupCharacter = lazy(() => import("../pages/SignupCharacter"));
-const SignupMBTI = lazy(() => import("../pages/SignupMBTI"));
-const Signup = lazy(() => import("../pages/Signup"));
+const DictAdd = lazy(() => import(/*webpackChunkName: "DictAdd"*/"../pages/DictAdd"));
+const DictDetail = lazy(() => import(/*webpackChunkName: "DictDetail"*/"../pages/DictDetail"));
+const DictList = lazy(() => import(/*webpackChunkName: "DictList"*/"../pages/DictList"));
+const DictDetailEdit = lazy(() => import(/*webpackChunkName: "DictDetailEdit"*/"../pages/DictDetailEdit"));
+const SearchResult = lazy(() => import(/*webpackChunkName: "SearchResult"*/"../pages/SearchResult"));
+const About = lazy(() => import(/*webpackChunkName: "About"*/"../pages/About"));
+const Main = lazy(() => import(/*webpackChunkName: "Main"*/"../pages/Main"));
+const StartPage = lazy(() => import(/*webpackChunkName: "StartPage"*/"../pages/StartPage"));
+const AuthRedirectHandler = lazy(() => import(/*webpackChunkName: "AuthRedirectHandler"*/"../auth/AuthRedirectHandler"));
+const Login = lazy(() => import(/*webpackChunkName: "Login"*/"../pages/Login"));
+const SignupCharacter = lazy(() => import(/*webpackChunkName: "SignupCharacter"*/"../pages/SignupCharacter"));
+const SignupMBTI = lazy(() => import(/*webpackChunkName: "SignupMBTI"*/"../pages/SignupMBTI"));
+const Signup = lazy(() => import(/*webpackChunkName: "Signup"*/"../pages/Signup"));
 
 // //trouble
 // import TroubleList from "../pages/TroubleList";
@@ -55,16 +55,16 @@ const Signup = lazy(() => import("../pages/Signup"));
 // import CrossWord from "../pages/CrossWord";
 // import GameMain from "../pages/GameMain";
 
-const GameMain = lazy(() => import("../pages/GameMain"));
-const CrossWord = lazy(() => import("../pages/CrossWord"));
-const MyPageEdit = lazy(() => import("../pages/MyPageEdit"));
-const MyPageWriting = lazy(() => import("../pages/MyPageWriting"));
-const MyPageMyWord = lazy(() => import("../pages/MyPageMyWord"));
-const MyPageScrap = lazy(() => import("../pages/MyPageScrap"));
-const TroubleDetailEdit = lazy(() => import("../pages/TroubleDetailEdit"));
-const TroubleAdd = lazy(() => import("../pages/TroubleAdd"));
-const TroubleDetail = lazy(() => import("../pages/TroubleDetail"));
-const TroubleList = lazy(() => import("../pages/TroubleList"));
+const GameMain = lazy(() => import(/*webpackChunkName: "GameMain"*/"../pages/GameMain"));
+const CrossWord = lazy(() => import(/*webpackChunkName: "CrossWord"*/"../pages/CrossWord"));
+const MyPageEdit = lazy(() => import(/*webpackChunkName: "MyPageEdit"*/"../pages/MyPageEdit"));
+const MyPageWriting = lazy(() => import(/*webpackChunkName: "MyPageWriting"*/"../pages/MyPageWriting"));
+const MyPageMyWord = lazy(() => import(/*webpackChunkName: "MyPageMyWord"*/"../pages/MyPageMyWord"));
+const MyPageScrap = lazy(() => import(/*webpackChunkName: "MyPageScrap"*/"../pages/MyPageScrap"));
+const TroubleDetailEdit = lazy(() => import(/*webpackChunkName: "TroubleDetailEdit"*/"../pages/TroubleDetailEdit"));
+const TroubleAdd = lazy(() => import(/*webpackChunkName: "TroubleAdd"*/"../pages/TroubleAdd"));
+const TroubleDetail = lazy(() => import(/*webpackChunkName: "TroubleDetail"*/"../pages/TroubleDetail"));
+const TroubleList = lazy(() => import(/*webpackChunkName: "TroubleList"*/"../pages/TroubleList"));
 
 const Router = () => {
   return (
