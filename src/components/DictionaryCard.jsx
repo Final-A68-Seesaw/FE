@@ -14,10 +14,6 @@ import styled from "styled-components";
 import { BsSuitHeart } from "react-icons/bs";
 import { BsSuitHeartFill } from "react-icons/bs";
 
-function getParametersForUnsplash({ width, height, quality, format }) {
-  return `?w=${width}&h=${height}&q=${quality}&fm=${format}&fit=crop`;
-}
-
 const DictionaryCard = (props) => {
   const dispatch = useDispatch();
 
@@ -65,10 +61,7 @@ const DictionaryCard = (props) => {
       </WordCard>
       <img
         src={
-          props.data.postImages ||
-          props.data.postImage ||
-          props.data.mainImage +
-            getParametersForUnsplash({ width: 446, height: 640, quality: 80 })
+          props.data.postImages || props.data.postImage || props.data.mainImage
         }
         style={{
           display: "flex",
@@ -76,7 +69,7 @@ const DictionaryCard = (props) => {
           height: "320px",
           borderRadius: "10px",
         }}
-        alt="seeso dictionary image"
+        alt="seeso dictionary card"
       />
     </div>
   );
