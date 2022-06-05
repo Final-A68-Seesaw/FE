@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import imageCompression from "browser-image-compression";
 
 //redux
 import { useDispatch, useSelector } from "react-redux";
@@ -40,6 +41,15 @@ const FileUpload = (props) => {
       return
     }
 
+    let options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 320,
+    }
+
+    let compFile = imageCompression(e.target.files[0], options)
+
+    console.log(e.target.files[0], compFile);
+
     if (FilesLength > 10) {
       setOverlength(true)
     }
@@ -78,26 +88,26 @@ const FileUpload = (props) => {
             <p style={{ color: oversize ? 'red' : '#999999' }}>10MB</p>
           </div>
         </OversizeMsg>
-        {dbimages?.length === 0 && imgUrlList.length === 0 ? null : 
-        <PreviewBox style={{ justifyContent: "flex-start" }}>
-          <Previews>
-            {dbimages?.map((v, i) => {
-              return (
-                <div key={i} style={{ margin: "10px" }}>
-                  <Preview src={v} onClick={() => delFile(i)} />
-                </div>
-              );
-            })}
+        {dbimages?.length === 0 && imgUrlList.length === 0 ? null :
+          <PreviewBox style={{ justifyContent: "flex-start" }}>
+            <Previews>
+              {dbimages?.map((v, i) => {
+                return (
+                  <div key={i} style={{ margin: "10px" }}>
+                    <Preview src={v} onClick={() => delFile(i)} />
+                  </div>
+                );
+              })}
 
-            {imgUrlList.map((v, i) => {
-              return (
-                <div key={i} style={{ margin: "10px" }}>
-                  <Preview src={v} onClick={() => delFile(i)} />
-                </div>
-              );
-            })}
-          </Previews>
-        </PreviewBox>}
+              {imgUrlList.map((v, i) => {
+                return (
+                  <div key={i} style={{ margin: "10px" }}>
+                    <Preview src={v} onClick={() => delFile(i)} />
+                  </div>
+                );
+              })}
+            </Previews>
+          </PreviewBox>}
         <hr style={{ width: "100%" }} />
       </>
 

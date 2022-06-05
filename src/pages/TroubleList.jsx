@@ -36,6 +36,8 @@ const TroubleList = () => {
     setPage(newPage)
   }
 
+  console.log(TroubleList);
+
   return (
     <>
       <Header />

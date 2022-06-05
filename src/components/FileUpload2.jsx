@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import imageCompression from "browser-image-compression";
 
 import { useDispatch, useSelector } from "react-redux";
 import { __loadDictDetail } from "../redux/modules/dictionary";
@@ -27,7 +28,7 @@ const FileUpload2 = (props) => {
     return () => dispatch(ImageActions.clrimg())
   }, [])
 
-  const ImageFile = (e) => {
+  const ImageFile = async (e) => {
     const FileList = e.target.files;
     const UrlList = [];
     const FilesLength = FileList.length + imgUrlList.length + dbimages.length
@@ -35,6 +36,22 @@ const FileUpload2 = (props) => {
     if (imgUrlList.length + dbimages.length > 10) {
       return
     }
+
+    let options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 320,
+    }
+
+    let compressFiles = []
+
+    for (let i = 0; i < e.target.files.length; i++) {
+      let compFile = await imageCompression(e.target.files, options)
+      console.log(compFile);
+
+      compressFiles.push(compFile)
+    }
+
+    console.log(compressFiles);
 
     if (FilesLength > 10) {
       setOverlength(true)
