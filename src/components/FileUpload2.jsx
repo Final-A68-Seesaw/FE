@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import imageCompression from "browser-image-compression";
 
 import { useDispatch, useSelector } from "react-redux";
 import { __loadDictDetail } from "../redux/modules/dictionary";
@@ -12,7 +13,7 @@ const FileUpload2 = (props) => {
   const dispatch = useDispatch();
 
   const dbimages = useSelector((state) => state.image.imagelist)
-  
+
   const params = useParams()
 
   const [Files, setFiles] = useState([]);
@@ -27,13 +28,38 @@ const FileUpload2 = (props) => {
     return () => dispatch(ImageActions.clrimg())
   }, [])
 
-  const ImageFile = (e) => {
+  const ImageFile = async (e) => {
     const FileList = e.target.files;
     const UrlList = [];
     const FilesLength = FileList.length + imgUrlList.length + dbimages.length
 
+    let compressFiles = []
+
     if (imgUrlList.length + dbimages.length > 10) {
       return
+    }
+
+    //이미지 리사이징 옵션
+    let options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 223,
+      useWebWorker: true,
+    }
+
+    for (let i = 0; i < e.target.files.length; i++) {
+      let fileName = e.target.files[i].name
+      let fileType = e.target.files[i].type
+
+      //gif파일은 리사이징 제외
+      if(fileType === 'image/gif') {
+        compressFiles.push(e.target.files[i])
+        continue
+      }
+
+      //이미지 리사이징
+      let compFile = await imageCompression(e.target.files[i], options)
+      let toFile = new File([compFile], fileName, { type: fileType })
+      compressFiles.push(toFile)
     }
 
     if (FilesLength > 10) {
@@ -47,14 +73,14 @@ const FileUpload2 = (props) => {
         setOversize(true)
         return
       }
-      UrlList.push(URL.createObjectURL(FileList[i]));
+      UrlList.push(URL.createObjectURL(compressFiles[i]));
     }
 
     setOversize(false)
-    setFiles([...Files, ...FileList]);
+    setFiles([...Files, ...compressFiles]);
 
     setImgUrlList([...imgUrlList, ...UrlList]);
-    dispatch(ImageActions.addimg({ FileList }));
+    dispatch(ImageActions.addimg({ FileList: compressFiles }));
   };
 
   const delFile = (id) => {

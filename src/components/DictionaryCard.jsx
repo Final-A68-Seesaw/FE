@@ -21,11 +21,11 @@ const DictionaryCard = (props) => {
   const [scrap, setScrap] = useState(false);
   const ChangeScrap = (postId) => {
     setScrap(!scrap);
-    if(props.data.mainImage){
-      dispatch(__scrapMyPage(!scrap, postId))
+    if (props.data.mainImage) {
+      dispatch(__scrapMyPage(!scrap, postId));
     } else {
       dispatch(__scrapDict(!scrap, postId));
-    } 
+    }
   };
 
   return (
@@ -69,6 +69,7 @@ const DictionaryCard = (props) => {
           height: "320px",
           borderRadius: "10px",
         }}
+        alt="seeso dictionary card"
       />
     </div>
   );
